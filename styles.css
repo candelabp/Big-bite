@@ -76,6 +76,11 @@ margin: 0;
     
     
   }
+  /*carrousel*/
+  .carousel{
+    background-color: #FFFF;
+  }
+  
   /* Media queries para dispositivos móviles */
   @media (max-width: 768px) {
     .menu-icon {
