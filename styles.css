@@ -1,0 +1,107 @@
+body {
+    margin: auto;
+    font-family: Arial, sans-serif;
+    background-color: rgba(223, 28, 28, 1);
+
+}
+.imgPrincipal{
+
+width:400px;
+margin: 0;
+
+}
+.container-ppal{
+    display: grid;
+    place-items: center; 
+    
+}
+.tituloBlanco{
+    color: #FFFF;
+    font-size: 60PX;
+    text-shadow: #333;
+}
+.tituloAmarillo{
+    color: #FFBA49;
+    font-size: 60px;
+    text-shadow: #333;
+    text-align: end;
+}
+
+/* Navbar */
+
+.navbar {
+    background-color:rgba(223, 28, 28, 1);
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 70px;
+  }
+  
+  /* Estilos del menú hamburguesa */
+  .menu-icon {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+  /* Ocultar enlaces en pantallas pequeñas */
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .nav-links li {
+    margin: 0 15px;
+  }
+  
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  .btn-amarillo{
+    display: inline-block;
+    padding: 0.5em 1em;
+    background: #FFBA49;
+    color: #333;
+    border-radius: 2em;
+    border:none;
+    
+    
+  }
+  /* Media queries para dispositivos móviles */
+  @media (max-width: 768px) {
+    .menu-icon {
+      display: block;
+    }
+  
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      background-color: #C10000 ;
+      height: 100%;
+      width: 200px;
+      padding: 10px;
+      transform: translateX(-100%); 
+    transition: transform 0.3s ease-in-out; 
+    }
+  
+    .nav-links.active {
+      /*display: flex;*/
+      transform: translateX(0)
+    }
+  
+    .nav-links li {
+      margin: 20px 0;
+    }
+  }
