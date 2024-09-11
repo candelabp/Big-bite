@@ -6,8 +6,8 @@ body {
 }
 .imgPrincipal{
 
-width:400px;
-margin: 0;
+  width:600px;
+  margin: 0;
 
 }
 .container-ppal{
@@ -19,12 +19,14 @@ margin: 0;
     color: #FFFF;
     font-size: 60PX;
     text-shadow: #333;
+    margin: 50px;
 }
 .tituloAmarillo{
     color: #FFBA49;
     font-size: 60px;
     text-shadow: #333;
     text-align: end;
+    margin: 50px;
 }
 
 /* Navbar */
@@ -32,14 +34,15 @@ margin: 0;
 .navbar {
     background-color:rgba(223, 28, 28, 1);
     color: white;
-    padding: 10px;
+    padding:10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 10px;
   }
   
   .logo {
-    width: 70px;
+    width: 60px;
   }
   
   /* Estilos del menú hamburguesa */
@@ -73,8 +76,6 @@ margin: 0;
     color: #333;
     border-radius: 2em;
     border:none;
-    
-    
   }
   /*carrousel*/
   .carousel{
@@ -110,3 +111,67 @@ margin: 0;
       margin: 20px 0;
     }
   }
+
+  .maspopular {
+    text-align: center;
+    font-size: 50px;
+    padding: 40px;
+  } 
+  
+  .imgburger {
+    text-align: left;
+  }
+
+  .imgburger img{
+    width: 400px;
+    height: 300px;
+  }
+
+  .burger-info {
+    width: 100%;
+    padding-left: 30px;
+  }
+
+  .burger-info h5 {
+    width: 30%;
+    font-size: 2em;
+    color: #000000;
+    margin-bottom: 10px;
+  }
+
+  .burger-info p {
+    width: 50%;
+    font-size: 1.2em;
+    color: #000000;
+    margin-bottom: 20px;
+  }
+
+  .btn-primary {
+    background-color: #f1c40f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .btn-primary:hover {
+    background-color: #d4ac0d;
+  }
+
+  .btn-secondary {
+    background-color: #e41f1f;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #c0392b;
+  }
+
+ 
