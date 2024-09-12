@@ -51,6 +51,7 @@ h2 {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+    display: block;
 }
 
 .formulario .genero-buttons button {

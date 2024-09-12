@@ -1,0 +1,248 @@
+body {
+   /* height: 100%;
+   margin: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;*/
+}
+/*navbar*/
+.navbar {
+    background-color:white;
+    color: black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 10;
+    position: sticky;
+    top: 0;
+  }
+
+  .imgNavbar{
+    opacity: 0.4;
+    padding-top: 50px;
+  }
+
+  .logo {
+    width: 60px;
+  }
+
+  /* Estilos del menú hamburguesa */
+  .headerNavBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .contPerfil{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .fotoPerfil{
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+  }
+
+  .nombrePerfil{
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+
+  .bi-house-door{
+    font-size: 1.8rem;
+    margin-right: 5px;
+  }
+
+  .iconMenuRestaurante{
+    width: 30px;
+    height: 30px;
+    color: white;
+    margin-right: 5px;
+  }
+
+  .menu-icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 60px;
+  }
+
+  .bi-list{
+    font-size: 2rem;
+  }
+
+  .bi-x{
+    font-size: 2rem;
+  }
+
+  .bi-question-circle{
+    font-size: 1.6rem;
+    margin-right: 10px;
+  }
+
+  .contLinks{
+    display: flex;
+    align-items: center;
+  }
+
+  /* Ocultar enlaces en pantallas pequeñas */
+  .nav-links li {
+    margin: 0 15px;
+  }
+
+  .nav-links li a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 18px;
+  }
+  .btn-amarillo{
+    display: inline-block;
+    background: #FFBA49;
+    color: #333;
+    border-radius: 2em;
+    border:none;
+    padding: 4px 6px;
+    font-size: 0.71rem;
+    font-weight: 700;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .prueba{
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    color: aqua;
+  }
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff ;
+    height: 100%;
+    padding: 10px;
+    transform: translateX(-100%); 
+    transition: transform 0.3s ease-in-out; 
+    list-style: none;
+    width: 75%;
+  }
+
+  .nav-links.active {
+    transform: translateX(0)
+  }
+
+  .nav-links li {
+    margin: 20px 0;
+  }
+
+  .redesNav{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .redesNav i{
+    font-size: 1.6rem;
+  }
+.contenedor-mensaje {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-top: 50%;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+.mensaje {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+button {
+    padding: 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+
+.login-btn {
+    background-color: #e62b1e;
+    color: white;
+}
+.login-btn:hover {
+    background-color: #b92018; /* Cambio de color en hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+    transform: scale(1.05); /* Agrandar un poco */
+}
+.login-btn:active {
+    transform: scale(0.98); /* Se achica un poco al hacer clic */
+    background-color: #a51c14; /* Cambio de color al hacer clic */
+}
+
+.register-btn {
+    background-color: #f7b21a;
+    color: white;
+}
+.register-btn:hover {
+    background-color: #d89e15; /* Cambio de color en hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+    transform: scale(1.05); /* Agrandar un poco */
+}
+
+.register-btn:active {
+    transform: scale(0.98); /* Se achica un poco al hacer clic */
+    background-color: #c89111; /* Cambio de color al hacer clic */
+}
+#modal::backdrop{
+    background-color: rgba(0,0,0,.55);
+}
+#modal{
+    width:50vh;
+    border-radius: 1rem;
+    border-color: #ccc;
+    transition: 0.3s;
+    border: 2px solid #ccc;
+}
+.inicio-sesion{
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    justify-content: center;
+   
+}
+.inicio-sesion label{
+    display: flex;
+    font-size: 12px;
+}
+.inicio-sesion input{
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+
+
+@media (min-width: 768px) {
+    .contenedor-mensaje {
+        margin-top: 10%; /* Ajusta este valor para pantallas más grandes */
+    }
+}
