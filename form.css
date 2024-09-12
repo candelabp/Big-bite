@@ -99,6 +99,43 @@ h2 {
 .formulario button:hover {
     opacity: 0.9;
 }
+.container {
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+
+
+/*login
+.mensaje {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.btnss {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+button {
+    padding: 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.login-btn {
+    background-color: #e62b1e;
+    color: white;
+}
+
+.register-btn {
+    background-color: #f7b21a;
+    color: white;
+}*/
 
 /* Ajustes para pantallas más grandes */
 @media (min-width: 768px) {
@@ -132,4 +169,5 @@ h2 {
         font-size: 18px;
         padding: 15px;
     }
+  
 }
