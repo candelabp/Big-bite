@@ -1,0 +1,251 @@
+h1{
+    margin: 0px;
+  }
+  
+  .tituloDestacado{
+    display: none;
+  }
+  
+  .imgPrincipal {
+    width: 95vw;
+    margin: 0;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));
+  
+  }
+  
+  .content {
+    background-color: rgba(223, 28, 28, 1);
+    height: auto;
+  }
+  
+  .container-ppal {
+    display: grid;
+    place-items: center;
+  
+  }
+  
+  .tituloBlanco {
+    color: #FFFF;
+    font-size: 4rem;
+    text-shadow: #333;
+    word-wrap: break-word;
+    font-weight: 700;
+    margin-left: 20px;
+  }
+  
+  .tituloAmarillo {
+    color: #FFBA49;
+    font-size: 4rem;
+    font-weight: 700;
+    text-shadow: #333;
+    word-wrap: break-word;
+    margin-left: 55%;
+  }
+  
+  
+  
+  /*carrousel*/
+  
+  
+  
+  
+  .tituloSlider {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    font-weight: 900;
+    font-size: 2.25rem;
+  }
+  
+  .imgFondoSlider {
+    filter:
+      drop-shadow(0 0 5px rgba(0, 0, 0, 0.9))
+      /* Sombra para resaltar el borde */
+      brightness(0) saturate(100%) invert(91%) sepia(0%) saturate(12%) hue-rotate(180deg);
+    width: 90%;
+    margin-top: 15vh;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .imgHamburguesaSlider {
+    z-index: 9;
+    width: 100%;
+    height: auto;
+    margin-top: 15%;
+  }
+  
+  .tituloProdSlider {
+    z-index: 9;
+    font-weight: 700;
+    margin-top: 2.5vh;
+    color: red;
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));
+    text-align: center;
+  
+  }
+  
+  .textoSliderDescripcion {
+    margin: auto;
+    width: 85%;
+    text-align: center;
+    z-index: 9;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .btnAmarilloSlider {
+    display: inline-block;
+    background: #FFBA49;
+    color: #333;
+    border-radius: 2em;
+    border: none;
+    margin-top: 35px;
+    padding: 6px 8px;
+    font-weight: 700;
+    z-index: 9;
+    width: 45%;
+  
+  }
+  
+  .btnRojoSlider {
+    margin-top: 35px;
+    padding: 12px 50px;
+    color: white;
+    background-color: #C10000;
+    margin-bottom: 10vh;
+    border-radius: 6px;
+    font-weight: 700;
+    border: none;
+    z-index: 9;
+    width: 80%;
+  }
+  
+  .contenedorSlider {
+    width: auto;
+  }
+  
+  .slider {
+    background-color: #FFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .descripcionPedido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+  @media (min-width: 541px) {
+
+    .tituloDestacado {
+      display: inline;
+      color: #FFBA49;
+    }
+  
+    .imgPrincipal {
+      width: 80vw;
+      margin: 25px 0px;
+    }
+  
+    .tituloBlanco {
+      font-size: 3rem;
+      margin-top: 25px;
+    }
+  
+    .tituloAmarillo {
+      margin-left: 70%;
+    }
+  
+    .imgHamburguesaSlider {
+      width: 75%;
+    }
+  
+    .tituloProdSlider {
+      font-size: 1.7rem;
+    }
+  
+    .textoSliderDescripcion {
+      width: 80%;
+      font-size: 1.2rem;
+    }
+  
+    .btnAmarilloSlider {
+      padding: 12px 14px;
+    }
+  
+    .btnRojoSlider {
+      font-size: 1.4rem;
+    }
+  
+    .btn-amarillo {
+      padding: 8px 12px;
+      font-size: 1rem;
+      width: 110px;
+    }
+  
+  }
+
+  @media (min-width: 821px) {
+    .tituloAmarillo {
+      display: none;
+    }
+  
+    .tituloBlanco {
+      text-align: center;
+      font-size: 4rem;
+    }
+  
+    .imgPrincipal {
+      width: 60%;
+      margin-bottom: 50px;
+    }
+  
+    .tituloSlider {
+      font-size: 3rem;
+      font-weight: 900;
+    }
+  }
+
+  @media (min-width: 954px) {
+    .imgFondoSlider {
+      display: none;
+    }
+  
+    .slider {
+      background-color: #FFFF;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .tituloSlider {
+      display: none;
+    }
+  
+    .imgHamburguesaSlider {
+      width: 50%;
+      margin-bottom: 8.5vh;
+      margin-top: 10%;
+    }
+  
+    .descripcionPedido {
+      margin-top: 5vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 40%;
+    }
+  
+    .btnRojoSlider {
+      font-size: 1rem;
+    }
+  
+  }
