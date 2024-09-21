@@ -16,8 +16,8 @@ h1{
   .content {
     background-color: rgba(223, 28, 28, 1);
     height: 90vh;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
   }
   
   .container-ppal {
