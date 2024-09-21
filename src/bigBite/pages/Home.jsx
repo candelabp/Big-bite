@@ -2,6 +2,7 @@
 import { CarouselComponent } from "../components/CarouselComponent"
 import { Footer } from "../components/Footer"
 import { NavBar } from "../components/NavBar"
+import '../css/home.css';
 
 
 export const Home = () => {
