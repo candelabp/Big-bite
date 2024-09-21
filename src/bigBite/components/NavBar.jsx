@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import '../css/navbarRojo.css';
 
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
