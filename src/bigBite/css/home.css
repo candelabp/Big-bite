@@ -15,7 +15,9 @@ h1{
   
   .content {
     background-color: rgba(223, 28, 28, 1);
-    height: auto;
+    height: 90vh;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
   }
   
   .container-ppal {
@@ -31,6 +33,9 @@ h1{
     word-wrap: break-word;
     font-weight: 700;
     margin-left: 20px;
+  }
+  .separador{
+    display: block;
   }
   
   .tituloAmarillo {
@@ -70,7 +75,7 @@ h1{
   
   .imgHamburguesaSlider {
     z-index: 9;
-    width: 100%;
+    width: 120%;
     height: auto;
     margin-top: 15%;
   }
@@ -78,7 +83,6 @@ h1{
   .tituloProdSlider {
     z-index: 9;
     font-weight: 700;
-    margin-top: 2.5vh;
     color: red;
     font-size: 1.5rem;
     filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));
@@ -88,11 +92,10 @@ h1{
   
   .textoSliderDescripcion {
     margin: auto;
-    width: 85%;
-    text-align: center;
+    width: 90%;
+    text-align: justify;
     z-index: 9;
     font-weight: 600;
-    font-size: 0.9rem;
   }
   
   .btnAmarilloSlider {
@@ -102,7 +105,7 @@ h1{
     border-radius: 2em;
     border: none;
     margin-top: 35px;
-    padding: 6px 8px;
+    padding: 8px 10px;
     font-weight: 700;
     z-index: 9;
     width: 45%;
@@ -111,7 +114,7 @@ h1{
   
   .btnRojoSlider {
     margin-top: 35px;
-    padding: 12px 50px;
+    padding: 12px 20px;
     color: white;
     background-color: #C10000;
     margin-bottom: 10vh;
@@ -143,27 +146,30 @@ h1{
 
   @media (min-width: 541px) {
 
-    .tituloDestacado {
-      display: inline;
-      color: #FFBA49;
+    .tituloBlanco{
+      margin-left: 10vh;
     }
+
+    .content{
+      height: auto;
+      margin-bottom: 5vh;
+    }
+
+  
   
     .imgPrincipal {
-      width: 80vw;
+      width: 70vw;
       margin: 25px 0px;
     }
   
-    .tituloBlanco {
-      font-size: 3rem;
-      margin-top: 25px;
-    }
-  
+
     .tituloAmarillo {
       margin-left: 70%;
     }
   
     .imgHamburguesaSlider {
-      width: 75%;
+      width: 90%;
+      margin-top: 0%;
     }
   
     .tituloProdSlider {
@@ -177,10 +183,12 @@ h1{
   
     .btnAmarilloSlider {
       padding: 12px 14px;
+      font-size: 1.2rem;
     }
   
     .btnRojoSlider {
       font-size: 1.4rem;
+      width: 70%;
     }
   
     .btn-amarillo {
@@ -192,6 +200,25 @@ h1{
   }
 
   @media (min-width: 821px) {
+
+    .content{
+      height: 90vh;
+      margin-bottom: 0px;
+    }
+
+    .tituloBlanco{
+      margin: 0px;
+    }
+
+    .tituloDestacado{
+      display: inline;
+      color: #FFBA49;
+    }
+
+    .separador{
+      display: inline;
+    }
+
     .tituloAmarillo {
       display: none;
     }
@@ -210,9 +237,20 @@ h1{
       font-size: 3rem;
       font-weight: 900;
     }
+
+    .imgHamburguesaSlider{
+      width: 80%;
+      margin-top: 0px;
+    }
+
+    .imgFondoSlider{
+      width: 50%;
+    }
   }
 
   @media (min-width: 954px) {
+
+
     .imgFondoSlider {
       display: none;
     }
@@ -249,3 +287,16 @@ h1{
     }
   
   }
+
+  
+  @media (min-width: 1150px) {
+  
+    .content{
+      height: auto;
+    }
+
+    .footerIcon{
+      font-size: 2rem;
+    }
+  }
+  

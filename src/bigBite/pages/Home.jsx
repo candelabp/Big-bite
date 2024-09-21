@@ -14,7 +14,7 @@ export const Home = () => {
 
             <section className="content">
 
-                <h1 className="tituloBlanco">Gran Sabor,<span className="tituloDestacado">Big Bite.</span></h1>
+                <h1 className="tituloBlanco">Gran <span className="separador">Sabor,</span><span className="tituloDestacado">Big Bite.</span></h1>
 
                 <div className="container-ppal">
                     <img className="imgPrincipal" src="src\bigBite\assets\burguerInicio2.png" />

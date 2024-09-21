@@ -25,6 +25,7 @@ footer {
     text-align: center;
     justify-content: space-between;
     width: 100%;
+    font-size: 0.8rem;
   
   }
   
@@ -45,6 +46,7 @@ footer {
   
   .footer-link2 a {
     color: white;
+    font-size: 0.8rem;
   }
   
   
@@ -83,9 +85,10 @@ footer {
   
   .footer-bottom {
     text-align: left;
-    font-size: 8px;
+    font-size: 0.6rem;
     position: relative;
-    width: 40%;
+    z-index: 9;
+    width: 100%;
     margin: 0;
   }
   
@@ -122,3 +125,42 @@ footer {
     height: auto;
     margin-top: 60%;
   } 
+
+  @media (min-width: 530px) {
+
+    .footer-links {
+      font-size: 1rem;
+    
+    }
+
+    .footer-link2 a {
+      font-size: 1rem;
+    }
+
+    .footer-social a {
+      font-size: 2rem;
+    }
+
+    .footer-bottom {
+      text-align: left;
+      font-size: 0.8rem;
+      position: relative;
+      z-index: 9;
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  @media (min-width: 767px) {
+  
+    .footer-social a {
+      font-size: 1.5rem;
+    }
+
+    .bi-facebook,
+    .bi-instagram,
+    .bi-twitter {
+      font-size: 2rem;
+      margin-top: 50px;
+    }
+  }

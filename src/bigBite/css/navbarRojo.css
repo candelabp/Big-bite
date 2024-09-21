@@ -9,7 +9,7 @@
     z-index: 10;
     position: sticky;
     top: 0;
-    /* height: 15vh; */
+    height: 10vh;
     padding: 0 20px; 
     margin-top: 10px;
   }
@@ -251,6 +251,10 @@
 
   @media (min-width: 768px) {
 
+    .contLinks svg{
+      margin-left: 2.5vh;
+    }
+
     .bi-question-circle,
     .bi-house-door,
     .ri-restaurant-line {
@@ -259,12 +263,7 @@
       margin-left: 15px;
     }
   
-    .bi-facebook,
-    .bi-instagram,
-    .bi-twitter {
-      font-size: 3rem;
-      margin-top: 50px;
-    }
+
   
     .nav-links {
       width: 50%;
