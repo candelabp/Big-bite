@@ -1,0 +1,166 @@
+/* Footer  */
+footer {
+    background-color: #C10000;
+    color: white;
+    padding: 20px 20px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    flex-flow: row wrap;
+  }
+  
+  .footer-links {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.8rem;
+  
+  }
+  
+  .footer-links a {
+    color: white;
+    margin-bottom: 10px;
+    text-decoration: none;
+  }
+  
+  
+  .footer-link-social {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .footer-link2 a {
+    color: white;
+    font-size: 0.8rem;
+  }
+  
+  
+  .footer-social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  
+  .footer-social a {
+    color: white;
+    font-size: 30px;
+    margin: 0 15px;
+  }
+  
+  .footer-container a:hover {
+    color: #FFD700;
+  }
+  
+  .footer-logo {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    height: 125%;
+    transform: translateX(-50%);
+    opacity: 0.3;
+    z-index: 0;
+  }
+  
+  .footer-linea {
+    background-color: #FFBA49;
+    padding: 1px 0;
+    opacity: 1;
+  }
+  
+  .footer-bottom {
+    text-align: left;
+    font-size: 0.6rem;
+    position: relative;
+    z-index: 9;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .footer-bottom p {
+    margin: 0;
+  }
+  
+  .footer-logo img {
+    max-width: 200px;
+    height: auto;
+    margin-top: 125%;
+  }
+  
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .footer-links {
+    margin-bottom: 20px;
+  }
+  
+  .footer-social {
+    margin-bottom: 20px;
+  }
+  
+  .footer-social a {
+    font-size: 25px;
+    margin: 0 10px;
+  }
+  
+  .footer-logo img {
+    max-width: 250px;
+    height: auto;
+    margin-top: 60%;
+  } 
+
+  @media (min-width: 530px) {
+
+    .footer-links {
+      font-size: 1rem;
+    
+    }
+
+    .footer-link2 a {
+      font-size: 1rem;
+    }
+
+    .footer-social a {
+      font-size: 2rem;
+    }
+
+    .footer-bottom {
+      text-align: left;
+      font-size: 0.8rem;
+      position: relative;
+      z-index: 9;
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  @media (min-width: 767px) {
+  
+    .footer-social a {
+      font-size: 1.5rem;
+    }
+
+    .bi-facebook,
+    .bi-instagram,
+    .bi-twitter {
+      font-size: 2rem;
+      margin-top: 50px;
+    }
+  }
