@@ -1,28 +1,32 @@
-import './formulario.css';
+import './Formulario.css';
 import { useForm } from "react-hook-form";
 
-
-export const Formulario = () => {
+function Formulario() {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const password = watch("password");
 
   const onSubmit = (data) => {
-    // Llamada al backend usando fetch
-    fetch('http://localhost:8080/api/registro/crear', {
-      method: 'POST', // Enviar la solicitud como POST
+    fetch('http://localhost:8080/usuarios/registrar', {
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // Especificar el formato de los datos
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data), // Convertir los datos a JSON
+      body: JSON.stringify(data),
     })
-    .then((response) => response.json()) // Obtener la respuesta del servidor
-    .then((responseData) => {
-      console.log('Respuesta del servidor:', responseData);
-      alert('Registro exitoso');
+    .then((response) => {
+      if (!response.ok) {
+        // Si la respuesta no es "OK", lanzamos un error con el mensaje devuelto
+        return response.text().then((text) => { throw new Error(text); });
+      }
+      return response.text(); // Si es exitoso, obtenemos el mensaje
+    })
+    .then((message) => {
+      console.log('Respuesta del servidor:', message);
+      alert(message); // Mostrar el mensaje de éxito
     })
     .catch((error) => {
       console.error('Hubo un error:', error);
-      alert('Error al enviar los datos');
+      alert(error.message); // Mostrar el mensaje de error
     });
   };
 
@@ -95,3 +99,4 @@ export const Formulario = () => {
   );
 }
 
+export default Formulario;
