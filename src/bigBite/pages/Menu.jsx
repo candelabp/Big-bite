@@ -28,7 +28,10 @@ export const Menu = () => {
                         </div>
                         <div className="menu-buttons">
                             <button>Ordenar por:</button>
-                            <button>Filtros <i className="bi bi-sliders"></i></button>
+                            <div className="filter-container">
+                                <button>Filtros <i className="bi bi-sliders"></i></button>
+                                
+                            </div>
                         </div>
                     </div>
 

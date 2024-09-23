@@ -94,6 +94,14 @@ button{
   background-color: #ff9530;
 }
 
+/* Boton filtros */
+
+.filter-menu{
+  display: none;
+}
+
+/*  Productos   */
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
