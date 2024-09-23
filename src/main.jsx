@@ -8,13 +8,16 @@ import './normalize.css';
 import { Menu } from './bigBite/pages/Menu';
 import {Formulario} from './bigBite/pages/Formulario';
 import { Home } from './bigBite/pages/Home'
-
-
-
-
+import { InicioSesion } from './bigBite/pages/InicioSesion';
+import { Footer } from './bigBite/components/Footer';
+import { BigBiteApp } from './BigBiteApp';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+<<<<<<< HEAD
     <Menu />
+=======
+    <Menu/>
+>>>>>>> 355b8f6b2ca3cf37f91d746aaa2563a971846d26
   </StrictMode>,
 )

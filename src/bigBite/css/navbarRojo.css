@@ -12,16 +12,19 @@
     position: sticky;
     top: 0;
     height: 10vh;
-    padding: 10px 20px; 
+    padding: 5px 20px; 
   }
   
   .imgNavbarRojo {
     opacity: 0.4;
-    padding-top: 50px;
   }
   
-  .logoNR {
-    width: 40px;
+  .logoContenedorRojo {
+    width: 30px;
+  }
+
+  .logo{
+    width: 100%;
   }
   
   /* Estilos del menú hamburguesa */
@@ -44,23 +47,39 @@
     border-radius: 12px;
   }
   
-  .nombrePerfilNR {
+  .nombrePerfilRojo {
     font-size: 1rem;
     text-align: center;
     margin-bottom: 30px;
     text-decoration: underline;
+    color: white;
   }
+
+  
 
   .bi-person-circle{
     font-size: 2.3rem;
+  }
+
+  .iconPreguntaRojo{
+    color: white;
+  }
+
+  .iconLogeadoRojo{
+    color: white;
+
   }
   
   .bi-house-door {
     font-size: 1.8rem;
     margin-right: 5px;
   }
+
+  .houseRojo{
+    color: white;
+  }
   
-  .iconMenuRestaurante {
+  .iconMenuRestauranteRojo {
     width: 30px;
     height: 30px;
     color: white;
@@ -76,12 +95,20 @@
   
   .bi-list {
     font-size: 2rem;
+    
+  }
+
+  .btnListRojo{
     color: white;
   }
   
   .bi-x {
     font-size: 2rem;
     margin-left: 30px;
+  }
+
+  .btnXRojo{
+    color: white;
   }
   
   .bi-question-circle {
@@ -108,7 +135,7 @@
     margin-bottom: 5vh;
    }
    
-   .input {
+   .inputRojo {
     width: 100%;
     height: 40px;
     line-height: 28px;
@@ -122,11 +149,11 @@
     transition: .3s ease;
    }
    
-   .input::placeholder {
+   .inputRojo::placeholder {
     color: #9e9ea7;
    }
    
-   .input:focus, input:hover {
+   .inputRojo:focus, inputRojo:hover {
     outline: none;
     border-color: rgba(234,76,137,0.4);
     background-color: #fff;
@@ -150,12 +177,13 @@
   
   
   /* Ocultar enlaces en pantallas pequeñas */
-  
-  .nav-linksNR li a {
-    color: white;
+
+  .tituloLinkRojo{
     text-decoration: none;
     font-size: 18px;
+    color: white;
   }
+  
   
   .btn-amarillo {
     display: inline-block;
@@ -186,7 +214,8 @@
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
     list-style: none;
-    width: 75%;
+    width: 60%;
+    padding-right: 15px;
   }
   
   .nav-linksNR.active {
@@ -197,6 +226,10 @@
     display: flex;
     width: 100%;
     justify-content: space-around;
+  }
+
+  .redesNavRojo{
+    color: white;
   }
   
   .redesNav i {
@@ -209,6 +242,7 @@
 
   .contadorCarrito{
     font-size: 1rem;
+    margin-left: 2px;
   }
 
   .menu-icon-carrito{
@@ -217,10 +251,12 @@
   }
 
 
+  
 
-  @media (min-width: 541px) {
 
-    .contLinks{
+  @media (min-width: 350px) {
+
+    .contLinkss{
       margin-left: 3vw;
     }
 
@@ -229,11 +265,11 @@
         height: 65px;
       }
     
-      .nombrePerfil {
+      .nombrePerfilRojo {
         font-size: 1.3rem;
       }
     
-      .nav-linksNR li a {
+      .nav-linkss li a {
         font-size: 20px;
       }
     
@@ -244,17 +280,18 @@
       .bi-list {
         font-size: 2.5rem;
       }
-
-      .nav-linksNR{
-        width: 60%;
-      }
   }
+
+  @media (min-width: 480px) {
+    .nav-links{
+      width: auto;
+    }
+  }
+
 
   @media (min-width: 768px) {
 
-    .contLinks svg{
-      margin-left: 2.5vh;
-    }
+    
 
     .bi-question-circle,
     .bi-house-door,
@@ -263,12 +300,13 @@
       margin-right: 15px;
       margin-left: 15px;
     }
+
+    .nav-links{
+      padding-right: 30px;
+    }
   
 
   
-    .nav-linksNR {
-      width: 50%;
-    }
   
     .bi-x {
       font-size: 3rem;

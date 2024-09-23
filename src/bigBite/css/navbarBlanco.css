@@ -1,4 +1,7 @@
-/*navbarBlanco*/
+
+
+/* Navbar */
+
 .navbarBlanco {
     background-color: white;
     color: black;
@@ -8,164 +11,330 @@
     z-index: 10;
     position: sticky;
     top: 0;
-}
-
-.imgNavbarBlanco {
+    height: auto;
+    padding: 5px 20px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .imgNavbar {
     opacity: 0.4;
-    padding-top: 50px;
-}
+  }
 
-.logoNB {
-    width: 60px;
-}
+  .logoContenedorBlanco{
+    width: 90px;
+  }
 
-/* Estilos del menú hamburguesa */
-.headerNavBarBlanco {
+  .iconLogeadoNegro{
+    color: black;
+  }
+  
+  .logo {
+    width: 100%;
+  }
+  
+  /* Estilos del menú hamburguesa */
+  .headerNavBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.contPerfil {
+  }
+  
+  .contPerfil {
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-}
-
-.fotoPerfil {
+  }
+  
+  .fotoPerfil {
     width: 50px;
     height: 50px;
     border-radius: 12px;
-}
-
-.nombrePerfilNB {
-    margin-top: 10px;
+  }
+  
+  .nombrePerfilNegro {
     font-size: 1rem;
-}
+    text-align: center;
+    color: black;
+    margin-bottom: 30px;
+    text-decoration: underline;
+  }
 
-.bi-house-door {
+  .bi-person-circle{
+    font-size: 2.3rem;
+  }
+  
+  
+  .bi-house-door {
     font-size: 1.8rem;
     margin-right: 5px;
-}
-
-.ri-restaurant-line{
-    font-size: 1.8rem;
-    margin-right: 5px;
-}
-
-.bi-question-circle{
-    font-size: 1.8rem;
-    margin-right: 5px;
-}
-
-.iconMenuRestaurante {
+  }
+  
+  .iconMenuRestaurante {
     width: 30px;
     height: 30px;
     color: white;
     margin-right: 5px;
-}
-
-.menu-icon {
+  }
+  
+  .menu-icon {
     display: flex;
     align-items: center;
     cursor: pointer;
     width: 60px;
-}
-
-.bi-list {
+  }
+  
+  .bi-list {
     font-size: 2rem;
+  }
 
-}
 
-.bi-x {
+  .btnListBlanco{
+    color: black;
+  }
+  
+  .bi-x {
     font-size: 2rem;
-}
+    margin-left: 30px;
+  }
 
-.bi-question-circle {
+  .btnXBlanco{
+    color: black;
+  }
+  
+  .bi-question-circle {
     font-size: 1.6rem;
     margin-right: 10px;
-}
-
-.contLinks {
+  }
+  
+  .contLinks {
     display: flex;
     align-items: center;
-}
+    margin-bottom: 20px;
+  }
 
-/* Ocultar enlaces en pantallas pequeñas */
-.nav-linksNB li {
-    margin: 0 15px;
-}
 
-.nav-linksNB li a {
-    color: rgb(0, 0, 0);
+
+  /* Buscador Nav */
+
+  /* From Uiverse.io by alexruix */ 
+  .group {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 100%;
+    margin-bottom: 5vh;
+   }
+   
+   .inputNegro {
+    width: 100%;
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: black;
+    color: white;
+    transition: .3s ease;
+   }
+   
+   .inputNegro::placeholder {
+    color: white;
+   }
+   
+   .inputNegro:focus, inputNegro:hover {
+    outline: none;
+    border-color: rgba(234,76,137,0.4);
+    background-color: black;
+    box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
+   }
+   
+   .icon {
+    position: absolute;
+    left: 1rem;
+    fill: #9e9ea7;
+    width: 1rem;
+    height: 1rem;
+   }
+   
+   
+   
+   
+   
+   
+
+  
+  
+  /* Ocultar enlaces en pantallas pequeñas */
+  
+  .tituloLinkNegro{
+    color: black;
     text-decoration: none;
     font-size: 18px;
-}
-
-.btn-amarillo {
+  }
+  
+  .btn-amarillo {
     display: inline-block;
     background: #FFBA49;
     color: #333;
     border-radius: 2em;
     border: none;
-    padding: 4px 6px;
+    padding: 6px 8px;
     font-size: 0.71rem;
     font-weight: 700;
-}
-
-.menu-icon {
+  }
+  
+  .menu-icon {
     display: block;
-}
+    background: none;
+    border: none;
+  }
+  
+  .nav-linkss {
 
-.prueba {
-    width: 30px;
-    height: 30px;
-    margin: auto;
-    color: aqua;
-}
-
-.nav-linksNB {
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #ffffff;
+    background-color: white;
     height: 100%;
     padding: 10px;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
     list-style: none;
-    width: 40vh;
-}
-
-.nav-linksNB.active {
-    transform: translateX(0)
-}
-
-.nav-linksNB li {
-    margin: 20px 0;
-}
-
-.redesNav {
+    width: 70%;
+  }
+  
+  .nav-linkss.active {
+    transform: translateX(0);
+    box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .redesNav {
     display: flex;
     width: 100%;
     justify-content: space-around;
-}
-
-.redesNav i {
+  }
+  
+  .redesNav i {
     font-size: 1.6rem;
-}
+  }
 
-@media (min-width: 1024px) {
-    .ri-home-line{
-      font-size: 1.5rem;
-      margin-right: 10px;
+  .bi-cart-fill{
+    font-size: 1.25rem;
+  }
+
+  .contadorCarrito{
+    font-size: 1rem;
+  }
+
+  .menu-icon-carrito{
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (min-width: 401px) {
+    .nav-linkss{
+      width: 60%;
+    }
+  }
+
+
+  @media (min-width: 468px) {
+  
+      .nav-linkss{
+        width: 55%;
+      }
+  }
+
+
+  @media (min-width: 541px) {
+
+    .nav-linkss{
+      width: 50%;
     }
 
-    .ri-restaurant-line{
-      font-size: 1.5rem;
-      margin-right: 10px;
+    .logoContenedorBlanco{
+      width: 100px;
     }
+
+    .contLinks{
+      margin-left: 3vw;
+    }
+
+    .fotoPerfil {
+        width: 65px;
+        height: 65px;
+      }
+    
+      .nombrePerfilNegro {
+        font-size: 1.3rem;
+      }
+    
+      .nav-linkss li a {
+        font-size: 20px;
+      }
+    
+      .bi-question-circle {
+        margin-right: 5px;
+      }
+    
+      .bi-list {
+        font-size: 2.5rem;
+      }
+
+
+  }
+
+  @media (min-width: 599px) {
+    .nav-linkss{
+      width: 40%;
+    }
+  }
+
+  @media (min-width: 768px) {
+
+    .nav-linkss{
+      width: 35%;
+    }
+
+
+
+
+    .bi-question-circle,
+    .bi-house-door,
+    .ri-restaurant-line {
+      font-size: 2rem;
+      margin-right: 15px;
+      margin-left: 15px;
+    }
+  
+
+  
+
+  
+    .bi-x {
+      font-size: 3rem;
+    }
+  }
+
+
+  @media (min-width: 925px) {
+
+    .navbarBlanco{
+      height: 10vh;
+    }
+
+    .nav-linkss{
+      width: 30%;
+    }
+  
+    .logoContenedorBlanco{
+      width: 80px;
+    }
+  
   }
