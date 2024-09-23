@@ -8,33 +8,12 @@ export const Formulario = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const password = watch("password");
 
-  // Estado para guardar la imagen en base64
-  const [imageBase64, setImageBase64] = useState("");
-
-  // Función para convertir el archivo a base64
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
-  // Capturar el archivo y convertirlo a base64
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const base64 = await convertToBase64(file);
-      setImageBase64(base64); // Guarda la imagen convertida
-    }
-  };
+  
 
   const onSubmit = (data) => {
     // Incluir la imagen base64 en los datos
     const payload = {
-      ...data,
-      imagen: imageBase64, // Añadir la imagen en base64
+      ...data
     };
 
     // Llamada al backend usando fetch
@@ -109,7 +88,7 @@ export const Formulario = () => {
               type="file"
               accept="image/*"
               {...register("imagen", { required: "La imagen es obligatoria" })}
-              onChange={handleImageChange} // Maneja el cambio de imagen
+            
             />
             {errors.imagen && <span>{errors.imagen.message}</span>}
           </div>
