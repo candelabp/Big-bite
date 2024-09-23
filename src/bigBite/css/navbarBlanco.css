@@ -2,28 +2,33 @@
 
 /* Navbar */
 
-.navbarRojo {
-    background-color: rgba(223, 28, 28, 1);
-    color: white;
+.navbarBlanco {
+    background-color: white;
+    color: black;
     display: flex;
     justify-content: space-around;
     align-items: center;
     z-index: 10;
     position: sticky;
     top: 0;
-    height: 10vh;
+    height: auto;
     padding: 5px 20px; 
+
   }
   
   .imgNavbar {
     opacity: 0.4;
   }
-  
-  .logoContenedorRojo {
-    width: 30px;
+
+  .logoContenedorBlanco{
+    width: 30%;
   }
 
-  .logo{
+  .iconLogeadoNegro{
+    color: black;
+  }
+  
+  .logo {
     width: 100%;
   }
   
@@ -47,39 +52,25 @@
     border-radius: 12px;
   }
   
-  .nombrePerfilRojo {
+  .nombrePerfilNegro {
     font-size: 1rem;
     text-align: center;
+    color: black;
     margin-bottom: 30px;
     text-decoration: underline;
-    color: white;
   }
-
-  
 
   .bi-person-circle{
     font-size: 2.3rem;
   }
-
-  .iconPreguntaRojo{
-    color: white;
-  }
-
-  .iconLogeadoRojo{
-    color: white;
-
-  }
+  
   
   .bi-house-door {
     font-size: 1.8rem;
     margin-right: 5px;
   }
-
-  .houseRojo{
-    color: white;
-  }
   
-  .iconMenuRestauranteRojo {
+  .iconMenuRestaurante {
     width: 30px;
     height: 30px;
     color: white;
@@ -95,11 +86,11 @@
   
   .bi-list {
     font-size: 2rem;
-    
   }
 
-  .btnListRojo{
-    color: white;
+
+  .btnListBlanco{
+    color: black;
   }
   
   .bi-x {
@@ -107,8 +98,8 @@
     margin-left: 30px;
   }
 
-  .btnXRojo{
-    color: white;
+  .btnXBlanco{
+    color: black;
   }
   
   .bi-question-circle {
@@ -123,6 +114,7 @@
   }
 
 
+
   /* Buscador Nav */
 
   /* From Uiverse.io by alexruix */ 
@@ -135,7 +127,7 @@
     margin-bottom: 5vh;
    }
    
-   .inputRojo {
+   .inputNegro {
     width: 100%;
     height: 40px;
     line-height: 28px;
@@ -144,19 +136,19 @@
     border: 2px solid transparent;
     border-radius: 8px;
     outline: none;
-    background-color: #f3f3f4;
-    color: #0d0c22;
+    background-color: black;
+    color: white;
     transition: .3s ease;
    }
    
-   .inputRojo::placeholder {
-    color: #9e9ea7;
+   .inputNegro::placeholder {
+    color: white;
    }
    
-   .inputRojo:focus, inputRojo:hover {
+   .inputNegro:focus, inputNegro:hover {
     outline: none;
     border-color: rgba(234,76,137,0.4);
-    background-color: #fff;
+    background-color: black;
     box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
    }
    
@@ -177,13 +169,12 @@
   
   
   /* Ocultar enlaces en pantallas pequeñas */
-
-  .tituloLinkRojo{
+  
+  .tituloLinkNegro{
+    color: black;
     text-decoration: none;
     font-size: 18px;
-    color: white;
   }
-  
   
   .btn-amarillo {
     display: inline-block;
@@ -191,7 +182,7 @@
     color: #333;
     border-radius: 2em;
     border: none;
-    padding: 4px 6px;
+    padding: 6px 8px;
     font-size: 0.71rem;
     font-weight: 700;
   }
@@ -202,33 +193,31 @@
     border: none;
   }
   
-  .nav-links {
+  .nav-linkss {
+
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #C10000;
+    background-color: white;
     height: 100%;
     padding: 10px;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
     list-style: none;
-    width: 75%;
+    width: 70%;
   }
   
-  .nav-links.active {
-    transform: translateX(0)
+  .nav-linkss.active {
+    transform: translateX(0);
+    box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.3);
   }
   
   .redesNav {
     display: flex;
     width: 100%;
     justify-content: space-around;
-  }
-
-  .redesNavRojo{
-    color: white;
   }
   
   .redesNav i {
@@ -241,7 +230,6 @@
 
   .contadorCarrito{
     font-size: 1rem;
-    margin-left: 2px;
   }
 
   .menu-icon-carrito{
@@ -253,6 +241,11 @@
 
   @media (min-width: 541px) {
 
+
+    .logoContenedorBlanco{
+      width: 25%;
+    }
+
     .contLinks{
       margin-left: 3vw;
     }
@@ -262,7 +255,7 @@
         height: 65px;
       }
     
-      .nombrePerfilRojo {
+      .nombrePerfilNegro {
         font-size: 1.3rem;
       }
     
@@ -285,6 +278,12 @@
 
   @media (min-width: 768px) {
 
+    .logoContenedorBlanco{
+      width: 18%;
+    }
+
+
+
     .bi-question-circle,
     .bi-house-door,
     .ri-restaurant-line {
@@ -302,4 +301,13 @@
     .bi-x {
       font-size: 3rem;
     }
+  }
+
+
+  @media (min-width: 925px) {
+  
+    .logoContenedorBlanco{
+      width: 130px;
+    }
+  
   }
