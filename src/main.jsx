@@ -9,13 +9,11 @@ import { Menu } from './bigBite/pages/Menu';
 import {Formulario} from './bigBite/pages/Formulario';
 import { Home } from './bigBite/pages/Home'
 import { InicioSesion } from './bigBite/pages/InicioSesion';
-
-
-
-
+import { Footer } from './bigBite/components/Footer';
+import { BigBiteApp } from './BigBiteApp';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <InicioSesion />
+    <Menu/>
   </StrictMode>,
 )
