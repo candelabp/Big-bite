@@ -14,157 +14,6 @@ button{
   border: none;
 }
 
-
-/*navbar*/
-.navbar {
-  background-color: white;
-  color: black;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 10;
-  position: sticky;
-  top: 0;
-}
-
-.imgNavbar {
-  opacity: 0.4;
-  padding-top: 50px;
-}
-
-.logo {
-  width: 60px;
-}
-
-/* Estilos del menú hamburguesa */
-.headerNavBar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.contPerfil {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-.fotoPerfil {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-}
-
-.nombrePerfil {
-  margin-top: 10px;
-  font-size: 1rem;
-}
-
-.bi-house-door {
-  font-size: 1.8rem;
-  margin-right: 5px;
-}
-
-.iconMenuRestaurante {
-  width: 30px;
-  height: 30px;
-  color: white;
-  margin-right: 5px;
-}
-
-.menu-icon {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  width: 60px;
-}
-
-.bi-list {
-  font-size: 2rem;
-
-}
-
-.bi-x {
-  font-size: 2rem;
-}
-
-.bi-question-circle {
-  font-size: 1.6rem;
-  margin-right: 10px;
-}
-
-.contLinks {
-  display: flex;
-  align-items: center;
-}
-
-/* Ocultar enlaces en pantallas pequeñas */
-.nav-links li {
-  margin: 0 15px;
-}
-
-.nav-links li a {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.btn-amarillo {
-  display: inline-block;
-  background: #FFBA49;
-  color: #333;
-  border-radius: 2em;
-  border: none;
-  padding: 4px 6px;
-  font-size: 0.71rem;
-  font-weight: 700;
-}
-
-.menu-icon {
-  display: block;
-}
-
-.prueba {
-  width: 30px;
-  height: 30px;
-  margin: auto;
-  color: aqua;
-}
-
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #ffffff;
-  height: 100%;
-  padding: 10px;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-  list-style: none;
-  width: 75%;
-}
-
-.nav-links.active {
-  transform: translateX(0)
-}
-
-.nav-links li {
-  margin: 20px 0;
-}
-
-.redesNav {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-}
-
-.redesNav i {
-  font-size: 1.6rem;
-}
-
 /*Menu*/
 .menu {
   width: 90%;
@@ -294,9 +143,7 @@ button{
   height: 30px;
 }
 
-.nav-links {
-  width: 40vh;
-}
+
 
 
 
@@ -322,14 +169,3 @@ button{
   }
 }
 
-@media (min-width: 1024px) {
-  .ri-home-line {
-    font-size: 1.5rem;
-    margin-right: 10px;
-  }
-
-  .ri-restaurant-line {
-    font-size: 1.5rem;
-    margin-right: 10px;
-  }
-}

@@ -1,4 +1,4 @@
-import './formulario.css';
+import '../css/formulario.css';
 import { useForm } from "react-hook-form";
 
 

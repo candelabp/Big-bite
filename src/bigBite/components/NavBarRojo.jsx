@@ -16,14 +16,14 @@ export const NavBar = () => {
     };
 
     return (
-        <nav className="navbar">
+        <nav className="navbarRojo">
             {/* Botón para abrir el menú */}
             <button className="menu-icon" id="menu-icon" onClick={abrirMenu}>
                 <i className="bi bi-list"></i>
             </button>
 
-            <div className="logo">
-                <img className="logo" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" />
+            <div className="logoNR">
+                <img className="logoNR" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" />
             </div>
 
             <div className="menu-icon-carrito menu-icon">
@@ -31,22 +31,22 @@ export const NavBar = () => {
             </div>
 
             {/* Lista de enlaces de navegación */}
-            <ul className={`nav-links ${menuAbierto ? 'active' : ''}`} id="nav-links">
-                <li className="headerNavBar">
+            <ul className={`nav-linksNR ${menuAbierto ? 'active' : ''}`} id="nav-linksNR">
+                <li className="headerNavBarRojo">
                     {/* Botón para cerrar el menú */}
                     <div className="menu-icon" id="menu-icon-cerrar" onClick={cerrarMenu}>
                         <i className="bi bi-x"></i>
                     </div>
 
-                    <div className="logo">
-                        <img className="logo" src="src\bigBite\assets\logo blanco.png" alt="Logo" />
+                    <div className="logoNR">
+                        <img className="logoNR" src="src\bigBite\assets\logo blanco.png" alt="Logo" />
                     </div>
                 </li>
 
                 <li>
                     <div className="contPerfil">
                         <i class="bi bi-person-circle"></i>
-                        <h3 className="nombrePerfil">Iniciar Sesion</h3>
+                        <h3 className="nombrePerfilNR">Iniciar Sesion</h3>
                     </div>
                 </li>
 
@@ -76,7 +76,7 @@ export const NavBar = () => {
                     <i className="bi bi-instagram"></i>
                     <i className="bi bi-facebook"></i>
                 </li>
-                <img src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" className="imgNavbar" />
+                <img src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" className="imgNavbarRojo" />
             </ul>
         </nav>
     );
