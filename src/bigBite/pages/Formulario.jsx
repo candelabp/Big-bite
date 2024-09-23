@@ -1,6 +1,5 @@
 import '../css/formulario.css';
 import { useForm } from "react-hook-form";
-import { useState } from 'react'; // Asegúrate de importar useState
 import { NavBarBlanco } from '../components/NavBarBlanco';
 import { Footer } from '../components/Footer';
 
