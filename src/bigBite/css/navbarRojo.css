@@ -250,10 +250,12 @@
   }
 
 
+  
 
-  @media (min-width: 541px) {
 
-    .contLinks{
+  @media (min-width: 350px) {
+
+    .contLinkss{
       margin-left: 3vw;
     }
 
@@ -266,7 +268,7 @@
         font-size: 1.3rem;
       }
     
-      .nav-links li a {
+      .nav-linkss li a {
         font-size: 20px;
       }
     
@@ -277,11 +279,8 @@
       .bi-list {
         font-size: 2.5rem;
       }
-
-      .nav-links{
-        width: 60%;
-      }
   }
+
 
   @media (min-width: 768px) {
 
@@ -292,12 +291,13 @@
       margin-right: 15px;
       margin-left: 15px;
     }
+
+    .nav-links{
+      padding-right: 30px;
+    }
   
 
   
-    .nav-links {
-      width: 50%;
-    }
   
     .bi-x {
       font-size: 3rem;
