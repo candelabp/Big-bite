@@ -13,7 +13,7 @@
     top: 0;
     height: auto;
     padding: 5px 20px; 
-
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
   }
   
   .imgNavbar {
@@ -21,7 +21,7 @@
   }
 
   .logoContenedorBlanco{
-    width: 70px;
+    width: 90px;
   }
 
   .iconLogeadoNegro{
@@ -259,7 +259,7 @@
     }
 
     .logoContenedorBlanco{
-      width: 25%;
+      width: 100px;
     }
 
     .contLinks{
@@ -292,19 +292,16 @@
 
   @media (min-width: 599px) {
     .nav-linkss{
-      width: 50%;
+      width: 40%;
     }
   }
 
   @media (min-width: 768px) {
 
     .nav-linkss{
-      width: 50%;
+      width: 35%;
     }
 
-    .logoContenedorBlanco{
-      width: 18%;
-    }
 
 
 
@@ -328,12 +325,16 @@
 
   @media (min-width: 925px) {
 
+    .navbarBlanco{
+      height: 10vh;
+    }
+
     .nav-linkss{
-      width: auto;
+      width: 30%;
     }
   
     .logoContenedorBlanco{
-      width: 130px;
+      width: 80px;
     }
   
   }
