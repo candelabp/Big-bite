@@ -13,7 +13,7 @@
     top: 0;
     height: auto;
     padding: 5px 20px; 
-
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
   }
   
   .imgNavbar {
@@ -21,7 +21,7 @@
   }
 
   .logoContenedorBlanco{
-    width: 30%;
+    width: 90px;
   }
 
   .iconLogeadoNegro{
@@ -237,13 +237,29 @@
     justify-content: center;
   }
 
+  @media (min-width: 401px) {
+    .nav-linkss{
+      width: 60%;
+    }
+  }
+
+
+  @media (min-width: 468px) {
+  
+      .nav-linkss{
+        width: 55%;
+      }
+  }
 
 
   @media (min-width: 541px) {
 
+    .nav-linkss{
+      width: 50%;
+    }
 
     .logoContenedorBlanco{
-      width: 25%;
+      width: 100px;
     }
 
     .contLinks{
@@ -259,7 +275,7 @@
         font-size: 1.3rem;
       }
     
-      .nav-links li a {
+      .nav-linkss li a {
         font-size: 20px;
       }
     
@@ -271,16 +287,21 @@
         font-size: 2.5rem;
       }
 
-      .nav-links{
-        width: 60%;
-      }
+
+  }
+
+  @media (min-width: 599px) {
+    .nav-linkss{
+      width: 40%;
+    }
   }
 
   @media (min-width: 768px) {
 
-    .logoContenedorBlanco{
-      width: 18%;
+    .nav-linkss{
+      width: 35%;
     }
+
 
 
 
@@ -294,9 +315,7 @@
   
 
   
-    .nav-links {
-      width: 50%;
-    }
+
   
     .bi-x {
       font-size: 3rem;
@@ -305,9 +324,17 @@
 
 
   @media (min-width: 925px) {
+
+    .navbarBlanco{
+      height: 10vh;
+    }
+
+    .nav-linkss{
+      width: 30%;
+    }
   
     .logoContenedorBlanco{
-      width: 130px;
+      width: 80px;
     }
   
   }

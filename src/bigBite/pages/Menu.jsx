@@ -45,7 +45,6 @@ export const Menu = () => {
 
     return (
         <>
-            
             <NavBarBlanco/>
 
             {/* Menu */}
