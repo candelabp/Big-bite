@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Footer } from '../components/Footer';
+import { NavBarBlanco } from '../components/NavBarBlanco'
 import '../css/menu.css';
 
 
@@ -21,61 +22,7 @@ export const Menu = () => {
 
     return (
         <>
-            <nav className="navbar">
-
-                <button className="menu-icon" id="menu-icon" onClick={abrirMenu}><i className="ri-menu-line"></i></button>
-
-                <div className="logo">
-                    <img className="logo" src="src\bigBite\assets\logoNegro.png" alt=""/>
-                </div>
-
-                <div className="menu-icon">
-                    <button className="btn-amarillo">¡Pedí Ya!</button>
-                </div>
-
-                <ul className={`nav-links ${menuAbierto ? 'active' : ''}`} id="nav-links">
-                    <li className="headerNavBar">
-                    <div className="menu-icon" id="menu-icon-cerrar" onClick={cerrarMenu}>
-                            <i className="ri-close-line"></i>
-                        </div>
-
-                        <div className="logo">
-                            <img className="logo" src="src\bigBite\assets\logoNegro.png" alt=""/>
-                        </div>
-
-                    </li>
-
-                    <li>
-                        <div className="contPerfil">
-                            <img src="src\bigBite\assets\benavides-geronimo-image.webp" alt="" className="fotoPerfil"/>
-                                <h3 className="nombrePerfil">Geronimo Benavides</h3>
-                        </div>
-                    </li>
-
-                    <li className="contLinks">
-                        <i className="ri-home-line"></i>
-                        <a href="#">Inicio</a>
-                    </li>
-
-                    <li className="contLinks">
-                        <i className="ri-restaurant-line"></i>
-                        <a href="./pages/menu.html">Menu</a>
-                    </li>
-
-
-                    <li className="contLinks">
-                        <i className="bi bi-question-circle"></i>
-                        <a href="#">Contacto</a>
-                    </li>
-
-                    <li className="redesNav">
-                        <i className="ri-instagram-line"></i>
-                        <i className="ri-twitter-x-line"></i>
-                        <i className="ri-facebook-circle-fill"></i>
-                    </li>
-                    <img src="src\bigBite\assets\logoNegro.png" alt="" className="imgNavbar"/>
-                </ul>
-            </nav>
+            <NavBarBlanco/>
 
             {/* Menu */}
 

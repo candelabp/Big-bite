@@ -202,7 +202,7 @@ h1{
   @media (min-width: 821px) {
 
     .content{
-      height: 90vh;
+      height: auto;
       margin-bottom: 0px;
     }
 
@@ -229,7 +229,7 @@ h1{
     }
   
     .imgPrincipal {
-      width: 60%;
+      width: 40%;
       margin-bottom: 50px;
     }
   

@@ -16,6 +16,6 @@ import { InicioSesion } from './bigBite/pages/InicioSesion';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Formulario />
+    <Home />
   </StrictMode>,
 )
