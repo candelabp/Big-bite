@@ -32,7 +32,7 @@ export const Ingresar = () => {
                 setErrorMessage(error);
             }
         } catch (error) {
-            setErrorMessage('Error de conexión con el servidor');
+            setErrorMessage(`Error de conexión con el servidor: ${error.message}`);
         }
     };
 
