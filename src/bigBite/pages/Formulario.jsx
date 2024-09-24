@@ -10,34 +10,35 @@ export const Formulario = () => {
   
 
   const onSubmit = (data) => {
-    // Incluir la imagen base64 en los datos
-    const payload = {
-      ...data
-    };
-
+    const formData = new FormData();
+  
+    // Agrega los datos del usuario
+    formData.append('usuario', new Blob([JSON.stringify(data)], {
+      type: 'application/json'
+    }));
+  
+    // Agrega la imagen de perfil
+    formData.append('imagenPerfil', data.imagen[0]);
+  
     // Llamada al backend usando fetch
     fetch('http://localhost:8080/usuarios/registrar', {
-      method: 'POST', // Enviar la solicitud como POST
-      headers: {
-        'Content-Type': 'application/json', // Especificar el formato de los datos
-      },
-      body: JSON.stringify(payload), // Convertir los datos a JSON
+      method: 'POST',
+      body: formData
     })
-    .then((response) => {
-      if (!response.ok) {
-        // Si la respuesta no es "OK", lanzamos un error con el mensaje devuelto
-        return response.text().then((text) => { throw new Error(text); });
-      }
-      return response.text(); // Si es exitoso, obtenemos el mensaje
-    })
-    .then((message) => {
-      console.log('Respuesta del servidor:', message);
-      alert(message); // Mostrar el mensaje de éxito
-    })
-    .catch((error) => {
-      console.error('Hubo un error:', error);
-      alert(error.message); // Mostrar el mensaje de error
-    });
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => { throw new Error(text); });
+        }
+        return response.text();
+      })
+      .then((message) => {
+        console.log('Respuesta del servidor:', message);
+        alert(message);
+      })
+      .catch((error) => {
+        console.error('Hubo un error:', error);
+        alert(error.message);
+      });
   };
 
   return (
