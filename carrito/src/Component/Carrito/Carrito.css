@@ -1,0 +1,148 @@
+body {
+    margin: auto;
+    font-family: Cambria, sans-serif;
+}
+  
+.resumencompra {
+    padding-bottom: 20px;
+}
+
+.linea { 
+    width: 280px;
+    padding: 1.8px;
+    color: #FFBA49;
+    border-radius: 10px;
+}
+  
+.section {
+    display: flex;
+    justify-content: space-between;
+}
+  
+.divimg {
+    background-color: #ece6f09c;
+    width: 35%;
+    border-radius: 20px;
+}
+  
+.imgburger {
+    margin-top: 30px;
+    width: 100%;
+}
+  
+.divinfo {
+    padding-top: 30px;
+}
+  
+.divcantidad {
+    padding-top: 50px;
+}
+  
+.btncant {
+    padding: 0;
+    width: 28px;
+    height: 28px;
+}
+  
+.inputcantidad {
+    width: 30px;
+    text-align: center;
+}
+  
+.eliminar { 
+    padding: 0;
+    color: red;
+}
+  
+.editar { 
+    color: #FFBA49;
+}
+  
+/* .divcompra { 
+    margin-right: 200px;
+} */
+  
+.section1 {
+    display: flex;
+    justify-content: space-between;
+    /* padding: 1px 3px 0 3px; */
+}
+  
+.productoscompra { 
+    display: block;
+    border-radius: 20px;
+    border: 2px ridge #ece6f09c;
+    width: 100%;
+    height: 200%;
+    padding: 30px;
+    margin: 130px 0 0 150px;
+}
+  
+.total { 
+    font-weight: bold;
+    padding-bottom: 1px;
+    background-color: #FFBA49;
+    border-radius: 8px;
+}
+  
+.btnpagar { 
+    border-radius: 10px;
+    margin-top: 30px;
+}
+  
+.lineagris {
+    display: none;
+}
+  
+@media (max-width: 990px){
+    .section1{
+        display: block;
+        justify-content: center;
+    }
+  
+    .lineagris { 
+        display: block;
+    }
+    
+    .productoscompra{
+        border: none;
+        margin: 10px 50px 50px 10px;
+    }
+    
+}
+  
+@media (max-width: 440px){
+    .btn-amarillo{
+        width: 60px;
+        height: 30px;
+    }
+  
+    .linea { 
+        width: 230px;
+    }
+  
+    .divinfo {
+        font-size: 12px;
+    }
+  
+    .btncant {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .inputcantidad {
+        width: 20px;
+    }
+     
+    .eliminar {
+        font-size: 12px; 
+        width: 20%;
+    }
+  
+    .editar {
+        margin-left: 20px;
+        font-size: 12px; 
+        width: 20%;
+    }
+    
+}
