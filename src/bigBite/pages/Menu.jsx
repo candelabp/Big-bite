@@ -12,6 +12,13 @@ import imageTripleThunderBite from '../assets/triple_thunder_bite.png';
 import imageSimpleCheesyBite from '../assets/simple_cheesy_bite.png';
 import imageLittleBiteBox from '../assets/little_bite_box.png';
 import imagePapasBite from '../assets/papas_bite.png';
+import cocaCola from '../assets/cocacola_chica.png';
+import sprite from '../assets/sprite_chica.png';
+import fanta from '../assets/fanta_chica.png';
+import fantaZero from '../assets/fantazero_chica.png';
+import fantaPomelo from '../assets/fantapomelo_chica.png';
+import cocaColaZero from '../assets/cocacolazero_chica.png';
+import spriteZero from '../assets/spritezero_chica.png';
 
 // Define la lista de productos
 const productos = [
@@ -22,7 +29,14 @@ const productos = [
     { nombre: 'Triple Thunder Bite', precio: 15000, imagen: imageTripleThunderBite },
     { nombre: 'Simple Cheesy Bite', precio: 9800, imagen: imageSimpleCheesyBite },
     { nombre: 'Little Bite Box', precio: 10000, imagen: imageLittleBiteBox },
-    { nombre: 'Papas Bite', precio: 5000, imagen: imagePapasBite }
+    { nombre: 'Papas Bite', precio: 5000, imagen: imagePapasBite },
+    { nombre: 'Coca-Cola 500ml', precio: 5000, imagen: cocaCola },
+    { nombre: 'Coca-Cola Zero 500ml', precio: 5000, imagen: cocaColaZero },
+    { nombre: 'Sprite 500ml', precio: 5000, imagen: sprite },
+    { nombre: 'Sprite Zero 500ml', precio: 5000, imagen: spriteZero },
+    { nombre: 'Fanta 500ml', precio: 5000, imagen: fanta },
+    { nombre: 'Fanta Pomelo 500ml', precio: 5000, imagen: fantaPomelo },
+    { nombre: 'Fanta Zero 500ml', precio: 5000, imagen: fantaZero }
 ];
 
 
