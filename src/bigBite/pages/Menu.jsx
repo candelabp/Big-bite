@@ -1,32 +1,36 @@
 import { Footer } from '../components/Footer';
 import { ProductCard } from '../components/ProductCard';
 import { NavBarBlanco } from '../components/NavBarBlanco';
+import { productos } from '../helpers/products';
 import '../css/menu.css';
+import { useEffect, useState } from 'react';
 
-// Importa las imágenes
-import imageDoubleCheddarSmash from '../assets/double_cheddar_smash.png';
-import imageCheesyDeluxeBite from '../assets/cheesy_deluxe_bite.png';
-import imageSmokyBBQBite from '../assets/smoky_bbq_bite.png';
-import imageMegaCrunchBite from '../assets/mega_crunch_bite.png';
-import imageTripleThunderBite from '../assets/triple_thunder_bite.png';
-import imageSimpleCheesyBite from '../assets/simple_cheesy_bite.png';
-import imageLittleBiteBox from '../assets/little_bite_box.png';
-import imagePapasBite from '../assets/papas_bite.png';
 
-// Define la lista de productos
-const productos = [
-    { nombre: 'Double Cheddar Smash', precio: 11300, imagen: imageDoubleCheddarSmash },
-    { nombre: 'Cheesy Deluxe Bite', precio: 13500, imagen: imageCheesyDeluxeBite },
-    { nombre: 'Smoky BBQ Bite', precio: 12800, imagen: imageSmokyBBQBite },
-    { nombre: 'Mega Crunch Bite', precio: 10000, imagen: imageMegaCrunchBite },
-    { nombre: 'Triple Thunder Bite', precio: 15000, imagen: imageTripleThunderBite },
-    { nombre: 'Simple Cheesy Bite', precio: 9800, imagen: imageSimpleCheesyBite },
-    { nombre: 'Little Bite Box', precio: 10000, imagen: imageLittleBiteBox },
-    { nombre: 'Papas Bite', precio: 5000, imagen: imagePapasBite }
-];
 
 
 export const Menu = () => {
+
+    const [filter, setFilter] = useState('');
+    const [filteredProducts, setFilteredProducts] = useState(productos);
+    const [filterMenuVisible, setFilterMenuVisible] = useState(false);
+
+    const handleFilterClick = (filterType) => {
+        setFilter(filterType);
+    };
+
+    const toggleFilterMenu = () => {
+        setFilterMenuVisible(!filterMenuVisible);
+    };
+
+    useEffect(() => {
+        if (filter) {
+            setFilteredProducts(productos.filter((producto) => producto.tipo === filter));
+        } else {
+            setFilteredProducts(productos);
+        }
+    }, [filter, productos]);
+
+
 
 
     return (
@@ -53,22 +57,31 @@ export const Menu = () => {
                             </div>
 
                             <div className="filter-container">
-                                <button>Filtros <i className="bi bi-sliders"></i></button>
-                                <div id="filter-menu" class="filter-menu">
-                                    <a href="#">Hamburguesa</a>
-                                    <a href="#">Bebida</a>
-                                    <a href="#">Papas</a>
-                                    <a href="#">Cajita</a>
+                                <button onClick={toggleFilterMenu} className="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filtros <i className="bi bi-sliders filter-button"></i></button>
+                                <div className="dropdown-menu filter-menu">
+                                    <li><a href="#" onClick={() => handleFilterClick('burger')}>Hamburguesa</a></li>
+                                    <li><a href="#" onClick={() => handleFilterClick('bebida')}>Bebida</a></li>
+                                    <li><a href="#" onClick={() => handleFilterClick('papas')}>Papas</a></li>
+                                    <li><a href="#" onClick={() => handleFilterClick('cajita')}>Cajita</a></li>
                                 </div>
                             </div>
                         </div>
+
+
 
                     </div>
 
 
                 </div>
                 <div className="product-grid">
-                    {productos.map((producto, index) => <ProductCard nombre={producto.nombre} precio={producto.precio} imagen={producto.imagen} />)}
+                    {filteredProducts.map((producto, index) => (
+                        <ProductCard
+                            key={index}
+                            nombre={producto.nombre}
+                            precio={producto.precio}
+                            imagen={producto.imagen}
+                        />
+                    ))}
                 </div>
 
             </main>
