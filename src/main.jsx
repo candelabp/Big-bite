@@ -13,7 +13,7 @@ import { Formulario } from './bigBite/pages/Formulario';
 import { Login } from './bigBite/pages/Login';
 import { Ingresar } from './bigBite/pages/Ingresar';
 import {Menu} from './bigBite/pages/Menu';
-import { Carrito } from './bigBite/components/Carrito';
+import { Carrito } from './bigBite/pages/Carrito';
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
