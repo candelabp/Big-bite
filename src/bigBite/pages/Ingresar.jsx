@@ -39,6 +39,7 @@ export const Ingresar = () => {
     return (
         <>
             <NavBarBlanco />
+
             <div className='form-container'>
                 <form className="inicio-sesion" onSubmit={handleSubmit}>
                     <label htmlFor="email"><b>Email</b></label>
@@ -60,11 +61,6 @@ export const Ingresar = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-
-                    <label htmlFor="recordar">
-                        <b>Recordar contraseña</b>
-                        <input type="checkbox" id="recordar" name="recordar" />
-                    </label>
 
                     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 

@@ -1,13 +1,13 @@
-import './Carrito.css'
-import burger1 from '/img/burger1.png'
-import burger2 from '/img/burger2.png'
-import papasbite from '/img/papas_bite.png'
-import './Carrito.css'
 
+import burger1 from '../assets/burger1.png'
+import burger2 from '../assets/burger2.png'
+import papasbite from '../assets/papas_bite.png'
+import '../css/carrito.css'
 
 export const Carrito = () => {
 
     return (
+
         <div className='container'>
             <br />
             <h3 className='resumencompra'>

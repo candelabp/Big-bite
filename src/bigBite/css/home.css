@@ -93,8 +93,8 @@ h1{
     z-index: 9;
     font-weight: 700;
     color: red;
-    font-size: 1.5rem;
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));
+    font-size: 3rem;
+   /* filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));*/
     text-align: center;
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
@@ -231,6 +231,7 @@ h1{
 
     .tituloBlanco{
       margin: 0px;
+      
     }
 
     .tituloDestacado{
@@ -248,7 +249,7 @@ h1{
   
     .tituloBlanco {
       text-align: center;
-      font-size: 4rem;
+      font-size: 200px;
     }
   
     .imgPrincipal {
