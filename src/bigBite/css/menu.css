@@ -9,15 +9,11 @@ body {
   background-color: #ffffff;
 }
 
-button{
+button {
   background-color: transparent;
   border: none;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 355b8f6b2ca3cf37f91d746aaa2563a971846d26
 /*Menu*/
 .menu {
   width: 90%;
@@ -100,9 +96,36 @@ button{
 
 /* Boton filtros */
 
-.filter-menu{
-  display: none;
+.filter-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
+.filter-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFBA49;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  border-radius: 10px;
+}
+
+.filter-menu a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 10px;
+  
+}
+
+.filter-menu a:hover {
+  background-color: #ff9530;
+  
+}
+
 
 /*  Productos   */
 
@@ -180,4 +203,3 @@ button{
     /* 2 columnas en pantallas medianas */
   }
 }
-

@@ -14,10 +14,6 @@ import { BigBiteApp } from './BigBiteApp';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-<<<<<<< HEAD
-    <Menu />
-=======
     <Menu/>
->>>>>>> 355b8f6b2ca3cf37f91d746aaa2563a971846d26
   </StrictMode>,
 )
