@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Footer } from '../components/Footer';
 import { ProductCard } from '../components/ProductCard';
 import { NavBarBlanco } from '../components/NavBarBlanco';
@@ -16,36 +15,23 @@ import imagePapasBite from '../assets/papas_bite.png';
 
 // Define la lista de productos
 const productos = [
-  { nombre: 'Double Cheddar Smash', precio: 11300, imagen: imageDoubleCheddarSmash },
-  { nombre: 'Cheesy Deluxe Bite', precio: 13500, imagen: imageCheesyDeluxeBite },
-  { nombre: 'Smoky BBQ Bite', precio: 12800, imagen: imageSmokyBBQBite },
-  { nombre: 'Mega Crunch Bite', precio: 10000, imagen: imageMegaCrunchBite },
-  { nombre: 'Triple Thunder Bite', precio: 15000, imagen: imageTripleThunderBite },
-  { nombre: 'Simple Cheesy Bite', precio: 9800, imagen: imageSimpleCheesyBite },
-  { nombre: 'Little Bite Box', precio: 10000, imagen: imageLittleBiteBox },
-  { nombre: 'Papas Bite', precio: 5000, imagen: imagePapasBite }
+    { nombre: 'Double Cheddar Smash', precio: 11300, imagen: imageDoubleCheddarSmash },
+    { nombre: 'Cheesy Deluxe Bite', precio: 13500, imagen: imageCheesyDeluxeBite },
+    { nombre: 'Smoky BBQ Bite', precio: 12800, imagen: imageSmokyBBQBite },
+    { nombre: 'Mega Crunch Bite', precio: 10000, imagen: imageMegaCrunchBite },
+    { nombre: 'Triple Thunder Bite', precio: 15000, imagen: imageTripleThunderBite },
+    { nombre: 'Simple Cheesy Bite', precio: 9800, imagen: imageSimpleCheesyBite },
+    { nombre: 'Little Bite Box', precio: 10000, imagen: imageLittleBiteBox },
+    { nombre: 'Papas Bite', precio: 5000, imagen: imagePapasBite }
 ];
-  
+
 
 export const Menu = () => {
 
-     // Estado para manejar si el menú está abierto o cerrado
-     const [menuAbierto, setMenuAbierto] = useState(false);
-
-     // Función para abrir/cerrar el menú
-     const abrirMenu = () => {
-         setMenuAbierto(!menuAbierto); // Alterna entre abierto y cerrado
-     };
- 
-     // Función para cerrar el menú (por ejemplo, al hacer clic en el botón de cerrar)
-     const cerrarMenu = () => {
-         setMenuAbierto(false);
-     };
- 
 
     return (
         <>
-            <NavBarBlanco/>
+            <NavBarBlanco />
 
             {/* Menu */}
 
@@ -54,20 +40,32 @@ export const Menu = () => {
 
                 <div className="menu">
                     <h2 className="menu-tittle">Menú</h2>
-                    <hr className="menu-line"/>
+                    <hr className="menu-line" />
 
-                        <div className="menu-top">
-                            <div className="search-container">
-                                <input className="menu-search" type="search" placeholder="Buscar en el menú..."/>
-                                    <i className="bi bi-search search-icon"></i>
-                            </div>
-                            <div className="menu-buttons">
+                    <div className="menu-top">
+                        <div className="search-container">
+                            <input className="menu-search" type="search" placeholder="Buscar en el menú..." />
+                            <i className="bi bi-search search-icon"></i>
+                        </div>
+                        <div className="menu-buttons">
+                            <div id='order-button'>
                                 <button>Ordenar por:</button>
+                            </div>
+
+                            <div className="filter-container">
                                 <button>Filtros <i className="bi bi-sliders"></i></button>
+                                <div id="filter-menu" class="filter-menu">
+                                    <a href="#">Hamburguesa</a>
+                                    <a href="#">Bebida</a>
+                                    <a href="#">Papas</a>
+                                    <a href="#">Cajita</a>
+                                </div>
                             </div>
                         </div>
 
-                        
+                    </div>
+
+
                 </div>
                 <div className="product-grid">
                     {productos.map((producto, index) => <ProductCard nombre={producto.nombre} precio={producto.precio} imagen={producto.imagen} />)}

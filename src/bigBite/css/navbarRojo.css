@@ -15,7 +15,7 @@
     padding: 5px 20px; 
   }
   
-  .imgNavbar {
+  .imgNavbarRojo {
     opacity: 0.4;
   }
   
@@ -28,7 +28,7 @@
   }
   
   /* Estilos del menú hamburguesa */
-  .headerNavBar {
+  .headerNavBarRojo {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -202,7 +202,7 @@
     border: none;
   }
   
-  .nav-links {
+  .nav-linksNR {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -218,7 +218,7 @@
     padding-right: 15px;
   }
   
-  .nav-links.active {
+  .nav-linksNR.active {
     transform: translateX(0)
   }
   

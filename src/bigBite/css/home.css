@@ -15,7 +15,7 @@ h1{
   
   .content {
     background-color: rgba(223, 28, 28, 1);
-    height: 90vh;
+    height: 100vh;
     padding-top: 5vh;
     padding-bottom: 5vh;
   }
@@ -151,7 +151,7 @@ h1{
     }
 
     .content{
-      height: auto;
+      height: 100vh;
       margin-bottom: 5vh;
     }
 
@@ -202,7 +202,7 @@ h1{
   @media (min-width: 821px) {
 
     .content{
-      height: auto;
+      height: 100vh;
       margin-bottom: 0px;
     }
 
@@ -249,6 +249,7 @@ h1{
   }
 
   @media (min-width: 954px) {
+   
 
 
     .imgFondoSlider {

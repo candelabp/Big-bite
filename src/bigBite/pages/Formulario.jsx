@@ -1,6 +1,5 @@
 import '../css/formulario.css';
 import { useForm } from "react-hook-form";
-import { useState } from 'react'; // Asegúrate de importar useState
 import { NavBarBlanco } from '../components/NavBarBlanco';
 import { Footer } from '../components/Footer';
 
@@ -8,58 +7,38 @@ export const Formulario = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const password = watch("password");
 
-  // Estado para guardar la imagen en base64
-  const [imageBase64, setImageBase64] = useState("");
-
-  // Función para convertir el archivo a base64
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
-  // Capturar el archivo y convertirlo a base64
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const base64 = await convertToBase64(file);
-      setImageBase64(base64); // Guarda la imagen convertida
-    }
-  };
+  
 
   const onSubmit = (data) => {
-    // Incluir la imagen base64 en los datos
-    const payload = {
-      ...data,
-      imagen: imageBase64, // Añadir la imagen en base64
-    };
-
+    const formData = new FormData();
+  
+    // Agrega los datos del usuario
+    formData.append('usuario', new Blob([JSON.stringify(data)], {
+      type: 'application/json'
+    }));
+  
+    // Agrega la imagen de perfil
+    formData.append('imagenPerfil', data.imagen[0]);
+  
     // Llamada al backend usando fetch
     fetch('http://localhost:8080/usuarios/registrar', {
-      method: 'POST', // Enviar la solicitud como POST
-      headers: {
-        'Content-Type': 'application/json', // Especificar el formato de los datos
-      },
-      body: JSON.stringify(payload), // Convertir los datos a JSON
+      method: 'POST',
+      body: formData
     })
-    .then((response) => {
-      if (!response.ok) {
-        // Si la respuesta no es "OK", lanzamos un error con el mensaje devuelto
-        return response.text().then((text) => { throw new Error(text); });
-      }
-      return response.text(); // Si es exitoso, obtenemos el mensaje
-    })
-    .then((message) => {
-      console.log('Respuesta del servidor:', message);
-      alert(message); // Mostrar el mensaje de éxito
-    })
-    .catch((error) => {
-      console.error('Hubo un error:', error);
-      alert(error.message); // Mostrar el mensaje de error
-    });
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => { throw new Error(text); });
+        }
+        return response.text();
+      })
+      .then((message) => {
+        console.log('Respuesta del servidor:', message);
+        alert(message);
+      })
+      .catch((error) => {
+        console.error('Hubo un error:', error);
+        alert(error.message);
+      });
   };
 
   return (
@@ -109,7 +88,7 @@ export const Formulario = () => {
               type="file"
               accept="image/*"
               {...register("imagen", { required: "La imagen es obligatoria" })}
-              onChange={handleImageChange} // Maneja el cambio de imagen
+            
             />
             {errors.imagen && <span>{errors.imagen.message}</span>}
           </div>

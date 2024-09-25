@@ -1,7 +1,7 @@
 
 import { CarouselComponent } from "../components/CarouselComponent"
 import { Footer } from "../components/Footer"
-import { NavBar } from "../components/NavBar"
+import { NavBar } from "../components/NavBarRojo"
 import '../css/home.css';
 
 
