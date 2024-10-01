@@ -1,4 +1,4 @@
-# Big Bite - Ecommerce
+# Big Bite - Ecommerce 🍔
 
 Bienvenido al repositorio del proyecto **Big Bite**, un ecommerce para una hamburguesería, diseñado para ofrecer una experiencia de compra fácil y rápida. Este proyecto está construido utilizando tecnologías modernas como **Java**, **Spring Boot**, y **React** para proporcionar una solución eficiente, escalable y fácil de mantener.
 
