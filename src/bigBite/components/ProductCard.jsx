@@ -2,9 +2,7 @@ import '../css/menu.css';
 import ShopingCart from '../assets/shopping-cart.png';
 
 export const ProductCard = ({ nombre, precio, imagen }) => {
-  console.log(nombre)
-  console.log(precio)
-  console.log()
+
   return (
     <div className="product-card">
       <h3>{nombre}</h3>

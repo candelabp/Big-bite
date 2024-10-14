@@ -131,6 +131,7 @@ button {
   gap: 20px;
   margin: 20px 50px 20px 50px;
   /* padding-bottom: 20px; */
+  margin-bottom: 20px;
 }
 
 .product-card {
@@ -141,6 +142,9 @@ button {
   text-align: center;
   position: relative;
   transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
 }
 
@@ -152,6 +156,12 @@ button {
   margin-top: 10px;
   font-size: 1.2em;
   color: #ff3b30;
+  margin-top: 0;
+}
+.product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .product-image img {
@@ -167,6 +177,7 @@ button {
   border: none;
   cursor: pointer;
   border-radius: 20%;
+  align-self: center;
 }
 
 .cart-button img {
@@ -196,5 +207,25 @@ button {
   .product-grid {
     grid-template-columns: repeat(1, 1fr);
     /* 2 columnas en pantallas medianas */
+  
+  }
+  .product-card img {
+    width: 70%;
+    height: auto;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+}
+
+@media (min-width: 1024px) {
+  .ri-home-line {
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+
+  .ri-restaurant-line {
+    font-size: 1.5rem;
+    margin-right: 10px;
   }
 }
