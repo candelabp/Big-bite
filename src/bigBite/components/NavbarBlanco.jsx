@@ -24,11 +24,11 @@ export const NavBarBlanco = () => {
             </button>
 
             <div className="logoContenedorBlanco">
-                <img className="logo" src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" />
+                <Link to='/'><img className="logo" src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" /></Link>
             </div>
 
             <div className="menu-icon-carrito menu-icon">
-                <button className="btn-amarillo"><i className="bi bi-cart-fill"></i><span className="contadorCarrito">0</span></button>
+                <Link to='/carrito'><button className="btn-amarillo"><i className="bi bi-cart-fill"></i><span className="contadorCarrito">0</span></button></Link>
             </div>
 
             {/* Lista de enlaces de navegación */}
@@ -47,7 +47,7 @@ export const NavBarBlanco = () => {
                 <li>
                     <div className="contPerfil">
                         <i className="bi bi-person-circle iconLogeadoNegro"></i>
-                        <h3 className="nombrePerfilNegro"><Link to="/login">Iniciar Sesion</Link></h3>
+                        <h3 className="nombrePerfilNegro"><Link to="/login" className="inicioSesionBlanco">Iniciar Sesion</Link></h3>
                     </div>
                 </li>
 
