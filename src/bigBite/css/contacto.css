@@ -1,0 +1,82 @@
+/* Contenedor del formulario */
+.contact-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30vh;
+    margin-top: 10vh;
+}
+
+h2 {
+    text-align: left;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/ Línea decorativa debajo del título /
+.contact-line {
+    width: 50px;
+    height: 3px;
+    background-color: #f4a261;
+    margin: 0 0 20px 0;
+    border: none;
+}
+
+/ Formulario /
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/ Agrupación de campos /
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/ Control individual /
+.form-control {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-control input, .form-control textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/ Botón de enviar */
+.submit-btn {
+    background-color: #FFBA49;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+.submit-btn:hover {
+    background-color: #e99714;
+}
+
+textarea {
+    resize: none;
+}
