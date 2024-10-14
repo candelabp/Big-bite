@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+h1{
+    margin: 0px;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .tituloDestacado{
+    display: none;
+  }
+  
+  .imgPrincipal {
+    width: 95vw;
+    margin: 0;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));
+  
+  }
+  
+  .content {
+    background-color: rgba(223, 28, 28, 1);
+    height: 100vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+  }
+  
+  .container-ppal {
+    display: grid;
+    place-items: center;
+  
+  }
+  
+  .tituloBlanco {
+    color: #FFFF;
+    font-size: 4rem;
+    text-shadow: #333;
+    word-wrap: break-word;
+    font-weight: 700;
+    margin-left: 20px;
+  }
+  .separador{
+    display: block;
+  }
+  
+  .tituloAmarillo {
+    color: #FFBA49;
+    font-size: 4rem;
+    font-weight: 700;
+    text-shadow: #333;
+    word-wrap: break-word;
+    margin-left: 55%;
+  }
+  
+  
+  
+  /*carrousel*/
+  
+  
+  
+  
+  .tituloSlider {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    font-weight: 900;
+    font-size: 2.25rem;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  
+  .imgFondoSlider {
+    filter:
+      drop-shadow(0 0 5px rgba(0, 0, 0, 0.9))
+      /* Sombra para resaltar el borde */
+      brightness(0) saturate(100%) invert(91%) sepia(0%) saturate(12%) hue-rotate(180deg);
+    width: 90%;
+    margin-top: 15vh;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .imgHamburguesaSlider {
+    z-index: 9;
+    width: 120%;
+    height: auto;
+    margin-top: 15%;
+  }
+  
+  .tituloProdSlider {
+    z-index: 9;
+    font-weight: 700;
+    color: red;
+    font-size: 3rem;
+   /* filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));*/
+    text-align: center;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  
+  }
+  
+  .textoSliderDescripcion {
+    margin: auto;
+    width: 90%;
+    text-align: justify;
+    z-index: 9;
+    font-weight: 600;
+        
+  font-family: "Poppins", sans-serif;
+ /* font-weight: 400;*/
+  font-style: normal;
+}
+  
+  
+  .btnAmarilloSlider {
+    display: inline-block;
+    background: #FFBA49;
+    color: #333;
+    border-radius: 2em;
+    border: none;
+    margin-top: 35px;
+    padding: 8px 10px;
+    font-weight: 700;
+    z-index: 9;
+    width: 45%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  
+  }
+  
+  .btnRojoSlider {
+    margin-top: 35px;
+    padding: 12px 20px;
+    color: white;
+    background-color: #C10000;
+    margin-bottom: 10vh;
+    border-radius: 6px;
+    font-weight: 700;
+    border: none;
+    z-index: 9;
+    width: 80%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .contenedorSlider {
+    width: auto;
+  }
+  
+  .slider {
+    background-color: #FFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .descripcionPedido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+  @media (min-width: 541px) {
+
+    .tituloBlanco{
+      margin-left: 10vh;
+    }
+
+    .content{
+      height: 100vh;
+      margin-bottom: 5vh;
+    }
+
+  
+  
+    .imgPrincipal {
+      width: 70vw;
+      margin: 25px 0px;
+    }
+  
+
+    .tituloAmarillo {
+      margin-left: 70%;
+    }
+  
+    .imgHamburguesaSlider {
+      width: 90%;
+      margin-top: 0%;
+    }
+  
+    .tituloProdSlider {
+      font-size: 1.7rem;
+    }
+  
+    .textoSliderDescripcion {
+      width: 80%;
+      font-size: 1.2rem;
+    }
+  
+    .btnAmarilloSlider {
+      padding: 12px 14px;
+      font-size: 1.2rem;
+    }
+  
+    .btnRojoSlider {
+      font-size: 1.4rem;
+      width: 70%;
+    }
+  
+    .btn-amarillo {
+      padding: 8px 12px;
+      font-size: 1rem;
+      width: 110px;
+    }
+  
+  }
+
+  @media (min-width: 821px) {
+
+    .content{
+      height: 100vh;
+      margin-bottom: 0px;
+    }
+
+    .tituloBlanco{
+      margin: 0px;
+    }
+
+    .tituloDestacado{
+      display: inline;
+      color: #FFBA49;
+    }
+
+    .separador{
+      display: inline;
+    }
+
+    .tituloAmarillo {
+      display: none;
+    }
+  
+    .tituloBlanco {
+      text-align: center;
+      font-size: 150px;
+    }
+  
+    .imgPrincipal {
+      width: 40%;
+      margin-bottom: 50px;
+    }
+  
+    .tituloSlider {
+      font-size: 3rem;
+      font-weight: 900;
+    }
+
+    .imgHamburguesaSlider{
+      width: 80%;
+      margin-top: 0px;
+    }
+
+    .imgFondoSlider{
+      width: 50%;
+    }
+  }
+
+  @media (min-width: 954px) {
+   
+
+
+    .imgFondoSlider {
+      display: none;
+    }
+  
+    .slider {
+      background-color: #FFFF;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .tituloSlider {
+      display: none;
+    }
+  
+    .imgHamburguesaSlider {
+      width: 50%;
+      margin-bottom: 8.5vh;
+      margin-top: 10%;
+    }
+  
+    .descripcionPedido {
+      margin-top: 5vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 40%;
+    }
+  
+    .btnRojoSlider {
+      font-size: 1rem;
+    }
+  
+  }
+
+  
+  @media (min-width: 1150px) {
+  
+    .content{
+      height: auto;
+    }
+
+    .footerIcon{
+      font-size: 2rem;
+    }
+  }
+  
