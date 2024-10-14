@@ -9,6 +9,10 @@
     color: #FFBA49;
     border-radius: 10px;
 }
+
+.contenedor{
+    padding: 50px;
+}
   
 .section {
     display: flex;

@@ -12,7 +12,7 @@ export const Carrito = () => {
     return (
         <>
             <NavBar/>
-            <div className='container'>
+            <div className='contenedor'>
                 <br />
                 <h3 className='resumencompra'>
                     Resumen de compra
