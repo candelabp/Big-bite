@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .admin-container {
   padding: 20px;
   text-align: center; /* Centrar contenido */
@@ -11,6 +13,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: "Poppins", sans-serif;
 }
 
 .btn-reporte:hover {
@@ -21,8 +24,9 @@
   border: 2px solid rgb(180, 180, 180);
   border-radius: 10px;
   text-align: center;
+  font-family: "Poppins", sans-serif;
   padding: 10px;
-  width: 80%; /* Ajusta el tamaño para que sea más pequeño */
+  width: 80%; 
   margin: 0 auto;
   display: inline-block;
 }
@@ -40,10 +44,11 @@
 }
 .grilla-productos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Cambia auto-fill por auto-fit para que los productos se adapten mejor al tamaño de la pantalla */
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 10px;
   margin-top: 20px;
-  justify-content: center; /* Centra el contenido */
+  justify-content: center;
+  font-family:"Poppins", sans-serif;
 }
 
 .producto-item {
@@ -55,6 +60,7 @@
   width: 100%; 
   max-width: 200px; 
   margin: 0 auto; 
+  font-family: "Poppins", sans-serif;
 }
 input[type="text"] {
   padding: 10px;

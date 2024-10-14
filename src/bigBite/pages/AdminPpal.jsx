@@ -2,6 +2,9 @@ import  { useState } from 'react';
 import '../css/adminPpal.css';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import * as XLSX from 'xlsx';
+import burger1 from '../assets/burger1.png';
+import burger2 from '../assets/burger2.png';
+import burger3 from '../assets/burger3.png';
 
 export const AdminPpal = () => {
   // Estado para manejar la búsqueda
@@ -32,11 +35,14 @@ export const AdminPpal = () => {
   const beneficioNeto = totalIngresos - totalEgresos;
 
   const productos = [
-    { nombre: 'Classic Burger', precio: '$5.99' },
-    { nombre: 'Bacon Burger', precio: '$7.99' },
-    { nombre: 'Veggie Burger', precio: '$6.39' },
-    { nombre: 'Chicken Burger', precio: '$8.29' },
-    { nombre: 'Steak Burger', precio: '$9.99' },
+    { nombre: 'Classic Burger', precio: '$5.99',imagen:burger1,stock:'10' },
+    { nombre: 'Bacon Burger', precio: '$7.99',imagen:burger2,stock:'10' },
+    { nombre: 'Veggie Burger', precio: '$6.39',imagen:burger3,stock:'10' },
+    { nombre: 'Chicken Burger', precio: '$8.29',imagen:burger1,stock:'10' },
+    { nombre: 'Steak Burger', precio: '$9.99',imagen:burger2,stock:'10' },
+    { nombre: 'Classic Burger', precio: '$5.99',imagen:burger1,stock:'10' },
+    { nombre: 'Bacon Burger', precio: '$7.99',imagen:burger2,stock:'10' },
+    { nombre: 'Veggie Burger', precio: '$6.39',imagen:burger3,stock:'10' },
   ];
 
   // Filtrar productos basados en el término de búsqueda
@@ -94,7 +100,9 @@ export const AdminPpal = () => {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((producto, index) => (
             <div className="producto-item" key={index}>
+                 <img src={producto.imagen} alt={producto.nombre} style={{ width: '100px', height: '100px' }} />   
               <p><b>{producto.nombre}</b></p>
+              <p>stock: {producto.stock}</p>
               <p>{producto.precio}</p>
             </div>
           ))

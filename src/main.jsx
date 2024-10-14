@@ -16,6 +16,8 @@ import {Menu} from './bigBite/pages/Menu';
 import { Carrito } from './bigBite/pages/Carrito';
 import { Contacto } from './bigBite/pages/Contacto';
 import { AdminPpal } from './bigBite/pages/AdminPpal';
+import { AdminProductos } from './bigBite/pages/AdminProductos';
+AdminProductos
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
@@ -31,6 +33,8 @@ root.render(
         <Route path="/carrito" element={<Carrito />} />
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/AdminPpal" element={<AdminPpal />} />
+        <Route path="/AdminPtoductos" element={<AdminProductos />} />
+
       </Routes>
     </Router>
   </React.StrictMode>
