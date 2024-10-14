@@ -19,12 +19,12 @@ export const NavBarBlanco = () => {
     return (
         <nav className="navbarBlanco">
             {/* Botón para abrir el menú */}
-            <button className="menu-icon" id="menu-icon" onClick={abrirMenu}>
-                <i className="bi bi-list btnListBlanco"></i>
-            </button>
-
             <div className="logoContenedorBlanco">
-                <img className="logo" src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" />
+                <Link to='/'><img className="logo" src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" /></Link>
+            </div>
+
+            <div className="menu-icon-carrito menu-icon">
+                <Link to='/carrito'><button className="btn-amarillo"><i className="bi bi-cart-fill"></i><span className="contadorCarrito">0</span></button></Link>
             </div>
 
             <div className="menu-icon-carrito menu-icon">
@@ -45,9 +45,9 @@ export const NavBarBlanco = () => {
                 </li>
 
                 <li>
-                    <div className="contPerfil">
+                <div className="contPerfil">
                         <i className="bi bi-person-circle iconLogeadoNegro"></i>
-                        <h3 className="nombrePerfilNegro"><Link to="/login">Iniciar Sesion</Link></h3>
+                        <h3 className="nombrePerfilNegro"><Link to="/login" className="inicioSesionBlanco">Iniciar Sesion</Link></h3>
                     </div>
                 </li>
 
