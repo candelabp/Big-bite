@@ -17,7 +17,7 @@ h2 {
     margin-bottom: 10px;
 }
 
-/ Línea decorativa debajo del título /
+/* Línea decorativa debajo del título */
 .contact-line {
     width: 50px;
     height: 3px;
@@ -26,13 +26,13 @@ h2 {
     border: none;
 }
 
-/ Formulario /
+/* Formulario */
 .contact-form {
     display: flex;
     flex-direction: column;
 }
 
-/ Agrupación de campos /
+/* Agrupación de campos */
 .form-group {
     display: flex;
     justify-content: space-between;
@@ -40,7 +40,7 @@ h2 {
     margin-bottom: 20px;
 }
 
-/ Control individual /
+/* Control individual */
 .form-control {
     flex: 1;
     display: flex;
@@ -60,7 +60,7 @@ h2 {
     width: 100%;
 }
 
-/ Botón de enviar */
+/* Botón de enviar */
 .submit-btn {
     background-color: #FFBA49;
     color: white;

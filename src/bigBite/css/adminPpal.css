@@ -1,0 +1,37 @@
+
+.admin-container {
+    padding: 20px;
+    align-items: center;
+  }
+  
+  .btn-reporte {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #DF1C1C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .btn-reporte:hover {
+    background-color: #a10606;
+  }
+  .item-detalle{
+    
+    border:2px solid rgb(180, 180, 180);
+    border-radius: 1vh;
+    text-align: center;
+    width: 50%; 
+    margin: 0 auto;
+    margin-top: 30%; 
+    display: inline-block;
+ 
+  }
+  .detalles{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px
+
+  }
