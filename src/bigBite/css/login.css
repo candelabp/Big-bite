@@ -35,11 +35,13 @@ button {
     color: white;
     width: 30vh;
 }
+
 .login-btn:hover {
     background-color: #b92018; /* Cambio de color en hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
     transform: scale(1.05); /* Agrandar un poco */
 }
+
 .login-btn:active {
     transform: scale(0.98); /* Se achica un poco al hacer clic */
     background-color: #a51c14; /* Cambio de color al hacer clic */
@@ -49,10 +51,13 @@ button {
 }
 .register-btn {
     background-color: #f7b21a;
-    color: white;
     width: 30vh;
-    
 }
+
+.textRegister-btn, .textLogin-btn{
+    color: white;
+}
+
 .register-btn:hover {
     background-color: #d89e15; /* Cambio de color en hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */

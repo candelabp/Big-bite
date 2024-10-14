@@ -96,19 +96,14 @@ button {
 
 /* Boton filtros */
 
-.filter-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 
 .filter-menu {
-  display: flex;
+ 
   flex-direction: column;
   background-color: #FFBA49;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 100;
   border-radius: 10px;
+
 }
 
 .filter-menu a {
@@ -117,23 +112,25 @@ button {
   text-decoration: none;
   text-align: center;
   color: #ffffff;
-  border-radius: 10px;
   
 }
 
+
 .filter-menu a:hover {
   background-color: #ff9530;
-  
+
 }
+
 
 
 /*  Productos   */
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 20px;
-  margin-top: 20px;
+  margin: 20px 50px 20px 50px;
+  /* padding-bottom: 20px; */
 }
 
 .product-card {
@@ -158,7 +155,6 @@ button {
 }
 
 .product-image img {
-  width: 100%;
   height: auto;
   border-radius: 10px;
   cursor: pointer;
@@ -182,15 +178,14 @@ button {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 524px) {
   .menu-buttons {
-    flex-direction: column;
     gap: 10px;
     width: 100%;
   }
 
   .product-card h3 {
-    font-size: 1em;
+    font-size: 3.5vw;
   }
 
   .cart-button img {
@@ -199,7 +194,7 @@ button {
   }
 
   .product-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     /* 2 columnas en pantallas medianas */
   }
 }

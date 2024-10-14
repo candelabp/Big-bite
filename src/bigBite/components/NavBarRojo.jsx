@@ -24,11 +24,11 @@ export const NavBar = () => {
             </button>
 
             <div className="logoContenedorRojo">
-                <img className="logo" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" />
+                <Link to='/'><img className="logo" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" /></Link>
             </div>
 
             <div className="menu-icon-carrito menu-icon">
-                <button className="btn-amarillo"><i className="bi bi-cart-fill"></i><span className="contadorCarrito">0</span></button>
+                <Link to='/carrito'><button className="btn-amarillo"><i className="bi bi-cart-fill"></i><span className="contadorCarrito">0</span></button></Link>
             </div>
 
             {/* Lista de enlaces de navegación */}
@@ -47,7 +47,7 @@ export const NavBar = () => {
                 <li>
                     <div className="contPerfil">
                         <i className="bi bi-person-circle iconLogeadoRojo"></i>
-                        <h3 className="nombrePerfilRojo"><Link to="/login">Iniciar Sesion</Link></h3>
+                        <h3 className="nombrePerfilRojo"><Link to="/login" className="inicioSesionRojo">Iniciar Sesion</Link></h3>
                     </div>
                 </li>
 
