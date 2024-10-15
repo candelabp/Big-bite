@@ -1,9 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import '../css/adminProductos.css';
 
 export const AdminProductos = () => {
-  const [hamburguesas, setHamburguesas] = useState([]);
+  // Lista de hamburguesas
+  const [hamburguesas, setHamburguesas] = useState([
+    {
+      nombre: 'Mega Crunch',
+      precio: '$9.99',
+      tiempoPreparacion: '10 mins',
+      precioCombo: '$12.99',
+      descripcion: 'Hamburguesa con queso',
+      stock: 20,
+      imagen: '', // Nueva propiedad para la imagen
+    },
+    {
+      nombre: 'Classic Burger',
+      precio: '$5.99',
+      tiempoPreparacion: '8 mins',
+      precioCombo: '$9.99',
+      descripcion: 'Hamburguesa clásica con carne',
+      stock: 15,
+      imagen: '',
+    },
+    {
+      nombre: 'Bacon Burger',
+      precio: '$7.99',
+      tiempoPreparacion: '12 mins',
+      precioCombo: '$10.99',
+      descripcion: 'Hamburguesa con bacon y queso',
+      stock: 10,
+      imagen: '',
+    },
+  ]);
+
+  // Estado para la hamburguesa seleccionada
   const [selectedHamburguesa, setSelectedHamburguesa] = useState(null);
+
+  // Estado para la nueva hamburguesa
   const [newHamburguesa, setNewHamburguesa] = useState({
     nombre: '',
     precio: '',
@@ -11,23 +44,17 @@ export const AdminProductos = () => {
     precioCombo: '',
     descripcion: '',
     stock: '',
-    imagen: '',
+    imagen: '', // Nueva propiedad para la imagen
   });
 
-  // Obtener las hamburguesas desde el backend
-  useEffect(() => {
-    fetch('/api/hamburguesas')
-      .then((response) => response.json())
-      .then((data) => setHamburguesas(data))
-      .catch((error) => console.error('Error al obtener las hamburguesas:', error));
-  }, []);
-
+  // Maneja la selección de la hamburguesa en el menú desplegable
   const handleSelectChange = (e) => {
     const selectedName = e.target.value;
     const foundHamburguesa = hamburguesas.find((h) => h.nombre === selectedName);
     setSelectedHamburguesa(foundHamburguesa);
   };
 
+  // Maneja los cambios en los campos autocompletados
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSelectedHamburguesa({
@@ -36,6 +63,7 @@ export const AdminProductos = () => {
     });
   };
 
+  // Maneja los cambios en los campos de la nueva hamburguesa
   const handleNewInputChange = (e) => {
     const { name, value } = e.target;
     setNewHamburguesa({
@@ -44,6 +72,7 @@ export const AdminProductos = () => {
     });
   };
 
+  // Maneja el cambio de imagen al agregar una nueva hamburguesa
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -51,7 +80,7 @@ export const AdminProductos = () => {
     reader.onloadend = () => {
       setNewHamburguesa({
         ...newHamburguesa,
-        imagen: reader.result,
+        imagen: reader.result, // Guardar la URL de la imagen
       });
     };
 
@@ -60,49 +89,43 @@ export const AdminProductos = () => {
     }
   };
 
-  const handleAddHamburguesa = (e) => {
-    e.preventDefault();
-    fetch('/api/hamburguesas', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newHamburguesa),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setHamburguesas([...hamburguesas, data]);
-        setNewHamburguesa({
-          nombre: '',
-          precio: '',
-          tiempoPreparacion: '',
-          precioCombo: '',
-          descripcion: '',
-          stock: '',
-          imagen: '',
-        });
-      })
-      .catch((error) => console.error('Error al agregar la hamburguesa:', error));
+  // Maneja el cambio de imagen al editar una hamburguesa existente
+  const handleEditImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setSelectedHamburguesa({
+        ...selectedHamburguesa,
+        imagen: reader.result, // Actualizar la URL de la imagen
+      });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleEditHamburguesa = (e) => {
+  // Maneja el envío del formulario de nueva hamburguesa
+  const handleAddHamburguesa = (e) => {
     e.preventDefault();
-    fetch(`/api/hamburguesas/${selectedHamburguesa.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(selectedHamburguesa),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const updatedHamburguesas = hamburguesas.map((h) =>
-          h.id === data.id ? data : h
-        );
-        setHamburguesas(updatedHamburguesas);
-        setSelectedHamburguesa(null);
-      })
-      .catch((error) => console.error('Error al actualizar la hamburguesa:', error));
+    setHamburguesas([...hamburguesas, newHamburguesa]);
+    setNewHamburguesa({
+      nombre: '',
+      precio: '',
+      tiempoPreparacion: '',
+      precioCombo: '',
+      descripcion: '',
+      stock: '',
+      imagen: '', // Limpiar el campo de imagen
+    });
+  };
+
+  const toggleDisponible = () => {
+    setSelectedHamburguesa({
+      ...selectedHamburguesa,
+      disponible: !selectedHamburguesa.disponible,
+    });
   };
 
   return (
@@ -129,11 +152,12 @@ export const AdminProductos = () => {
         </select>
       </div>
 
-      {/* Formulario para editar hamburguesa */}
+      {/* Solo mostrar el formulario si se selecciona una hamburguesa */}
       {selectedHamburguesa && (
         <div className='editar-hamburguesa'>
           <h2>Editar Hamburguesa</h2>
-          <form onSubmit={handleEditHamburguesa}>
+
+          <form>
             <label>Nombre de la hamburguesa</label>
             <input
               type="text"
@@ -182,21 +206,28 @@ export const AdminProductos = () => {
               onChange={handleInputChange}
             />
 
-            <div>
-              <img
-                src={selectedHamburguesa.imagen || 'https://via.placeholder.com/150'}
-                alt="Miniatura de hamburguesa"
-                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-              />
-              <input type="file" onChange={handleImageChange} />
-            </div>
+            <label>Imagen actual</label>
+            {selectedHamburguesa.imagen && (
+              <div className="imagen-miniatura">
+                <img src={selectedHamburguesa.imagen} alt="Miniatura" className="imagen-hamburguesa" />
+              </div>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleEditImageChange}
+            />
+
+            <button type="button" onClick={toggleDisponible}>
+              {selectedHamburguesa.disponible ? 'Disponible' : 'No Disponible'}
+            </button>
 
             <button type="submit">Actualizar</button>
           </form>
         </div>
       )}
 
-      {/* Formulario para agregar hamburguesa */}
+      {/* Sección Agregar Hamburguesas */}
       <div className="agregar-hamburguesa">
         <h2>Agregar Hamburguesas</h2>
         <div className="form-container">
@@ -269,7 +300,11 @@ export const AdminProductos = () => {
 
             <label>
               <span>Imagen</span>
-              <input type="file" onChange={handleImageChange} />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
             </label>
 
             <div className="form-actions">
@@ -280,4 +315,4 @@ export const AdminProductos = () => {
       </div>
     </div>
   );
-};
+}
