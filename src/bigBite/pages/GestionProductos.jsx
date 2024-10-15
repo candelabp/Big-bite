@@ -1,11 +1,111 @@
+import burger from '../assets/burgerinicio.png'
+import '../css/GestionProductos.css'
+
 export const GestionProductos = () => {
-    return(
-    <>
-        <h1>Gestion de Productos</h1>
-        <p>Mira y actualiza el estado de los pedidos de hamburguesas</p>
-        <input type="text" />
-        <button>Exportar pedidos</button>
-        <button>Filtrar</button>
-    </>
+    return (
+        <>
+            <section className='contenedor'>
+                <div className='gestproductos divpedidos'>
+                    <div><h1>Gestion de Productos</h1>
+                    <p>Mira y actualiza el estado de los pedidos de hamburguesas</p></div>
+                    <div><input type="text" value='Buscar pedidos...' className='buscarpedidos' />
+                    <br />
+                    <button type="button" className='btn btn-outline-warning botonescolor'>Exportar pedidos</button>
+                    <button type="button" className='btn btn-outline-danger botonescolor'>Filtrar</button></div>                    
+                </div>
+
+                <br />
+                <hr className='line'/>
+                <br />
+
+                <div className='divpedidos'>
+                    <div className='infopedidos'>
+                        <h1>Pedidos en curso</h1>
+                        <p>Lita de todos los pedidos en curso</p>
+                        <button type="button" className='btn btn-outline-dark botones'>Ver detalles</button>
+                        <button type="button" className='btn btn-dark botones'>Actualizar estado</button>
+                    </div>
+                    <div>
+                        <div className='divpedidos'>
+                            <img src={burger} className='burger' alt=""/>
+                            <p className='nrodeorden'>
+                                <b>Orden #006</b>
+                                <br />
+                                Total: $30.000
+                            </p>
+                            <p className='estado'>En preparación</p>
+                        </div>
+                        <hr />
+
+                        <div className='divpedidos'>
+                            <img src={burger} className='burger' alt=""/>
+                            <p className='nrodeorden'>
+                                <b>Orden #005</b>
+                                <br />
+                                Total: $35.000
+                            </p>
+                            <p className='estado'>En preparación</p>
+                        </div>
+                        <hr />
+
+                        <div className='divpedidos'>
+                            <img src={burger} className='burger' alt=""/>
+                            <p className='nrodeorden'>
+                                <b>Orden #004</b>
+                                <br />
+                                Total: $20.000
+                            </p>
+                            <p className='estado'>En camino</p>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <hr />
+                <br />
+
+                <div className='divpedidos'>
+                    <div className='infopedidos'>
+                        <h1>Pedidos anteriores</h1>
+                        <p>Lita de todos los pedidos en entregados</p>
+                        <button type="button" className='btn btn-outline-dark botones'>Revisar</button>
+                        <button type="button" className='btn btn-dark botones'>Repetir pedido</button>
+                    </div>
+                    <div>
+                        <div className='divpedidos'>
+                            <img src={burger} className='burger' alt=""/>
+                            <p className='nrodeorden'>
+                                <b>Orden #003</b>
+                                <br />
+                                Total: $32.800
+                            </p>
+                            <p className='estado'>Entregado</p>
+                        </div>
+                        <hr />
+                        
+                        <div className='divpedidos'>
+                            <img src={burger} className='burger' alt=""/>
+                            <p className='nrodeorden'>
+                                <b>Orden #002</b>
+                                <br />
+                                Total:$ 25.000
+                            </p>
+                            <p className='estado'>Entregado</p>
+                        </div>
+                        <hr />
+
+                        <div className='divpedidos'>
+                            <img src={burger} className='burger' alt=""/>
+                            <p className='nrodeorden'>
+                                <b>Orden #001</b>
+                                <br />
+                                Total:$ 24.500
+                            </p>
+                            <p className='estado'>Entregado</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </>
     )
 }

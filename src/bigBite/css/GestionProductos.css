@@ -1,0 +1,57 @@
+.contenedor{
+    padding: 80px 50px;
+}
+
+/* .gestproductos {
+    text-align: center;
+} */
+
+.buscarpedidos {
+    color: gray;
+    font-size: 12px;
+    padding: 6px 100px;
+    margin-left: 50px;
+}
+
+.botonescolor {
+    width: 200px;
+    margin: 15px;
+    font-size: 15px;
+}
+
+/* .line {
+    color: #FFBA49;
+    border-radius: 5px;
+} */
+
+.divpedidos {
+    display: flex;
+    justify-content: space-around;
+}
+
+.infopedidos {
+    padding-top: 50px;
+}
+
+.botones {
+    width: 160px;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.burger {
+    background-color: #ece6f09c;
+    border-radius: 50px;
+    width: 50px;
+    height: 45px;
+}
+
+.nrodeorden {
+    padding: 0 200px 0 30px;
+}
+
+.estado {
+    padding-top: 15px;
+    width: 120px;
+    text-align: end;
+}
