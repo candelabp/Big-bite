@@ -2,24 +2,27 @@ import '../css/formulario.css';
 import { useForm } from "react-hook-form";
 import { NavBarBlanco } from '../components/NavBarBlanco';
 import { Footer } from '../components/Footer';
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { FirebaseApp } from '../../firebase/config';
+
 
 export const Formulario = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const password = watch("password");
 
-  
+
 
   const onSubmit = (data) => {
     const formData = new FormData();
-  
+
     // Agrega los datos del usuario
     formData.append('usuario', new Blob([JSON.stringify(data)], {
       type: 'application/json'
     }));
-  
+
     // Agrega la imagen de perfil
     formData.append('imagenPerfil', data.imagen[0]);
-  
+
     // Llamada al backend usando fetch
     fetch('http://localhost:8080/usuarios/registrar', {
       method: 'POST',
@@ -40,6 +43,35 @@ export const Formulario = () => {
         alert(error.message);
       });
   };
+
+  // const handleRegister = async (e) => {
+  //   e.preventDefault();
+  //   const auth = getAuth(FirebaseApp);
+  //   try {
+  //     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  //     const user = userCredential.user;
+  //     console.log('User registered:', user);
+  //     alert('User registered successfully');
+  //   } catch (error) {
+  //     console.error('Error during registration:', error);
+  //     alert(error.message);
+  //   }
+  // };
+
+  const handleLogin = async () => {
+    const auth = getAuth(FirebaseApp);
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // El usuario ha iniciado sesión con éxito
+      console.log('User Info:', result.user);
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+    }
+  };
+
+
+
 
   return (
     <div>
@@ -88,7 +120,7 @@ export const Formulario = () => {
               type="file"
               accept="image/*"
               {...register("imagen", { required: "La imagen es obligatoria" })}
-            
+
             />
             {errors.imagen && <span>{errors.imagen.message}</span>}
           </div>
@@ -124,6 +156,9 @@ export const Formulario = () => {
           <div className="formulario-buttons">
             <button type="submit" className='boton-enviar'>Enviar</button>
             <button type="button" className='boton-reset' onClick={() => reset()}>Limpiar</button>
+          </div>
+          <div>
+            <button type="button" className='boton-google' onClick={handleLogin}>Registrarse con <i className="bi bi-google"></i>oogle</button>
           </div>
         </form>
       </div>

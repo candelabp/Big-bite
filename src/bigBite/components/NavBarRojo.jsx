@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import '../css/navbarRojo.css';
 import { Link } from 'react-router-dom';
+import { UserContext } from "../../api/userContext";
+
 
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
+    const {user} = useContext(UserContext);
 
     // Función para abrir/cerrar el menú
     const abrirMenu = () => {
@@ -44,12 +47,24 @@ export const NavBar = () => {
                     </div>
                 </li>
 
-                <li>
+                {user ? (
+                    <li>
+                    <div className="contPerfil">
+                        <img className="logoLogeado" src={user.photoURL} alt="Logo" />
+                        <h3 className="nombrePerfilLogeado">{user.displayName}</h3>
+                    </div>
+                </li> 
+                ) : (
+                    <li>
                     <div className="contPerfil">
                         <i className="bi bi-person-circle iconLogeadoRojo"></i>
                         <h3 className="nombrePerfilRojo"><Link to="/login" className="inicioSesionRojo">Iniciar Sesion</Link></h3>
                     </div>
                 </li>
+                )}
+                
+
+                
 
                 <li className="contLinks">
                     <i className="bi bi-house-door houseRojo"></i>

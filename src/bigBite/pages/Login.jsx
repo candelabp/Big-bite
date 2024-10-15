@@ -5,6 +5,7 @@ import { NavBarBlanco } from '../components/NavBarBlanco';
 import { motion } from 'framer-motion';
 
 export const Login = () => {
+
   return (
     <>
       <NavBarBlanco />

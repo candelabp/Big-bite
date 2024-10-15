@@ -33,7 +33,6 @@ export const getUserInfo = async () => {
     }
 };
 
-
 // Ejemplo de una función para obtener productos
 // export const getProductos = async () => {
 //     try {
