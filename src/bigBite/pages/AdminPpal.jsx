@@ -5,6 +5,7 @@ import * as XLSX from 'xlsx';
 import burger1 from '../assets/burger1.png';
 import burger2 from '../assets/burger2.png';
 import burger3 from '../assets/burger3.png';
+import NavbarAdmin from '../components/NavbarAdmin';
 
 export const AdminPpal = () => {
   // Estado para manejar la búsqueda
@@ -51,6 +52,9 @@ export const AdminPpal = () => {
   );
 
   return (
+    <>
+      <NavbarAdmin />
+
     <div className="admin-container">
       <h1>Resumen Financiero</h1>
       <button className="btn-reporte" onClick={exportToExcel}>Exportar a Excel</button>
@@ -111,5 +115,6 @@ export const AdminPpal = () => {
         )}
       </div>
     </div>
+    </>
   );
 };

@@ -7,8 +7,8 @@ const NavbarAdmin = () =>{
     <div>
       <header className="header">
       <img className="logo-admin" src="src\bigBite\assets\logoNegro.png" alt="Logo-admin" />        <nav className="navbar"></nav>
-        <Link className="tituloLinkAdmin" to="/">Inicio</Link>
-        <Link className="tituloLinkAdmin" to="/">Productos</Link>
+        <Link className="tituloLinkAdmin" to="/AdminPpal">Inicio</Link>
+        <Link className="tituloLinkAdmin" to="/AdminProductos">Productos</Link>
         <Link className="tituloLinkAdmin" to="/">Administrador</Link>
         <Link className="tituloLinkAdmin" to="/">Asientos contables</Link>
         <Link className="tituloLinkAdmin" to="/">Pedidos</Link>
