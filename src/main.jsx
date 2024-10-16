@@ -18,8 +18,8 @@ import { Contacto } from './bigBite/pages/Contacto';
 import { AdminPpal } from './bigBite/pages/AdminPpal';
 import { AdminProductos } from './bigBite/pages/AdminProductos';
 import { AsientosContables } from './bigBite/pages/AsientosContables';
-AdminProductos
-AdminPpal
+import { GestionPedidos } from './bigBite/pages/GestionPedidos';
+
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
@@ -37,6 +37,8 @@ root.render(
         <Route path="/AdminProductos" element={<AdminProductos />} />
         <Route path="/AdminPpal" element={<AdminPpal />} />
         <Route path="/AsientosContables" element={<AsientosContables />} />
+        <Route path="/GestionPedidos" element={<GestionPedidos />} />
+
       </Routes>
     </Router>
   </React.StrictMode>
