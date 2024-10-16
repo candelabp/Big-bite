@@ -74,7 +74,7 @@ button:focus {
   .zona-media-izquierda {
     flex-basis: 50%; /* Ocupa el 50% del ancho */
     display: flex;
-    align-items: left;
+    align-items: flex-start;
     flex-direction: column; /* Coloca el h3 y botones verticalmente */
     gap: 20px; /* Espacio entre el h3 y los botones */
   }
@@ -148,7 +148,7 @@ button:focus {
   .zona-baja-izq {
     flex-basis: 50%; /* 50% del ancho */
     display: flex; /* Alinea el contenido verticalmente */
-    align-items: center; /* Centra el contenido verticalmente */
+    align-items: flex-start; /* Centra el contenido verticalmente */
     justify-content: flex-start; /* Alinea a la izquierda */
   }
   
