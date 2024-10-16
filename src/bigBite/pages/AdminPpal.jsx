@@ -1,15 +1,14 @@
-import  { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../css/adminPpal.css';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import * as XLSX from 'xlsx';
-import burger1 from '../assets/burger1.png';
-import burger2 from '../assets/burger2.png';
-import burger3 from '../assets/burger3.png';
 import NavbarAdmin from '../components/NavbarAdmin';
 
 export const AdminPpal = () => {
   // Estado para manejar la búsqueda
   const [searchTerm, setSearchTerm] = useState('');
+  const [hamburguesas, setHamburguesas] = useState([]); // Estado para almacenar las hamburguesas
+  const [loading, setLoading] = useState(true); // Estado para manejar la carga de datos
 
   const exportToExcel = () => {
     const workbook = XLSX.utils.book_new();
@@ -35,19 +34,28 @@ export const AdminPpal = () => {
   const totalEgresos = data.reduce((acc, curr) => acc + curr.egreso, 0);
   const beneficioNeto = totalIngresos - totalEgresos;
 
-  const productos = [
-    { nombre: 'Classic Burger', precio: '$5.99',imagen:burger1,stock:'10' },
-    { nombre: 'Bacon Burger', precio: '$7.99',imagen:burger2,stock:'10' },
-    { nombre: 'Veggie Burger', precio: '$6.39',imagen:burger3,stock:'10' },
-    { nombre: 'Chicken Burger', precio: '$8.29',imagen:burger1,stock:'10' },
-    { nombre: 'Steak Burger', precio: '$9.99',imagen:burger2,stock:'10' },
-    { nombre: 'Classic Burger', precio: '$5.99',imagen:burger1,stock:'10' },
-    { nombre: 'Bacon Burger', precio: '$7.99',imagen:burger2,stock:'10' },
-    { nombre: 'Veggie Burger', precio: '$6.39',imagen:burger3,stock:'10' },
-  ];
+  // Función para obtener las hamburguesas del backend
+  useEffect(() => {
+    const fetchHamburguesas = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/hamburguesas');
+        if (!response.ok) {
+          throw new Error('Error al obtener los datos');
+        }
+        const data = await response.json();
+        setHamburguesas(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error al obtener las hamburguesas:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchHamburguesas();
+  }, []);
 
   // Filtrar productos basados en el término de búsqueda
-  const filteredProducts = productos.filter((producto) =>
+  const filteredProducts = hamburguesas.filter((producto) =>
     producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -55,66 +63,68 @@ export const AdminPpal = () => {
     <>
       <NavbarAdmin />
 
-    <div className="admin-container">
-      <h1>Resumen Financiero</h1>
-      <button className="btn-reporte" onClick={exportToExcel}>Exportar a Excel</button>
-      
-      {/* Gráfico */}
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="ingreso" fill="#DF1C1C" />
-          <Bar dataKey="egreso" fill="#FFBA49" />
-        </BarChart>
-      </ResponsiveContainer>
+      <div className="admin-container">
+        <h1>Resumen Financiero</h1>
+        <button className="btn-reporte" onClick={exportToExcel}>Exportar a Excel</button>
+        
+        {/* Gráfico */}
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="ingreso" fill="#DF1C1C" />
+            <Bar dataKey="egreso" fill="#FFBA49" />
+          </BarChart>
+        </ResponsiveContainer>
 
-      {/* Detalles financieros */}
-      <div className="detalles">
-        <div className="item-detalle">
-          <p><b>TOTAL INGRESOS</b></p>
-          <p>${totalIngresos.toLocaleString()}</p>
+        {/* Detalles financieros */}
+        <div className="detalles">
+          <div className="item-detalle">
+            <p><b>TOTAL INGRESOS</b></p>
+            <p>${totalIngresos.toLocaleString()}</p>
+          </div>
+          <div className="item-detalle">
+            <p><b>TOTAL GASTOS</b></p>
+            <p>${totalEgresos.toLocaleString()}</p>
+          </div>
+          <div className="item-detalle">
+            <p><b>BENEFICIO NETO</b></p>
+            <p>${beneficioNeto.toLocaleString()}</p>
+          </div>
         </div>
-        <div className="item-detalle">
-          <p><b>TOTAL GASTOS</b></p>
-          <p>${totalEgresos.toLocaleString()}</p>
-        </div>
-        <div className="item-detalle">
-          <p><b>BENEFICIO NETO</b></p>
-          <p>${beneficioNeto.toLocaleString()}</p>
+
+        <h1 className="lista-productos">Lista de productos</h1>
+
+        {/* Campo de búsqueda */}
+        <input 
+          type="text" 
+          placeholder="Buscar productos..." 
+          value={searchTerm} 
+          onChange={(e) => setSearchTerm(e.target.value)} 
+          style={{ padding: '10px', width: '100%', maxWidth: '300px', margin: '20px auto', display: 'block' }}
+        />
+        
+        {/* Grilla de productos */}
+        <div className="grilla-productos">
+          {loading ? (
+            <p>Cargando productos...</p>
+          ) : filteredProducts.length > 0 ? (
+            filteredProducts.map((producto, index) => (
+              <div className="producto-item" key={index}>
+                <img src={producto.urlImagen} alt={producto.nombre} style={{ width: '100px', height: '100px' }} />
+                <p><b>{producto.nombre}</b></p>
+                <p>stock: {producto.stock}</p>
+                <p>${producto.precio.toFixed(2)}</p>
+              </div>
+            ))
+          ) : (
+            <p>No se encontraron productos.</p>
+          )}
         </div>
       </div>
-
-      <h1 className="lista-productos">Lista de productos</h1>
-
-      {/* Campo de búsqueda */}
-      <input 
-        type="text" 
-        placeholder="Buscar productos..." 
-        value={searchTerm} 
-        onChange={(e) => setSearchTerm(e.target.value)} 
-        style={{ padding: '10px', width: '100%', maxWidth: '300px', margin: '20px auto', display: 'block' }}
-      />
-      
-      {/* Grilla de productos */}
-      <div className="grilla-productos">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((producto, index) => (
-            <div className="producto-item" key={index}>
-                 <img src={producto.imagen} alt={producto.nombre} style={{ width: '100px', height: '100px' }} />   
-              <p><b>{producto.nombre}</b></p>
-              <p>stock: {producto.stock}</p>
-              <p>{producto.precio}</p>
-            </div>
-          ))
-        ) : (
-          <p>No se encontraron productos.</p>
-        )}
-      </div>
-    </div>
     </>
   );
 };
