@@ -10,7 +10,7 @@ const NavbarAdmin = () =>{
         <Link className="tituloLinkAdmin" to="/AdminPpal">Inicio</Link>
         <Link className="tituloLinkAdmin" to="/AdminProductos">Productos</Link>
         <Link className="tituloLinkAdmin" to="/">Administrador</Link>
-        <Link className="tituloLinkAdmin" to="/">Asientos contables</Link>
+        <Link className="tituloLinkAdmin" to="/AsientosContables">Asientos contables</Link>
         <Link className="tituloLinkAdmin" to="/">Pedidos</Link>
 
       </header>

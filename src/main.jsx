@@ -17,6 +17,7 @@ import { Carrito } from './bigBite/pages/Carrito';
 import { Contacto } from './bigBite/pages/Contacto';
 import { AdminPpal } from './bigBite/pages/AdminPpal';
 import { AdminProductos } from './bigBite/pages/AdminProductos';
+import { AsientosContables } from './bigBite/pages/AsientosContables';
 AdminProductos
 AdminPpal
 const rootElement = document.getElementById('root');
@@ -35,6 +36,7 @@ root.render(
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/AdminProductos" element={<AdminProductos />} />
         <Route path="/AdminPpal" element={<AdminPpal />} />
+        <Route path="/AsientosContables" element={<AsientosContables />} />
       </Routes>
     </Router>
   </React.StrictMode>
