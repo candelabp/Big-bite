@@ -1,8 +1,7 @@
 *{
     margin:0;
     padding: 0;
-    font-family: "Poppins", sans-serif;
-
+   
 } 
 .tituloLinkAdmin{
         text-decoration: none;
@@ -13,6 +12,7 @@
         margin-left: 70px;
         margin-right: 70px;
         transition: all 0.3s ease;
+        font-family: "Poppins", sans-serif;
 
     }
     .tituloLinkAdmin:hover {
@@ -22,7 +22,7 @@
         border-radius: 10px; 
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     }
-
+    
     .header{
         top:0;
         left: 0;
