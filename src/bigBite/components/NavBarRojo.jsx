@@ -1,6 +1,7 @@
 import { useState } from "react";
 import '../css/navbarRojo.css';
 import { Link } from 'react-router-dom';
+import TotalCart from "./CartContent/TotalCart";
 
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
@@ -15,6 +16,9 @@ export const NavBar = () => {
     const cerrarMenu = () => {
         setMenuAbierto(false);
     };
+    
+
+    
 
     return (
         <nav className="navbarRojo">
@@ -28,7 +32,7 @@ export const NavBar = () => {
             </div>
 
             <div className="menu-icon-carrito menu-icon">
-                <Link to='/carrito'><button className="btn-amarillo"><i className="bi bi-cart-fill"></i><span className="contadorCarrito">0</span></button></Link>
+                <Link to='/carrito'><button className="btn-amarillo"><i className="bi bi-cart-fill"></i><TotalCart></TotalCart></button></Link>
             </div>
 
             {/* Lista de enlaces de navegación */}
