@@ -3,6 +3,7 @@
 }
 .divpedidos p{
     font-family: "Poppins", sans-serif;
+    font-size: 14px;
 }
 .buscarpedidos {
     font-size: 12px;
@@ -61,7 +62,7 @@
 }
 
 .nrodeorden {
-    padding: 0 30vh 0 30px;
+    padding: 0 40vh 0 30px;
 }
 
 .estado {
