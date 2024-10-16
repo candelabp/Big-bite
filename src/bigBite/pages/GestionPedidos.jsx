@@ -68,7 +68,7 @@ export const GestionPedidos = () => {
                 <hr />
                 <br />
 
-                <div className='divpedidos'>
+                <div className='divpedidos entregados'>
                     <div className='paddingtitulos'>
                         <h1>Pedidos anteriores</h1>
                         <p>Lista de todos los pedidos entregados</p>
