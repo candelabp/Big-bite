@@ -1,17 +1,21 @@
 import burger from '../assets/burgerinicio.png'
-import '../css/GestionProductos.css'
+import '../css/GestionPedidos.css'
 
-export const GestionProductos = () => {
+export const GestionPedidos = () => {
     return (
         <>
             <section className='contenedor'>
-                <div className='gestproductos divpedidos'>
-                    <div><h1>Gestion de Productos</h1>
-                    <p>Mira y actualiza el estado de los pedidos de hamburguesas</p></div>
-                    <div><input type="text" value='Buscar pedidos...' className='buscarpedidos' />
-                    <br />
-                    <button type="button" className='btn btn-outline-warning botonescolor'>Exportar pedidos</button>
-                    <button type="button" className='btn btn-outline-danger botonescolor'>Filtrar</button></div>                    
+                <div className='divpedidos'>
+                    <div>
+                        <h1>Gestion de Pedidos</h1>
+                        <p>Mira y actualiza el estado de los pedidos de hamburguesas</p>
+                    </div>
+                    <div>
+                        <input type="text" placeholder='Buscar pedidos...' className='buscarpedidos' />
+                        <br />
+                        <button type="button" className='btn btn-outline-warning botonescolor'>Exportar pedidos</button>
+                        <button type="button" className='btn btn-outline-danger botonescolor'>Filtrar</button>
+                    </div>                    
                 </div>
 
                 <br />
@@ -19,14 +23,14 @@ export const GestionProductos = () => {
                 <br />
 
                 <div className='divpedidos'>
-                    <div className='infopedidos'>
+                    <div className='paddingtitulos'>
                         <h1>Pedidos en curso</h1>
-                        <p>Lita de todos los pedidos en curso</p>
+                        <p>Lista de todos los pedidos en curso</p>
                         <button type="button" className='btn btn-outline-dark botones'>Ver detalles</button>
                         <button type="button" className='btn btn-dark botones'>Actualizar estado</button>
                     </div>
                     <div>
-                        <div className='divpedidos'>
+                        <div className='infopedidos'>
                             <img src={burger} className='burger' alt=""/>
                             <p className='nrodeorden'>
                                 <b>Orden #006</b>
@@ -37,7 +41,7 @@ export const GestionProductos = () => {
                         </div>
                         <hr />
 
-                        <div className='divpedidos'>
+                        <div className='infopedidos'>
                             <img src={burger} className='burger' alt=""/>
                             <p className='nrodeorden'>
                                 <b>Orden #005</b>
@@ -48,7 +52,7 @@ export const GestionProductos = () => {
                         </div>
                         <hr />
 
-                        <div className='divpedidos'>
+                        <div className='infopedidos'>
                             <img src={burger} className='burger' alt=""/>
                             <p className='nrodeorden'>
                                 <b>Orden #004</b>
@@ -65,14 +69,14 @@ export const GestionProductos = () => {
                 <br />
 
                 <div className='divpedidos'>
-                    <div className='infopedidos'>
+                    <div className='paddingtitulos'>
                         <h1>Pedidos anteriores</h1>
-                        <p>Lita de todos los pedidos en entregados</p>
+                        <p>Lista de todos los pedidos entregados</p>
                         <button type="button" className='btn btn-outline-dark botones'>Revisar</button>
                         <button type="button" className='btn btn-dark botones'>Repetir pedido</button>
                     </div>
                     <div>
-                        <div className='divpedidos'>
+                        <div className='infopedidos'>
                             <img src={burger} className='burger' alt=""/>
                             <p className='nrodeorden'>
                                 <b>Orden #003</b>
@@ -83,7 +87,7 @@ export const GestionProductos = () => {
                         </div>
                         <hr />
                         
-                        <div className='divpedidos'>
+                        <div className='infopedidos'>
                             <img src={burger} className='burger' alt=""/>
                             <p className='nrodeorden'>
                                 <b>Orden #002</b>
@@ -94,7 +98,7 @@ export const GestionProductos = () => {
                         </div>
                         <hr />
 
-                        <div className='divpedidos'>
+                        <div className='infopedidos'>
                             <img src={burger} className='burger' alt=""/>
                             <p className='nrodeorden'>
                                 <b>Orden #001</b>
