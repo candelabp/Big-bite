@@ -9,21 +9,24 @@ export const Administradores = () => {
     const [selectedAdmin, setSelectedAdmin] = useState(null);
     const [isAddingAdmin, setIsAddingAdmin] = useState(false);
     const [selectedRole, setSelectedRole] = useState('Admin');
+    const [isViewAdmin, setIsViewAdmin]=useState(false)
   
     const admins = [
       { id: 1,image:userimage , name: "Jane Doe", role: "Admin" },
-      { id: 2,image:userimage , name: "John Smith", role: "Admin" }
+      { id: 2,image:userimage , name: "John Smith", role: "Admin" },
+      {id: 3,image:userimage , name: "Marcos Diaz", role: "Admin" },
+      { id: 4,image:userimage , name: "Maria Marquez", role: "Admin" }
     ];
   
     const handleSelectAdmin = (admin) => {
         setSelectedAdmin(admin);
         setIsAddingAdmin(false)
-        // No cambiar isAddingAdmin, el formulario no debe aparecer al seleccionar un admin.
+        setIsViewAdmin(false)
       };
       
     const handleViewAdmin = (admin) => {
         setSelectedAdmin(admin); // Se establece el admin seleccionado
-        setIsAddingAdmin(true); // Asegúrate de que el formulario no esté abierto
+        setIsViewAdmin(true); // Asegúrate de que el formulario no esté abierto
     };
   
     const handleRoleSelect = (role) => {
@@ -33,11 +36,13 @@ export const Administradores = () => {
     const handleAddAdmin = () => {
       setSelectedAdmin(null);
       setIsAddingAdmin(true);
+      setIsViewAdmin(false)
     };
   
     const handleRemoveAdmin = () => {
       setSelectedAdmin(null);
       setIsAddingAdmin(false);
+      setIsViewAdmin(false)
     };
   
     return (
@@ -57,14 +62,14 @@ export const Administradores = () => {
             </div>
           </div>
           <div className="admin-actions">
-            <button className="btn add-btn" onClick={handleAddAdmin}>Add Admin</button>
+            <button className="btn add-btn" onClick={handleAddAdmin}>Agregar Admin</button>
           </div>
         </div>
   
         {/* Parte Media */}
         <div className="middle-section">
           <div className='zona-media-izquierda'> 
-            <h1>Current Admins</h1>
+            <h1>Administradores Actuales</h1>
             <div className="admin-actions-left">
               {selectedAdmin && (
                 <>
@@ -99,13 +104,13 @@ export const Administradores = () => {
         </div>
   
         {/* Parte Inferior */}
-        {(isAddingAdmin ) && (
+        {(isAddingAdmin||isViewAdmin  ) && (
             <div className='linea'>
                 <hr />
             </div>
         )}
-        {(isAddingAdmin ) && (
-            
+
+        {(isAddingAdmin||isViewAdmin ) && (
             
             <div className="bottom-section">
                 
@@ -115,12 +120,32 @@ export const Administradores = () => {
                 <div className='zona-baja-der'>
                     <div className="form-group">
                         <label>Nombre</label>
-                        <input type="text" placeholder="Enter name" defaultValue={selectedAdmin?.name || ''} />
+                        <input type="text" placeholder="Ingrese el nombre" defaultValue={selectedAdmin?.name || ''} />
+                    </div>
+                    <div className="form-group">
+                        <label>Telefono</label>
+                        <input type="email" placeholder="Ingrese el telefono" />
                     </div>
                     <div className="form-group">
                         <label>Email</label>
-                        <input type="email" placeholder="Enter email" />
+                        <input type="email" placeholder="Ingrese el Email" />
                     </div>
+                    {(isAddingAdmin)&&(
+                      <>
+                        <div className="form-group">
+                          <label>Subir Imagen</label>
+                          <input type="file" accept="image/*" />
+                        </div>
+                        <div className="form-group">
+                          <label>Contraseña</label>
+                          <input type="password" placeholder="La contraseña debe tener al menos 6 caracteres" />
+                        </div>
+                        <div className="form-group">
+                          <label>Repetir Contraseña</label>
+                          <input type="password" placeholder="La contraseña debe tener al menos 6 caracteres" />
+                        </div>
+                    </>
+                    )}
                     <div className="form-group">
                     <label>Rol</label>
                     <div className="role-options">
@@ -131,7 +156,7 @@ export const Administradores = () => {
                         <button 
                             className={`role-btn ${selectedRole === 'Client' ? 'selected' : ''}`} 
                             onClick={() => handleRoleSelect('Client')}
-                            >Client</button>
+                            >Cliente</button>
 
                     </div>
                 </div>

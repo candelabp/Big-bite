@@ -24,7 +24,7 @@ button:focus {
 .top-section {
   display: flex;
   justify-content: space-between;
-  background-color: red;
+  background-color: rgba(223, 28, 28, 1);
   padding: 70px;
   color: white;
   
@@ -59,7 +59,7 @@ button:focus {
 }
 
 .add-btn {
-  background-color: #f39c12;
+  background-color: #FFBA49;
 }
 
 /* Parte Media */
