@@ -26,6 +26,15 @@ export const Ingresar = () => {
                 // Si el login es exitoso
                 const message = await response.text();
                 alert(message); // Aquí puedes redirigir a otra página o hacer lo que necesites.
+                // Si el login es exitoso, recibimos un JSON con los datos del usuario
+                const userData = await response.json();
+                // Almacenar los datos en localStorage para persistirlos
+                localStorage.setItem('user', JSON.stringify(userData));
+
+                alert('Inicio de sesión exitoso');
+                // Aquí puedes redirigir a otra página o hacer algo con los datos del usuario.
+                // Ejemplo: redirigir a la página principal
+                // window.location.href = '/home';
             } else {
                 // Si hay un error (por ejemplo, credenciales incorrectas)
                 const error = await response.text();
