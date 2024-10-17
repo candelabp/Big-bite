@@ -16,7 +16,7 @@ select {
   margin-top: 20px;
 }
 
-form {
+.form-producto {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
@@ -24,13 +24,13 @@ form {
   max-width: 600px;
 }
 
-label {
+.label-producto {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-input {
+.input-producto {
   padding: 10px;
   width: 100%;
   border: 1px solid #ccc;
