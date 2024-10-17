@@ -262,8 +262,13 @@ h2 {
   text-decoration: none;
   font-size: 1.2rem;
   font-weight: bold;
+  transition: color 0.3s ease; /* Transición suave para el cambio de color */
 }
 
 .nav-categorias li a:hover {
-  text-decoration: underline;
+  color: rgb(255, 186, 73); /* Cambiar color de las letras a amarillo cuando se pasa el cursor */
+}
+
+.nav-categorias li a:active {
+  color: red; /* Cambiar color de las letras a rojo cuando se hace clic */
 }
