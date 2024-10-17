@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import '../css/administradores.css';
 import userimage from '../assets/benavides-geronimo-image.webp';
-import { Footer } from '../components/Footer';
 import NavbarAdmin from '../components/NavbarAdmin';
 
 export const Administradores = () => {
@@ -277,7 +276,7 @@ export const Administradores = () => {
           </form>
         )}
     
-        <Footer />
+       
       </div>
     );
     
