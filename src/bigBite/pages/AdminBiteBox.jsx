@@ -120,46 +120,36 @@ export const AdminBiteBox = () => {
         </header>
         <section className="contenedor-formulario">
           <h2>{selectedBiteBox ? 'Editar BiteBox' : 'Registrar BiteBox'}</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className='form-producto' onSubmit={handleSubmit(onSubmit)}>
+
             <div>
-              <label>Nombre:</label>
-              <input {...register("nombre", { required: "El nombre es obligatorio" })} />
+              <label className='label-producto'>Nombre:</label>
+              <input className='input-producto' {...register("nombre", { required: "El nombre es obligatorio" })} />
               {errors.nombre && <span className="error-message">{errors.nombre.message}</span>}
             </div>
             <div>
-              <label>Descripción:</label>
-              <input {...register("descripcion", { required: "La descripción es obligatoria" })} />
+              <label className='label-producto'>Descripción:</label>
+              <input className='input-producto' {...register("descripcion", { required: "La descripción es obligatoria" })} />
               {errors.descripcion && <span className="error-message">{errors.descripcion.message}</span>}
             </div>
             <div>
-              <label>Precio Costo:</label>
-              <input type="number" step="0.01" {...register("precio", { required: "El precio es obligatorio" })} />
+              <label className='label-producto'>Precio Costo:</label>
+              <input className='input-producto' type="number" step="0.01" {...register("precio", { required: "El precio es obligatorio" })} />
               {errors.precio && <span className="error-message">{errors.precio.message}</span>}
             </div>
             <div>
-              <label>Precio Venta:</label>
-              <input type="number" step="0.01" {...register("precioCombo", { required: "El precio combo es obligatorio" })} />
+              <label className='label-producto'>Precio Venta:</label>
+              <input className='input-producto' type="number" step="0.01" {...register("precioCombo", { required: "El precio combo es obligatorio" })} />
               {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
             </div>
             <div>
-              <label>Stock:</label>
-              <input type="number" {...register("stock", { required: "El stock es obligatorio" })} />
+              <label className='label-producto'>Stock:</label>
+              <input className='input-producto' type="number" {...register("stock", { required: "El stock es obligatorio" })} />
               {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>
-            {/* Casilla disponible que solo aparece al editar */}
-            {selectedBiteBox && (
-              <div>
-                <label>Disponible:</label>
-                <input type="checkbox" {...register("disponible")} />
-              </div>
-            )}
             <div>
-              <label>¿Contiene juguete?</label>
-              <input type="checkbox" {...register("contieneJuguete")} />
-            </div>
-            <div>
-              <label>Hamburguesa:</label>
-              <select {...register("hamburguesa", { required: "Selecciona una hamburguesa" })}>
+              <label className='label-producto'>Hamburguesa:</label>
+              <select className='input-producto' {...register("hamburguesa", { required: "Selecciona una hamburguesa" })}>
                 <option value="">Seleccionar</option>
                 {hamburguesas.map(hamburguesa => (
                   <option key={hamburguesa.id} value={hamburguesa.id}>{hamburguesa.nombre}</option>
@@ -168,7 +158,18 @@ export const AdminBiteBox = () => {
               {errors.hamburguesa && <span className="error-message">{errors.hamburguesa.message}</span>}
             </div>
             <div>
-              <label>Imagen:</label>
+              <label className='label-producto'>¿Contiene juguete?</label>
+              <input type="checkbox" {...register("contieneJuguete")} />
+            </div>
+            {/* Casilla disponible que solo aparece al editar */}
+            {selectedBiteBox && (
+              <div>
+                <label className='label-producto'>Disponible:</label>
+                <input type="checkbox" {...register("disponible")} />
+              </div>
+            )}
+            <div>
+              <label className='label-producto'>Imagen:</label>
               <input type="file" accept="image/*" {...register("imagen")} onChange={handleImageChange} />
             </div>
             
