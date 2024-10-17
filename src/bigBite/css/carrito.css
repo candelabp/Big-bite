@@ -3,6 +3,8 @@
     margin: 0px;
     margin-left: 2.3vh;
     bottom: 0px;
+    font-family: "Poppins", sans-serif;
+
 }
 
 .division2{
@@ -31,6 +33,8 @@
 
 .nombreArticuloCarrito{
     width: 20vh;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .divimg {
@@ -56,6 +60,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .divcantidad {
@@ -80,10 +86,14 @@
 .eliminar { 
     padding: 0;
     color: red;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .editar { 
     color: #FFBA49;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .sectionArticulo {
@@ -100,6 +110,8 @@
     width: 100%;
     height: 200%;
     margin-top: 5vh;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .total { 
