@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
-import '../css/adminProductos.css';  // Usa el mismo CSS que AdminProductos
+import '../css/adminProductos.css'; // Usa el mismo CSS que AdminProductos
 import NavbarAdmin from '../components/NavbarAdmin';
 
 export const AdminBebidas = () => {
@@ -101,7 +101,7 @@ export const AdminBebidas = () => {
           <nav className="nav-categorias">
             <ul>
               <li><a href="/AdminProductos">Hamburguesas</a></li>
-              <li><a href="/AdminPapasFritas">Papas Fritas</a></li>
+              <li><a href="/AdminPapas">Papas Fritas</a></li>
               <li><a href="/AdminBebidas">Bebidas</a></li>
               <li><a href="/AdminBiteBox">Bite Box</a></li>
             </ul>
@@ -137,7 +137,13 @@ export const AdminBebidas = () => {
             </div>
             <div>
               <label>Marca:</label>
-              <input {...register("marca", { required: "La marca es obligatoria" })} />
+              <select {...register("marca", { required: "La marca es obligatoria" })}>
+                <option value="">Seleccione una marca</option>
+                <option value="Coca-Cola">Coca-Cola</option>
+                <option value="Sprite">Sprite</option>
+                <option value="Fanta">Fanta</option>
+                <option value="Agua">Agua</option>
+              </select>
               {errors.marca && <span>{errors.marca.message}</span>}
             </div>
 
@@ -150,14 +156,14 @@ export const AdminBebidas = () => {
             )}
 
             <div>
-              <label>Imagen (opcional):</label>
+              <label>Imagen:</label>
               <input type="file" accept="image/*" {...register("imagenBebida")} onChange={handleImageChange} />
             </div>
 
             {/* Previsualización de la imagen */}
             <div className="image-preview">
               {imagePreview ? (
-                <img src={imagePreview} alt="Previsualización" className="imagen-hamburguesa" />
+                <img src={imagePreview} alt="Previsualización" className="imagen-producto" />
               ) : (
                 <p>No hay imagen cargada</p>
               )}
@@ -168,7 +174,7 @@ export const AdminBebidas = () => {
             </button>
           </form>
           <button onClick={() => setIsModalOpen(true)} className="btn-modal">
-            Editar Bebida Existente
+            Editar Bebida existente
           </button>
         </section>
 

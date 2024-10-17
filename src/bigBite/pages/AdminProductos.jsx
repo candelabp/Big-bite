@@ -19,13 +19,11 @@ export const AdminProductos = () => {
   }, []);
 
   const onSubmit = (data) => {
-    // Lógica para determinar si "disponible" debe ser true o false
+    // Determina si "disponible" debe ser true o false
     data.disponible = selectedHamburguesa ? data.disponible : (data.stock > 0);
 
     const formData = new FormData();
-    formData.append('hamburguesaDTO', new Blob([JSON.stringify(data)], {
-      type: 'application/json'
-    }));
+    formData.append('hamburguesaDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
 
     // Agregar la imagen actual si no se ha seleccionado una nueva
     if (selectedHamburguesa && !data.imagenHamburguesa.length) {
@@ -34,7 +32,7 @@ export const AdminProductos = () => {
       formData.append('imagenHamburguesa', data.imagenHamburguesa[0]);
     }
 
-    const url = selectedHamburguesa ? 
+    const url = selectedHamburguesa ?
       `http://localhost:8080/hamburguesas/editar/${selectedHamburguesa.id}` :
       'http://localhost:8080/hamburguesas/agregar';
 
@@ -95,7 +93,7 @@ export const AdminProductos = () => {
   // Verifica si todos los campos requeridos están llenos
   const isFormComplete = () => {
     const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'stock', 'tiempoPreparacion'];
-    return requiredFields.every(field => watch(field));
+    return requiredFields.every(field => watch(field) !== undefined && watch(field) !== null && watch(field) !== '');
   };
 
   return (
@@ -106,12 +104,12 @@ export const AdminProductos = () => {
           <h1>Administrar Hamburguesas</h1>
           <p>Agrega o edita productos en el menú</p>
           <nav className="nav-categorias">
-           <ul>
+            <ul>
               <li><a href="/AdminProductos">Hamburguesas</a></li>
-              <li><a href="/AdminPapasFritas">Papas Fritas</a></li>
+              <li><a href="/AdminPapas">Papas Fritas</a></li>
               <li><a href="/AdminBebidas">Bebidas</a></li>
               <li><a href="/AdminBiteBox">Bite Box</a></li>
-          </ul>
+            </ul>
           </nav>
         </header>
         <section className="contenedor-formulario">
@@ -120,32 +118,32 @@ export const AdminProductos = () => {
             <div>
               <label>Nombre:</label>
               <input {...register("nombre", { required: "El nombre es obligatorio" })} />
-              {errors.nombre && <span>{errors.nombre.message}</span>}
+              {errors.nombre && <span className="error-message">{errors.nombre.message}</span>}
             </div>
             <div>
               <label>Descripción:</label>
               <input {...register("descripcion", { required: "La descripción es obligatoria" })} />
-              {errors.descripcion && <span>{errors.descripcion.message}</span>}
+              {errors.descripcion && <span className="error-message">{errors.descripcion.message}</span>}
             </div>
             <div>
               <label>Precio Costo:</label>
               <input type="number" step="0.01" {...register("precio", { required: "El precio costo es obligatorio" })} />
-              {errors.precio && <span>{errors.precio.message}</span>}
+              {errors.precio && <span className="error-message">{errors.precio.message}</span>}
             </div>
             <div>
               <label>Precio Venta:</label>
               <input type="number" step="0.01" {...register("precioCombo", { required: "El precio venta es obligatorio" })} />
-              {errors.precioCombo && <span>{errors.precioCombo.message}</span>}
+              {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
             </div>
             <div>
               <label>Stock Actual:</label>
               <input type="number" {...register("stock", { required: "El stock es obligatorio" })} />
-              {errors.stock && <span>{errors.stock.message}</span>}
+              {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>
             <div>
               <label>Tiempo de Preparación (minutos):</label>
               <input type="number" {...register("tiempoPreparacion", { required: "El tiempo de preparación es obligatorio" })} />
-              {errors.tiempoPreparacion && <span>{errors.tiempoPreparacion.message}</span>}
+              {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
             </div>
 
             {/* Casilla disponible que solo aparece al editar */}
@@ -157,14 +155,14 @@ export const AdminProductos = () => {
             )}
 
             <div>
-              <label>Imagen (opcional):</label>
+              <label>Imagen:</label>
               <input type="file" accept="image/*" {...register("imagenHamburguesa")} onChange={handleImageChange} />
             </div>
             
             {/* Previsualización de la imagen o mensaje cuando no haya imagen */}
             <div className="image-preview">
               {imagePreview ? (
-                <img src={imagePreview} alt="Previsualización" className="imagen-hamburguesa" />
+                <img src={imagePreview} alt="Previsualización" className="imagen-producto" />
               ) : (
                 <p>No hay imagen cargada</p>
               )}
@@ -175,7 +173,7 @@ export const AdminProductos = () => {
             </button>
           </form>
           <button onClick={() => setIsModalOpen(true)} className="btn-modal">
-            Editar Hamburguesa Existente
+            Editar Hamburguesa existente
           </button>
         </section>
 
