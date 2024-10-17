@@ -13,13 +13,14 @@ import { Home } from './bigBite/pages/Home';
 import { Formulario } from './bigBite/pages/Formulario';
 import { Login } from './bigBite/pages/Login';
 import { Ingresar } from './bigBite/pages/Ingresar';
-import {Menu} from './bigBite/pages/Menu';
+import { Menu } from './bigBite/pages/Menu';
 import { Carrito } from './bigBite/pages/Carrito';
 import { Contacto } from './bigBite/pages/Contacto';
 import { AdminPpal } from './bigBite/pages/AdminPpal';
 import { AdminProductos } from './bigBite/pages/AdminProductos';
 import { AsientosContables } from './bigBite/pages/AsientosContables';
 import { GestionPedidos } from './bigBite/pages/GestionPedidos';
+import { Administradores } from './bigBite/pages/Administradores';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
@@ -40,6 +41,7 @@ root.render(
         <Route path="/AdminPpal" element={<AdminPpal />} />
         <Route path="/AsientosContables" element={<AsientosContables />} />
         <Route path="/GestionPedidos" element={<GestionPedidos />} />
+        <Route path="/Administradores" element={<Administradores />} />
 
       </Routes>
     </Router>

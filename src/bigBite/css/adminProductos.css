@@ -37,7 +37,7 @@ input {
   border-radius: 5px;
 }
 
-button {
+.btnRegistrarHamburguesa{
   grid-column: span 2;
   padding: 10px;
   background-color: #DF1C1C;
@@ -47,7 +47,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.btnRegistrarHamburguesa:hover {
   background-color: #a10606;
 }
 

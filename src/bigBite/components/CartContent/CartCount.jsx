@@ -14,9 +14,9 @@ const CartCount = ({ product }) => {
     
   return (
     <div className='divcantidad'>
-        <button type="button" className='btn btn-outline-danger btncant' onClick={decremento}>-</button>
-        <p className='cantidadCarrito'>{product.cantidad}</p>
         <button type="button" className='btn btn-outline-danger btncant' onClick={() => agregarCarrito(product)}>+</button>
+        <p className='cantidadCarrito'>{product.cantidad}</p>
+        <button type="button" className='btn btn-outline-danger btncant' onClick={decremento}>-</button>
     </div>
   )
 }
