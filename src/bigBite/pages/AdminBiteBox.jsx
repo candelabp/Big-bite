@@ -3,15 +3,22 @@ import { useForm } from "react-hook-form";
 import '../css/adminProductos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
 
-export const AdminProductos = () => {
+export const AdminBiteBox = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
+  const [biteBoxes, setBiteBoxes] = useState([]);
   const [hamburguesas, setHamburguesas] = useState([]);
-  const [selectedHamburguesa, setSelectedHamburguesa] = useState(null);
+  const [selectedBiteBox, setSelectedBiteBox] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Cargar hamburguesas desde el backend
+    // Cargar BiteBoxes desde el backend
+    fetch('http://localhost:8080/bite-box')
+      .then(response => response.json())
+      .then(data => setBiteBoxes(data))
+      .catch(error => console.error('Error al cargar las BiteBoxes:', error));
+    
+    // Cargar hamburguesas desde el backend para el desplegable
     fetch('http://localhost:8080/hamburguesas')
       .then(response => response.json())
       .then(data => setHamburguesas(data))
@@ -20,23 +27,21 @@ export const AdminProductos = () => {
 
   const onSubmit = (data) => {
     // Determina si "disponible" debe ser true o false
-    data.disponible = selectedHamburguesa ? data.disponible : (data.stock > 0);
+    data.disponible = selectedBiteBox ? data.disponible : (data.stock > 0);
 
     const formData = new FormData();
-    formData.append('hamburguesaDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-
-    // Agregar la imagen actual si no se ha seleccionado una nueva
-    if (selectedHamburguesa && !data.imagenHamburguesa.length) {
-      formData.append('imagenHamburguesa', selectedHamburguesa.urlImagen);
-    } else if (data.imagenHamburguesa && data.imagenHamburguesa.length > 0) {
-      formData.append('imagenHamburguesa', data.imagenHamburguesa[0]);
+    formData.append('biteBoxDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+    
+    // Agregar la imagen
+    if (data.imagen && data.imagen.length > 0) {
+      formData.append('imagen', data.imagen[0]);
     }
 
-    const url = selectedHamburguesa ?
-      `http://localhost:8080/hamburguesas/editar/${selectedHamburguesa.id}` :
-      'http://localhost:8080/hamburguesas/agregar';
+    const url = selectedBiteBox ?
+      `http://localhost:8080/bite-box/editar/${selectedBiteBox.id}` :
+      'http://localhost:8080/bite-box/agregar';
 
-    const method = selectedHamburguesa ? 'PUT' : 'POST';
+    const method = selectedBiteBox ? 'PUT' : 'POST';
 
     fetch(url, {
       method: method,
@@ -50,13 +55,13 @@ export const AdminProductos = () => {
       })
       .then(message => {
         console.log('Respuesta del servidor:', message);
-        alert(selectedHamburguesa ? 'Edición exitosa' : 'Registro exitoso');
+        alert(selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso');
         reset();
-        setSelectedHamburguesa(null);
+        setSelectedBiteBox(null);
         setImagePreview(null);
-        return fetch('http://localhost:8080/hamburguesas')
+        return fetch('http://localhost:8080/bite-box')
           .then(response => response.json())
-          .then(data => setHamburguesas(data));
+          .then(data => setBiteBoxes(data));
       })
       .catch(error => {
         console.error('Hubo un error:', error);
@@ -64,16 +69,17 @@ export const AdminProductos = () => {
       });
   };
 
-  const editarHamburguesa = (hamburguesa) => {
-    setSelectedHamburguesa(hamburguesa);
-    setValue('nombre', hamburguesa.nombre);
-    setValue('descripcion', hamburguesa.descripcion);
-    setValue('precio', hamburguesa.precio);
-    setValue('precioCombo', hamburguesa.precioCombo);
-    setValue('stock', hamburguesa.stock);
-    setValue('tiempoPreparacion', hamburguesa.tiempoPreparacion);
-    setValue('disponible', hamburguesa.disponible);
-    setImagePreview(hamburguesa.urlImagen || null);
+  const editarBiteBox = (biteBox) => {
+    setSelectedBiteBox(biteBox);
+    setValue('nombre', biteBox.nombre);
+    setValue('descripcion', biteBox.descripcion);
+    setValue('precio', biteBox.precio);
+    setValue('precioCombo', biteBox.precioCombo);
+    setValue('stock', biteBox.stock);
+    setValue('disponible', biteBox.disponible);
+    setValue('contieneJuguete', biteBox.contieneJuguete);
+    setValue('hamburguesa', biteBox.hamburguesa.id); // Asumiendo que biteBox.hamburguesa es un objeto con ID
+    setImagePreview(biteBox.urlImagen || null);
     setIsModalOpen(false);
   };
 
@@ -92,7 +98,7 @@ export const AdminProductos = () => {
 
   // Verifica si todos los campos requeridos están llenos
   const isFormComplete = () => {
-    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'stock', 'tiempoPreparacion'];
+    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'stock', 'hamburguesa'];
     return requiredFields.every(field => watch(field) !== undefined && watch(field) !== null && watch(field) !== '');
   };
 
@@ -101,8 +107,8 @@ export const AdminProductos = () => {
       <NavbarAdmin />
       <div className="contenedor-admin">
         <header className="admin-header">
-          <h1>Administrar Hamburguesas</h1>
-          <p>Agrega o edita productos en el menú</p>
+          <h1>Administrar BiteBox</h1>
+          <p>Agrega o edita productos BiteBox</p>
           <nav className="nav-categorias">
             <ul>
               <li><a href="/AdminProductos">Hamburguesas</a></li>
@@ -113,50 +119,57 @@ export const AdminProductos = () => {
           </nav>
         </header>
         <section className="contenedor-formulario">
-          <h2>{selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}</h2>
-          <form className='form-producto' onSubmit={handleSubmit(onSubmit)}>
+          <h2>{selectedBiteBox ? 'Editar BiteBox' : 'Registrar BiteBox'}</h2>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label className='label-producto'>Nombre:</label>
-              <input className='input-producto' {...register("nombre", { required: "El nombre es obligatorio" })} />
+              <label>Nombre:</label>
+              <input {...register("nombre", { required: "El nombre es obligatorio" })} />
               {errors.nombre && <span className="error-message">{errors.nombre.message}</span>}
             </div>
             <div>
-              <label className='label-producto'>Descripción:</label>
-              <input className='input-producto' {...register("descripcion", { required: "La descripción es obligatoria" })} />
+              <label>Descripción:</label>
+              <input {...register("descripcion", { required: "La descripción es obligatoria" })} />
               {errors.descripcion && <span className="error-message">{errors.descripcion.message}</span>}
             </div>
             <div>
-              <label className='label-producto'>Precio Costo:</label>
-              <input className='input-producto'  type="number" step="0.01" {...register("precio", { required: "El precio costo es obligatorio" })} />
+              <label>Precio Costo:</label>
+              <input type="number" step="0.01" {...register("precio", { required: "El precio es obligatorio" })} />
               {errors.precio && <span className="error-message">{errors.precio.message}</span>}
             </div>
             <div>
-              <label className='label-producto'>Precio Venta:</label>
-              <input className='input-producto' type="number" step="0.01" {...register("precioCombo", { required: "El precio venta es obligatorio" })} />
+              <label>Precio Venta:</label>
+              <input type="number" step="0.01" {...register("precioCombo", { required: "El precio combo es obligatorio" })} />
               {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
             </div>
             <div>
-              <label className='label-producto'>Stock:</label>
-              <input className='input-producto' type="number" {...register("stock", { required: "El stock es obligatorio" })} />
+              <label>Stock:</label>
+              <input type="number" {...register("stock", { required: "El stock es obligatorio" })} />
               {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>
-            <div>
-              <label className='label-producto'>Tiempo de Preparación (minutos):</label>
-              <input className='input-producto' type="number" {...register("tiempoPreparacion", { required: "El tiempo de preparación es obligatorio" })} />
-              {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
-            </div>
-
             {/* Casilla disponible que solo aparece al editar */}
-            {selectedHamburguesa && (
+            {selectedBiteBox && (
               <div>
-                <label className='label-producto'>Disponible:</label>
+                <label>Disponible:</label>
                 <input type="checkbox" {...register("disponible")} />
               </div>
             )}
-
             <div>
-              <label className='label-producto'>Imagen:</label>
-              <input type="file" accept="image/*" {...register("imagenHamburguesa")} onChange={handleImageChange} />
+              <label>¿Contiene juguete?</label>
+              <input type="checkbox" {...register("contieneJuguete")} />
+            </div>
+            <div>
+              <label>Hamburguesa:</label>
+              <select {...register("hamburguesa", { required: "Selecciona una hamburguesa" })}>
+                <option value="">Seleccionar</option>
+                {hamburguesas.map(hamburguesa => (
+                  <option key={hamburguesa.id} value={hamburguesa.id}>{hamburguesa.nombre}</option>
+                ))}
+              </select>
+              {errors.hamburguesa && <span className="error-message">{errors.hamburguesa.message}</span>}
+            </div>
+            <div>
+              <label>Imagen:</label>
+              <input type="file" accept="image/*" {...register("imagen")} onChange={handleImageChange} />
             </div>
             
             {/* Previsualización de la imagen o mensaje cuando no haya imagen */}
@@ -169,32 +182,32 @@ export const AdminProductos = () => {
             </div>
             
             <button type="submit" disabled={!isFormComplete()} className={`submit-button ${!isFormComplete() ? 'disabled' : ''}`}>
-              {selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}
+              {selectedBiteBox ? 'Editar BiteBox' : 'Registrar BiteBox'}
             </button>
           </form>
           <button onClick={() => setIsModalOpen(true)} className="btn-modal">
-            Editar Hamburguesa existente
+            Editar BiteBox existente
           </button>
         </section>
 
-        {/* Modal para seleccionar hamburguesas */}
+        {/* Modal para seleccionar BiteBoxes */}
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <h2>Selecciona una Hamburguesa</h2>
+              <h2>Seleccionar BiteBox para Editar</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
-                {hamburguesas.map((hamburguesa) => (
-                  <div key={hamburguesa.id} className="product-item">
-                    {hamburguesa.urlImagen ? (
-                      <img src={hamburguesa.urlImagen} alt={hamburguesa.nombre} className="product-modal-image" />
+                {biteBoxes.map(biteBox => (
+                  <div key={biteBox.id} className="product-item">
+                    {biteBox.urlImagen ? (
+                      <img src={biteBox.urlImagen} alt={biteBox.nombre} className="product-modal-image" />
                     ) : (
                       <img src="/placeholder.jpg" alt="Sin imagen" className="product-modal-image" />
                     )}
                     <div className="product-details">
-                      <p><strong>{hamburguesa.nombre}</strong></p>
-                      <p>Precio: ${hamburguesa.precioCombo}</p>
-                      <button onClick={() => editarHamburguesa(hamburguesa)}>Editar</button>
+                      <p><strong>{biteBox.nombre}</strong></p>
+                      <p>Precio: ${biteBox.precioCombo}</p>
+                      <button onClick={() => editarBiteBox(biteBox)}>Editar</button>
                     </div>
                   </div>
                 ))}

@@ -16,7 +16,7 @@ select {
   margin-top: 20px;
 }
 
-form {
+.form-producto {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
@@ -24,13 +24,13 @@ form {
   max-width: 600px;
 }
 
-label {
+.label-producto {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-input {
+.input-producto {
   padding: 10px;
   width: 100%;
   border: 1px solid #ccc;
@@ -46,6 +46,12 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+button.disabled {
+  background-color: #ccc; /* Cambia el color cuando está deshabilitado */
+  cursor: not-allowed; /* Cambia el cursor para mostrar que no está disponible */
+}
+
 
 button:hover {
   background-color: #a10606;
@@ -136,7 +142,7 @@ h2 {
   background-color: #e0e0e0; /* Color de fondo al pasar el mouse */
 }
 
-.imagen-hamburguesa {
+.imagen-producto {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -177,13 +183,8 @@ h2 {
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 20px; /* Aumenta el tamaño si lo deseas */
+  font-size: 20px;
 }
-
-.btn-close:hover {
-  background-color: #e44141;
-}
-
 
 .btn-close:hover {
   background-color: #e44141;
@@ -193,7 +194,7 @@ h2 {
   margin-top: 20px;
 }
 
-.hamburguesa-item {
+.product-item {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -201,23 +202,23 @@ h2 {
   justify-content: space-between;
 }
 
-.hamburguesa-modal-imagen {
-  width: 50px;
-  height: 50px;
+.product-modal-image {
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 5px;
   margin-right: 10px;
 }
 
-.hamburguesa-details {
+.product-details {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.hamburguesa-details p {
+.product-details p {
   margin: 0;
-  white-space: nowrap; /* Evitar que el texto se rompa */
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -246,4 +247,28 @@ h2 {
 .checkbox-container label {
     margin-left: 8px; /* Espaciado entre el checkbox y la etiqueta */
     font-size: 16px; /* Tamaño de fuente de la etiqueta */
+}
+
+.nav-categorias ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  gap: 20px;
+}
+
+.nav-categorias li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+.nav-categorias li a:hover {
+  color: rgb(255, 186, 73); /* Cambiar color de las letras a amarillo cuando se pasa el cursor */
+}
+
+.nav-categorias li a:active {
+  color: red; /* Cambiar color de las letras a rojo cuando se hace clic */
 }
