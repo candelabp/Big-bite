@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/js/src/carousel';
 import './styles.css';
 import './normalize.css';
+import DataProvider from './bigBite/components/Context/DataContext';
 
 // Importa las páginas
 import { Home } from './bigBite/pages/Home';
@@ -42,4 +43,19 @@ root.render(
       </Routes>
     </Router>
   </React.StrictMode>
+  <DataProvider>
+    <React.StrictMode>
+      <Router> {/* Configura Router */}
+        <Routes> {/* Define las rutas */}
+          <Route path="/" element={<Home />} />
+          <Route path="/formulario" element={<Formulario />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/ingresar" element={<Ingresar />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/carrito" element={<Carrito />} />
+          <Route path="/contacto" element={<Contacto />} />
+        </Routes>
+      </Router>
+    </React.StrictMode>
+  </DataProvider>
 );
