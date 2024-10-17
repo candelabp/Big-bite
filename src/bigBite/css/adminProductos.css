@@ -177,7 +177,7 @@ h2 {
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 20px; /* Aumenta el tamaño si lo deseas */
+  font-size: 20px;
 }
 
 .btn-close:hover {
@@ -188,7 +188,7 @@ h2 {
   margin-top: 20px;
 }
 
-.hamburguesa-item {
+.product-item {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -196,7 +196,7 @@ h2 {
   justify-content: space-between;
 }
 
-.hamburguesa-modal-imagen {
+.product-modal-image {
   width: 100px;
   height: 100px;
   object-fit: cover;
@@ -204,23 +204,15 @@ h2 {
   margin-right: 10px;
 }
 
-.hamburguesa-modal-imagen {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.hamburguesa-details {
+.product-details {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.hamburguesa-details p {
+.product-details p {
   margin: 0;
-  white-space: nowrap; /* Evitar que el texto se rompa */
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }

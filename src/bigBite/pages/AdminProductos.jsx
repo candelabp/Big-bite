@@ -187,13 +187,13 @@ export const AdminProductos = () => {
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
                 {hamburguesas.map((hamburguesa) => (
-                  <div key={hamburguesa.id} className="hamburguesa-item">
+                  <div key={hamburguesa.id} className="product-item">
                     {hamburguesa.urlImagen ? (
-                      <img src={hamburguesa.urlImagen} alt={hamburguesa.nombre} className="hamburguesa-modal-imagen" />
+                      <img src={hamburguesa.urlImagen} alt={hamburguesa.nombre} className="product-modal-image" />
                     ) : (
-                      <img src="/placeholder.jpg" alt="Sin imagen" className="hamburguesa-modal-imagen" />
+                      <img src="/placeholder.jpg" alt="Sin imagen" className="product-modal-image" />
                     )}
-                    <div className="hamburguesa-details">
+                    <div className="product-details">
                       <p><strong>{hamburguesa.nombre}</strong></p>
                       <p>Precio: ${hamburguesa.precioCombo}</p>
                       <button onClick={() => editarHamburguesa(hamburguesa)}>Editar</button>
