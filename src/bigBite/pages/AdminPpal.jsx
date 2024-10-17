@@ -1,20 +1,38 @@
 import { useState, useEffect } from 'react';
 import '../css/adminPpal.css';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import * as XLSX from 'xlsx';
 import NavbarAdmin from '../components/NavbarAdmin';
+import ExcelJS from 'exceljs';
 
 export const AdminPpal = () => {
-  // Estado para manejar la búsqueda
   const [searchTerm, setSearchTerm] = useState('');
-  const [hamburguesas, setHamburguesas] = useState([]); // Estado para almacenar las hamburguesas
-  const [loading, setLoading] = useState(true); // Estado para manejar la carga de datos
+  const [hamburguesas, setHamburguesas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const exportToExcel = () => {
-    const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Resumen Financiero");
-    XLSX.writeFile(workbook, "reporte_financiero.xlsx");
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Resumen Financiero');
+
+    // Agregar encabezados
+    worksheet.columns = [
+      { header: 'Mes', key: 'name', width: 15 },
+      { header: 'Ingreso', key: 'ingreso', width: 15 },
+      { header: 'Egreso', key: 'egreso', width: 15 }
+    ];
+
+    // Agregar datos
+    data.forEach((item) => {
+      worksheet.addRow(item);
+    });
+
+    // Guardar el archivo
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'reporte_financiero.xlsx';
+      link.click();
+    });
   };
 
   const data = [
@@ -29,12 +47,12 @@ export const AdminPpal = () => {
     { name: 'Septiembre', ingreso: 2300, egreso: 678}
   ];
 
+  // El resto de tu código...
   // Calcular los totales
   const totalIngresos = data.reduce((acc, curr) => acc + curr.ingreso, 0);
   const totalEgresos = data.reduce((acc, curr) => acc + curr.egreso, 0);
   const beneficioNeto = totalIngresos - totalEgresos;
 
-  // Función para obtener las hamburguesas del backend
   useEffect(() => {
     const fetchHamburguesas = async () => {
       try {
@@ -54,7 +72,6 @@ export const AdminPpal = () => {
     fetchHamburguesas();
   }, []);
 
-  // Filtrar productos basados en el término de búsqueda
   const filteredProducts = hamburguesas.filter((producto) =>
     producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -62,7 +79,6 @@ export const AdminPpal = () => {
   return (
     <>
       <NavbarAdmin />
-
       <div className="admin-container">
         <h1>Resumen Financiero</h1>
         <button className="btn-reporte" onClick={exportToExcel}>Exportar a Excel</button>
@@ -98,7 +114,6 @@ export const AdminPpal = () => {
 
         <h1 className="lista-productos">Lista de productos</h1>
 
-        {/* Campo de búsqueda */}
         <input 
           type="text" 
           placeholder="Buscar productos..." 
@@ -107,7 +122,6 @@ export const AdminPpal = () => {
           style={{ padding: '10px', width: '100%', maxWidth: '300px', margin: '20px auto', display: 'block' }}
         />
         
-        {/* Grilla de productos */}
         <div className="grilla-productos">
           {loading ? (
             <p>Cargando productos...</p>
