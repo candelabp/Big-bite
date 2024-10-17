@@ -103,8 +103,16 @@ export const AdminProductos = () => {
       <NavbarAdmin />
       <div className="contenedor-admin">
         <header className="admin-header">
-          <h1>Administrar Productos</h1>
-          <p>Agrega o edita hamburguesas en el menú</p>
+          <h1>Administrar Hamburguesas</h1>
+          <p>Agrega o edita productos en el menú</p>
+          <nav className="nav-categorias">
+           <ul>
+              <li><a href="/AdminProductos">Hamburguesas</a></li>
+              <li><a href="/AdminPapasFritas">Papas Fritas</a></li>
+              <li><a href="/AdminBebidas">Bebidas</a></li>
+              <li><a href="/AdminBiteBox">Bite Box</a></li>
+          </ul>
+          </nav>
         </header>
         <section className="contenedor-formulario">
           <h2>{selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}</h2>

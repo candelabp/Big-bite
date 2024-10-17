@@ -184,11 +184,6 @@ h2 {
   background-color: #e44141;
 }
 
-
-.btn-close:hover {
-  background-color: #e44141;
-}
-
 .modal-body {
   margin-top: 20px;
 }
@@ -202,8 +197,16 @@ h2 {
 }
 
 .hamburguesa-modal-imagen {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.hamburguesa-modal-imagen {
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 5px;
   margin-right: 10px;
@@ -246,4 +249,23 @@ h2 {
 .checkbox-container label {
     margin-left: 8px; /* Espaciado entre el checkbox y la etiqueta */
     font-size: 16px; /* Tamaño de fuente de la etiqueta */
+}
+
+.nav-categorias ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  gap: 20px;
+}
+
+.nav-categorias li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.nav-categorias li a:hover {
+  text-decoration: underline;
 }
