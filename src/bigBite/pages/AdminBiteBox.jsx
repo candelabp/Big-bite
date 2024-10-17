@@ -132,17 +132,17 @@ export const AdminBiteBox = () => {
               {errors.descripcion && <span className="error-message">{errors.descripcion.message}</span>}
             </div>
             <div>
-              <label>Precio:</label>
+              <label>Precio Costo:</label>
               <input type="number" step="0.01" {...register("precio", { required: "El precio es obligatorio" })} />
               {errors.precio && <span className="error-message">{errors.precio.message}</span>}
             </div>
             <div>
-              <label>Precio Combo:</label>
+              <label>Precio Venta:</label>
               <input type="number" step="0.01" {...register("precioCombo", { required: "El precio combo es obligatorio" })} />
               {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
             </div>
             <div>
-              <label>Stock Actual:</label>
+              <label>Stock:</label>
               <input type="number" {...register("stock", { required: "El stock es obligatorio" })} />
               {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>

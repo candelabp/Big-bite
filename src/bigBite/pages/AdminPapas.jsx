@@ -131,7 +131,7 @@ export const AdminPapas = () => {
               {errors.precioCombo && <span>{errors.precioCombo.message}</span>}
             </div>
             <div>
-              <label>Stock Actual:</label>
+              <label>Stock:</label>
               <input type="number" {...register("stock", { required: "El stock es obligatorio" })} />
               {errors.stock && <span>{errors.stock.message}</span>}
             </div>

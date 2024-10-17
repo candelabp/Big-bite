@@ -136,7 +136,7 @@ export const AdminProductos = () => {
               {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
             </div>
             <div>
-              <label>Stock Actual:</label>
+              <label>Stock:</label>
               <input type="number" {...register("stock", { required: "El stock es obligatorio" })} />
               {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>
