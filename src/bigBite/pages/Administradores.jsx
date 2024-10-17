@@ -81,7 +81,7 @@ export const Administradores = () => {
     return (
       <div className="app-container">
         <NavBar/>
-
+    
         {/* Parte Superior */}
         <div className="top-section">
           <div className="admin-info">
@@ -94,10 +94,10 @@ export const Administradores = () => {
             </div>
           </div>
           <div className="admin-actions">
-            <button className="btn add-btn" onClick={handleAddAdmin}>Agregar Admin</button>
+            <button className="add-button" onClick={handleAddAdmin}>Agregar Admin</button>
           </div>
         </div>
-
+    
         {/* Parte Media */}
         <div className="middle-section">
           <div className='zona-media-izquierda'>
@@ -105,13 +105,13 @@ export const Administradores = () => {
             <div className="admin-actions-left">
               {selectedAdmin && (
                 <>
-                  <button className="btn delete-btn">Borrar Admin</button>
-                  <button className="btn view-btn" onClick={() => handleViewAdmin(selectedAdmin)}>Ver Detalles</button>
+                  <button className="delete-button">Borrar Admin</button>
+                  <button className="view-button" onClick={() => handleViewAdmin(selectedAdmin)}>Ver Detalles</button>
                 </>
               )}
             </div>
           </div>
-
+    
           <div className="admin-list">
             <div className="admin-list-right">
               {admins.map((admin) => (
@@ -132,56 +132,53 @@ export const Administradores = () => {
             </div>
           </div>
         </div>
-
-        {/* Formulario de Agregar Admin o ver datos  */}
-        {(isAddingAdmin||isViewAdmin  ) && (
-            <div className='linea'>
-                <hr />
-            </div>
+    
+        {/* Formulario de Agregar Admin o ver datos */}
+        {(isAddingAdmin || isViewAdmin) && (
+          <div className='linea'>
+            <hr />
+          </div>
         )}
-
-        {(isViewAdmin ) && (
-            
-            <div className="bottom-section">
-                
-                <div className='zona-baja-izq'>
-                    <h1>Detalles Admin</h1>
-                </div>
-                <div className='zona-baja-der'>
-                    <div className="form-group">
-                        <label>Nombre</label>
-                        <input type="text" placeholder="Ingrese el nombre" defaultValue={selectedAdmin?.name || ''} />
-                    </div>
-                    <div className="form-group">
-                        <label>Telefono</label>
-                        <input type="email" placeholder="Ingrese el telefono" />
-                    </div>
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input type="email" placeholder="Ingrese el Email" />
-                    </div>
-                    <div className="form-group">
-                    <label>Rol</label>
-                    <div className="role-options">
-                        <button 
-                            className={`role-btn ${selectedRole === 'Admin' ? 'selected' : ''}`} 
-                            onClick={() => handleRoleSelect('Admin')}
-                             >Admin</button>
-                        <button 
-                            className={`role-btn ${selectedRole === 'Client' ? 'selected' : ''}`} 
-                            onClick={() => handleRoleSelect('Client')}
-                            >Cliente</button>
-
-                    </div>
-                </div>
-                    <div className="form-actions">
-                        <button className="btn cancel-btn" onClick={handleRemoveAdmin}>Cancelar</button>
-                        <button className="btn save-btn">Guardar Cambios</button>
-                    </div>
-                </div>
+    
+        {(isViewAdmin) && (
+          <div className="bottom-section">
+            <div className='zona-baja-izq'>
+              <h1>Detalles Admin</h1>
             </div>
+            <div className='zona-baja-der'>
+              <div className="form-group">
+                <label>Nombre</label>
+                <input type="text" placeholder="Ingrese el nombre" defaultValue={selectedAdmin?.name || ''} />
+              </div>
+              <div className="form-group">
+                <label>Telefono</label>
+                <input type="text" placeholder="Ingrese el telefono" />
+              </div>
+              <div className="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Ingrese el Email" />
+              </div>
+              <div className="form-group">
+                <label>Rol</label>
+                <div className="role-options">
+                  <button 
+                    className={`role-button ${selectedRole === 'Admin' ? 'selected' : ''}`} 
+                    onClick={() => handleRoleSelect('Admin')}
+                  >Admin</button>
+                  <button 
+                    className={`role-button ${selectedRole === 'Client' ? 'selected' : ''}`} 
+                    onClick={() => handleRoleSelect('Client')}
+                  >Cliente</button>
+                </div>
+              </div>
+              <div className="form-actions">
+                <button className="cancel-button" onClick={handleRemoveAdmin}>Cancelar</button>
+                <button className="save-button">Guardar Cambios</button>
+              </div>
+            </div>
+          </div>
         )}
-
+    
         {(isAddingAdmin) && (
           <form onSubmit={handleSubmit(onSubmit)} className="bottom-section form-admin">
             <div className='zona-baja-izq'>
@@ -193,19 +190,19 @@ export const Administradores = () => {
                 <input {...register("nombre", { required: "El nombre es obligatorio" })} />
                 {errors.nombre && <span>{errors.nombre.message}</span>}
               </div>
-
+    
               <div className="form-group">
                 <label>Apellido:</label>
                 <input {...register("apellido", { required: "El apellido es obligatorio" })} />
                 {errors.apellido && <span>{errors.apellido.message}</span>}
               </div>
-
+    
               <div className="form-group">
                 <label>Telefono:</label>
                 <input {...register("telefono", { required: "El telefono es obligatorio" })} />
                 {errors.telefono && <span>{errors.telefono.message}</span>}
               </div>
-
+    
               <div className="form-group">
                 <label>Email:</label>
                 <input
@@ -220,7 +217,7 @@ export const Administradores = () => {
                 />
                 {errors.email && <span>{errors.email.message}</span>}
               </div>
-
+    
               <div className="form-group">
                 <label>Imagen de perfil:</label>
                 <input
@@ -230,7 +227,7 @@ export const Administradores = () => {
                 />
                 {errors.imagen && <span>{errors.imagen.message}</span>}
               </div>
-
+    
               <div className="form-group">
                 <label>Contraseña:</label>
                 <input
@@ -245,7 +242,7 @@ export const Administradores = () => {
                 />
                 {errors.password && <span>{errors.password.message}</span>}
               </div>
-
+    
               <div className="form-group">
                 <label>Repetir contraseña:</label>
                 <input
@@ -258,36 +255,31 @@ export const Administradores = () => {
                 />
                 {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
               </div>
+    
               <div className="form-group">
-                    <label>Rol</label>
-                    <div className="role-options">
-                        <button 
-                            className={`role-btn ${selectedRole === 'Admin' ? 'selected' : ''}`} 
-                            onClick={() => handleRoleSelect('Admin')}
-                             >Admin</button>
-                        <button 
-                            className={`role-btn ${selectedRole === 'Client' ? 'selected' : ''}`} 
-                            onClick={() => handleRoleSelect('Client')}
-                            >Cliente</button>
-
-                    </div>
+                <label>Rol</label>
+                <div className="role-options">
+                  <button 
+                    className={`role-button ${selectedRole === 'Admin' ? 'selected' : ''}`} 
+                    onClick={() => handleRoleSelect('Admin')}
+                  >Admin</button>
+                  <button 
+                    className={`role-button ${selectedRole === 'Client' ? 'selected' : ''}`} 
+                    onClick={() => handleRoleSelect('Client')}
+                  >Cliente</button>
                 </div>
+              </div>
+    
               <div className="form-actions">
-                        <button className="btn cancel-btn" onClick={handleRemoveAdmin}>Cancelar</button>
-                        <button className="btn save-btn">Agregar</button>
-                    </div>
-
-              {/*  
-              <div className="form-actions">
-                <button className="btn cancel-btn" onClick={handleRemoveAdmin}>Cancelar</button>
-                <button type="submit" className="btn save-btn">Agregar</button>
-              </div> */}
-
+                <button className="cancel-button" onClick={handleRemoveAdmin}>Cancelar</button>
+                <button type="submit" className="save-button">Guardar Admin</button>
+              </div>
             </div>
           </form>
         )}
-
-        <Footer/>
+    
+        <Footer />
       </div>
     );
-}
+    
+};
