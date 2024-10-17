@@ -19,6 +19,7 @@ import { Contacto } from './bigBite/pages/Contacto';
 import { AdminPpal } from './bigBite/pages/AdminPpal';
 import { AdminProductos } from './bigBite/pages/AdminProductos';
 import { AdminBebidas } from './bigBite/pages/AdminBebidas';
+import { AdminPapas } from './bigBite/pages/AdminPapas';
 import { AsientosContables } from './bigBite/pages/AsientosContables';
 import { GestionPedidos } from './bigBite/pages/GestionPedidos';
 
@@ -39,6 +40,7 @@ root.render(
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/AdminProductos" element={<AdminProductos />} />
         <Route path="/AdminBebidas" element={<AdminBebidas />} />
+        <Route path="/AdminPapas" element={<AdminPapas />} />
         <Route path="/AdminPpal" element={<AdminPpal />} />
         <Route path="/AsientosContables" element={<AsientosContables />} />
         <Route path="/GestionPedidos" element={<GestionPedidos />} />
