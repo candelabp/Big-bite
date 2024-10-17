@@ -145,7 +145,7 @@ export const Formulario = () => {
           </div>
 
           <div className="formulario-buttons">
-            <button type="submit" className='boton-enviar'>Enviar</button>
+            <button type="submit" className='boton-enviar'>Registrar</button>
             <button type="button" className='boton-reset' onClick={() => reset()}>Limpiar</button>
           </div>
           <div>
