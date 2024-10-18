@@ -194,7 +194,7 @@ export const AdminPapas = () => {
                     <div className="product-details">
                       <p><strong>{papasFritas.nombre}</strong></p>
                       <p>Precio: ${papasFritas.precioCombo}</p>
-                      <button onClick={() => editarPapasFritas(papasFritas)}>Editar</button>
+                      <button className="btnRegistrarHamburguesa" onClick={() => editarPapasFritas(papasFritas)}>Editar</button>
                     </div>
                   </div>
                 ))}

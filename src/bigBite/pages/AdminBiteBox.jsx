@@ -208,7 +208,7 @@ export const AdminBiteBox = () => {
                     <div className="product-details">
                       <p><strong>{biteBox.nombre}</strong></p>
                       <p>Precio: ${biteBox.precioCombo}</p>
-                      <button onClick={() => editarBiteBox(biteBox)}>Editar</button>
+                      <button className="btnRegistrarHamburguesa" onClick={() => editarBiteBox(biteBox)}>Editar</button>
                     </div>
                   </div>
                 ))}

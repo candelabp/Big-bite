@@ -196,7 +196,8 @@ export const AdminBebidas = () => {
                     <div className="product-details">
                       <p><strong>{bebida.nombre}</strong></p>
                       <p>Precio: ${bebida.precioCombo}</p>
-                      <button onClick={() => editarBebida(bebida)}>Editar</button>
+                      <button className="btnRegistrarHamburguesa" onClick={() => editarBebida(bebida)}>Editar</button>
+
                     </div>
                   </div>
                 ))}
