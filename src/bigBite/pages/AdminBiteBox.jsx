@@ -107,8 +107,8 @@ export const AdminBiteBox = () => {
       <NavbarAdmin />
       <div className="contenedor-admin">
         <header className="admin-header">
-          <h1>Administrar BiteBox</h1>
-          <p>Agrega o edita productos BiteBox</p>
+          <h1>Administrar Bite Box</h1>
+          <p>Agrega o edita productos del menú</p>
           <nav className="nav-categorias">
             <ul>
               <li><a href="/AdminProductos">Hamburguesas</a></li>
@@ -119,7 +119,7 @@ export const AdminBiteBox = () => {
           </nav>
         </header>
         <section className="contenedor-formulario">
-          <h2>{selectedBiteBox ? 'Editar BiteBox' : 'Registrar BiteBox'}</h2>
+          <h2>{selectedBiteBox ? 'Editar BiteBox' : 'Registrar Bite Box'}</h2>
           <form className='form-producto' onSubmit={handleSubmit(onSubmit)}>
 
             <div>
@@ -183,7 +183,7 @@ export const AdminBiteBox = () => {
             </div>
             
             <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
-              {selectedBiteBox ? 'Editar BiteBox' : 'Registrar BiteBox'}
+              {selectedBiteBox ? 'Editar BiteBox' : 'Registrar Bite Box'}
             </button>
           </form>
           <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">

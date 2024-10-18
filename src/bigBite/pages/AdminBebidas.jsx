@@ -97,7 +97,7 @@ export const AdminBebidas = () => {
       <div className="contenedor-admin">
         <header className="admin-header">
           <h1>Administrar Bebidas</h1>
-          <p>Agrega o edita productos en el menú</p>
+          <p>Agrega o edita productos del menú</p>
           <nav className="nav-categorias">
             <ul>
               <li><a href="/AdminProductos">Hamburguesas</a></li>
