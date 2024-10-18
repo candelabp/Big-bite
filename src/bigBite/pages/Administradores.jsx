@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import '../css/administradores.css';
 import userimage from '../assets/benavides-geronimo-image.webp';
+import francorinaldiimage from '../assets/franco-rinaldi.jpg';
+import chiquiimage from '../assets/chiqui-tapion.jpg';
+import julianalvarezimage from '../assets/julian-alvarez.jpg';
+import senseiclossimage from '../assets/sensei-closs.jpg';
+import messiimage from '../assets/messi.jpg';
+import maslatonimage from '../assets/maslaton.jpg';
+import cobriximage from '../assets/cobrix.jpg';
 import NavbarAdmin from '../components/NavbarAdmin';
 
 export const Administradores = () => {
@@ -15,10 +22,14 @@ export const Administradores = () => {
     const [isViewAdmin, setIsViewAdmin]=useState(false);
 
     const admins = [
-      { id: 1, image: userimage, name: "Jane Doe", role: "Admin" },
-      { id: 2, image: userimage, name: "John Smith", role: "Admin" },
-      { id: 3, image: userimage, name: "Marcos Diaz", role: "Admin" },
-      { id: 4, image: userimage, name: "Maria Marquez", role: "Admin" }
+      { id: 1, image: senseiclossimage, name: "Sensei Closs", role: "Admin" },
+      { id: 2, image: julianalvarezimage, name: "La bestia de Calchin", role: "Admin" },
+      { id: 3, image: chiquiimage, name: "Chiqui Tapion", role: "Admin" },
+      { id: 4, image: francorinaldiimage, name: "Franco Rinaldi", role: "Admin" },
+      { id: 5, image: messiimage, name: "Lionel Messi", role: "Admin" },
+      { id: 6, image: maslatonimage, name: "Carlos Maslatón", role: "Admin" },
+      { id: 7, image: cobriximage, name: "Cobrix", role: "Admin" }
+
     ];
 
     const handleSelectAdmin = (admin) => {
@@ -87,7 +98,7 @@ export const Administradores = () => {
               <img src={userimage} alt="" />
             </div>
             <div>
-              <h1>Agregar Nuevo Admin</h1>
+              <h1>Tito Calderón</h1>
               <p>Rol: Admin</p>
             </div>
           </div>
