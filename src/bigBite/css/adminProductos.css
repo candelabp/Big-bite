@@ -37,7 +37,7 @@ select {
   border-radius: 5px;
 }
 
-button {
+.btnRegistrarHamburguesa{
   grid-column: span 2;
   padding: 10px;
   background-color: #DF1C1C;
@@ -47,13 +47,7 @@ button {
   cursor: pointer;
 }
 
-button.disabled {
-  background-color: #ccc; /* Cambia el color cuando está deshabilitado */
-  cursor: not-allowed; /* Cambia el cursor para mostrar que no está disponible */
-}
-
-
-button:hover {
+.btnRegistrarHamburguesa:hover {
   background-color: #a10606;
 }
 
