@@ -51,6 +51,11 @@ select {
   background-color: #a10606;
 }
 
+.btnRegistrarHamburguesa.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .contenedor-admin {
   padding: 20px;
   font-family: "Poppins", sans-serif;
