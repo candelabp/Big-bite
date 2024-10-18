@@ -109,54 +109,55 @@ export const AdminPapas = () => {
         </header>
         <section className="contenedor-formulario">
           <h2>{selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className='form-producto' onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label>Nombre:</label>
-              <input {...register("nombre", { required: "El nombre es obligatorio" })} />
-              {errors.nombre && <span>{errors.nombre.message}</span>}
+              <label className='label-producto'>Nombre:</label>
+              <input className='input-producto' {...register("nombre", { required: "El nombre es obligatorio" })} />
+              {errors.nombre && <span className="error-message">{errors.nombre.message}</span>}
             </div>
             <div>
-              <label>Descripción:</label>
-              <input {...register("descripcion", { required: "La descripción es obligatoria" })} />
-              {errors.descripcion && <span>{errors.descripcion.message}</span>}
+              <label className='label-producto'>Descripción:</label>
+              <input className='input-producto' {...register("descripcion", { required: "La descripción es obligatoria" })} />
+              {errors.descripcion && <span className="error-message">{errors.descripcion.message}</span>}
             </div>
             <div>
-              <label>Precio Costo:</label>
-              <input type="number" step="0.01" {...register("precio", { required: "El precio costo es obligatorio" })} />
-              {errors.precio && <span>{errors.precio.message}</span>}
+              <label className='label-producto'>Precio Costo:</label>
+              <input className='input-producto' type="number" step="0.01" {...register("precio", { required: "El precio costo es obligatorio" })} />
+              {errors.precio && <span className="error-message">{errors.precio.message}</span>}
             </div>
             <div>
-              <label>Precio Venta:</label>
-              <input type="number" step="0.01" {...register("precioCombo", { required: "El precio venta es obligatorio" })} />
-              {errors.precioCombo && <span>{errors.precioCombo.message}</span>}
+              <label className='label-producto'>Precio Venta:</label>
+              <input className='input-producto' type="number" step="0.01" {...register("precioCombo", { required: "El precio venta es obligatorio" })} />
+              {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
             </div>
             <div>
-              <label>Stock:</label>
-              <input type="number" {...register("stock", { required: "El stock es obligatorio" })} />
-              {errors.stock && <span>{errors.stock.message}</span>}
+              <label className='label-producto'>Stock:</label>
+              <input className='input-producto' type="number" {...register("stock", { required: "El stock es obligatorio" })} />
+              {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>
             <div>
-              <label>Tamaño:</label>
-              <select {...register("tamanio", { required: "El tamaño es obligatorio" })}>
+              <label className='label-producto'>Tamaño:</label>
+              <select className='input-producto' {...register("tamanio", { required: "El tamaño es obligatorio" })}>
                 <option value="">Seleccionar tamaño</option>
                 <option value="MEDIANAS">MEDIANAS</option>
                 <option value="GRANDES">GRANDES</option>
               </select>
-              {errors.tamanio && <span>{errors.tamanio.message}</span>}
+              {errors.tamanio && <span className="error-message">{errors.tamanio.message}</span>}
             </div>
 
             {/* Casilla disponible que solo aparece al editar */}
             {selectedPapasFritas && (
               <div>
-                <label>Disponible:</label>
+                <label className='label-producto'>Disponible:</label>
                 <input type="checkbox" {...register("disponible")} />
               </div>
             )}
 
             <div>
-              <label>Imagen:</label>
-              <input type="file" accept="image/*" {...register("imagenPapasFritas")} onChange={handleImageChange} />
+              <label className='label-producto'>Imagen:</label>
+              <input className='input-producto' type="file" accept="image/*" {...register("imagenPapasFritas")} onChange={handleImageChange} />
             </div>
+
 
             {/* Previsualización de la imagen */}
             <div className="image-preview">
@@ -180,7 +181,7 @@ export const AdminPapas = () => {
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <h2>Seleccionar Papas Fritas para Editar</h2>
+              <h2>Selecciona unas Papas Fritas</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
                 {papasFritas.map((papasFritas) => (
