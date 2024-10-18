@@ -170,11 +170,11 @@ export const AdminBebidas = () => {
               )}
             </div>
 
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button ${!isFormComplete() ? 'disabled' : ''}`}>
+            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
               {selectedBebida ? 'Editar Bebida' : 'Registrar Bebida'}
             </button>
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal">
+          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
             Editar Bebida existente
           </button>
         </section>
