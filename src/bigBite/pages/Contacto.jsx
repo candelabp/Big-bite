@@ -1,7 +1,7 @@
 import  { useState } from 'react';
 import '../css/contacto.css';
 import { Footer } from '../components/Footer';
-import { NavBarBlanco } from '../components/NavBarBlanco';
+import { NavBarBlanco } from '../components/NavbarBlanco';
 
 export const Contacto = () => { 
     return (
