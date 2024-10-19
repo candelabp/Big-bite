@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer';
 import { NavBarBlanco } from '../components/NavbarBlanco';
 import { motion } from 'framer-motion';
 
+//hola
 export const Login = () => {
   return (
     <>
