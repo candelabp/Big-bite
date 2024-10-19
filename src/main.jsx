@@ -6,7 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/js/src/carousel';
 import './styles.css';
 import './normalize.css';
-import DataProvider from './bigBite/components/Context/DataContext';
+//import DataProvider from './bigBite/components/Context/DataContext';
 // Importa las páginas
 import { Home } from './bigBite/pages/Home';
 import { Formulario } from './bigBite/pages/Formulario';
@@ -29,9 +29,9 @@ const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <DataProvider>
+//  <DataProvider>
     <React.StrictMode>
-      <UserProvider>
+      {/*<UserProvider> */}
         <Router> {/* Configura Router */}
           <Routes> {/* Define las rutas */}
             <Route path="/" element={<Home />} />
@@ -52,7 +52,7 @@ root.render(
 
           </Routes>
         </Router>
-      </UserProvider>
+      {/*</UserProvider>*/}
     </React.StrictMode>
-  </DataProvider>
+  //</DataProvider>
 );
