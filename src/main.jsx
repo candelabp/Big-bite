@@ -22,7 +22,7 @@ import { AdminPapas } from './bigBite/pages/AdminPapas';
 import { AdminBiteBox } from './bigBite/pages/AdminBiteBox';
 import { AsientosContables } from './bigBite/pages/AsientosContables';
 import { GestionPedidos } from './bigBite/pages/GestionPedidos';
-import { UserProvider } from './context/userContext';
+//import { UserProvider } from './context/userContext';
 import { Administradores } from './bigBite/pages/Administradores';
 
 const rootElement = document.getElementById('root');
