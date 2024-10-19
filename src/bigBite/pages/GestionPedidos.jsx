@@ -1,4 +1,4 @@
-import burger from '../assets/burgerinicio.png'
+import burger from '../assets/burgerInicio.png'
 import '../css/GestionPedidos.css'
 import NavbarAdmin from '../components/NavbarAdmin';
 export const GestionPedidos = () => {
