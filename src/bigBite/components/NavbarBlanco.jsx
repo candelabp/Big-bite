@@ -47,7 +47,7 @@ export const NavBarBlanco = () => {
                     </div>
 
                     <div className="logoContenedorBlanco">
-                        <img className="logo" src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" />
+                        <img className="logo" src={logoNegro} alt="Logo" />
                     </div>
                 </li>
 
@@ -92,7 +92,7 @@ export const NavBarBlanco = () => {
                     <i className="bi bi-facebook"></i>
                 </li>
 
-                <img src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" className="imgNavbar" />
+                <img src={logoNegro} alt="Logo" className="imgNavbar" />
             </ul>
         </nav>
     );

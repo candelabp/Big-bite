@@ -46,7 +46,7 @@ export const NavBar = () => {
                     </div>
 
                     <div className="logoContenedorRojo">
-                        <img className="logo" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" />
+                        <img className="logo" src={logoBlanco} alt="Logo" />
                     </div>
                 </li>
 
@@ -90,7 +90,7 @@ export const NavBar = () => {
                     <i className="bi bi-instagram redesNavRojo"></i>
                     <i className="bi bi-facebook redesNavRojo"></i>
                 </li>
-                <img src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" className="imgNavbarRojo" />
+                <img src={logoBlanco} alt="Logo" className="imgNavbarRojo" />
             </ul>
         </nav>
     );
