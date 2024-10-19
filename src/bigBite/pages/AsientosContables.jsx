@@ -9,6 +9,9 @@ export const AsientosContables = () => {
     // Estado para almacenar los asientos contables en el libro diario
     const [libroDiario, setLibroDiario] = useState([]);
 
+    // Estado para mostrar el aviso de que se ingresó un nuevo asiento
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     // Definir el plan de cuentas con su naturaleza (Débito/Crédito)
     const planDeCuentas = [
         { codigo: '1.1.1.01', nombre: 'Caja en Efectivo', naturaleza: 'Débito' },
@@ -41,6 +44,12 @@ export const AsientosContables = () => {
         // Agrega el asiento al libro diario
         setLibroDiario([...libroDiario, asientoData]);
 
+        // Mostrar el mensaje de éxito
+        setShowSuccessMessage(true);
+
+        // Ocultar el mensaje después de 3 segundos
+        setTimeout(() => setShowSuccessMessage(false), 3000);
+
         reset();
     };
 
@@ -53,6 +62,13 @@ export const AsientosContables = () => {
                     <p>Complete los campos con la información necesaria</p>
                 </div>
                 <div className="formulario-asiento">
+                    {/* Mostrar el mensaje de éxito */}
+                    {showSuccessMessage && (
+                        <div className="mensaje-exito">
+                            ¡Asiento contable ingresado con éxito!
+                        </div>
+                    )}
+
                     <form className='formulario-contable' onSubmit={handleSubmit(onSubmit)}>
                         <div className="relleno">
                             <div>
