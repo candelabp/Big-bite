@@ -5,30 +5,43 @@ import { useState } from 'react';
 
 export const AsientosContables = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const [tipoAsiento, setTipoAsiento] = useState(null);
+    
+    // Estado para almacenar los asientos contables en el libro diario
+    const [libroDiario, setLibroDiario] = useState([]);
 
-    // Definir el plan de cuentas
+    // Definir el plan de cuentas con su naturaleza (Débito/Crédito)
     const planDeCuentas = [
-        { codigo: '1.1.1.01', nombre: 'Caja en Efectivo' },
-        { codigo: '1.1.1.02', nombre: 'Banco XX' },
-        { codigo: '1.1.1.03', nombre: 'Mercado Pago' },
-        { codigo: '1.1.1.04', nombre:'Binance'},
-        { codigo: '1.1.3.01', nombre: 'Materias Primas' },
-        { codigo: '2.1.1.01', nombre: 'Proveedores de Insumos' },
-        { codigo: '2.1.2.01', nombre: 'IVA por Pagar' },
-        { codigo: '4.1.1.01', nombre: 'Ventas de Hamburguesas' },
-        { codigo: '4.1.1.02', nombre: 'Ventas de Bebidas' },
+        { codigo: '1.1.1.01', nombre: 'Caja en Efectivo', naturaleza: 'Débito' },
+        { codigo: '1.1.1.02', nombre: 'Cuentas Bancarias', naturaleza: 'Débito' },
+        { codigo: '1.1.1.03', nombre: 'Plataformas de Pago', naturaleza: 'Débito' },
+        { codigo: '1.1.3.01', nombre: 'Materias Primas', naturaleza: 'Débito' },
+        { codigo: '1.1.3.02', nombre: 'Productos Terminados', naturaleza: 'Débito' },
+        { codigo: '2.1.1.01', nombre: 'Proveedores de Insumos', naturaleza: 'Crédito' },
+        { codigo: '2.1.2.01', nombre: 'IVA por Pagar', naturaleza: 'Crédito' },
+        { codigo: '4.1.1.01', nombre: 'Ventas de Hamburguesas', naturaleza: 'Crédito' },
+        { codigo: '4.1.1.02', nombre: 'Ventas de Bebidas', naturaleza: 'Crédito' },
+        // Agrega más cuentas según sea necesario
     ];
 
     const onSubmit = (data) => {
+        const cuentaSeleccionada = planDeCuentas.find(cuenta => cuenta.codigo === data.cuenta);
+        const tipoAsiento = cuentaSeleccionada ? cuentaSeleccionada.naturaleza : null;
+
         if (!tipoAsiento) {
-            alert("Por favor, seleccione el tipo de asiento.");
+            alert("Error: No se pudo determinar el tipo de asiento.");
             return;
         }
-        const asientoData = { ...data, tipoAsiento };
-        console.log(asientoData);
+
+        const asientoData = {
+            ...data,
+            tipoAsiento,
+            fecha: new Date().toLocaleDateString() // Guarda la fecha actual
+        };
+
+        // Agrega el asiento al libro diario
+        setLibroDiario([...libroDiario, asientoData]);
+
         reset();
-        setTipoAsiento(null);
     };
 
     return (
@@ -69,9 +82,33 @@ export const AsientosContables = () => {
                             </div>
                         </div>
 
-
                         <button type="submit" className="btn-submit">Guardar Asiento</button>
                     </form>
+                </div>
+
+                {/* Mostrar tabla del libro diario */}
+                <div className="libro-diario">
+                    <h2>Libro Diario</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Cuenta</th>
+                                <th>Monto</th>
+                                <th>Tipo de Asiento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {libroDiario.map((asiento, index) => (
+                                <tr key={index}>
+                                    <td>{asiento.fecha}</td>
+                                    <td>{asiento.cuenta}</td>
+                                    <td>{asiento.monto}</td>
+                                    <td>{asiento.tipoAsiento}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </>
