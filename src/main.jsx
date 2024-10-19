@@ -29,7 +29,9 @@ const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
+  <DataProvider>
     <React.StrictMode>
+      <UserProvider>
         <Router> {/* Configura Router */}
           <Routes> {/* Define las rutas */}
             <Route path="/" element={<Home />} />
@@ -50,5 +52,7 @@ root.render(
 
           </Routes>
         </Router>
+      </UserProvider>
     </React.StrictMode>
+  </DataProvider>
 );
