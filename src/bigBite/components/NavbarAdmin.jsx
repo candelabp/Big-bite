@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import '../css/navbarAdmin.css';
 import { Link } from 'react-router-dom';
-
+import logoNegro from '../assets/logoNegro.png'
 const NavbarAdmin = () =>{
   return(
     <div>
       <header className="header">
-      <img className="logo-admin" src="src\bigBite\assets\logoNegro.png" alt="Logo-admin" />        <nav className="navbar"></nav>
+      <img className="logo-admin" src={logoNegro} alt="Logo-admin" />       
         <Link className="tituloLinkAdmin" to="/AdminPpal">Inicio</Link>
         <Link className="tituloLinkAdmin" to="/AdminProductos">Productos</Link>
         <Link className="tituloLinkAdmin" to="/Administradores">Administradores</Link>
