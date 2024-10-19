@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import '../css/navbarBlanco.css';
 import { Link } from 'react-router-dom';
 import TotalCart from "./CartContent/TotalCart";
-import { UserContext } from "../../context/userContext";
+import { UserContext } from '../../context/UserContext';
 
 export const NavBarBlanco = () => {
     // Estado para manejar si el menú está abierto o cerrado

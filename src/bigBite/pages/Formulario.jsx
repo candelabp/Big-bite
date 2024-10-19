@@ -6,7 +6,7 @@ import { NavBarBlanco } from '../components/NavbarBlanco';
 import { FirebaseApp } from '../../firebase/config';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../context/userContext';
+import { UserContext } from '../../context/UserContext';
 import { useContext } from 'react';
 
 

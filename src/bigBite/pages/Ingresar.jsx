@@ -5,7 +5,7 @@ import { NavBarBlanco } from '../components/NavbarBlanco';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { FirebaseApp } from '../../firebase/config';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../context/userContext';
+import { UserContext } from '../../context/UserContext';
 
 
 export const Ingresar = () => {
