@@ -97,7 +97,7 @@ export const AdminBebidas = () => {
       <div className="contenedor-admin">
         <header className="admin-header">
           <h1>Administrar Bebidas</h1>
-          <p>Agrega o edita productos en el menú</p>
+          <p>Agrega o edita productos del menú</p>
           <nav className="nav-categorias">
             <ul>
               <li><a href="/AdminProductos">Hamburguesas</a></li>
@@ -170,11 +170,11 @@ export const AdminBebidas = () => {
               )}
             </div>
 
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button ${!isFormComplete() ? 'disabled' : ''}`}>
+            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
               {selectedBebida ? 'Editar Bebida' : 'Registrar Bebida'}
             </button>
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal">
+          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
             Editar Bebida existente
           </button>
         </section>
@@ -183,7 +183,7 @@ export const AdminBebidas = () => {
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <h2>Seleccionar Bebida para Editar</h2>
+              <h2>Selecciona una Bebida</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
                 {bebidas.map((bebida) => (
@@ -196,7 +196,8 @@ export const AdminBebidas = () => {
                     <div className="product-details">
                       <p><strong>{bebida.nombre}</strong></p>
                       <p>Precio: ${bebida.precioCombo}</p>
-                      <button onClick={() => editarBebida(bebida)}>Editar</button>
+                      <button className="btnRegistrarHamburguesa" onClick={() => editarBebida(bebida)}>Editar</button>
+
                     </div>
                   </div>
                 ))}

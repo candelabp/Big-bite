@@ -1,4 +1,6 @@
 import '../css/footer.css';
+import logoBlanco from '../assets/logo blanco.png'
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
     return (
@@ -14,6 +16,9 @@ export const Footer = () => {
                         <div className="footer-link2">
                             <a href="#">Preguntas Frecuentes</a>
                         </div>
+                        <div className="footer-link2">
+                        <Link className="tituloLinkRojo" to="/AdminPpal">Administrador</Link>
+                        </div>
                         <div className="footer-social">
 
                             <a href="#"><i className="bi bi-instagram"></i></a>
@@ -25,7 +30,7 @@ export const Footer = () => {
                 </div>
 
                 <div className="footer-logo">
-                    <img src="src\bigBite\assets\logo blanco.png" alt="Big Bite Logo" />
+                    <img src={logoBlanco}  alt="Big Bite Logo" />
                 </div>
 
                 <hr className="footer-linea" />
@@ -35,7 +40,7 @@ export const Footer = () => {
                     <p> Todos los derechos reservados.</p>
                 </div>
                 <div className="footer-logo">
-                    <img src="src\bigBite\assets\logo blanco.png" alt="Big Bite Logo" />
+                    <img src={logoBlanco} alt="Big Bite Logo" />
                 </div>
             </footer>
 

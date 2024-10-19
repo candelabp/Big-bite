@@ -1,11 +1,20 @@
 import '../css/formulario.css';
 import { useForm } from "react-hook-form";
-import { NavBarBlanco } from '../components/NavBarBlanco';
+
 import { Footer } from '../components/Footer';
+import { NavBarBlanco } from '../components/NavbarBlanco';
+import { FirebaseApp } from '../../firebase/config';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import { useContext } from 'react';
+
 
 export const Formulario = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const password = watch("password");
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   
 
@@ -40,6 +49,20 @@ export const Formulario = () => {
         alert(error.message);
       });
   };
+
+  const handleLogin = async () => {
+    const auth = getAuth(FirebaseApp);
+    const provider = new GoogleAuthProvider();
+    try {
+        const result = await signInWithPopup(auth, provider);
+        // El usuario ha iniciado sesión con éxito
+        console.log('User Info:', result.user);
+        setUser(result.user); 
+        navigate('/')
+    } catch (error) {
+        console.error('Error during sign-in:', error);
+    }
+};
 
   return (
     <div>
@@ -124,6 +147,9 @@ export const Formulario = () => {
           <div className="formulario-buttons">
             <button type="submit" className='boton-enviar'>Registrar</button>
             <button type="button" className='boton-reset' onClick={() => reset()}>Limpiar</button>
+          </div>
+          <div>
+            <button type="button" className='boton-google' onClick={handleLogin}>Registrarse con <i className="bi bi-google"></i>oogle</button>
           </div>
         </form>
       </div>

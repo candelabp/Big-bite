@@ -97,7 +97,7 @@ export const AdminPapas = () => {
       <div className="contenedor-admin">
         <header className="admin-header">
           <h1>Administrar Papas Fritas</h1>
-          <p>Agrega o edita productos en el menú</p>
+          <p>Agrega o edita productos del menú</p>
           <nav className="nav-categorias">
             <ul>
               <li><a href="/AdminProductos">Hamburguesas</a></li>
@@ -168,11 +168,11 @@ export const AdminPapas = () => {
               )}
             </div>
 
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button ${!isFormComplete() ? 'disabled' : ''}`}>
+            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
               {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
             </button>
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal">
+          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
             Editar Papas Fritas existentes
           </button>
         </section>
@@ -181,7 +181,7 @@ export const AdminPapas = () => {
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <h2>Seleccionar Papas Fritas para Editar</h2>
+              <h2>Selecciona unas Papas Fritas</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
                 {papasFritas.map((papasFritas) => (
@@ -194,7 +194,7 @@ export const AdminPapas = () => {
                     <div className="product-details">
                       <p><strong>{papasFritas.nombre}</strong></p>
                       <p>Precio: ${papasFritas.precioCombo}</p>
-                      <button onClick={() => editarPapasFritas(papasFritas)}>Editar</button>
+                      <button className="btnRegistrarHamburguesa" onClick={() => editarPapasFritas(papasFritas)}>Editar</button>
                     </div>
                   </div>
                 ))}

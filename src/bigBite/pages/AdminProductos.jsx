@@ -102,7 +102,7 @@ export const AdminProductos = () => {
       <div className="contenedor-admin">
         <header className="admin-header">
           <h1>Administrar Hamburguesas</h1>
-          <p>Agrega o edita productos en el menú</p>
+          <p>Agrega o edita productos del menú</p>
           <nav className="nav-categorias">
             <ul>
               <li><a href="/AdminProductos">Hamburguesas</a></li>
@@ -168,11 +168,11 @@ export const AdminProductos = () => {
               )}
             </div>
             
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button ${!isFormComplete() ? 'disabled' : ''}`}>
+            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
               {selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}
             </button>
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal">
+          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
             Editar Hamburguesa existente
           </button>
         </section>
@@ -181,7 +181,7 @@ export const AdminProductos = () => {
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <h2>Seleccionar Hamburguesa para Editar</h2>
+              <h2>Selecciona una Hamburguesa</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
                 {hamburguesas.map((hamburguesa) => (
@@ -194,7 +194,7 @@ export const AdminProductos = () => {
                     <div className="product-details">
                       <p><strong>{hamburguesa.nombre}</strong></p>
                       <p>Precio: ${hamburguesa.precioCombo}</p>
-                      <button onClick={() => editarHamburguesa(hamburguesa)}>Editar</button>
+                      <button className="btnRegistrarHamburguesa" onClick={() => editarHamburguesa(hamburguesa)}>Editar</button>
                     </div>
                   </div>
                 ))}

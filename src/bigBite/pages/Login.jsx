@@ -1,9 +1,10 @@
 import '../css/login.css';
 import { Link } from 'react-router-dom';
 import { Footer } from '../components/Footer';
-import { NavBarBlanco } from '../components/NavBarBlanco';
+import { NavBarBlanco } from '../components/NavbarBlanco';
 import { motion } from 'framer-motion';
 
+//hola
 export const Login = () => {
   return (
     <>
