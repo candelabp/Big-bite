@@ -1,3 +1,7 @@
+import logoBlanco from '../assets/logo blanco.png';
+import burger2 from '../assets/burger2.png';
+import burger1 from '../assets/burger1.png';
+import burger3 from '../assets/burger3.png';
 export const CarouselComponent = () => {
   return (
     <>
@@ -7,8 +11,8 @@ export const CarouselComponent = () => {
           <div className="carousel-item active">
             <div className="slider">
               <h2 className="tituloSlider">Mas popular</h2>
-              <img src="src\bigBite\assets\logo blanco.png" alt="" className="imgFondoSlider" />
-              <img src="src\bigBite\assets\burger2.png" alt="" className="imgHamburguesaSlider" />
+              <img src={logoBlanco} alt="" className="imgFondoSlider" />
+              <img src={burger2} alt="" className="imgHamburguesaSlider" />
               <div className="descripcionPedido">
                 <h4 className="tituloProdSlider">Mega Crunch Bate</h4>
                 <p className="textoSliderDescripcion">
@@ -24,8 +28,8 @@ export const CarouselComponent = () => {
           <div className="carousel-item">
             <div className="slider">
               <h2 className="tituloSlider">Mas popular</h2>
-              <img src="src\bigBite\assets\logo blanco.png" alt="" className="imgFondoSlider" />
-              <img src="src\bigBite\assets\burger1.png" alt="" className="imgHamburguesaSlider" />
+              <img src={logoBlanco} alt="" className="imgFondoSlider" />
+              <img src={burger1} alt="" className="imgHamburguesaSlider" />
               <div className="descripcionPedido">
                 <h4 className="tituloProdSlider">Mega Crunch Bate</h4>
                 <p className="textoSliderDescripcion">
@@ -41,8 +45,8 @@ export const CarouselComponent = () => {
           <div className="carousel-item">
             <div className="slider">
               <h2 className="tituloSlider">Mas popular</h2>
-              <img src="src\bigBite\assets\logo blanco.png" alt="" className="imgFondoSlider" />
-              <img src="src\bigBite\assets\burger3.png" alt="" className="imgHamburguesaSlider" />
+              <img src={logoBlanco} alt="" className="imgFondoSlider" />
+              <img src={burger3} alt="" className="imgHamburguesaSlider" />
               <div className="descripcionPedido">
                 <h4 className="tituloProdSlider">Smoky BBQ Bite</h4>
                 <p className="textoSliderDescripcion">

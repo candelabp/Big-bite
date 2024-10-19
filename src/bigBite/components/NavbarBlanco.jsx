@@ -3,6 +3,7 @@ import '../css/navbarBlanco.css';
 import { Link } from 'react-router-dom';
 import TotalCart from "./CartContent/TotalCart";
 import { UserContext } from '../../context/UserContext';
+import logoNegro from '../assets/logoNegro.png'
 
 export const NavBarBlanco = () => {
     // Estado para manejar si el menú está abierto o cerrado
@@ -30,7 +31,7 @@ export const NavBarBlanco = () => {
             </button>
 
             <div className="logoContenedorBlanco">
-                <Link to='/'><img className="logo" src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" /></Link>
+                <Link to='/'><img className="logo" src={logoNegro} alt="Logo" /></Link>
             </div>
 
             <div className="menu-icon-carrito menu-icon">
