@@ -7,6 +7,19 @@ export const AsientosContables = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [tipoAsiento, setTipoAsiento] = useState(null);
 
+    // Definir el plan de cuentas
+    const planDeCuentas = [
+        { codigo: '1.1.1.01', nombre: 'Caja en Efectivo' },
+        { codigo: '1.1.1.02', nombre: 'Banco XX' },
+        { codigo: '1.1.1.03', nombre: 'Mercado Pago' },
+        { codigo: '1.1.1.04', nombre:'Binance'},
+        { codigo: '1.1.3.01', nombre: 'Materias Primas' },
+        { codigo: '2.1.1.01', nombre: 'Proveedores de Insumos' },
+        { codigo: '2.1.2.01', nombre: 'IVA por Pagar' },
+        { codigo: '4.1.1.01', nombre: 'Ventas de Hamburguesas' },
+        { codigo: '4.1.1.02', nombre: 'Ventas de Bebidas' },
+    ];
+
     const onSubmit = (data) => {
         if (!tipoAsiento) {
             alert("Por favor, seleccione el tipo de asiento.");
@@ -31,10 +44,17 @@ export const AsientosContables = () => {
                         <div className="relleno">
                             <div>
                                 <label>Cuenta:</label>
-                                <input
-                                    placeholder="Ingrese el nombre de la cuenta"
-                                    {...register("cuenta", { required: "El nombre de la cuenta es obligatorio" })}
-                                />
+                                {/* Reemplazamos el input por un select */}
+                                <select
+                                    {...register("cuenta", { required: "Debe seleccionar una cuenta" })}
+                                >
+                                    <option value="">Seleccione una cuenta</option>
+                                    {planDeCuentas.map((cuenta) => (
+                                        <option key={cuenta.codigo} value={cuenta.codigo}>
+                                            {cuenta.codigo} - {cuenta.nombre}
+                                        </option>
+                                    ))}
+                                </select>
                                 {errors.cuenta && <span className="error">{errors.cuenta.message}</span>}
                             </div>
 
@@ -49,25 +69,6 @@ export const AsientosContables = () => {
                             </div>
                         </div>
 
-                        <div className="tipo-asiento">
-                            <label>Tipo de Asiento</label>
-                            <div className="botones-tipo">
-                                <button
-                                    type="button"
-                                    className={tipoAsiento === 'Débito' ? 'selected' : ''}
-                                    onClick={() => setTipoAsiento('Débito')}
-                                >
-                                    Débito
-                                </button>
-                                <button
-                                    type="button"
-                                    className={tipoAsiento === 'Crédito' ? 'selected' : ''}
-                                    onClick={() => setTipoAsiento('Crédito')}
-                                >
-                                    Crédito
-                                </button>
-                            </div>
-                        </div>
 
                         <button type="submit" className="btn-submit">Guardar Asiento</button>
                     </form>
