@@ -114,7 +114,7 @@ export const AdminPpal = () => {
 
         <h1 className="lista-productos">Lista de productos</h1>
 
-        <input 
+        <input className='inputs'
           type="text" 
           placeholder="Buscar productos..." 
           value={searchTerm} 

@@ -109,6 +109,11 @@ button:focus {
   background-color: white;
   color: black;
   border: 1px solid black;
+  padding: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 .view-button {
@@ -116,6 +121,11 @@ button:focus {
   margin-bottom: 10px;
   background-color: black;
   color: white;
+  padding: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 /* Parte Inferior */
@@ -161,11 +171,12 @@ button:focus {
   margin-bottom: 5px;
 }
 
-input {
+.bottom-section input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  
 }
 
 .role-options {
@@ -199,10 +210,20 @@ input {
   color: black;
   border: 1px solid black;
   width: 40%;
+  padding: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 .save-button {
   background-color: black;
   width: 40%;
   color: white;
+  padding: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }

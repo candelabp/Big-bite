@@ -34,7 +34,7 @@ export const Login = () => {
           >
             <Link to="/ingresar">
               <motion.button
-                className="login-btn"
+                className="buttons login-btn"
                 whileHover={{ scale: 1.1 }}  // Crece al pasar el cursor sobre el botón
                 whileTap={{ scale: 0.9 }}    // Se reduce al hacer clic
               >
@@ -44,7 +44,7 @@ export const Login = () => {
             
             <Link to="/formulario">
               <motion.button
-                className="register-btn"
+                className="buttons register-btn"
                 whileHover={{ scale: 1.1 }}  // Crece al pasar el cursor sobre el botón
                 whileTap={{ scale: 0.9 }}    // Se reduce al hacer clic
               >
