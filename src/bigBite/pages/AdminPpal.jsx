@@ -3,11 +3,16 @@ import '../css/adminPpal.css';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import NavbarAdmin from '../components/NavbarAdmin';
 import ExcelJS from 'exceljs';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export const AdminPpal = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [hamburguesas, setHamburguesas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [filteredData, setFilteredData] = useState([]);
 
   const exportToExcel = () => {
     const workbook = new ExcelJS.Workbook();
@@ -21,7 +26,7 @@ export const AdminPpal = () => {
     ];
 
     // Agregar datos
-    data.forEach((item) => {
+    filteredData.forEach((item) => {
       worksheet.addRow(item);
     });
 
@@ -36,21 +41,26 @@ export const AdminPpal = () => {
   };
 
   const data = [
-    { name: 'Enero', ingreso: 2400, egreso: 1000},
-    { name: 'Febrero', ingreso: 1398, egreso: 500},
-    { name: 'Marzo', ingreso: 9800, egreso: 4580},
-    { name: 'Abril', ingreso: 3908, egreso: 800},
-    { name: 'Mayo', ingreso: 4800, egreso: 3000},
-    { name: 'Junio', ingreso: 3800, egreso: 1250},
-    { name: 'Julio', ingreso: 5500, egreso: 2340},
-    { name: 'Agosto', ingreso: 7300, egreso: 4780},
-    { name: 'Septiembre', ingreso: 2300, egreso: 678}
+    { name: 'Enero', ingreso: 2400, egreso: 1000, date: new Date(2024, 0, 1) },
+    { name: 'Febrero', ingreso: 1398, egreso: 500, date: new Date(2024, 1, 1) },
+    { name: 'Marzo', ingreso: 9800, egreso: 4580, date: new Date(2024, 2, 1) },
+    { name: 'Abril', ingreso: 3908, egreso: 800, date: new Date(2024, 3, 1) },
+    { name: 'Mayo', ingreso: 4800, egreso: 3000, date: new Date(2024, 4, 1) },
+    { name: 'Junio', ingreso: 3800, egreso: 1250, date: new Date(2024, 5, 1) },
+    { name: 'Julio', ingreso: 5500, egreso: 2340, date: new Date(2024, 6, 1) },
+    { name: 'Agosto', ingreso: 7300, egreso: 4780, date: new Date(2024, 7, 1) },
+    { name: 'Septiembre', ingreso: 2300, egreso: 678, date: new Date(2024, 8, 1) }
   ];
 
-  // El resto de tu código...
-  // Calcular los totales
-  const totalIngresos = data.reduce((acc, curr) => acc + curr.ingreso, 0);
-  const totalEgresos = data.reduce((acc, curr) => acc + curr.egreso, 0);
+  // Filtrar datos según rango de fechas seleccionado
+  useEffect(() => {
+    const filtered = data.filter((item) => item.date >= startDate && item.date <= endDate);
+    setFilteredData(filtered);
+  }, [startDate, endDate]);
+
+  // Calcular los totales basados en los datos filtrados
+  const totalIngresos = filteredData.reduce((acc, curr) => acc + curr.ingreso, 0);
+  const totalEgresos = filteredData.reduce((acc, curr) => acc + curr.egreso, 0);
   const beneficioNeto = totalIngresos - totalEgresos;
 
   useEffect(() => {
@@ -83,9 +93,33 @@ export const AdminPpal = () => {
         <h1>Resumen Financiero</h1>
         <button className="btn-reporte" onClick={exportToExcel}>Exportar a Excel</button>
         
+        {/* Selección de rango de fechas */}
+        <div className="date-range">
+          <p>Filtrar por rango de fechas:</p>
+          <div>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
+              dateFormat="dd/MM/yyyy"
+            />
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+              dateFormat="dd/MM/yyyy"
+            />
+          </div>
+        </div>
+
         {/* Gráfico */}
         <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          <BarChart data={filteredData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
