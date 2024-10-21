@@ -109,6 +109,7 @@ export const AdminProductos = () => {
               <li><a href="/AdminPapas">Papas Fritas</a></li>
               <li><a href="/AdminBebidas">Bebidas</a></li>
               <li><a href="/AdminBiteBox">Bite Box</a></li>
+              <li><a href="/AdminInsumos">Insumos</a></li>
             </ul>
           </nav>
         </header>

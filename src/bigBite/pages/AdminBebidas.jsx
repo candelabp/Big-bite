@@ -104,6 +104,7 @@ export const AdminBebidas = () => {
               <li><a href="/AdminPapas">Papas Fritas</a></li>
               <li><a href="/AdminBebidas">Bebidas</a></li>
               <li><a href="/AdminBiteBox">Bite Box</a></li>
+              <li><a href="/AdminInsumos">Insumos</a></li>
             </ul>
           </nav>
         </header>
@@ -140,10 +141,10 @@ export const AdminBebidas = () => {
               <label className='label-producto'>Marca:</label>
               <select className='input-producto' {...register("marca", { required: "La marca es obligatoria" })}>
                 <option value="">Seleccione una marca</option>
-                <option value="Coca-Cola">Coca-Cola</option>
-                <option value="Sprite">Sprite</option>
-                <option value="Fanta">Fanta</option>
-                <option value="Agua">Agua</option>
+                <option value="COCA-COLA">Coca-Cola</option>
+                <option value="SPRITE">Sprite</option>
+                <option value="FANTA">Fanta</option>
+                <option value="AGUA">Agua</option>
               </select>
               {errors.marca && <span className="error-message">{errors.marca.message}</span>}
             </div>
