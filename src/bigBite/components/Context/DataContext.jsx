@@ -23,7 +23,7 @@ const DataProvider = ({ children }) => {
         const productRepeat = cart.find((element) => element.id === product.id)
 
         if (productRepeat){
-            setCart(cart.map((element) => element.id === product.id ? {...product, cantidad: productRepeat.cantidad+1} : element))
+            setCart(cart.map((element) => element.id === product.id ? {...product, repeticion: productRepeat.repeticion+1} : element))
         } else{
             setCart([...cart,product]);
             console.log(product)

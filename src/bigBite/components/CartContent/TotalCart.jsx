@@ -6,7 +6,7 @@ const TotalCart = () => {
 
     const {cart} = useContext(dataContext);
 
-    const itemsEnCarrito = cart.reduce((acumulador, element) => acumulador + element.cantidad, 0)
+    const itemsEnCarrito = cart.reduce((acumulador, element) => acumulador + element.repeticion, 0)
 
 
   return (
