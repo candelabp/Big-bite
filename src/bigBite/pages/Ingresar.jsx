@@ -1,12 +1,19 @@
 import '../css/ingresar.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Footer } from '../components/Footer';
-import { NavBarBlanco } from '../components/NavBarBlanco';
+import { NavBarBlanco } from '../components/NavbarBlanco';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { FirebaseApp } from '../../firebase/config';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+
 
 export const Ingresar = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,6 +33,15 @@ export const Ingresar = () => {
                 // Si el login es exitoso
                 const message = await response.text();
                 alert(message); // Aquí puedes redirigir a otra página o hacer lo que necesites.
+                // Si el login es exitoso, recibimos un JSON con los datos del usuario
+                const userData = await response.json();
+                // Almacenar los datos en localStorage para persistirlos
+                localStorage.setItem('user', JSON.stringify(userData));
+
+                alert('Inicio de sesión exitoso');
+                // Aquí puedes redirigir a otra página o hacer algo con los datos del usuario.
+                // Ejemplo: redirigir a la página principal
+                // window.location.href = '/home';
             } else {
                 // Si hay un error (por ejemplo, credenciales incorrectas)
                 const error = await response.text();
@@ -36,6 +52,19 @@ export const Ingresar = () => {
         }
     };
 
+    const handleLogin = async () => {
+        const auth = getAuth(FirebaseApp);
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            // El usuario ha iniciado sesión con éxito
+            console.log('User Info:', result.user);
+            setUser(result.user); 
+            navigate('/')
+        } catch (error) {
+            console.error('Error during sign-in:', error);
+        }
+    };
     return (
         <>
             <NavBarBlanco />
@@ -66,6 +95,7 @@ export const Ingresar = () => {
 
                     <div className="btns">
                         <button type="submit" className="login-btn">Ingresar</button>
+                        <button type="button" className='loginGoogle-btn' onClick={handleLogin}>Iniciar con <i className="bi bi-google"></i>oogle</button>
                         <button 
                             className="register-btn" 
                             type="button" 

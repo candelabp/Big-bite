@@ -1,0 +1,48 @@
+*{
+    margin:0;
+    padding: 0;
+   
+} 
+.tituloLinkAdmin{
+        text-decoration: none;
+        position: relative;
+        font-size: 15px;
+        color: black;
+        font-weight:500 ;
+        margin-left: 70px;
+        margin-right: 70px;
+        transition: all 0.3s ease;
+        font-family: "Poppins", sans-serif;
+
+    }
+    .tituloLinkAdmin:hover {
+        color: white; 
+        background-color: #e61603; 
+        padding: 5px 10px; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    }
+    
+    .header{
+        top:0;
+        left: 0;
+        width: 100%;
+        padding:5px 10px;
+        background: rgb(255, 255, 255);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+    }
+.navbar .tituloLinkAdmin{
+    position: relative;
+    font-size: 19px;
+    color: black;
+    font-weight:500 ;
+    margin-left: 40px;
+
+}
+
+.logo-admin{
+    width: 5%;
+}

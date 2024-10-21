@@ -2,10 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 body {
-  font-family: Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
   background-color: #ffffff;
 }
 
@@ -175,10 +176,16 @@ button {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  border: none;
+  border: 0px solid transparent;
   cursor: pointer;
   border-radius: 20%;
   align-self: center;
+  transition-duration: 0.25s;
+}
+
+.cart-button:hover{
+  border: 1.5px solid #ff3b30;
+  background-color: none;
 }
 
 .cart-button img {

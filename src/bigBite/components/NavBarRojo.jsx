@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import '../css/navbarRojo.css';
 import { Link } from 'react-router-dom';
-
+import TotalCart from "./CartContent/TotalCart";
+import { UserContext } from '../../context/UserContext';
+import logoBlanco from '../assets/logo blanco.png'
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
+    const {user} = useContext(UserContext);
 
     // Función para abrir/cerrar el menú
     const abrirMenu = () => {
@@ -15,6 +18,9 @@ export const NavBar = () => {
     const cerrarMenu = () => {
         setMenuAbierto(false);
     };
+    
+
+    
 
     return (
         <nav className="navbarRojo">
@@ -24,11 +30,11 @@ export const NavBar = () => {
             </button>
 
             <div className="logoContenedorRojo">
-                <Link to='/'><img className="logo" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" /></Link>
+                <Link to='/'><img className="logo" src={logoBlanco} alt="Logo" /></Link>
             </div>
 
             <div className="menu-icon-carrito menu-icon">
-                <Link to='/carrito'><button className="btn-amarillo"><i className="bi bi-cart-fill"></i><span className="contadorCarrito">0</span></button></Link>
+                <Link to='/carrito'><button className="btn-amarillo"><i className="bi bi-cart-fill"></i><TotalCart></TotalCart></button></Link>
             </div>
 
             {/* Lista de enlaces de navegación */}
@@ -40,16 +46,26 @@ export const NavBar = () => {
                     </div>
 
                     <div className="logoContenedorRojo">
-                        <img className="logo" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" />
+                        <img className="logo" src={logoBlanco} alt="Logo" />
                     </div>
                 </li>
 
-                <li>
+                {user ? (
+                    <li>
+                    <div className="contPerfil">
+                        <img className="logoLogeado" src={user.photoURL} alt="Logo" />
+                        <h3 className="nombrePerfilLogeado">{user.displayName}</h3>
+                    </div>
+                </li> 
+                ) : (
+                    <li>
                     <div className="contPerfil">
                         <i className="bi bi-person-circle iconLogeadoRojo"></i>
                         <h3 className="nombrePerfilRojo"><Link to="/login" className="inicioSesionRojo">Iniciar Sesion</Link></h3>
                     </div>
                 </li>
+                )}
+
 
                 <li className="contLinks">
                     <i className="bi bi-house-door houseRojo"></i>
@@ -68,23 +84,13 @@ export const NavBar = () => {
                     <Link className="tituloLinkRojo" to="/contacto">Contacto</Link>
                 </li>
 
-                <li className="contLinks">
-                    <div className="group">
-                        <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
-                            <g>
-                                <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-                            </g>
-                        </svg>
-                        <input placeholder="Search" type="search" className="inputRojo" />
-                    </div>
-                </li>
-
+            
                 <li className="redesNav">
                     <i className="bi bi-twitter redesNavRojo"></i>
                     <i className="bi bi-instagram redesNavRojo"></i>
                     <i className="bi bi-facebook redesNavRojo"></i>
                 </li>
-                <img src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" className="imgNavbarRojo" />
+                <img src={logoBlanco} alt="Logo" className="imgNavbarRojo" />
             </ul>
         </nav>
     );

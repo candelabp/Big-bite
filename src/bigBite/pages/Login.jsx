@@ -1,9 +1,10 @@
 import '../css/login.css';
 import { Link } from 'react-router-dom';
 import { Footer } from '../components/Footer';
-import { NavBarBlanco } from '../components/NavBarBlanco';
+import { NavBarBlanco } from '../components/NavbarBlanco';
 import { motion } from 'framer-motion';
 
+//hola
 export const Login = () => {
   return (
     <>
@@ -31,21 +32,25 @@ export const Login = () => {
             animate={{ opacity: 1, scale: 1 }}    // Se hace visible y crece a su tamaño original
             transition={{ duration: 0.4 }}  // Con un retraso de 1 segundo
           >
-            <motion.button
-              className="login-btn"
-              whileHover={{ scale: 1.1 }}  // Crece al pasar el cursor sobre el botón
-              whileTap={{ scale: 0.9 }}    // Se reduce al hacer clic
-            >
-              <Link to="/ingresar" className='textLogin-btn'>Ingresar</Link>
-            </motion.button>
-
-            <motion.button
-              className="register-btn"
-              whileHover={{ scale: 1.1 }}  // Crece al pasar el cursor sobre el botón
-              whileTap={{ scale: 0.9 }}    // Se reduce al hacer clic
-            >
-              <Link to="/formulario" className='textRegister-btn'>Registrarme</Link>
-            </motion.button>
+            <Link to="/ingresar">
+              <motion.button
+                className="login-btn"
+                whileHover={{ scale: 1.1 }}  // Crece al pasar el cursor sobre el botón
+                whileTap={{ scale: 0.9 }}    // Se reduce al hacer clic
+              >
+                <Link to="/ingresar" className='textLogin-btn'>Ingresar</Link>
+              </motion.button>
+            </Link>
+            
+            <Link to="/formulario">
+              <motion.button
+                className="register-btn"
+                whileHover={{ scale: 1.1 }}  // Crece al pasar el cursor sobre el botón
+                whileTap={{ scale: 0.9 }}    // Se reduce al hacer clic
+              >
+                <Link to="/formulario" className='textRegister-btn'>Registrarme</Link>
+              </motion.button>
+            </Link>
           </motion.div>
         </motion.div>
       </div>

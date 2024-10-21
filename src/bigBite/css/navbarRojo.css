@@ -1,321 +1,335 @@
-
-
 /* Navbar */
 
 .navbarRojo {
-    background-color: rgba(223, 28, 28, 1);
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 10;
-    position: sticky;
-    top: 0;
-    height: 10vh;
-    padding: 5px 20px; 
+  background-color: rgba(223, 28, 28, 1);
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+  position: sticky;
+  top: 0;
+  height: 10vh;
+  padding: 5px 20px;
+  font-family: "Poppins", sans-serif;
+
+}
+
+.inicioSesionRojo {
+  color: white;
+}
+
+.imgNavbarRojo {
+  opacity: 0.4;
+}
+
+.logoContenedorRojo {
+  width: 30px;
+}
+
+.logo {
+  width: 100%;
+}
+
+/* Estilos del menú hamburguesa */
+.headerNavBarRojo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contPerfil {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.fotoPerfil {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+}
+
+.nombrePerfilRojo {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 30px;
+  text-decoration: underline;
+  color: white;
+}
+
+.logoLogeado {
+  width: 25%;
+  border-radius: 12px;
+  margin-bottom: 5px;
+}
+
+.nombrePerfilLogeado {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
+}
+
+
+
+.bi-person-circle {
+  font-size: 2.3rem;
+}
+
+.iconPreguntaRojo {
+  color: white;
+}
+
+.iconLogeadoRojo {
+  color: white;
+
+}
+
+.bi-house-door {
+  font-size: 1.8rem;
+  margin-right: 5px;
+}
+
+.houseRojo {
+  color: white;
+}
+
+.iconMenuRestauranteRojo {
+  width: 30px;
+  height: 30px;
+  color: white;
+  margin-right: 5px;
+}
+
+.menu-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 60px;
+}
+
+.bi-list {
+  font-size: 2rem;
+
+}
+
+.btnListRojo {
+  color: white;
+}
+
+.bi-x {
+  font-size: 2rem;
+  margin-left: 30px;
+}
+
+.btnXRojo {
+  color: white;
+}
+
+.bi-question-circle {
+  font-size: 1.6rem;
+  margin-right: 10px;
+}
+
+.contLinks {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+/* Buscador Nav */
+
+/* From Uiverse.io by alexruix */
+.group {
+  display: flex;
+  line-height: 28px;
+  align-items: center;
+  position: relative;
+  max-width: 100%;
+  margin-bottom: 5vh;
+}
+
+.inputRojo {
+  width: 100%;
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  padding-left: 2.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f3f3f4;
+  color: #0d0c22;
+  transition: .3s ease;
+}
+
+.inputRojo::placeholder {
+  color: #9e9ea7;
+}
+
+.inputRojo:focus,
+inputRojo:hover {
+  outline: none;
+  border-color: rgba(234, 76, 137, 0.4);
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
+}
+
+.icon {
+  position: absolute;
+  left: 1rem;
+  fill: #9e9ea7;
+  width: 1rem;
+  height: 1rem;
+}
+
+
+
+
+
+
+
+
+
+/* Ocultar enlaces en pantallas pequeñas */
+
+.tituloLinkRojo {
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+}
+
+
+.btn-amarillo {
+  display: inline-block;
+  background: #FFBA49;
+  color: #333;
+  border-radius: 2em;
+  border: none;
+  padding: 4px 6px;
+  font-size: 0.71rem;
+  font-weight: 700;
+}
+
+.menu-icon {
+  display: block;
+  background: none;
+  border: none;
+}
+
+.nav-linksNR {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #C10000;
+  height: 100%;
+  padding: 10px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  list-style: none;
+  width: 60%;
+  padding-right: 15px;
+}
+
+.nav-linksNR.active {
+  transform: translateX(0)
+}
+
+.redesNav {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.redesNavRojo {
+  color: white;
+}
+
+.redesNav i {
+  font-size: 1.6rem;
+}
+
+.bi-cart-fill {
+  font-size: 1.25rem;
+}
+
+.contadorCarrito {
+  font-size: 1rem;
+  margin-left: 2px;
+}
+
+.menu-icon-carrito {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+
+@media (min-width: 350px) {
+
+  .contLinkss {
+    margin-left: 3vw;
   }
 
-  .inicioSesionRojo{
-    color: white;
-  }
-  
-  .imgNavbarRojo {
-    opacity: 0.4;
-  }
-  
-  .logoContenedorRojo {
-    width: 30px;
-  }
-
-  .logo{
-    width: 100%;
-  }
-  
-  /* Estilos del menú hamburguesa */
-  .headerNavBarRojo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .contPerfil {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-  
   .fotoPerfil {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
+    width: 65px;
+    height: 65px;
   }
-  
+
   .nombrePerfilRojo {
-    font-size: 1rem;
-    text-align: center;
-    margin-bottom: 30px;
-    text-decoration: underline;
-    color: white;
+    font-size: 1.3rem;
   }
 
-  
-
-  .bi-person-circle{
-    font-size: 2.3rem;
+  .nav-linkss li a {
+    font-size: 20px;
   }
 
-  .iconPreguntaRojo{
-    color: white;
-  }
-
-  .iconLogeadoRojo{
-    color: white;
-
-  }
-  
-  .bi-house-door {
-    font-size: 1.8rem;
-    margin-right: 5px;
-  }
-
-  .houseRojo{
-    color: white;
-  }
-  
-  .iconMenuRestauranteRojo {
-    width: 30px;
-    height: 30px;
-    color: white;
-    margin-right: 5px;
-  }
-  
-  .menu-icon {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    width: 60px;
-  }
-  
-  .bi-list {
-    font-size: 2rem;
-    
-  }
-
-  .btnListRojo{
-    color: white;
-  }
-  
-  .bi-x {
-    font-size: 2rem;
-    margin-left: 30px;
-  }
-
-  .btnXRojo{
-    color: white;
-  }
-  
   .bi-question-circle {
-    font-size: 1.6rem;
-    margin-right: 10px;
-  }
-  
-  .contLinks {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+    margin-right: 5px;
   }
 
-
-  /* Buscador Nav */
-
-  /* From Uiverse.io by alexruix */ 
-  .group {
-    display: flex;
-    line-height: 28px;
-    align-items: center;
-    position: relative;
-    max-width: 100%;
-    margin-bottom: 5vh;
-   }
-   
-   .inputRojo {
-    width: 100%;
-    height: 40px;
-    line-height: 28px;
-    padding: 0 1rem;
-    padding-left: 2.5rem;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    outline: none;
-    background-color: #f3f3f4;
-    color: #0d0c22;
-    transition: .3s ease;
-   }
-   
-   .inputRojo::placeholder {
-    color: #9e9ea7;
-   }
-   
-   .inputRojo:focus, inputRojo:hover {
-    outline: none;
-    border-color: rgba(234,76,137,0.4);
-    background-color: #fff;
-    box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
-   }
-   
-   .icon {
-    position: absolute;
-    left: 1rem;
-    fill: #9e9ea7;
-    width: 1rem;
-    height: 1rem;
-   }
-   
-   
-   
-   
-   
-   
-
-  
-  
-  /* Ocultar enlaces en pantallas pequeñas */
-
-  .tituloLinkRojo{
-    text-decoration: none;
-    font-size: 18px;
-    color: white;
+  .bi-list {
+    font-size: 2.5rem;
   }
-  
-  
-  .btn-amarillo {
-    display: inline-block;
-    background: #FFBA49;
-    color: #333;
-    border-radius: 2em;
-    border: none;
-    padding: 4px 6px;
-    font-size: 0.71rem;
-    font-weight: 700;
-  }
-  
-  .menu-icon {
-    display: block;
-    background: none;
-    border: none;
-  }
-  
+}
+
+@media (min-width: 480px) {
+
   .nav-linksNR {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #C10000;
-    height: 100%;
-    padding: 10px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    list-style: none;
-    width: 60%;
-    padding-right: 15px;
-  }
-  
-  .nav-linksNR.active {
-    transform: translateX(0)
-  }
-  
-  .redesNav {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-  }
-
-  .redesNavRojo{
-    color: white;
-  }
-  
-  .redesNav i {
-    font-size: 1.6rem;
-  }
-
-  .bi-cart-fill{
-    font-size: 1.25rem;
-  }
-
-  .contadorCarrito{
-    font-size: 1rem;
-    margin-left: 2px;
-  }
-
-  .menu-icon-carrito{
-    display: flex;
-    justify-content: center;
-  }
-
-
-  
-
-
-  @media (min-width: 350px) {
-
-    .contLinkss{
-      margin-left: 3vw;
-    }
-
-    .fotoPerfil {
-        width: 65px;
-        height: 65px;
-      }
-    
-      .nombrePerfilRojo {
-        font-size: 1.3rem;
-      }
-    
-      .nav-linkss li a {
-        font-size: 20px;
-      }
-    
-      .bi-question-circle {
-        margin-right: 5px;
-      }
-    
-      .bi-list {
-        font-size: 2.5rem;
-      }
-  }
-
-  @media (min-width: 480px) {
-
-    .nav-linksNR {
-      width: auto;
+    width: auto;
   }
 
 }
 
 
 
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
 
-    
 
-    .bi-question-circle,
-    .bi-house-door,
-    .ri-restaurant-line {
-      font-size: 2rem;
-      margin-right: 15px;
-      margin-left: 15px;
-    }
 
-    .nav-links{
-      padding-right: 30px;
-    }
-  
-
-  
-  
-    .bi-x {
-      font-size: 3rem;
-    }
+  .bi-question-circle,
+  .bi-house-door,
+  .ri-restaurant-line {
+    font-size: 2rem;
+    margin-right: 15px;
+    margin-left: 15px;
   }
+
+  .nav-links {
+    padding-right: 30px;
+  }
+
+
+
+
+  .bi-x {
+    font-size: 3rem;
+  }
+}

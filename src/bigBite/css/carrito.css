@@ -1,148 +1,263 @@
 
 .resumencompra {
-    padding-bottom: 20px;
+    margin: 0px;
+    margin-left: 2.3vh;
+    bottom: 0px;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.division2{
+    width: 100%;
 }
 
 .linea { 
-    width: 280px;
-    padding: 1.8px;
-    color: #FFBA49;
+    color: #ff9d00;
     border-radius: 10px;
+    border: 1px solid #ff9d00;
+    margin: 10px;
 }
 
+
 .contenedor{
-    padding: 50px;
+    padding: 2.5vh;
 }
   
 .section {
     display: flex;
     justify-content: space-between;
+    width: 90%;
+    margin-bottom: 5px;
+    padding: 0px 10px;
+}
+
+.nombreArticuloCarrito{
+    width: 20vh;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .divimg {
     background-color: #ece6f09c;
-    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
     border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
   
 .imgburger {
-    margin-top: 30px;
     width: 100%;
+}
+
+.contOpcionesCarrito{
+    width: 20vh;
 }
   
 .divinfo {
-    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .divcantidad {
-    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
   
 .btncant {
     padding: 0;
+    margin: 10px;
     width: 28px;
     height: 28px;
 }
   
-.inputcantidad {
-    width: 30px;
+.cantidadCarrito {
     text-align: center;
+    margin: 0px;
 }
   
 .eliminar { 
     padding: 0;
     color: red;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .editar { 
     color: #FFBA49;
+    font-family: "Poppins", sans-serif;
+
 }
   
-/* .divcompra { 
-    margin-right: 200px;
-} */
-  
-.section1 {
+.sectionArticulo {
     display: flex;
     justify-content: space-between;
-    /* padding: 1px 3px 0 3px; */
+    margin-top: 5vh;
 }
   
 .productoscompra { 
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: 20px;
-    border: 2px ridge #ece6f09c;
     width: 100%;
     height: 200%;
-    padding: 30px;
-    margin: 130px 0 0 150px;
+    margin-top: 5vh;
+    font-family: "Poppins", sans-serif;
+
 }
   
 .total { 
     font-weight: bold;
     padding-bottom: 1px;
     background-color: #FFBA49;
-    border-radius: 8px;
+    padding: 0px 10px;
 }
   
 .btnpagar { 
     border-radius: 10px;
     margin-top: 30px;
+    background-color: #C10000;
+    color: white;
+    margin-bottom: 10vh;
 }
   
 .lineagris {
-    display: none;
+    color: #a29fa3;
+    border-radius: 10px;
+    border: 1.5px solid #a29fa3;
+    margin: 10px;
+    width: 60%;
 }
-  
-@media (max-width: 990px){
-    .section1{
-        display: block;
-        justify-content: center;
+
+.celdaCantidad{
+    margin: 0px;
+
+}
+
+
+@media (min-width: 490px) {
+    .nombreArticuloCarrito{
+        width: 35vh;
     }
-  
-    .lineagris { 
-        display: block;
+
+    .contOpcionesCarrito{
+        width: 35vh;
     }
-    
+
+    .btncant{
+        width: 40px;
+    }
+
+    .sectionArticulo {
+        width: 90%;
+        margin: auto;
+        margin-top: 5vh;
+    }
+}
+
+@media (min-width: 550px) {
+    .divimg {
+        width: 130px;
+    }
+}
+
+@media (min-width: 720px) {
+
+    .divimg {
+        width: 150px;
+    }
+
+    .nombreArticuloCarrito{
+        font-size: 1.25rem;
+        width: 60vh;
+    }
+
+    .contOpcionesCarrito{
+        width: 60vh;
+    }
+
     .productoscompra{
-        border: none;
-        margin: 10px 50px 50px 10px;
+        width: 65%;
+        margin: auto;
+        margin-top: 5vh;
     }
+}
+
+@media (min-width: 980px) {
+    .division{
+        display: flex;
+        justify-content: space-between;
+        margin: 0px 5vh;
+    }
+
+    .division2{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .lineagris{
+        display: none;
+    }
+
+    .productoscompra{
+        width: 40%;
+        padding-top: 5vh;
+    }
+
+    .sectionArticulo{
+        width: 50%;
+    }
+
+    .nombreArticuloCarrito, .contOpcionesCarrito{
+        width: 30vh;
+    }
+    
+    .sectionArticulo{
+        width: 65%;
+    }
+
+    .contenedor{
+        margin-bottom: 5vh;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .divimg{
+        width: 220px;
+    }
+
+    .sectionArticulo{
+        width: 80%;
+    }
+
+    .nombreArticuloCarrito, .contOpcionesCarrito{
+        width: 50vh;
+    }
+
+    .nombreArticuloCarrito{
+        font-size: 1.50rem;
+    }
+
+    .eliminar{
+        font-size: 1.25rem;
+    }
+
+    .btncant{
+        width: 50px;
+    }
+
     
 }
   
-@media (max-width: 440px){
-    .btn-amarillo{
-        width: 60px;
-        height: 30px;
-    }
-  
-    .linea { 
-        width: 230px;
-    }
-  
-    .divinfo {
-        font-size: 12px;
-    }
-  
-    .btncant {
-        width: 20px;
-        height: 20px;
-    }
+
     
-    .inputcantidad {
-        width: 20px;
-    }
-     
-    .eliminar {
-        font-size: 12px; 
-        width: 20%;
-    }
-  
-    .editar {
-        margin-left: 20px;
-        font-size: 12px; 
-        width: 20%;
-    }
-    
-}
