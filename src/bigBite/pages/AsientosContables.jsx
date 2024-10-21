@@ -56,7 +56,8 @@ export const AsientosContables = () => {
 
         const asientoData = {
             cuenta: data.cuenta,
-            monto: data.monto
+            monto: data.monto,
+            tipo: data.tipo  // Agregado: tipo (Debe o Haber)
         };
 
         try {
@@ -74,7 +75,7 @@ export const AsientosContables = () => {
                 setShowSuccessMessage(true);
 
                 // Volver a cargar los asientos desde el backend para actualizar la tabla
-                fetchAsientos(); // Ahora la función está disponible aquí también
+                fetchAsientos();
 
                 // Ocultar el mensaje después de 3 segundos
                 setTimeout(() => setShowSuccessMessage(false), 3000);
@@ -130,6 +131,19 @@ export const AsientosContables = () => {
                                 />
                                 {errors.monto && <span className="error">{errors.monto.message}</span>}
                             </div>
+
+                            {/* Selector para Debe o Haber */}
+                            <div>
+                                <label>Tipo:</label>
+                                <select
+                                    {...register("tipo", { required: "Debe seleccionar si es Debe o Haber" })}
+                                >
+                                    <option value="">Seleccione el tipo</option>
+                                    <option value="debe">Debe</option>
+                                    <option value="haber">Haber</option>
+                                </select>
+                                {errors.tipo && <span className="error">{errors.tipo.message}</span>}
+                            </div>
                         </div>
 
                         <button type="submit" className="btn-submit">Guardar Asiento</button>
@@ -145,6 +159,7 @@ export const AsientosContables = () => {
                                 <th>Fecha</th>
                                 <th>Cuenta</th>
                                 <th>Monto</th>
+                                <th>Tipo</th> {/* Nuevo campo para Debe/Haber */}
                             </tr>
                         </thead>
                         <tbody>
@@ -153,7 +168,7 @@ export const AsientosContables = () => {
                                     <td>{asiento.fecha}</td>
                                     <td>{asiento.cuenta.codigo}</td>
                                     <td>{asiento.monto}</td>
-                                    
+                                    <td>{asiento.tipo}</td> {/* Mostrar Debe o Haber */}
                                 </tr>
                             ))}
                         </tbody>
