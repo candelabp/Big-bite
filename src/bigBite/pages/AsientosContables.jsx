@@ -29,17 +29,19 @@ export const AsientosContables = () => {
         fetchCuentas();
     }, []);
 
-    // Función para obtener los asientos desde el backend
+    // Función para obtener los asientos desde el backend (ahora fuera de useEffect)
+    const fetchAsientos = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/asientos');
+            const data = await response.json();
+            setLibroDiario(data);
+        } catch (error) {
+            console.error("Error al obtener los asientos:", error);
+        }
+    };
+
+    // Llamada inicial para obtener los asientos al cargar el componente
     useEffect(() => {
-        const fetchAsientos = async () => {
-            try {
-                const response = await fetch('http://localhost:8080/asientos');
-                const data = await response.json();
-                setLibroDiario(data);
-            } catch (error) {
-                console.error("Error al obtener los asientos:", error);
-            }
-        };
         fetchAsientos();
     }, []);
 
@@ -54,8 +56,7 @@ export const AsientosContables = () => {
 
         const asientoData = {
             cuenta: data.cuenta,
-            monto: data.monto,
-            fecha: new Date().toLocaleDateString() // Guarda la fecha actual
+            monto: data.monto
         };
 
         try {
@@ -73,7 +74,7 @@ export const AsientosContables = () => {
                 setShowSuccessMessage(true);
 
                 // Volver a cargar los asientos desde el backend para actualizar la tabla
-                fetchAsientos();
+                fetchAsientos(); // Ahora la función está disponible aquí también
 
                 // Ocultar el mensaje después de 3 segundos
                 setTimeout(() => setShowSuccessMessage(false), 3000);
@@ -150,7 +151,7 @@ export const AsientosContables = () => {
                             {libroDiario.map((asiento, index) => (
                                 <tr key={index}>
                                     <td>{asiento.fecha}</td>
-                                    <td>{asiento.cuenta}</td>
+                                    <td>{asiento.cuenta.codigo}</td>
                                     <td>{asiento.monto}</td>
                                     
                                 </tr>
