@@ -37,7 +37,17 @@ select {
   border-radius: 5px;
 }
 
+.content-buttons-adminProducts {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-column: span 2;
+  gap: 20px;
+}
+
 .btnRegistrarHamburguesa{
+  width: 400px;
   grid-column: span 2;
   padding: 10px;
   background-color: #DF1C1C;
@@ -49,6 +59,22 @@ select {
 
 .btnRegistrarHamburguesa:hover {
   background-color: #a10606;
+}
+
+.btnModal{
+  width: 400px;
+  padding: 10px;
+  background-color: rgb(236, 158, 31);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;  
+  display: flex;
+  justify-content: center;
+}
+
+.btnModal:hover {
+  background-color: rgb(184, 122, 22);
 }
 
 .btnRegistrarHamburguesa.disabled {

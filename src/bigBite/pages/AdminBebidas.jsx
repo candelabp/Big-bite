@@ -171,13 +171,17 @@ export const AdminBebidas = () => {
               )}
             </div>
 
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
-              {selectedBebida ? 'Editar Bebida' : 'Registrar Bebida'}
-            </button>
+            <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
+              
+              <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
+                {selectedBebida ? 'Editar Bebida' : 'Registrar Bebida'}
+              </button>
+              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+                Editar Bebida existente
+              </button>
+
+            </div>
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
-            Editar Bebida existente
-          </button>
         </section>
 
         {/* Modal para seleccionar bebidas */}
