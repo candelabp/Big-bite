@@ -1,10 +1,13 @@
 import '../css/asientosContables.css';
 import NavbarAdmin from '../components/NavbarAdmin';
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const AsientosContables = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    
+    // Estado para almacenar las cuentas traídas del backend
+    const [planDeCuentas, setPlanDeCuentas] = useState([]);
     
     // Estado para almacenar los asientos contables en el libro diario
     const [libroDiario, setLibroDiario] = useState([]);
@@ -12,45 +15,35 @@ export const AsientosContables = () => {
     // Estado para mostrar el aviso de que se ingresó un nuevo asiento
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-    // Definir el plan de cuentas con su naturaleza (Débito/Crédito)
-    const planDeCuentas = [
-        { codigo: '1.1.1.01', nombre: 'Efectivo', naturaleza: 'Débito' },
-        { codigo: '1.1.1.02', nombre: 'Banco XX', naturaleza: 'Débito' },
-        { codigo: '1.1.1.03', nombre: 'Plataformas de Pago Mercado Pago', naturaleza: 'Débito' },
-        { codigo: '1.1.1.04', nombre: 'Plataformas de Pago Binance', naturaleza: 'Débito' },
-        { codigo: '1.1.2.01', nombre: 'Deudores por venta', naturaleza: 'Débito' },
-        { codigo: '1.1.3.01', nombre: 'Materias Primas', naturaleza: 'Débito' },
-        { codigo: '1.1.3.02', nombre: 'Productos Terminados', naturaleza: 'Débito' },
-        { codigo: '1.2.1.1.01', nombre: 'Equipos de Cocina', naturaleza: 'Débito' },
-        { codigo: '1.2.1.1.02', nombre: 'Depreciación Acumulada Equipos de Cocina', naturaleza: 'Crédito' },
-        { codigo: '1.2.1.1.03', nombre: 'Mobiliario', naturaleza: 'Débito' },
-        { codigo: '1.2.1.1.04', nombre: 'Depreciación Acumulada Mobiliario', naturaleza: 'Crédito' },
-        { codigo: '1.2.1.2.01', nombre: 'Vehículos para Delivery', naturaleza: 'Débito' },
-        { codigo: '1.2.1.2.02', nombre: 'Depreciación Acumulada Vehículos delivery', naturaleza: 'Crédito' },
-        { codigo: '2.1.1.01', nombre: 'Proveedores', naturaleza: 'Crédito' },
-        { codigo: '2.1.1.02', nombre: 'Acreedores Varios', naturaleza: 'Crédito' },
-        { codigo: '2.1.2.01', nombre: 'IVA a Pagar', naturaleza: 'Crédito' },
-        { codigo: '2.1.2.02', nombre: 'Ingresos Brutos a pagar', naturaleza: 'Crédito' },
-        { codigo: '2.2.1.01', nombre: 'Préstamos Bancarios', naturaleza: 'Crédito' },
-        { codigo: '3.1.1.01', nombre: 'Capital Social', naturaleza: 'Crédito' },
-        { codigo: '3.2.1.01', nombre: 'Resultado del Ejercicio', naturaleza: 'Crédito' },
-        { codigo: '3.2.1.02', nombre: 'Resultados Acumulados', naturaleza: 'Crédito' },
-        { codigo: '4.1.1.01', nombre: 'Ventas de Hamburguesas', naturaleza: 'Crédito' },
-        { codigo: '4.1.1.02', nombre: 'Ventas de Bebidas', naturaleza: 'Crédito' },
-        { codigo: '4.1.1.03', nombre: 'Ventas de Otros Productos (Postres, Extras)', naturaleza: 'Crédito' },
-        { codigo: '5.1.1', nombre: 'Costo de Mercadería Vendida', naturaleza: 'Débito' },
-        { codigo: '5.2.1', nombre: 'Sueldos del Personal de Cocina', naturaleza: 'Débito' },
-        { codigo: '5.2.2', nombre: 'Cargas sociales', naturaleza: 'Débito' },
-        { codigo: '5.2.3', nombre: 'Consumo de Energía, Agua, Gas', naturaleza: 'Débito' },
-        { codigo: '5.2.4', nombre: 'Depreciación Bienes de Uso', naturaleza: 'Débito' },
-        { codigo: '5.3.1', nombre: 'Sueldos Personal (Cocina y Administración)', naturaleza: 'Débito' },
-        { codigo: '5.3.2', nombre: 'Cargas sociales', naturaleza: 'Débito' },
-        { codigo: '5.3.3', nombre: 'Alquiler', naturaleza: 'Débito' },
-        { codigo: '5.3.4', nombre: 'Servicios Públicos (Internet, Agua, Gas, Electricidad)', naturaleza: 'Débito' },
-        { codigo: '6.1', nombre: 'Comisiones de Plataformas de Delivery (PedidosYa, Rappi)', naturaleza: 'Débito' },
-    ];
+    // Función para obtener las cuentas desde el backend
+    useEffect(() => {
+        const fetchCuentas = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/cuentas');
+                const data = await response.json();
+                setPlanDeCuentas(data);
+            } catch (error) {
+                console.error("Error al obtener las cuentas:", error);
+            }
+        };
+        fetchCuentas();
+    }, []);
 
-    const onSubmit = (data) => {
+    // Función para obtener los asientos desde el backend
+    useEffect(() => {
+        const fetchAsientos = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/asientos');
+                const data = await response.json();
+                setLibroDiario(data);
+            } catch (error) {
+                console.error("Error al obtener los asientos:", error);
+            }
+        };
+        fetchAsientos();
+    }, []);
+
+    const onSubmit = async (data) => {
         const cuentaSeleccionada = planDeCuentas.find(cuenta => cuenta.codigo === data.cuenta);
         const tipoAsiento = cuentaSeleccionada ? cuentaSeleccionada.naturaleza : null;
 
@@ -60,21 +53,39 @@ export const AsientosContables = () => {
         }
 
         const asientoData = {
-            ...data,
+            cuenta: data.cuenta,
+            monto: data.monto,
             tipoAsiento,
             fecha: new Date().toLocaleDateString() // Guarda la fecha actual
         };
 
-        // Agrega el asiento al libro diario
-        setLibroDiario([...libroDiario, asientoData]);
+        try {
+            // Enviar el asiento al backend
+            const response = await fetch('http://localhost:8080/asientos/agregar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(asientoData),
+            });
 
-        // Mostrar el mensaje de éxito
-        setShowSuccessMessage(true);
+            if (response.ok) {
+                // Mostrar el mensaje de éxito
+                setShowSuccessMessage(true);
 
-        // Ocultar el mensaje después de 3 segundos
-        setTimeout(() => setShowSuccessMessage(false), 3000);
+                // Volver a cargar los asientos desde el backend para actualizar la tabla
+                fetchAsientos();
 
-        reset();
+                // Ocultar el mensaje después de 3 segundos
+                setTimeout(() => setShowSuccessMessage(false), 3000);
+
+                reset();
+            } else {
+                alert("Error al guardar el asiento.");
+            }
+        } catch (error) {
+            console.error("Error al guardar el asiento:", error);
+        }
     };
 
     return (
@@ -97,7 +108,6 @@ export const AsientosContables = () => {
                         <div className="relleno">
                             <div>
                                 <label>Cuenta:</label>
-                                {/* Reemplazamos el input por un select */}
                                 <select
                                     {...register("cuenta", { required: "Debe seleccionar una cuenta" })}
                                 >
