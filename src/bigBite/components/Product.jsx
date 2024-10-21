@@ -1,30 +1,41 @@
-import React, { useContext } from 'react'
-import { dataContext } from './Context/DataContext'
+import React, { useContext, useEffect, useState } from 'react';
+import { dataContext } from './Context/DataContext';
 import '../css/menu.css';
-import ShopingCart from '../assets/shopping-cart.png';
-import { div } from 'framer-motion/client';
+import ShoppingCart from '../assets/shopping-cart.png';
 
 const Product = () => {
-
     const { data, agregarCarrito } = useContext(dataContext);
+    // const { agregarCarrito } = useContext(dataContext);
+    // const [data, setData] = useState([]);
 
-    
+    // useEffect(() => {
+    //     const fetchProducts = async () => {
+    //         try {
+    //             const response = await fetch('http://localhost:8080/productos');
+    //             const products = await response.json();
+    //             setData(products);
+    //         } catch (error) {
+    //             console.error('Error fetching products:', error);
+    //         }
+    //     };
 
-    
-  return (
-    data.map((product) =>{
-        return(
-            <div className="product-card" key={product.id}>
-                <h3>{product.name}</h3>
-                <img src={product.img} alt={product.name} />
-                <h3>${product.price}</h3>
-                <button className="cart-button" onClick={() => agregarCarrito(product)}>
-                    <img src={ShopingCart} alt="" /> 
-                </button>
-            </div>
-        ) 
-    })
-  )
-}
+    //     fetchProducts();
+    // }, []); // El array vacío asegura que se ejecute solo una vez al montar el componente.
 
-export default Product
+    return (
+        <div className="product-list">
+            {data.map((product) => (
+                <div className="product-card" key={product.id}>
+                    <h3>{product.nombre}</h3>
+                    <img src={product.urlImagen} alt={product.nombre} />
+                    <h3>${product.precio}</h3>
+                    <button className="cart-button" onClick={() => agregarCarrito(product)}>
+                        <img src={ShoppingCart} alt="Agregar al carrito" />
+                    </button>
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default Product;

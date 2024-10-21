@@ -16,7 +16,7 @@ const DataProvider = ({ children }) => {
     }, [cart]);
     
     useEffect(() => {
-        axios("data.json").then((respuesta) => setData(respuesta.data));
+        axios("http://localhost:8080/productos").then((respuesta) => setData(respuesta.data));
     }, []);
 
     const agregarCarrito = (product ) =>{
