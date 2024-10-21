@@ -55,7 +55,6 @@ export const AsientosContables = () => {
         const asientoData = {
             cuenta: data.cuenta,
             monto: data.monto,
-            tipoAsiento,
             fecha: new Date().toLocaleDateString() // Guarda la fecha actual
         };
 
@@ -145,7 +144,6 @@ export const AsientosContables = () => {
                                 <th>Fecha</th>
                                 <th>Cuenta</th>
                                 <th>Monto</th>
-                                <th>Tipo de Asiento</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -154,7 +152,7 @@ export const AsientosContables = () => {
                                     <td>{asiento.fecha}</td>
                                     <td>{asiento.cuenta}</td>
                                     <td>{asiento.monto}</td>
-                                    <td>{asiento.tipoAsiento}</td>
+                                    
                                 </tr>
                             ))}
                         </tbody>
