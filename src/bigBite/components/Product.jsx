@@ -15,9 +15,9 @@ const Product = () => {
     data.map((product) =>{
         return(
             <div className="product-card" key={product.id}>
-                <h3>{product.name}</h3>
-                <img src={product.img} alt={product.name} />
-                <h3>${product.price}</h3>
+                <h3>{product.producto.name}</h3>
+                <img src={product.producto.img} alt={product.producto.name} />
+                <h3>${product.producto.price}</h3>
                 <button className="cart-button" onClick={() => agregarCarrito(product)}>
                     <img src={ShopingCart} alt="" /> 
                 </button>
