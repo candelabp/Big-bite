@@ -177,7 +177,7 @@ button {
 /* Para pantallas más grandes de 736px */
 @media (min-width: 736px) {
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Múltiples columnas en pantallas grandes */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Múltiples columnas en pantallas grandes */
     justify-content: center;
   }
 }
