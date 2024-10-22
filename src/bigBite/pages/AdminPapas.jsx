@@ -168,14 +168,20 @@ export const AdminPapas = () => {
                 <p>No hay imagen cargada</p>
               )}
             </div>
+            <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
+                <button onClick={() => setInsumosModalOpen(true)} className="btnModal">
+                  Seleccionar insumos
+                </button>
 
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
-              {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
-            </button>
+              <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
+                {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
+              </button>
+              
+              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+                Editar Papas Fritas existentes
+              </button>
+            </div>          
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
-            Editar Papas Fritas existentes
-          </button>
         </section>
 
         {/* Modal para seleccionar papas fritas */}

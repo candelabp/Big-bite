@@ -111,13 +111,16 @@ export const AdminInsumos = () => {
               </select>
               {errors.unidadMedida && <span className="error-message">{errors.unidadMedida.message}</span>}
             </div>
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
-              {selectedInsumo ? 'Editar Insumo' : 'Registrar Insumo'}
-            </button>
+
+            <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
+              <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
+                {selectedInsumo ? 'Editar Insumo' : 'Registrar Insumo'}
+              </button>
+              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+                Editar Insumo existente
+              </button>
+            </div>
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
-            Editar Insumo existente
-          </button>
         </section>
 
         {/* Modal para seleccionar Insumos */}

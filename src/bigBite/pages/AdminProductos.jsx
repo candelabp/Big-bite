@@ -6,9 +6,12 @@ import NavbarAdmin from '../components/NavbarAdmin';
 export const AdminProductos = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
   const [hamburguesas, setHamburguesas] = useState([]);
+  const [insumos, setInsumos] = useState([]);
   const [selectedHamburguesa, setSelectedHamburguesa] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInsumosModalOpen, setIsInsumosModalOpen] = useState(false);
+  const [selectedInsumos, setSelectedInsumos] = useState([]);
 
   useEffect(() => {
     // Cargar hamburguesas desde el backend
@@ -18,26 +21,73 @@ export const AdminProductos = () => {
       .catch(error => console.error('Error al cargar las hamburguesas:', error));
   }, []);
 
+  const fetchInsumos = () => {
+    fetch('http://localhost:8080/insumos')  // GET al endpoint de insumos
+      .then(response => response.json())
+      .then(data => setInsumos(data))  // Guardar los insumos en el estado
+      .catch(error => console.error('Error al cargar los insumos:', error));
+  };
+
+  // Manejar selección de insumos
+  const handleInsumoSelection = (insumoId, cantidad) => {
+    setSelectedInsumos(prevSelected => {
+        const insumoExists = prevSelected.find(item => item.insumoId === insumoId);
+
+        if (insumoExists) {
+            return prevSelected.map(item =>
+                item.insumoId === insumoId ? { ...item, cantidad: parseInt(cantidad) } : item
+            );
+        }
+
+        if (parseInt(cantidad) > 0) {
+            return [...prevSelected, { insumoId, cantidad: parseInt(cantidad) }];
+        }
+
+        return prevSelected;
+    });
+  };
+
+  const confirmInsumoSelection = () => {
+    // Aquí puedes manejar cualquier lógica adicional antes de cerrar
+    setIsInsumosModalOpen(false);
+  };
+
+  const handleOpenInsumosModal = () => {
+    setIsInsumosModalOpen(true);  // Abrir el modal
+    fetchInsumos();  // Cargar los insumos cuando se abre el modal
+  };
+
   const onSubmit = (data) => {
     // Determina si "disponible" debe ser true o false
-    data.disponible = selectedHamburguesa ? data.disponible : (data.stock > 0);
-
+    data.disponible = selectedHamburguesa ? data.disponible : (data.tiempoPreparacion > 0);
+  
+    // Filtrar insumos que tengan cantidad mayor a 0
+    const detalleInsumos = selectedInsumos
+      .filter(insumo => insumo.cantidad > 0)
+      .map(insumo => ({
+        insumoId: insumo.id,
+        cantidad: parseInt(insumo.cantidad, 10),
+      }));
+  
+    // Añadir la lista de detalleInsumos al objeto de datos que se enviará
+    data.detalleInsumos = detalleInsumos;
+  
     const formData = new FormData();
     formData.append('hamburguesaDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-
+  
     // Agregar la imagen actual si no se ha seleccionado una nueva
     if (selectedHamburguesa && !data.imagenHamburguesa.length) {
       formData.append('imagenHamburguesa', selectedHamburguesa.urlImagen);
     } else if (data.imagenHamburguesa && data.imagenHamburguesa.length > 0) {
       formData.append('imagenHamburguesa', data.imagenHamburguesa[0]);
     }
-
+  
     const url = selectedHamburguesa ?
       `http://localhost:8080/hamburguesas/editar/${selectedHamburguesa.id}` :
       'http://localhost:8080/hamburguesas/agregar';
-
+  
     const method = selectedHamburguesa ? 'PUT' : 'POST';
-
+  
     fetch(url, {
       method: method,
       body: formData
@@ -92,9 +142,11 @@ export const AdminProductos = () => {
 
   // Verifica si todos los campos requeridos están llenos
   const isFormComplete = () => {
-    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'stock', 'tiempoPreparacion'];
-    return requiredFields.every(field => watch(field) !== undefined && watch(field) !== null && watch(field) !== '');
+    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'tiempoPreparacion'];
+    return requiredFields.every(field => watch(field) !== undefined && watch(field) !== null && watch(field) !== '') &&
+        selectedInsumos.some(insumo => insumo.cantidad > 0); // Asegúrate de que haya insumos seleccionados
   };
+
 
   return (
     <>
@@ -113,6 +165,7 @@ export const AdminProductos = () => {
             </ul>
           </nav>
         </header>
+
         <section className="contenedor-formulario">
           <h2>{selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}</h2>
           <form className='form-producto' onSubmit={handleSubmit(onSubmit)}>
@@ -135,11 +188,6 @@ export const AdminProductos = () => {
               <label className='label-producto'>Precio Venta:</label>
               <input className='input-producto' type="number" step="0.01" {...register("precioCombo", { required: "El precio venta es obligatorio" })} />
               {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
-            </div>
-            <div>
-              <label className='label-producto'>Stock:</label>
-              <input className='input-producto' type="number" {...register("stock", { required: "El stock es obligatorio" })} />
-              {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>
             <div>
               <label className='label-producto'>Tiempo de Preparación (minutos):</label>
@@ -168,14 +216,20 @@ export const AdminProductos = () => {
                 <p>No hay imagen cargada</p>
               )}
             </div>
-            
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
-              {selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}
-            </button>
+            <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
+               <button type="button" onClick={handleOpenInsumosModal} className="btnModal">
+                Seleccionar insumos
+                </button>
+              
+              <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
+                {selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}
+              </button>
+              
+              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+                Editar Hamburguesa existente
+              </button>
+            </div>
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
-            Editar Hamburguesa existente
-          </button>
         </section>
 
         {/* Modal para seleccionar hamburguesas */}
@@ -203,6 +257,42 @@ export const AdminProductos = () => {
             </div>
           </div>
         )}
+
+        {/* Modal para seleccionar Insumos */}
+          {isInsumosModalOpen && (
+            <div className="modal">
+              <div className="modal-content">
+                <h2>Selecciona los Insumos</h2>
+                <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
+                <div className="modal-body">
+                  {insumos.map(insumo => (
+                    <div key={insumo.id} className="product-item">
+                      <div className="product-details">
+                        <p><strong>{insumo.nombre}</strong></p>
+                        <p>{insumo.unidadMedida}</p>
+                        {/* Campo para ingresar la cantidad del insumo */}
+                        <input
+                          type="number"
+                          min="0"
+                          placeholder="Cantidad"
+                          onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
+                          className="cantidad-input"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="modal-footer">
+                  <button onClick={() => {
+                    // Aquí puedes manejar la lógica si es necesario antes de cerrar
+                    setIsInsumosModalOpen(false);
+                  }} className="btn-confirmar">
+                    Confirmar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
       </div>
     </>
   );
