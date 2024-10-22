@@ -46,18 +46,17 @@ export const AsientosContables = () => {
     }, []);
 
     const onSubmit = async (data) => {
-        const cuentaSeleccionada = planDeCuentas.find(cuenta => cuenta.codigo === data.cuenta);
-        const tipoAsiento = cuentaSeleccionada ? cuentaSeleccionada.naturaleza : null;
+        const cuentaSeleccionada = planDeCuentas.find(cuenta => cuenta.id === parseInt(data.cuenta, 10));
 
-        if (!tipoAsiento) {
-            alert("Error: No se pudo determinar el tipo de asiento.");
+        if (!cuentaSeleccionada) {
+            alert("Error: La cuenta seleccionada no es válida.");
             return;
         }
 
         const asientoData = {
-            cuenta: data.cuenta,
+            cuenta: cuentaSeleccionada.id, // Enviar el ID numérico de la cuenta
             monto: data.monto,
-            tipo: data.tipo  // Agregado: tipo (Debe o Haber)
+            tipo: data.tipo
         };
 
         try {
@@ -114,7 +113,7 @@ export const AsientosContables = () => {
                                 >
                                     <option value="">Seleccione una cuenta</option>
                                     {planDeCuentas.map((cuenta) => (
-                                        <option key={cuenta.codigo} value={cuenta.codigo}>
+                                        <option key={cuenta.id} value={cuenta.id}>
                                             {cuenta.codigo} - {cuenta.nombre}
                                         </option>
                                     ))}
