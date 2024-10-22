@@ -31,19 +31,19 @@ export const AdminProductos = () => {
   // Manejar selección de insumos
   const handleInsumoSelection = (insumoId, cantidad) => {
     setSelectedInsumos(prevSelected => {
-        const insumoExists = prevSelected.find(item => item.insumoId === insumoId);
-
-        if (insumoExists) {
-            return prevSelected.map(item =>
-                item.insumoId === insumoId ? { ...item, cantidad: parseInt(cantidad) } : item
-            );
-        }
-
-        if (parseInt(cantidad) > 0) {
-            return [...prevSelected, { insumoId, cantidad: parseInt(cantidad) }];
-        }
-
-        return prevSelected;
+      const insumoExists = prevSelected.find(item => item.insumoId === insumoId);
+  
+      if (insumoExists) {
+        return prevSelected.map(item =>
+          item.insumoId === insumoId ? { ...item, cantidad: parseInt(cantidad) } : item
+        );
+      }
+  
+      if (parseInt(cantidad) > 0) {
+        return [...prevSelected, { insumoId, cantidad: parseInt(cantidad) }];
+      }
+  
+      return prevSelected;
     });
   };
 
@@ -58,24 +58,21 @@ export const AdminProductos = () => {
   };
 
   const onSubmit = (data) => {
-    // Determina si "disponible" debe ser true o false
-    data.disponible = selectedHamburguesa ? data.disponible : (data.tiempoPreparacion > 0);
+    // Directly use the checkbox value for "disponible"
+    data.disponible = data.disponible;
   
-    // Filtrar insumos que tengan cantidad mayor a 0
     const detalleInsumos = selectedInsumos
       .filter(insumo => insumo.cantidad > 0)
       .map(insumo => ({
-        insumoId: insumo.id,
+        insumoId: insumo.insumoId,
         cantidad: parseInt(insumo.cantidad, 10),
       }));
   
-    // Añadir la lista de detalleInsumos al objeto de datos que se enviará
     data.detalleInsumos = detalleInsumos;
   
     const formData = new FormData();
     formData.append('hamburguesaDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
   
-    // Agregar la imagen actual si no se ha seleccionado una nueva
     if (selectedHamburguesa && !data.imagenHamburguesa.length) {
       formData.append('imagenHamburguesa', selectedHamburguesa.urlImagen);
     } else if (data.imagenHamburguesa && data.imagenHamburguesa.length > 0) {
@@ -104,6 +101,7 @@ export const AdminProductos = () => {
         reset();
         setSelectedHamburguesa(null);
         setImagePreview(null);
+        setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
         return fetch('http://localhost:8080/hamburguesas')
           .then(response => response.json())
           .then(data => setHamburguesas(data));
@@ -195,13 +193,10 @@ export const AdminProductos = () => {
               {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
             </div>
 
-            {/* Casilla disponible que solo aparece al editar */}
-            {selectedHamburguesa && (
-              <div>
-                <label className='label-producto'>Disponible:</label>
-                <input type="checkbox" {...register("disponible")} />
-              </div>
-            )}
+            <div>
+              <label className='label-producto'>Disponible:</label>
+              <input type="checkbox" {...register("disponible")} />
+            </div>
 
             <div>
               <label className='label-producto'>Imagen:</label>
@@ -259,13 +254,17 @@ export const AdminProductos = () => {
         )}
 
         {/* Modal para seleccionar Insumos */}
-          {isInsumosModalOpen && (
-            <div className="modal">
-              <div className="modal-content">
-                <h2>Selecciona los Insumos</h2>
-                <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
-                <div className="modal-body">
-                  {insumos.map(insumo => (
+        {isInsumosModalOpen && (
+          <div className="modal">
+            <div className="modal-content">
+              <h2>Selecciona los Insumos</h2>
+              <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
+              <div className="modal-body">
+                {insumos.map(insumo => {
+                  const selectedInsumo = selectedInsumos.find(item => item.insumoId === insumo.id);
+                  const cantidad = selectedInsumo ? selectedInsumo.cantidad : 0;
+
+                  return (
                     <div key={insumo.id} className="product-item">
                       <div className="product-details">
                         <p><strong>{insumo.nombre}</strong></p>
@@ -275,24 +274,23 @@ export const AdminProductos = () => {
                           type="number"
                           min="0"
                           placeholder="Cantidad"
+                          value={cantidad}
                           onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
                           className="cantidad-input"
                         />
                       </div>
                     </div>
-                  ))}
-                </div>
-                <div className="modal-footer">
-                  <button onClick={() => {
-                    // Aquí puedes manejar la lógica si es necesario antes de cerrar
-                    setIsInsumosModalOpen(false);
-                  }} className="btn-confirmar">
-                    Confirmar
-                  </button>
-                </div>
+                  );
+                })}
+              </div>
+              <div className="modal-footer">
+                <button onClick={confirmInsumoSelection} className="btn-confirmar">
+                  Confirmar
+                </button>
               </div>
             </div>
-          )}
+          </div>
+        )}
       </div>
     </>
   );
