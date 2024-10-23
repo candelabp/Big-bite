@@ -32,6 +32,11 @@ export const AdminBiteBox = () => {
       .catch(error => console.error('Error al cargar las bebidas:', error));
   }, []);
 
+  const handleEditBiteBoxes = (e) => {
+    e.preventDefault(); 
+    setIsModalOpen(true); 
+  };
+
   const onSubmit = (data) => {
     // Determina si "disponible" debe ser true o false
     data.disponible = selectedBiteBox ? data.disponible : (data.stock > 0);
@@ -208,7 +213,7 @@ export const AdminBiteBox = () => {
               <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
                 {selectedBiteBox ? 'Editar BiteBox' : 'Registrar Bite Box'}
               </button>
-              <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
+              <button type="button" onClick={handleEditBiteBoxes} className="btnRegistrarHamburguesa">
                 Editar BiteBox existente
               </button>
             </div>

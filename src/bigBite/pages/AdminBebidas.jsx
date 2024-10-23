@@ -18,6 +18,11 @@ export const AdminBebidas = () => {
       .catch(error => console.error('Error al cargar las bebidas:', error));
   }, []);
 
+  const handleEditBebidas = (e) => {
+    e.preventDefault(); 
+    setIsModalOpen(true); 
+  };
+
   const onSubmit = (data) => {
     // Asignar tiempo de preparación 0 automáticamente
     data.tiempoPreparacion = 0;
@@ -174,7 +179,7 @@ export const AdminBebidas = () => {
               <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
                 {selectedBebida ? 'Editar Bebida' : 'Registrar Bebida'}
               </button>
-              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+              <button type="button" onClick={handleEditBebidas} className="btnRegistrarHamburguesa">
                 Editar Bebida existente
               </button>
 

@@ -57,6 +57,11 @@ export const AdminPapas = () => {
     fetchInsumos();  // Cargar los insumos cuando se abre el modal
   };
 
+  const handleEditPapasFritas = (e) => {
+    e.preventDefault(); 
+    setIsModalOpen(true); 
+  };
+
   const onSubmit = (data) => {
     data.disponible = data.disponible;
   
@@ -228,7 +233,7 @@ export const AdminPapas = () => {
                 {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
               </button>
               
-              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+              <button type="button" onClick={handleEditPapasFritas} className="btnRegistrarHamburguesa">
                 Editar Papas Fritas existentes
               </button>
             </div>          

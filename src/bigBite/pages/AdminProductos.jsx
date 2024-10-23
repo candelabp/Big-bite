@@ -57,6 +57,11 @@ export const AdminProductos = () => {
     fetchInsumos();  // Cargar los insumos cuando se abre el modal
   };
 
+  const handleEditHamburguesa = (e) => {
+    e.preventDefault(); // Evita el envío del formulario
+    setIsModalOpen(true); // Abre el modal para seleccionar hamburguesas existentes
+  };
+
   const onSubmit = (data) => {
     data.disponible = data.disponible;
   
@@ -232,7 +237,7 @@ export const AdminProductos = () => {
                 {selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}
               </button>
               
-              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+              <button type="button" onClick={handleEditHamburguesa} className="btnRegistrarHamburguesa">
                 Editar Hamburguesa existente
               </button>
             </div>
