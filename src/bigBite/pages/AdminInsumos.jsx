@@ -106,8 +106,9 @@ export const AdminInsumos = () => {
               <label className='label-producto'>Unidad de Medida:</label>
               <select className='input-producto' {...register("unidadMedida", { required: "Selecciona una unidad de medida" })}>
                 <option value="">Seleccionar</option>
-                <option value="UNIDADES">UNIDADES</option>
-                <option value="KG">KG</option>
+                <option value="Unidades">Unidades</option>
+                <option value="Kg">Kg</option>
+                <option value="Gr">Gg</option>
               </select>
               {errors.unidadMedida && <span className="error-message">{errors.unidadMedida.message}</span>}
             </div>

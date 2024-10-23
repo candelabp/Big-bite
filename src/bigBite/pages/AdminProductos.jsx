@@ -58,7 +58,6 @@ export const AdminProductos = () => {
   };
 
   const onSubmit = (data) => {
-    // Directly use the checkbox value for "disponible"
     data.disponible = data.disponible;
   
     const detalleInsumos = selectedInsumos
@@ -118,10 +117,21 @@ export const AdminProductos = () => {
     setValue('descripcion', hamburguesa.descripcion);
     setValue('precio', hamburguesa.precio);
     setValue('precioCombo', hamburguesa.precioCombo);
-    setValue('stock', hamburguesa.stock);
     setValue('tiempoPreparacion', hamburguesa.tiempoPreparacion);
     setValue('disponible', hamburguesa.disponible);
     setImagePreview(hamburguesa.urlImagen || null);
+    
+    // Establecer insumos con sus cantidades
+    if (hamburguesa.detalleInsumos && hamburguesa.detalleInsumos.length > 0) {
+      const insumosConCantidad = hamburguesa.detalleInsumos.map(detalle => ({
+        insumoId: detalle.insumoId,
+        cantidad: detalle.cantidad
+      }));
+      setSelectedInsumos(insumosConCantidad);
+    } else {
+      setSelectedInsumos([]);
+    }
+  
     setIsModalOpen(false);
   };
 
