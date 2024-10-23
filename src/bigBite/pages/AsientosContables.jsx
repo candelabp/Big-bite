@@ -123,7 +123,7 @@ export const AsientosContables = () => {
 
                             <div>
                                 <label>Monto:</label>
-                                <input
+                                <input className='input-asiento'
                                     type="number"
                                     placeholder="Ingrese el monto del asiento"
                                     {...register("monto", { required: "El monto es obligatorio" })}
