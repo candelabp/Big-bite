@@ -28,7 +28,7 @@ const Product = () => {
                 <div className="product-card" key={product.id}>
                     <h3>{product.nombre}</h3>
                     <img src={product.urlImagen} alt={product.nombre} />
-                    <h3 className='precio-card'>${product.precio}</h3>
+                    <h3 className='precio-card'>${product.precioCombo}</h3>
                     <button className="cart-button" onClick={() => agregarCarrito(product)}>
                         <img src={ShoppingCart} alt="Agregar al carrito" />
                     </button>
