@@ -36,18 +36,21 @@ const Product = () => {
                 </div>
             ))}
 
-            {showModal && selectedProduct && (
-                <div className="modal-menu">
-                    <div className="modal-content">
-                        <span className="close-button" onClick={closeModal}>&times;</span>
-                        <h2>{selectedProduct.nombre}</h2>
-                        <img src={selectedProduct.urlImagen} alt={selectedProduct.nombre} />
-                        <p>Descripción: {selectedProduct.descripcion}</p>
-                        <h3>Precio: ${selectedProduct.precio}</h3>
+        {showModal && selectedProduct && (
+            <div className="modal-menu">
+                <div className="modal-content">
+                    <img src={selectedProduct.urlImagen} alt={selectedProduct.nombre} />
+                    <div className="modal-text">
+                        <h3>{selectedProduct.nombre}</h3>
+                        <p> {selectedProduct.descripcion}</p>
+                        <h4>Precio: ${selectedProduct.precio}</h4>
                     </div>
-                    <div className="modal-overlay" onClick={closeModal}></div>
+                    <span className="close-button" onClick={closeModal}>&times;</span>
                 </div>
-            )}
+                <div className="modal-overlay" onClick={closeModal}></div>
+            </div>
+        )}
+
         </div>
     );
 };

@@ -173,7 +173,7 @@ button {
   width: 30px;
   height: 30px;
 }
-/* menu.css */
+/* Estilos del modal */
 .modal-menu {
   position: fixed;
   top: 0;
@@ -191,10 +191,25 @@ button {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  max-width: 500px;
+  max-width: 800px;
   width: 90%;
-  text-align: center;
+  display: flex;
+  gap: 20px;
+  align-items: center;
   position: relative;
+}
+
+.modal-content img {
+  max-width: 40%;
+  max-height: 250px;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+}
+
+.modal-text {
+  flex: 1;
+  text-align: center;
 }
 
 .close-button {
@@ -213,6 +228,17 @@ button {
   height: 100%;
   background-color: transparent;
 }
+
+.modal-content img {
+  max-width: 40%; /* Ajusta el tamaño de la imagen para que ocupe el 40% del ancho del modal */
+    max-height: 250px; /* Limita la altura máxima a 250px */
+  width: auto; /* Mantiene la proporción del ancho */
+  height: auto; /* Mantiene la proporción de la altura */
+  display: block; /* Centra la imagen */
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+  border-radius: 8px; /* Opcional: redondear bordes */
+}
+
 
 /* Para pantallas más grandes de 736px */
 @media (min-width: 736px) {
