@@ -183,13 +183,10 @@ export const AdminBiteBox = () => {
               <label className='label-producto'>¿Contiene juguete?</label>
               <input type="checkbox" {...register("contieneJuguete")} />
             </div>
-            {/* Casilla disponible que solo aparece al editar */}
-            {selectedBiteBox && (
-              <div>
+            <div>
                 <label className='label-producto'>Disponible:</label>
                 <input type="checkbox" {...register("disponible")} />
               </div>
-            )}
             <div>
               <label className='label-producto'>Imagen:</label>
               <input type="file" accept="image/*" {...register("imagen")} onChange={handleImageChange} />
