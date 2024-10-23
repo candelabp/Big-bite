@@ -1,22 +1,44 @@
+/* Estilos principales */
 .titulo-asientos {
     background-color: #DF1C1C;
     color: white;
     text-align: center;
-    margin-bottom: 30px;
-    padding: 50px;
+    margin-bottom: 40px;
+    padding: 40px;
     font-family: "Poppins", sans-serif;
 }
-
+.titulo-asientos.h1 {
+    color: #f7f7f7;
+}
 .formulario-asiento form .relleno {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    align-items: center;
 }
-.formulario-asiento label{
+
+.formulario-asiento label {
     font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    color: #555;
 }
-.formulario-asiento input{
+
+.formulario-asiento input, 
+.formulario-asiento select {
     font-family: "Poppins", sans-serif;
+    padding: 10px;
+    width: 100%;
+    max-width: 350px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.formulario-asiento input:focus, 
+.formulario-asiento select:focus {
+    border-color: #DF1C1C;
+    box-shadow: 0px 2px 8px rgba(223, 28, 28, 0.3);
 }
 
 .tipo-asiento .botones-tipo button {
@@ -26,12 +48,12 @@
     cursor: pointer;
     margin-right: 10px;
     font-family: "Poppins", sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .tipo-asiento .botones-tipo button.selected {
     background-color: #DF1C1C;
     font-weight: bold;
-    font-family: "Poppins", sans-serif;
 }
 
 .error {
@@ -47,20 +69,48 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    margin-top: 20px;
-    margin-left: 40%;
+    margin-top: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-left: auto;
+    margin-right: auto;
 }
-.formulario-contable{
-    grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin: 20px auto;
-  max-width: 600px;
-  display: block;
-  margin-top: 5%;
+
+.btn-submit:hover {
+    background-color: #ff5757;
+    transform: scale(1.05);
 }
+
+.formulario-contable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+/* Estilos para el mensaje de éxito */
+.mensaje-exito {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 18px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Estilos para el libro diario */
 .libro-diario {
-    margin-top: 40px;
-    padding: 20px;
+    margin-top: 60px;
+    padding: 40px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -72,57 +122,53 @@
 }
 
 .libro-diario table {
-    width: 70%;
-    border-collapse: collapse;
-    margin-top: 30px;
-    margin:auto
+    width: 80%;
+    margin: 30px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.libro-diario th, .libro-diario td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    color: #333;
+.libro-diario th, 
+.libro-diario td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
 }
 
 .libro-diario th {
     background-color: #DF1C1C;
     color: white;
     font-weight: bold;
+    font-size: 16px;
 }
 
 .libro-diario tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f7f7f7;
 }
 
 .libro-diario tr:hover {
-    background-color: #ddd;
+    background-color: #ffe5e5;
 }
 
-.libro-diario td {
-    font-size: 14px;
+/* Fuente y tipografía */
+.titulo-asientos h1 {
+    font-size: 2.5rem;
+    color: #333;
 }
 
-.libro-diario th {
-    font-size: 16px;
-    text-align: center;
+.relleno label {
+    font-size: 1rem;
+    color: #555;
 }
 
-.libro-diario table, .libro-diario th, .libro-diario td {
-    border: 1px solid #ddd;
+.relleno input, 
+.relleno select {
+    font-size: 1.1rem;
 }
 
-.libro-diario tr:last-child td {
-    border-bottom: none;
-}
-.mensaje-exito {
-    background-color: #FFBA49;
-    color: white;
-    padding: 10px 20px;
-    margin: 20px 0;
-    border-radius: 5px;
-    text-align: center;
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+/* Navbar estilo sombra */
+.navbar {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
