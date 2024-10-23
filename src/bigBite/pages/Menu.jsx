@@ -33,7 +33,7 @@ export const Menu = () => {
                         </div>
                     </div>
 
-                    <div className="product-grid">
+                    <div >
                         <Product></Product>
                     </div>
 

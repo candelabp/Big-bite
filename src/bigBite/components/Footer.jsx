@@ -1,49 +1,35 @@
-import '../css/footer.css';
-import logoBlanco from '../assets/logo blanco.png'
+import logoBlancoFooter from '../assets/logo_blanco_footer.png'
 import { Link } from 'react-router-dom';
+import '../css/footer.css';
 
 export const Footer = () => {
     return (
         <>
-
-            <footer>
-                <div className="footer-container">
-                    <div className="footer-links">
-                        <a href="#">Términos de Servicio</a>
-                        <a href="#">Políticas de Privacidad</a>
-                    </div>
-                    <div className="footer-link-social">
-                        <div className="footer-link2">
-                            <a href="#">Preguntas Frecuentes</a>
-                        </div>
-                        <div className="footer-link2">
-                        <Link className="tituloLinkRojo" to="/AdminPpal">Administrador</Link>
-                        </div>
-                        <div className="footer-social">
-
-                            <a href="#"><i className="bi bi-instagram"></i></a>
-                            <a href="#"><i className="bi bi-twitter"></i></a>
-                            <a href="#"><i className="bi bi-facebook"></i></a>
-                        </div>
-                    </div>
-
+           <footer>
+                <div className='footer-logo'>
+                    <img src={logoBlancoFooter} alt="Big Bite Logo" />
                 </div>
 
-                <div className="footer-logo">
-                    <img src={logoBlanco}  alt="Big Bite Logo" />
+                <div>
+                    <Link className='footer-links' to='/'>Inicio</Link>
+                    <Link className='footer-links' to=''>Servicios</Link>
+                    <Link className='footer-links' to=''>Terminos</Link>
+                    <Link className='footer-links' to=''>Politicas</Link>
                 </div>
 
-                <hr className="footer-linea" />
+                <div>
+                    <Link to='https://www.instagram.com/?hl=es' target='_blank'><i className="bi bi-instagram footer-redes"></i></Link>
+                    <Link to='https://facebook.com/?locale=es_LA' target='_blank'><i className="bi bi-facebook footer-redes"></i></Link>
+                    <Link to='https://x.com/?lang=es' target='_blank'><i className="bi bi-twitter footer-redes"></i></Link>
+                </div>
 
-                <div className="footer-bottom">
+                <hr className='footer-linea' />
+
+                <div className='footer-bottom'>
                     <p>© 2024 Big Bite Corporation.</p>
                     <p> Todos los derechos reservados.</p>
                 </div>
-                <div className="footer-logo">
-                    <img src={logoBlanco} alt="Big Bite Logo" />
-                </div>
-            </footer>
-
+                </footer>
 
         </>
     )

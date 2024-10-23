@@ -62,7 +62,9 @@
   margin: 0 auto; 
   font-family: "Poppins", sans-serif;
 }
-input[type="text"] {
+
+inputs{
+  
   padding: 10px;
   width: 100%;
   max-width: 300px;
@@ -70,4 +72,5 @@ input[type="text"] {
   display: block;
   border: 1px solid #ccc;
   border-radius: 5px;
+  
 }

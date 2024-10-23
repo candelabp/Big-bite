@@ -125,14 +125,20 @@ button {
 
 
 /*  Productos   */
-
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(1, 1fr); /* Por defecto, una columna para pantallas pequeñas */
   gap: 20px;
+<<<<<<< HEAD
+  margin: 20px auto;
+  width: 90%;
+  padding: 0px 20px;
+ justify-content:center ;
+=======
   margin: 20px 50px 20px 50px;
   /* padding-bottom: 20px; */
   margin-bottom: 20px;
+>>>>>>> main
 }
 
 .product-card {
@@ -147,6 +153,10 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+<<<<<<< HEAD
+}
+
+=======
 
 }
 
@@ -166,26 +176,28 @@ button {
   align-items: center;
 }
 
+>>>>>>> main
 .product-card img {
   height: 200px;
   border-radius: 10px;
   cursor: pointer;
 }
+.precio-card{
+  margin-top: 20px;
+}
 
 .cart-button {
   position: absolute;
-  bottom: 10px;
+  bottom: 23px;
   right: 10px;
   border: 0px solid transparent;
   cursor: pointer;
   border-radius: 20%;
   align-self: center;
+<<<<<<< HEAD
   transition-duration: 0.25s;
-}
-
-.cart-button:hover{
-  border: 1.5px solid #ff3b30;
-  background-color: none;
+=======
+>>>>>>> main
 }
 
 .cart-button img {
@@ -193,26 +205,14 @@ button {
   height: 30px;
 }
 
-
-
-
-
-@media (max-width: 524px) {
-  .menu-buttons {
-    gap: 10px;
-    width: 100%;
-  }
-
-  .product-card h3 {
-    font-size: 3.5vw;
-  }
-
-  .cart-button img {
-    width: 25px;
-    height: 25px;
-  }
-
+/* Para pantallas más grandes de 736px */
+@media (min-width: 736px) {
   .product-grid {
+<<<<<<< HEAD
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Múltiples columnas en pantallas grandes */
+    justify-content: center;
+  }
+=======
     grid-template-columns: repeat(1, 1fr);
     /* 2 columnas en pantallas medianas */
   
@@ -224,6 +224,7 @@ button {
     cursor: pointer;
   }
   
+>>>>>>> main
 }
 
 @media (min-width: 1024px) {
