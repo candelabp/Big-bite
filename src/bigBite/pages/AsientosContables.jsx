@@ -93,7 +93,7 @@ export const AsientosContables = () => {
             <NavbarAdmin />
             <div className="Asientos">
                 <div className="titulo-asientos">
-                    <h1>Registrar asientos contables</h1>
+                    <h1 className='titulo-asiento'>Registrar asientos contables</h1>
                     <p>Complete los campos con la información necesaria</p>
                 </div>
                 <div className="formulario-asiento">

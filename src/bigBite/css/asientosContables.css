@@ -7,12 +7,13 @@
     padding: 40px;
     font-family: "Poppins", sans-serif;
 }
-.titulo-asientos.h1 {
+.titulo-asiento {
     color: #f7f7f7;
 }
 .formulario-asiento form .relleno {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     gap: 20px;
     align-items: center;
 }
@@ -33,6 +34,7 @@
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
+    flex:2;
 }
 
 .formulario-asiento input:focus, 
@@ -155,12 +157,13 @@
 /* Fuente y tipografía */
 .titulo-asientos h1 {
     font-size: 2.5rem;
-    color: #333;
+    color: #ffffff;
 }
 
 .relleno label {
     font-size: 1rem;
     color: #555;
+    flex: 1;
 }
 
 .relleno input, 
