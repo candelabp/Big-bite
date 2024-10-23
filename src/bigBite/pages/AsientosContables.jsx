@@ -2,20 +2,45 @@ import '../css/asientosContables.css';
 import NavbarAdmin from '../components/NavbarAdmin';
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from 'react';
+import ExcelJS from 'exceljs';
 
 export const AsientosContables = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    
-    // Estado para almacenar las cuentas traídas del backend
     const [planDeCuentas, setPlanDeCuentas] = useState([]);
-    
-    // Estado para almacenar los asientos contables en el libro diario
     const [libroDiario, setLibroDiario] = useState([]);
-
-    // Estado para mostrar el aviso de que se ingresó un nuevo asiento
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-    // Función para obtener las cuentas desde el backend
+    const exportToExcel = () => {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Resumen Financiero');
+    
+        worksheet.columns = [
+            { header: 'Fecha', key: 'fecha', width: 15 },
+            { header: 'Cuenta', key: 'cuenta', width: 15 },
+            { header: 'Monto', key: 'monto', width: 15 },
+            { header: 'Tipo', key: 'tipo', width: 15 }
+        ];
+    
+        libroDiario.forEach((item) => {
+            worksheet.addRow({
+                fecha: item.fecha,
+                cuenta: item.cuenta.codigo,
+                monto: item.monto,
+                tipo: item.tipo
+            });
+        });
+    
+        workbook.xlsx.writeBuffer().then((buffer) => {
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'reporte_financiero.xlsx';
+            link.click();
+        }).catch((error) => {
+            console.error("Error al exportar a Excel:", error);
+        });
+    };
+
     useEffect(() => {
         const fetchCuentas = async () => {
             try {
@@ -29,7 +54,6 @@ export const AsientosContables = () => {
         fetchCuentas();
     }, []);
 
-    // Función para obtener los asientos desde el backend (ahora fuera de useEffect)
     const fetchAsientos = async () => {
         try {
             const response = await fetch('http://localhost:8080/asientos');
@@ -40,7 +64,6 @@ export const AsientosContables = () => {
         }
     };
 
-    // Llamada inicial para obtener los asientos al cargar el componente
     useEffect(() => {
         fetchAsientos();
     }, []);
@@ -54,13 +77,12 @@ export const AsientosContables = () => {
         }
 
         const asientoData = {
-            cuenta: cuentaSeleccionada.id, // Enviar el ID numérico de la cuenta
+            cuenta: cuentaSeleccionada.id,
             monto: data.monto,
             tipo: data.tipo
         };
 
         try {
-            // Enviar el asiento al backend
             const response = await fetch('http://localhost:8080/asientos/agregar', {
                 method: 'POST',
                 headers: {
@@ -70,15 +92,9 @@ export const AsientosContables = () => {
             });
 
             if (response.ok) {
-                // Mostrar el mensaje de éxito
                 setShowSuccessMessage(true);
-
-                // Volver a cargar los asientos desde el backend para actualizar la tabla
                 fetchAsientos();
-
-                // Ocultar el mensaje después de 3 segundos
                 setTimeout(() => setShowSuccessMessage(false), 3000);
-
                 reset();
             } else {
                 alert("Error al guardar el asiento.");
@@ -97,7 +113,6 @@ export const AsientosContables = () => {
                     <p>Complete los campos con la información necesaria</p>
                 </div>
                 <div className="formulario-asiento">
-                    {/* Mostrar el mensaje de éxito */}
                     {showSuccessMessage && (
                         <div className="mensaje-exito">
                             ¡Asiento contable ingresado con éxito!
@@ -108,9 +123,7 @@ export const AsientosContables = () => {
                         <div className="relleno">
                             <div>
                                 <label>Cuenta:</label>
-                                <select
-                                    {...register("cuenta", { required: "Debe seleccionar una cuenta" })}
-                                >
+                                <select {...register("cuenta", { required: "Debe seleccionar una cuenta" })}>
                                     <option value="">Seleccione una cuenta</option>
                                     {planDeCuentas.map((cuenta) => (
                                         <option key={cuenta.id} value={cuenta.id}>
@@ -123,20 +136,13 @@ export const AsientosContables = () => {
 
                             <div>
                                 <label>Monto:</label>
-                                <input className='input-asiento'
-                                    type="number"
-                                    placeholder="Ingrese el monto del asiento"
-                                    {...register("monto", { required: "El monto es obligatorio" })}
-                                />
+                                <input className='input-asiento' type="number" placeholder="Ingrese el monto del asiento" {...register("monto", { required: "El monto es obligatorio" })}/>
                                 {errors.monto && <span className="error">{errors.monto.message}</span>}
                             </div>
 
-                            {/* Selector para Debe o Haber */}
                             <div>
                                 <label>Tipo:</label>
-                                <select
-                                    {...register("tipo", { required: "Debe seleccionar si es Debe o Haber" })}
-                                >
+                                <select {...register("tipo", { required: "Debe seleccionar si es Debe o Haber" })}>
                                     <option value="">Seleccione el tipo</option>
                                     <option value="debe">Debe</option>
                                     <option value="haber">Haber</option>
@@ -149,16 +155,16 @@ export const AsientosContables = () => {
                     </form>
                 </div>
 
-                {/* Mostrar tabla del libro diario */}
                 <div className="libro-diario">
                     <h2>Libro Diario</h2>
+                    <button onClick={exportToExcel} className="btn-excel">Descargar reporte</button>
                     <table>
                         <thead>
                             <tr>
                                 <th>Fecha</th>
                                 <th>Cuenta</th>
                                 <th>Monto</th>
-                                <th>Tipo</th> {/* Nuevo campo para Debe/Haber */}
+                                <th>Tipo</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -167,7 +173,7 @@ export const AsientosContables = () => {
                                     <td>{asiento.fecha}</td>
                                     <td>{asiento.cuenta.codigo}</td>
                                     <td>{asiento.monto}</td>
-                                    <td>{asiento.tipo}</td> {/* Mostrar Debe o Haber */}
+                                    <td>{asiento.tipo}</td>
                                 </tr>
                             ))}
                         </tbody>

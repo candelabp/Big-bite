@@ -139,7 +139,7 @@ export const AdminPpal = () => {
           <div className="date-range">
             <p>Filtrar por rango de fechas:</p>
             <div>
-              <DatePicker
+              <DatePicker className='datepicker'
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 selectsStart
@@ -148,6 +148,7 @@ export const AdminPpal = () => {
                 dateFormat="dd/MM/yyyy"
               />
               <DatePicker
+              className='datepicker'
                 selected={endDate}
                 onChange={(date) => setEndDate(date)}
                 selectsEnd

@@ -35,6 +35,9 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     flex:2;
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield; 
 }
 
 .formulario-asiento input:focus, 
@@ -75,8 +78,28 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 5px;
 }
-
+.btn-excel{
+    
+        font-family: "Poppins", sans-serif;
+        background-color: #DF1C1C;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 30px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-left: 44%;
+        margin-right: auto;
+        border-radius: 5px;
+    
+    
+}
+.btn-excel:hover {
+    background-color: #ff5757;
+    transform: scale(1.05);
+}
 .btn-submit:hover {
     background-color: #ff5757;
     transform: scale(1.05);
@@ -92,7 +115,7 @@
     background-color: #fff;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 950px;
 }
 
 /* Estilos para el mensaje de éxito */
