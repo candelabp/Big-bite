@@ -125,11 +125,11 @@ export const AdminProductos = () => {
     setValue('tiempoPreparacion', hamburguesa.tiempoPreparacion);
     setValue('disponible', hamburguesa.disponible);
     setImagePreview(hamburguesa.urlImagen || null);
-    
+  
     // Establecer insumos con sus cantidades
     if (hamburguesa.detalleInsumos && hamburguesa.detalleInsumos.length > 0) {
       const insumosConCantidad = hamburguesa.detalleInsumos.map(detalle => ({
-        insumoId: detalle.insumoId,
+        insumoId: detalle.insumo.id,
         cantidad: detalle.cantidad
       }));
       setSelectedInsumos(insumosConCantidad);
