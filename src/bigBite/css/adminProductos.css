@@ -48,7 +48,8 @@ select, input.input-producto {
 }
 
 .btnRegistrarHamburguesa{
-  width: 100%; /* Botón con ancho total del contenedor */
+  width: 400px;
+  grid-column: span 2;
   padding: 10px;
   background-color: #DF1C1C;
   color: white;
@@ -62,7 +63,7 @@ select, input.input-producto {
 }
 
 .btnModal{
-  width: 100%; /* Botón con ancho total del contenedor */
+  width: 400px; /* Botón con ancho total del contenedor */
   padding: 10px;
   background-color: rgb(236, 158, 31);
   color: white;
@@ -290,3 +291,56 @@ h2 {
 .nav-categorias li a:active {
   color: red; /* Cambiar color de las letras a rojo cuando se hace clic */
 }
+
+/* CHEEEEEEEEEEEEEEEEEEECKBOOOOOOOOOOOOOOOOOX */
+.container-cbx-productos {
+  --input-focus: #DF1C1C;
+  --input-out-of-focus: #ccc;
+  --bg-color: #fff;
+  --bg-color-alt: #666;
+  --main-color: #323232;
+  position: relative;
+  cursor: pointer;
+}
+
+.container-cbx-productos input {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkmark-cbx-productos {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  box-shadow: 4px 4px var(--main-color);
+  background-color: var(--input-out-of-focus);
+  transition: all 0.3s;
+}
+
+.container-cbx-productos input:checked ~ .checkmark-cbx-productos {
+  background-color: var(--input-focus);
+}
+
+.checkmark-cbx-productos:after {
+  content: "";
+  width: 7px;
+  height: 15px;
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  display: none;
+  border: solid var(--bg-color);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.container-cbx-productos input:checked ~ .checkmark-cbx-productos:after {
+  display: block;
+}
+
+
+/* ACA TERMINA EL CHEEEEEEEEEEEEEEEEEEEECKBOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOX */

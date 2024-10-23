@@ -203,10 +203,12 @@ export const AdminProductos = () => {
               {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
             </div>
 
-            <div>
-              <label className='label-producto'>Disponible:</label>
-              <input type="checkbox" {...register("disponible")} />
+            <div className="container-cbx-productos">
+              <span className="label-producto">Disponible:</span>
+              <input type="checkbox" id="disponible" {...register("disponible")} />
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
             </div>
+
 
             <div>
               <label className='label-producto'>Imagen:</label>
@@ -266,7 +268,7 @@ export const AdminProductos = () => {
         {/* Modal para seleccionar Insumos */}
         {isInsumosModalOpen && (
           <div className="products-modal">
-            <div className="modal-content">
+            <div className="products-modal-content">
               <h2>Selecciona los Insumos</h2>
               <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
               <div className="modal-body">

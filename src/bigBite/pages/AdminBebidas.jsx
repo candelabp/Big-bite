@@ -149,9 +149,10 @@ export const AdminBebidas = () => {
               {errors.marca && <span className="error-message">{errors.marca.message}</span>}
             </div>
 
-            <div>
-              <label className='label-producto'>Disponible:</label>
-              <input type="checkbox" {...register("disponible")} />
+            <div className="container-cbx-productos">
+              <span className="label-producto">Disponible:</span>
+              <input type="checkbox" id="disponible" {...register("disponible")} />
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
             </div>
             
             <div>

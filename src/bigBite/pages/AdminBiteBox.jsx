@@ -179,13 +179,16 @@ export const AdminBiteBox = () => {
               {errors.bebida && <span className="error-message">{errors.bebida.message}</span>}
             </div>
             
-            <div>
-              <label className='label-producto'>¿Contiene juguete?</label>
-              <input type="checkbox" {...register("contieneJuguete")} />
+            <div className="container-cbx-productos">
+              <span className="label-producto">¿Contiene juguete?</span>
+              <input type="checkbox" id="contieneJuguete" {...register("contieneJuguete")} />
+              <label htmlFor="contieneJuguete" className="checkmark-cbx-productos"></label>
             </div>
-            <div>
-              <label className='label-producto'>Disponible:</label>
-              <input type="checkbox" {...register("disponible")} />
+
+            <div className="container-cbx-productos">
+              <span className="label-producto">Disponible:</span>
+              <input type="checkbox" id="disponible" {...register("disponible")} />
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
             </div>
             <div>
               <label className='label-producto'>Imagen:</label>
