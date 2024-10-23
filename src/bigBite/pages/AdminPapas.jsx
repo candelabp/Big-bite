@@ -6,9 +6,12 @@ import NavbarAdmin from '../components/NavbarAdmin';
 export const AdminPapas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
   const [papasFritas, setPapasFritas] = useState([]);
+  const [insumos, setInsumos] = useState([]);
   const [selectedPapasFritas, setSelectedPapasFritas] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInsumosModalOpen, setIsInsumosModalOpen] = useState(false);
+  const [selectedInsumos, setSelectedInsumos] = useState([]);
 
   useEffect(() => {
     // Cargar papas fritas desde el backend
@@ -18,46 +21,97 @@ export const AdminPapas = () => {
       .catch(error => console.error('Error al cargar las papas fritas:', error));
   }, []);
 
+  const fetchInsumos = () => {
+    fetch('http://localhost:8080/insumos')  // GET al endpoint de insumos
+      .then(response => response.json())
+      .then(data => setInsumos(data))  // Guardar los insumos en el estado
+      .catch(error => console.error('Error al cargar los insumos:', error));
+  };
+
+  // Manejar selección de insumos
+  const handleInsumoSelection = (insumoId, cantidad) => {
+    setSelectedInsumos(prevSelected => {
+      const insumoExists = prevSelected.find(item => item.insumoId === insumoId);
+  
+      if (insumoExists) {
+        return prevSelected.map(item =>
+          item.insumoId === insumoId ? { ...item, cantidad: parseInt(cantidad) } : item
+        );
+      }
+  
+      if (parseInt(cantidad) > 0) {
+        return [...prevSelected, { insumoId, cantidad: parseInt(cantidad) }];
+      }
+  
+      return prevSelected;
+    });
+  };
+
+  const confirmInsumoSelection = () => {
+    // Aquí puedes manejar cualquier lógica adicional antes de cerrar
+    setIsInsumosModalOpen(false);
+  };
+
+  const handleOpenInsumosModal = () => {
+    setIsInsumosModalOpen(true);  // Abrir el modal
+    fetchInsumos();  // Cargar los insumos cuando se abre el modal
+  };
+
   const onSubmit = (data) => {
-    // Asignar tiempo de preparación 0 automáticamente
-    data.tiempoPreparacion = 0;
-
-    // Determinar si "disponible" debe ser true o false
-    data.disponible = selectedPapasFritas ? data.disponible : (data.stock > 0);
-
+    data.disponible = data.disponible;
+  
+    const detalleInsumos = selectedInsumos
+      .filter(insumo => insumo.cantidad > 0)
+      .map(insumo => ({
+        insumoId: insumo.insumoId,  // Asegúrate de que insumoId esté presente y no sea null
+        cantidad: parseInt(insumo.cantidad, 10),
+      }));
+  
+    data.detalleInsumos = detalleInsumos;
+  
     const formData = new FormData();
     formData.append('papasFritasDTO', new Blob([JSON.stringify(data)], {
       type: 'application/json'
     }));
-
+  
     // Agregar imagen si hay una nueva
-    if (selectedPapasFritas && !data.imagenPapasFritas.length) {
-      formData.append('imagenPapasFritas', selectedPapasFritas.urlImagen);
-    } else if (data.imagenPapasFritas && data.imagenPapasFritas.length > 0) {
+    if (data.imagenPapasFritas && data.imagenPapasFritas.length > 0) {
       formData.append('imagenPapasFritas', data.imagenPapasFritas[0]);
+    } else if (selectedPapasFritas && selectedPapasFritas.urlImagen) {
+      formData.append('imagenPapasFritas', selectedPapasFritas.urlImagen);
     }
-
-    const url = selectedPapasFritas ? 
+  
+    const url = selectedPapasFritas ?
       `http://localhost:8080/papas-fritas/editar/${selectedPapasFritas.id}` :
       'http://localhost:8080/papas-fritas/agregar';
-
+  
     const method = selectedPapasFritas ? 'PUT' : 'POST';
-
+  
     fetch(url, {
       method: method,
       body: formData
     })
-      .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
+      .then(response => {
+        if (!response.ok) {
+          return response.text().then(text => { throw new Error(text); });
+        }
+        return response.text();
+      })
       .then(message => {
+        console.log('Respuesta del servidor:', message);
         alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
         reset();
         setSelectedPapasFritas(null);
         setImagePreview(null);
+        setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
         return fetch('http://localhost:8080/papas-fritas')
           .then(response => response.json())
           .then(data => setPapasFritas(data));
       })
-      .catch(error => alert('Error al enviar los datos'));
+      .catch(error => {
+        console.error('Hubo un error:', error);
+        alert('Error al enviar los datos');
+      });
   };
 
   const editarPapasFritas = (papasFritas) => {
@@ -66,8 +120,8 @@ export const AdminPapas = () => {
     setValue('descripcion', papasFritas.descripcion);
     setValue('precio', papasFritas.precio);
     setValue('precioCombo', papasFritas.precioCombo);
-    setValue('stock', papasFritas.stock);
     setValue('tamanio', papasFritas.tamanio); // Mantén el tamaño
+    setValue('tiempoPreparacion', papasFritas.tiempoPreparacion); // Asegúrate de asignar el tiempo de preparación
     setValue('disponible', papasFritas.disponible);
     setImagePreview(papasFritas.urlImagen || null);
     setIsModalOpen(false); // Cierra el modal al editar
@@ -87,8 +141,9 @@ export const AdminPapas = () => {
   };
 
   const isFormComplete = () => {
-    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'stock', 'tamanio'];
-    return requiredFields.every(field => watch(field));
+    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'tamanio', 'tiempoPreparacion'];
+    return requiredFields.every(field => watch(field) !== undefined && watch(field) !== null && watch(field) !== '') &&
+        selectedInsumos.some(insumo => insumo.cantidad > 0); // Asegúrate de que haya insumos seleccionados
   };
 
   return (
@@ -104,6 +159,7 @@ export const AdminPapas = () => {
               <li><a href="/AdminPapas">Papas Fritas</a></li>
               <li><a href="/AdminBebidas">Bebidas</a></li>
               <li><a href="/AdminBiteBox">Bite Box</a></li>
+              <li><a href="/AdminInsumos">Insumos</a></li>
             </ul>
           </nav>
         </header>
@@ -131,9 +187,13 @@ export const AdminPapas = () => {
               {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
             </div>
             <div>
-              <label className='label-producto'>Stock:</label>
-              <input className='input-producto' type="number" {...register("stock", { required: "El stock es obligatorio" })} />
-              {errors.stock && <span className="error-message">{errors.stock.message}</span>}
+              <label className='label-producto'>Tiempo de Preparación (minutos):</label>
+              <input className='input-producto' type="number" {...register("tiempoPreparacion", { required: "El tiempo de preparación es obligatorio" })} />
+              {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
+            </div>
+            <div>
+              <label className='label-producto'>Disponible:</label>
+              <input type="checkbox" {...register("disponible")} />
             </div>
             <div>
               <label className='label-producto'>Tamaño:</label>
@@ -145,21 +205,11 @@ export const AdminPapas = () => {
               {errors.tamanio && <span className="error-message">{errors.tamanio.message}</span>}
             </div>
 
-            {/* Casilla disponible que solo aparece al editar */}
-            {selectedPapasFritas && (
-              <div>
-                <label className='label-producto'>Disponible:</label>
-                <input type="checkbox" {...register("disponible")} />
-              </div>
-            )}
-
             <div>
               <label className='label-producto'>Imagen:</label>
               <input className='input-producto' type="file" accept="image/*" {...register("imagenPapasFritas")} onChange={handleImageChange} />
             </div>
 
-
-            {/* Previsualización de la imagen */}
             <div className="image-preview">
               {imagePreview ? (
                 <img src={imagePreview} alt="Previsualización" className="imagen-producto" />
@@ -167,17 +217,22 @@ export const AdminPapas = () => {
                 <p>No hay imagen cargada</p>
               )}
             </div>
+            <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
+              <button type="button" onClick={handleOpenInsumosModal} className="btnModal">
+                Seleccionar insumos
+              </button>
 
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
-              {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
-            </button>
+              <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
+                {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
+              </button>
+              
+              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+                Editar Papas Fritas existentes
+              </button>
+            </div>          
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
-            Editar Papas Fritas existentes
-          </button>
         </section>
 
-        {/* Modal para seleccionar papas fritas */}
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
@@ -198,6 +253,43 @@ export const AdminPapas = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {isInsumosModalOpen && (
+          <div className="modal">
+            <div className="modal-content">
+              <h2>Selecciona los Insumos</h2>
+              <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
+              <div className="modal-body">
+                {insumos.map(insumo => {
+                  const selectedInsumo = selectedInsumos.find(item => item.insumoId === insumo.id);
+                  const cantidad = selectedInsumo ? selectedInsumo.cantidad : 0;
+
+                  return (
+                    <div key={insumo.id} className="product-item">
+                      <div className="product-details">
+                        <p><strong>{insumo.nombre}</strong></p>
+                        <p>{insumo.unidadMedida}</p>
+                        <input
+                          type="number"
+                          min="0"
+                          placeholder="Cantidad"
+                          value={cantidad}
+                          onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
+                          className="cantidad-input"
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="modal-footer">
+                <button onClick={confirmInsumoSelection} className="btn-confirmar">
+                  Confirmar
+                </button>
               </div>
             </div>
           </div>

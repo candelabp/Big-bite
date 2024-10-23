@@ -58,3 +58,71 @@
   display: block;
   margin-top: 5%;
 }
+.libro-diario {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.libro-diario h2 {
+    text-align: center;
+    color: #333;
+}
+
+.libro-diario table {
+    width: 70%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    margin:auto
+}
+
+.libro-diario th, .libro-diario td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+.libro-diario th {
+    background-color: #DF1C1C;
+    color: white;
+    font-weight: bold;
+}
+
+.libro-diario tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.libro-diario tr:hover {
+    background-color: #ddd;
+}
+
+.libro-diario td {
+    font-size: 14px;
+}
+
+.libro-diario th {
+    font-size: 16px;
+    text-align: center;
+}
+
+.libro-diario table, .libro-diario th, .libro-diario td {
+    border: 1px solid #ddd;
+}
+
+.libro-diario tr:last-child td {
+    border-bottom: none;
+}
+.mensaje-exito {
+    background-color: #FFBA49;
+    color: white;
+    padding: 10px 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}

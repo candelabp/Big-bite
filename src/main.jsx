@@ -20,6 +20,7 @@ import { AdminProductos } from './bigBite/pages/AdminProductos';
 import { AdminBebidas } from './bigBite/pages/AdminBebidas';
 import { AdminPapas } from './bigBite/pages/AdminPapas';
 import { AdminBiteBox } from './bigBite/pages/AdminBiteBox';
+import { AdminInsumos } from './bigBite/pages/AdminInsumos';
 import { AsientosContables } from './bigBite/pages/AsientosContables';
 import { GestionPedidos } from './bigBite/pages/GestionPedidos';
 import { UserProvider } from './context/UserContext';
@@ -45,6 +46,7 @@ root.render(
             <Route path="/AdminBebidas" element={<AdminBebidas />} />
             <Route path="/AdminPapas" element={<AdminPapas />} />
             <Route path="/AdminBiteBox" element={<AdminBiteBox />} />
+            <Route path="/AdminInsumos" element={<AdminInsumos />} />
             <Route path="/AdminPpal" element={<AdminPpal />} />
             <Route path="/AsientosContables" element={<AsientosContables />} />
             <Route path="/GestionPedidos" element={<GestionPedidos />} />

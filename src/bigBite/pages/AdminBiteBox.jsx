@@ -115,6 +115,7 @@ export const AdminBiteBox = () => {
               <li><a href="/AdminPapas">Papas Fritas</a></li>
               <li><a href="/AdminBebidas">Bebidas</a></li>
               <li><a href="/AdminBiteBox">Bite Box</a></li>
+              <li><a href="/AdminInsumos">Insumos</a></li>
             </ul>
           </nav>
         </header>
@@ -147,6 +148,7 @@ export const AdminBiteBox = () => {
               <input className='input-producto' type="number" {...register("stock", { required: "El stock es obligatorio" })} />
               {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>
+
             <div>
               <label className='label-producto'>Hamburguesa:</label>
               <select className='input-producto' {...register("hamburguesa", { required: "Selecciona una hamburguesa" })}>
@@ -157,6 +159,7 @@ export const AdminBiteBox = () => {
               </select>
               {errors.hamburguesa && <span className="error-message">{errors.hamburguesa.message}</span>}
             </div>
+            
             <div>
               <label className='label-producto'>¿Contiene juguete?</label>
               <input type="checkbox" {...register("contieneJuguete")} />
@@ -181,14 +184,16 @@ export const AdminBiteBox = () => {
                 <p>No hay imagen cargada</p>
               )}
             </div>
-            
-            <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
-              {selectedBiteBox ? 'Editar BiteBox' : 'Registrar Bite Box'}
-            </button>
+
+            <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
+              <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
+                {selectedBiteBox ? 'Editar BiteBox' : 'Registrar Bite Box'}
+              </button>
+              <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
+                Editar BiteBox existente
+              </button>
+            </div>
           </form>
-          <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
-            Editar BiteBox existente
-          </button>
         </section>
 
         {/* Modal para seleccionar BiteBoxes */}
