@@ -126,8 +126,8 @@ export const AdminInsumos = () => {
 
         {/* Modal para seleccionar Insumos */}
         {isModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="products-modal">
+            <div className="products-modal-content">
               <h2>Selecciona un Insumo</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
