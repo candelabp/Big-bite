@@ -175,7 +175,7 @@ h2 {
 }
 
 /* Estilos del modal */
-.modal {
+.products-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -187,11 +187,11 @@ h2 {
   align-items: center;
 }
 
-.modal-content {
+.products-modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  width: 80%;
+  min-width: 400px;
   max-width: 600px;
   position: relative;
   overflow: auto;
@@ -243,9 +243,15 @@ h2 {
 
 .product-details p {
   margin: 0;
-  white-space: nowrap;
+  white-space: normal; /* Permite que el texto se envuelva */
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.product-details p strong {
+  white-space: normal;
+  word-wrap: break-word; 
+  word-break: break-all;
 }
 
 .btn-select {

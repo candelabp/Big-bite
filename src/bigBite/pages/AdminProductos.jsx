@@ -239,8 +239,8 @@ export const AdminProductos = () => {
 
         {/* Modal para seleccionar hamburguesas */}
         {isModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="products-modal">
+            <div className="products-modal-content">
               <h2>Selecciona una Hamburguesa</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
@@ -265,7 +265,7 @@ export const AdminProductos = () => {
 
         {/* Modal para seleccionar Insumos */}
         {isInsumosModalOpen && (
-          <div className="modal">
+          <div className="products-modal">
             <div className="modal-content">
               <h2>Selecciona los Insumos</h2>
               <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
@@ -286,15 +286,14 @@ export const AdminProductos = () => {
                           placeholder="Cantidad"
                           value={cantidad}
                           onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
-                          className="cantidad-input"
+                          className="input-producto"
                         />
                       </div>
                     </div>
+                    
                   );
                 })}
-              </div>
-              <div className="modal-footer">
-                <button onClick={confirmInsumoSelection} className="btn-confirmar">
+                <button onClick={confirmInsumoSelection} className="btnRegistrarHamburguesa">
                   Confirmar
                 </button>
               </div>
