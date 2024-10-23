@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
-import '../css/adminProductos.css';
+import '../css/adminProductos.css';  // Usa el mismo CSS que AdminProductos
 import NavbarAdmin from '../components/NavbarAdmin';
 
-export const AdminProductos = () => {
+export const AdminPapas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
-  const [hamburguesas, setHamburguesas] = useState([]);
+  const [papasFritas, setPapasFritas] = useState([]);
   const [insumos, setInsumos] = useState([]);
-  const [selectedHamburguesa, setSelectedHamburguesa] = useState(null);
+  const [selectedPapasFritas, setSelectedPapasFritas] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInsumosModalOpen, setIsInsumosModalOpen] = useState(false);
   const [selectedInsumos, setSelectedInsumos] = useState([]);
 
   useEffect(() => {
-    // Cargar hamburguesas desde el backend
-    fetch('http://localhost:8080/hamburguesas')
+    // Cargar papas fritas desde el backend
+    fetch('http://localhost:8080/papas-fritas')
       .then(response => response.json())
-      .then(data => setHamburguesas(data))
-      .catch(error => console.error('Error al cargar las hamburguesas:', error));
+      .then(data => setPapasFritas(data))
+      .catch(error => console.error('Error al cargar las papas fritas:', error));
   }, []);
 
   const fetchInsumos = () => {
@@ -63,26 +63,29 @@ export const AdminProductos = () => {
     const detalleInsumos = selectedInsumos
       .filter(insumo => insumo.cantidad > 0)
       .map(insumo => ({
-        insumoId: insumo.insumoId,
+        insumoId: insumo.insumoId,  // Asegúrate de que insumoId esté presente y no sea null
         cantidad: parseInt(insumo.cantidad, 10),
       }));
   
     data.detalleInsumos = detalleInsumos;
   
     const formData = new FormData();
-    formData.append('hamburguesaDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+    formData.append('papasFritasDTO', new Blob([JSON.stringify(data)], {
+      type: 'application/json'
+    }));
   
-    if (selectedHamburguesa && !data.imagenHamburguesa.length) {
-      formData.append('imagenHamburguesa', selectedHamburguesa.urlImagen);
-    } else if (data.imagenHamburguesa && data.imagenHamburguesa.length > 0) {
-      formData.append('imagenHamburguesa', data.imagenHamburguesa[0]);
+    // Agregar imagen si hay una nueva
+    if (data.imagenPapasFritas && data.imagenPapasFritas.length > 0) {
+      formData.append('imagenPapasFritas', data.imagenPapasFritas[0]);
+    } else if (selectedPapasFritas && selectedPapasFritas.urlImagen) {
+      formData.append('imagenPapasFritas', selectedPapasFritas.urlImagen);
     }
   
-    const url = selectedHamburguesa ?
-      `http://localhost:8080/hamburguesas/editar/${selectedHamburguesa.id}` :
-      'http://localhost:8080/hamburguesas/agregar';
+    const url = selectedPapasFritas ?
+      `http://localhost:8080/papas-fritas/editar/${selectedPapasFritas.id}` :
+      'http://localhost:8080/papas-fritas/agregar';
   
-    const method = selectedHamburguesa ? 'PUT' : 'POST';
+    const method = selectedPapasFritas ? 'PUT' : 'POST';
   
     fetch(url, {
       method: method,
@@ -96,14 +99,14 @@ export const AdminProductos = () => {
       })
       .then(message => {
         console.log('Respuesta del servidor:', message);
-        alert(selectedHamburguesa ? 'Edición exitosa' : 'Registro exitoso');
+        alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
         reset();
-        setSelectedHamburguesa(null);
+        setSelectedPapasFritas(null);
         setImagePreview(null);
         setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
-        return fetch('http://localhost:8080/hamburguesas')
+        return fetch('http://localhost:8080/papas-fritas')
           .then(response => response.json())
-          .then(data => setHamburguesas(data));
+          .then(data => setPapasFritas(data));
       })
       .catch(error => {
         console.error('Hubo un error:', error);
@@ -111,28 +114,17 @@ export const AdminProductos = () => {
       });
   };
 
-  const editarHamburguesa = (hamburguesa) => {
-    setSelectedHamburguesa(hamburguesa);
-    setValue('nombre', hamburguesa.nombre);
-    setValue('descripcion', hamburguesa.descripcion);
-    setValue('precio', hamburguesa.precio);
-    setValue('precioCombo', hamburguesa.precioCombo);
-    setValue('tiempoPreparacion', hamburguesa.tiempoPreparacion);
-    setValue('disponible', hamburguesa.disponible);
-    setImagePreview(hamburguesa.urlImagen || null);
-    
-    // Establecer insumos con sus cantidades
-    if (hamburguesa.detalleInsumos && hamburguesa.detalleInsumos.length > 0) {
-      const insumosConCantidad = hamburguesa.detalleInsumos.map(detalle => ({
-        insumoId: detalle.insumoId,
-        cantidad: detalle.cantidad
-      }));
-      setSelectedInsumos(insumosConCantidad);
-    } else {
-      setSelectedInsumos([]);
-    }
-  
-    setIsModalOpen(false);
+  const editarPapasFritas = (papasFritas) => {
+    setSelectedPapasFritas(papasFritas);
+    setValue('nombre', papasFritas.nombre);
+    setValue('descripcion', papasFritas.descripcion);
+    setValue('precio', papasFritas.precio);
+    setValue('precioCombo', papasFritas.precioCombo);
+    setValue('tamanio', papasFritas.tamanio); // Mantén el tamaño
+    setValue('tiempoPreparacion', papasFritas.tiempoPreparacion); // Asegúrate de asignar el tiempo de preparación
+    setValue('disponible', papasFritas.disponible);
+    setImagePreview(papasFritas.urlImagen || null);
+    setIsModalOpen(false); // Cierra el modal al editar
   };
 
   const handleImageChange = (e) => {
@@ -148,20 +140,18 @@ export const AdminProductos = () => {
     }
   };
 
-  // Verifica si todos los campos requeridos están llenos
   const isFormComplete = () => {
-    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'tiempoPreparacion'];
+    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'tamanio', 'tiempoPreparacion'];
     return requiredFields.every(field => watch(field) !== undefined && watch(field) !== null && watch(field) !== '') &&
         selectedInsumos.some(insumo => insumo.cantidad > 0); // Asegúrate de que haya insumos seleccionados
   };
-
 
   return (
     <>
       <NavbarAdmin />
       <div className="contenedor-admin">
         <header className="admin-header">
-          <h1>Administrar Hamburguesas</h1>
+          <h1>Administrar Papas Fritas</h1>
           <p>Agrega o edita productos del menú</p>
           <nav className="nav-categorias">
             <ul>
@@ -173,9 +163,8 @@ export const AdminProductos = () => {
             </ul>
           </nav>
         </header>
-
         <section className="contenedor-formulario">
-          <h2>{selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}</h2>
+          <h2>{selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}</h2>
           <form className='form-producto' onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label className='label-producto'>Nombre:</label>
@@ -189,7 +178,7 @@ export const AdminProductos = () => {
             </div>
             <div>
               <label className='label-producto'>Precio Costo:</label>
-              <input className='input-producto'  type="number" step="0.01" {...register("precio", { required: "El precio costo es obligatorio" })} />
+              <input className='input-producto' type="number" step="0.01" {...register("precio", { required: "El precio costo es obligatorio" })} />
               {errors.precio && <span className="error-message">{errors.precio.message}</span>}
             </div>
             <div>
@@ -202,18 +191,25 @@ export const AdminProductos = () => {
               <input className='input-producto' type="number" {...register("tiempoPreparacion", { required: "El tiempo de preparación es obligatorio" })} />
               {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
             </div>
-
             <div>
               <label className='label-producto'>Disponible:</label>
               <input type="checkbox" {...register("disponible")} />
             </div>
+            <div>
+              <label className='label-producto'>Tamaño:</label>
+              <select className='input-producto' {...register("tamanio", { required: "El tamaño es obligatorio" })}>
+                <option value="">Seleccionar tamaño</option>
+                <option value="MEDIANAS">MEDIANAS</option>
+                <option value="GRANDES">GRANDES</option>
+              </select>
+              {errors.tamanio && <span className="error-message">{errors.tamanio.message}</span>}
+            </div>
 
             <div>
               <label className='label-producto'>Imagen:</label>
-              <input type="file" accept="image/*" {...register("imagenHamburguesa")} onChange={handleImageChange} />
+              <input className='input-producto' type="file" accept="image/*" {...register("imagenPapasFritas")} onChange={handleImageChange} />
             </div>
-            
-            {/* Previsualización de la imagen o mensaje cuando no haya imagen */}
+
             <div className="image-preview">
               {imagePreview ? (
                 <img src={imagePreview} alt="Previsualización" className="imagen-producto" />
@@ -222,39 +218,38 @@ export const AdminProductos = () => {
               )}
             </div>
             <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
-               <button type="button" onClick={handleOpenInsumosModal} className="btnModal">
+              <button type="button" onClick={handleOpenInsumosModal} className="btnModal">
                 Seleccionar insumos
-                </button>
-              
+              </button>
+
               <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
-                {selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}
+                {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
               </button>
               
               <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
-                Editar Hamburguesa existente
+                Editar Papas Fritas existentes
               </button>
-            </div>
+            </div>          
           </form>
         </section>
 
-        {/* Modal para seleccionar hamburguesas */}
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <h2>Selecciona una Hamburguesa</h2>
+              <h2>Selecciona unas Papas Fritas</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
-                {hamburguesas.map((hamburguesa) => (
-                  <div key={hamburguesa.id} className="product-item">
-                    {hamburguesa.urlImagen ? (
-                      <img src={hamburguesa.urlImagen} alt={hamburguesa.nombre} className="product-modal-image" />
+                {papasFritas.map((papasFritas) => (
+                  <div key={papasFritas.id} className="product-item">
+                    {papasFritas.urlImagen ? (
+                      <img src={papasFritas.urlImagen} alt={papasFritas.nombre} className="product-modal-image" />
                     ) : (
                       <img src="/placeholder.jpg" alt="Sin imagen" className="product-modal-image" />
                     )}
                     <div className="product-details">
-                      <p><strong>{hamburguesa.nombre}</strong></p>
-                      <p>Precio: ${hamburguesa.precioCombo}</p>
-                      <button className="btnRegistrarHamburguesa" onClick={() => editarHamburguesa(hamburguesa)}>Editar</button>
+                      <p><strong>{papasFritas.nombre}</strong></p>
+                      <p>Precio: ${papasFritas.precioCombo}</p>
+                      <button className="btnRegistrarHamburguesa" onClick={() => editarPapasFritas(papasFritas)}>Editar</button>
                     </div>
                   </div>
                 ))}
@@ -263,7 +258,6 @@ export const AdminProductos = () => {
           </div>
         )}
 
-        {/* Modal para seleccionar Insumos */}
         {isInsumosModalOpen && (
           <div className="modal">
             <div className="modal-content">
@@ -279,7 +273,6 @@ export const AdminProductos = () => {
                       <div className="product-details">
                         <p><strong>{insumo.nombre}</strong></p>
                         <p>{insumo.unidadMedida}</p>
-                        {/* Campo para ingresar la cantidad del insumo */}
                         <input
                           type="number"
                           min="0"

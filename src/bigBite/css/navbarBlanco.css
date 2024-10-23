@@ -14,6 +14,8 @@
     height: auto;
     padding: 5px 20px; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+    font-family: "Poppins", sans-serif;
+
   }
 
   .inicioSesionBlanco{
@@ -215,7 +217,7 @@
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
     list-style: none;
-    width: 70%;
+    width: 60%;
   }
   
   .nav-linkss.active {
@@ -308,7 +310,7 @@
   @media (min-width: 768px) {
 
     .nav-linkss{
-      width: 35%;
+      width: 30%;
     }
 
 
@@ -339,7 +341,7 @@
     }
 
     .nav-linkss{
-      width: 30%;
+      width: 25%;
     }
   
     .logoContenedorBlanco{

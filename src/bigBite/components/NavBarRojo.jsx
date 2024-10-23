@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import '../css/navbarRojo.css';
 import { Link } from 'react-router-dom';
 import TotalCart from "./CartContent/TotalCart";
-
+import { UserContext } from '../../context/UserContext';
+import logoBlanco from '../assets/logo blanco.png'
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
+    const {user} = useContext(UserContext);
 
     // Función para abrir/cerrar el menú
     const abrirMenu = () => {
@@ -28,7 +30,7 @@ export const NavBar = () => {
             </button>
 
             <div className="logoContenedorRojo">
-                <Link to='/'><img className="logo" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" /></Link>
+                <Link to='/'><img className="logo" src={logoBlanco} alt="Logo" /></Link>
             </div>
 
             <div className="menu-icon-carrito menu-icon">
@@ -44,16 +46,26 @@ export const NavBar = () => {
                     </div>
 
                     <div className="logoContenedorRojo">
-                        <img className="logo" src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" />
+                        <img className="logo" src={logoBlanco} alt="Logo" />
                     </div>
                 </li>
 
-                <li>
+                {user ? (
+                    <li>
+                    <div className="contPerfil">
+                        <img className="logoLogeado" src={user.photoURL} alt="Logo" />
+                        <h3 className="nombrePerfilLogeado">{user.displayName}</h3>
+                    </div>
+                </li> 
+                ) : (
+                    <li>
                     <div className="contPerfil">
                         <i className="bi bi-person-circle iconLogeadoRojo"></i>
                         <h3 className="nombrePerfilRojo"><Link to="/login" className="inicioSesionRojo">Iniciar Sesion</Link></h3>
                     </div>
                 </li>
+                )}
+
 
                 <li className="contLinks">
                     <i className="bi bi-house-door houseRojo"></i>
@@ -78,7 +90,7 @@ export const NavBar = () => {
                     <i className="bi bi-instagram redesNavRojo"></i>
                     <i className="bi bi-facebook redesNavRojo"></i>
                 </li>
-                <img src="src\\bigBite\\assets\\logo blanco.png" alt="Logo" className="imgNavbarRojo" />
+                <img src={logoBlanco} alt="Logo" className="imgNavbarRojo" />
             </ul>
         </nav>
     );

@@ -77,6 +77,24 @@
     font-style: normal;
    
 }
+
+.loginGoogle-btn{
+    background-color: #ff3d3d;
+    color: white;
+    padding: 12px;
+    /*width: 100%;*/
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 2vh;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+   
+}
+
 .register-btn {
     background-color: #FFBA49;
     color: white;
@@ -95,6 +113,9 @@
 }
 
 .login-btn:hover  {
+    background-color: #e32d2d;
+}
+.loginGoogle-btn:hover  {
     background-color: #e32d2d;
 }
  .register-btn:hover {

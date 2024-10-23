@@ -1,40 +1,51 @@
-.formularioContactanos{
+.formularioContactanos {
     display: flex;
     flex-direction: column;
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 15px;
     margin: 5vh 5vh 10vh 5vh;
-    padding: 2.5vh ;
-    gap: 0px
-    ;
+    padding: 2.5vh;
+    gap: 15px;
 }
 
-form .formularioContactanos{
-    gap: 0px;
-}
-
-label .formularioContactanos{
-    width: 100%;
-}
-
-.tituloContactanos{
+.tituloContactanos {
     margin: 5vh 0px 0px 0px;
 }
 
-.contenedorContactanos{
+.textareaContacto {
+    resize: none;
+    min-height: 120px;
+    box-sizing: border-box; /* Corregido aquí */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+}
+
+.contenedorContactanos {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-
-.inputsContactanos{
-    padding: 10px;
-    width: 100%;
-    max-width: 300px;
-    margin: 5px auto;
-    display: block;
+.inputsContactanos {
     border: 1px solid #ccc;
     border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    margin: 5px auto;
+    box-sizing: border-box; /* Asegura que el ancho incluya el padding y borde */
+}
+
+.btnSubmitContacto {
+    border-radius: 10px;
+    margin-top: 30px;
+    background-color: #C10000;
+    color: white;
+    transition-duration: 0.5s;
+}
+
+.btnSubmitContacto:hover {
+    background-color: #970101;
 }

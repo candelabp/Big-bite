@@ -16,14 +16,14 @@ const DataProvider = ({ children }) => {
     }, [cart]);
     
     useEffect(() => {
-        axios("data.json").then((respuesta) => setData(respuesta.data));
+        axios("http://localhost:8080/productos").then((respuesta) => setData(respuesta.data));
     }, []);
 
     const agregarCarrito = (product ) =>{
         const productRepeat = cart.find((element) => element.id === product.id)
 
         if (productRepeat){
-            setCart(cart.map((element) => element.id === product.id ? {...product, cantidad: productRepeat.cantidad+1} : element))
+            setCart(cart.map((element) => element.id === product.id ? {...product, repeticion: productRepeat.repeticion+1} : element))
         } else{
             setCart([...cart,product]);
             console.log(product)

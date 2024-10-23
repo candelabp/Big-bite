@@ -1,5 +1,5 @@
 import { Footer } from '../components/Footer';
-import { NavBarBlanco } from '../components/NavBarBlanco';
+import { NavBarBlanco } from '../components/NavbarBlanco';
 import '../css/menu.css';
 import Product from '../components/Product';
 
@@ -33,7 +33,7 @@ export const Menu = () => {
                         </div>
                     </div>
 
-                    <div className="product-grid">
+                    <div >
                         <Product></Product>
                     </div>
 

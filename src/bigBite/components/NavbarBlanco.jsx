@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import '../css/navbarBlanco.css';
 import { Link } from 'react-router-dom';
 import TotalCart from "./CartContent/TotalCart";
+import { UserContext } from '../../context/UserContext';
+import logoNegro from '../assets/logoNegro.png'
 
 export const NavBarBlanco = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
+    const { user } = useContext(UserContext);
+
 
     // Función para abrir/cerrar el menú
     const abrirMenu = () => {
@@ -17,7 +21,7 @@ export const NavBarBlanco = () => {
         setMenuAbierto(false);
     };
 
-    
+
 
     return (
         <nav className="navbarBlanco">
@@ -27,7 +31,7 @@ export const NavBarBlanco = () => {
             </button>
 
             <div className="logoContenedorBlanco">
-                <Link to='/'><img className="logo" src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" /></Link>
+                <Link to='/'><img className="logo" src={logoNegro} alt="Logo" /></Link>
             </div>
 
             <div className="menu-icon-carrito menu-icon">
@@ -43,16 +47,26 @@ export const NavBarBlanco = () => {
                     </div>
 
                     <div className="logoContenedorBlanco">
-                        <img className="logo" src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" />
+                        <img className="logo" src={logoNegro} alt="Logo" />
                     </div>
                 </li>
 
-                <li>
-                    <div className="contPerfil">
-                        <i className="bi bi-person-circle iconLogeadoNegro"></i>
-                        <h3 className="nombrePerfilNegro"><Link to="/login" className="text-dark">Iniciar Sesion</Link></h3>
-                    </div>
-                </li>
+                {user ? (
+                    <li>
+                        <div className="contPerfil">
+                        <img className="logoLogeado" src={user.photoURL} alt="Logo" />
+                            <h3 className="nombrePerfilNegro">{user.displayName}</h3>
+                        </div>
+                    </li>
+                ) : (
+                    <li>
+                        <div className="contPerfil">
+                            <i className="bi bi-person-circle iconLogeadoNegro"></i>
+                            <h3 className="nombrePerfilNegro"><Link to="/login" className="text-dark">Iniciar Sesion</Link></h3>
+                        </div>
+                    </li>
+                )}
+
 
                 <li className="contLinks">
                     <i className="bi bi-house-door"></i>
@@ -78,7 +92,7 @@ export const NavBarBlanco = () => {
                     <i className="bi bi-facebook"></i>
                 </li>
 
-                <img src="src\\bigBite\\assets\\logoNegro.png" alt="Logo" className="imgNavbar" />
+                <img src={logoNegro} alt="Logo" className="imgNavbar" />
             </ul>
         </nav>
     );
