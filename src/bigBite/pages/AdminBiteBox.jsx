@@ -184,9 +184,9 @@ export const AdminBiteBox = () => {
               <input type="checkbox" {...register("contieneJuguete")} />
             </div>
             <div>
-                <label className='label-producto'>Disponible:</label>
-                <input type="checkbox" {...register("disponible")} />
-              </div>
+              <label className='label-producto'>Disponible:</label>
+              <input type="checkbox" {...register("disponible")} />
+            </div>
             <div>
               <label className='label-producto'>Imagen:</label>
               <input type="file" accept="image/*" {...register("imagen")} onChange={handleImageChange} />

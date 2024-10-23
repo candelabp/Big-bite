@@ -192,10 +192,6 @@ export const AdminPapas = () => {
               {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
             </div>
             <div>
-              <label className='label-producto'>Disponible:</label>
-              <input type="checkbox" {...register("disponible")} />
-            </div>
-            <div>
               <label className='label-producto'>Tamaño:</label>
               <select className='input-producto' {...register("tamanio", { required: "El tamaño es obligatorio" })}>
                 <option value="">Seleccionar tamaño</option>
@@ -203,6 +199,11 @@ export const AdminPapas = () => {
                 <option value="GRANDES">GRANDES</option>
               </select>
               {errors.tamanio && <span className="error-message">{errors.tamanio.message}</span>}
+            </div>
+
+            <div>
+              <label className='label-producto'>Disponible:</label>
+              <input type="checkbox" {...register("disponible")} />
             </div>
 
             <div>

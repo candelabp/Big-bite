@@ -149,13 +149,10 @@ export const AdminBebidas = () => {
               {errors.marca && <span className="error-message">{errors.marca.message}</span>}
             </div>
 
-             {/* Disponible que sale solo al editar */}
-             {selectedBebida && (
-              <div>
-                <label className='label-producto'>Disponible:</label>
-                <input type="checkbox" {...register("disponible")} />
-              </div>
-            )}
+            <div>
+              <label className='label-producto'>Disponible:</label>
+              <input type="checkbox" {...register("disponible")} />
+            </div>
             
             <div>
               <label className='label-producto'>Imagen:</label>
