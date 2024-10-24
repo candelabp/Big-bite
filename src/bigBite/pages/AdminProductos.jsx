@@ -126,19 +126,20 @@ export const AdminProductos = () => {
     setValue('disponible', hamburguesa.disponible);
     setImagePreview(hamburguesa.urlImagen || null);
   
-    // Establecer insumos con sus cantidades
-    if (hamburguesa.detalleInsumos && hamburguesa.detalleInsumos.length > 0) {
-      const insumosConCantidad = hamburguesa.detalleInsumos.map(detalle => ({
+    // Establecer los insumos y sus cantidades
+    if (hamburguesa.insumos && hamburguesa.insumos.length > 0) {
+      const insumosConCantidad = hamburguesa.insumos.map(detalle => ({
         insumoId: detalle.insumo.id,
         cantidad: detalle.cantidad
       }));
-      setSelectedInsumos(insumosConCantidad);
+      setSelectedInsumos(insumosConCantidad);  // Aquí estás cargando los insumos correctamente
     } else {
-      setSelectedInsumos([]);
+      setSelectedInsumos([]);  // Si no hay insumos, limpiamos la selección
     }
   
     setIsModalOpen(false);
   };
+  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -277,29 +278,28 @@ export const AdminProductos = () => {
               <h2>Selecciona los Insumos</h2>
               <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
               <div className="modal-body">
-                {insumos.map(insumo => {
-                  const selectedInsumo = selectedInsumos.find(item => item.insumoId === insumo.id);
-                  const cantidad = selectedInsumo ? selectedInsumo.cantidad : 0;
+              {insumos.map(insumo => {
+                const selectedInsumo = selectedInsumos.find(item => item.insumoId === insumo.id);
+                const cantidad = selectedInsumo ? selectedInsumo.cantidad : 0; // Establece la cantidad si existe, si no, 0
 
-                  return (
-                    <div key={insumo.id} className="product-item">
-                      <div className="product-details">
-                        <p><strong>{insumo.nombre}</strong></p>
-                        <p>{insumo.unidadMedida}</p>
-                        {/* Campo para ingresar la cantidad del insumo */}
-                        <input
-                          type="number"
-                          min="0"
-                          placeholder="Cantidad"
-                          value={cantidad}
-                          onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
-                          className="input-producto"
-                        />
-                      </div>
+                return (
+                  <div key={insumo.id} className="product-item">
+                    <div className="product-details">
+                      <p><strong>{insumo.nombre}</strong></p>
+                      <p>{insumo.unidadMedida}</p>
+                      {/* Campo para ingresar la cantidad del insumo */}
+                      <input
+                        type="number"
+                        min="0"
+                        placeholder="Cantidad"
+                        value={cantidad} // Aquí es donde se muestra la cantidad actual
+                        onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
+                        className="input-producto"
+                      />
                     </div>
-                    
-                  );
-                })}
+                  </div>
+                );
+              })}
                 <button onClick={confirmInsumoSelection} className="btnRegistrarHamburguesa">
                   Confirmar
                 </button>

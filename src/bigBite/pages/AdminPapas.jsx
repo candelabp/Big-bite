@@ -131,8 +131,8 @@ export const AdminPapas = () => {
     setImagePreview(papasFritas.urlImagen || null);
 
     // Establecer insumos con sus cantidades
-    if (papasFritas.detalleInsumos && papasFritas.detalleInsumos.length > 0) {
-      const insumosConCantidad = papasFritas.detalleInsumos.map(detalle => ({
+    if (papasFritas.insumos && papasFritas.insumos.length > 0) {
+      const insumosConCantidad = papasFritas.insumos.map(detalle => ({
         insumoId: detalle.insumo.id,
         cantidad: detalle.cantidad
       }));
