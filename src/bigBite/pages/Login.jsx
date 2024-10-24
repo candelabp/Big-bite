@@ -32,23 +32,22 @@ export const Login = () => {
             animate={{ opacity: 1, scale: 1 }}    // Se hace visible y crece a su tamaño original
             transition={{ duration: 0.4 }}  // Con un retraso de 1 segundo
           >
-            <Link to="/ingresar">
+             <Link to="/ingresar">
               <motion.button
-                className="buttons login-btn"
-                whileHover={{ scale: 1.1 }}  // Crece al pasar el cursor sobre el botón
-                whileTap={{ scale: 0.9 }}    // Se reduce al hacer clic
+              className="buttons login-btn"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <Link to="/ingresar" className='textLogin-btn'>Ingresar</Link>
+                Ingresar
               </motion.button>
             </Link>
-            
             <Link to="/formulario">
               <motion.button
-                className="buttons register-btn"
-                whileHover={{ scale: 1.1 }}  // Crece al pasar el cursor sobre el botón
-                whileTap={{ scale: 0.9 }}    // Se reduce al hacer clic
+              className="buttons register-btn"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <Link to="/formulario" className='textRegister-btn'>Registrarme</Link>
+                Registrarse
               </motion.button>
             </Link>
           </motion.div>

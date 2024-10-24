@@ -2,7 +2,7 @@ import '../css/ingresar.css';
 import { useContext, useState } from 'react';
 import { Footer } from '../components/Footer';
 import { NavBarBlanco } from '../components/NavbarBlanco';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { FirebaseApp } from '../../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
@@ -15,44 +15,8 @@ export const Ingresar = () => {
     const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const loginData = { email, password };
-
-        try {
-            const response = await fetch('http://localhost:8080/usuarios/iniciar-sesion', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(loginData),
-            });
-
-            if (response.ok) {
-                // Si el login es exitoso
-                const message = await response.text();
-                alert(message); // Aquí puedes redirigir a otra página o hacer lo que necesites.
-                // Si el login es exitoso, recibimos un JSON con los datos del usuario
-                const userData = await response.json();
-                // Almacenar los datos en localStorage para persistirlos
-                localStorage.setItem('user', JSON.stringify(userData));
-
-                alert('Inicio de sesión exitoso');
-                // Aquí puedes redirigir a otra página o hacer algo con los datos del usuario.
-                // Ejemplo: redirigir a la página principal
-                // window.location.href = '/home';
-            } else {
-                // Si hay un error (por ejemplo, credenciales incorrectas)
-                const error = await response.text();
-                setErrorMessage(error);
-            }
-        } catch (error) {
-            setErrorMessage(`Error de conexión con el servidor: ${error.message}`);
-        }
-    };
-
-    const handleLogin = async () => {
+    
+    const handleLoginWithGoogle = async () => {
         const auth = getAuth(FirebaseApp);
         const provider = new GoogleAuthProvider();
         try {
@@ -65,12 +29,29 @@ export const Ingresar = () => {
             console.error('Error during sign-in:', error);
         }
     };
+
+    const handleLoginWithEmail = async (e) => {
+        e.preventDefault();
+        const loginData = { email, password };
+        const auth = getAuth(FirebaseApp);
+        try {
+          const result = await signInWithEmailAndPassword(auth, email, password);
+          const user = result.user;
+          console.log('User Info:', user);
+    
+          setUser(user);
+          navigate('/');
+        } catch (error) {
+          console.error('Error during login:', error);
+          alert(error.message);
+        }
+      };
     return (
         <>
             <NavBarBlanco />
 
             <div className='form-container'>
-                <form className="inicio-sesion" onSubmit={handleSubmit}>
+                <form className="inicio-sesion" onSubmit={handleLoginWithEmail}>
                     <label htmlFor="email"><b>Email</b></label>
                     <input
                         type="email"
@@ -95,7 +76,7 @@ export const Ingresar = () => {
 
                     <div className="btns">
                         <button type="submit" className="login-btn">Ingresar</button>
-                        <button type="button" className='loginGoogle-btn' onClick={handleLogin}>Iniciar con <i className="bi bi-google"></i>oogle</button>
+                        <button type="button" className='loginGoogle-btn' onClick={handleLoginWithGoogle}>Iniciar con <i className="bi bi-google"></i>oogle</button>
                         <button 
                             className="register-btn" 
                             type="button" 
