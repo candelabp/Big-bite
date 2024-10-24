@@ -1,0 +1,137 @@
+[
+    {
+        "id": 1,
+        "producto": {
+            "name": "Double Cheddar Smash",
+            "price": 11300,
+            "img": "/src/bigBite/assets/double_cheddar_smash.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 2,
+        "producto": {
+            "name": "Cheesy Deluxe Bite",
+            "price": 13500,
+            "img": "/src/bigBite/assets/cheesy_deluxe_bite.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 3,
+        "producto": {
+            "name": "Smoky BBQ Bite",
+            "price": 12800,
+            "img": "/src/bigBite/assets/smoky_bbq_bite.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 4,
+        "producto": {
+            "name": "Mega Crunch Bite",
+            "price": 10000,
+            "img": "/src/bigBite/assets/mega_crunch_bite.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 5,
+        "producto": {
+            "name": "Triple Thunder Bite",
+            "price": 15000,
+            "img": "/src/bigBite/assets/triple_thunder_bite.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 6,
+        "producto": {
+            "name": "Simple Cheesy Bite",
+            "price": 9800,
+            "img": "/src/bigBite/assets/simple_cheesy_bite.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 7,
+        "producto": {
+            "name": "Little Bite Box",
+            "price": 10000,
+            "img": "/src/bigBite/assets/little_bite_box.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 8,
+        "producto": {
+            "name": "Papas Bite",
+            "price": 5000,
+            "img": "/src/bigBite/assets/papas_bite.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 9,
+        "producto": {
+            "name": "Coca-Cola",
+            "price": 3000,
+            "img": "/src/bigBite/assets/cocacola_chica.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 10,
+        "producto": {
+            "name": "Coca-Cola Zero",
+            "price": 3000,
+            "img": "/src/bigBite/assets/cocacolazero_chica.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 11,
+        "producto": {
+            "name": "Fanta",
+            "price": 3000,
+            "img": "/src/bigBite/assets/fanta_chica.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 12,
+        "producto": {
+            "name": "Fanta Zero",
+            "price": 3000,
+            "img": "/src/bigBite/assets/fantazero_chica.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 13,
+        "producto": {
+            "name": "Fanta Pomelo",
+            "price": 3000,
+            "img": "/src/bigBite/assets/fantapomelo_chica.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 14,
+        "producto": {
+            "name": "Sprite",
+            "price": 3000,
+            "img": "/src/bigBite/assets/sprite_chica.png",
+            "cantidad": 1
+        }
+    },
+    {
+        "id": 15,
+        "producto": {
+            "name": "Sprite Zero",
+            "price": 3000,
+            "img": "/src/bigBite/assets/sprite_chica.png",
+            "cantidad": 1
+        }
+    }
+]

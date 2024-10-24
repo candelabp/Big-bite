@@ -22,6 +22,10 @@
 .contenedor{
     padding: 2.5vh;
 }
+
+.contenedor{
+    padding: 50px;
+}
   
 .section {
     display: flex;
