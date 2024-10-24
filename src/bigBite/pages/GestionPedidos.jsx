@@ -31,6 +31,7 @@ export const GestionPedidos = () => {
                         <p>Lista de todos los pedidos en curso</p>
                         <button type="button" className='btn btn-outline-warning botones'>Ver detalles</button>
                         {/* <button type="button" className='btn btn-dark botones'>Actualizar estado</button> */}
+                        
                     </div>
                     
                     <div>

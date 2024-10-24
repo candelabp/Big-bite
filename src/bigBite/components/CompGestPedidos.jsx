@@ -38,29 +38,32 @@ export const CompGestPedidos = () => {
 
     return (
         <>
-            <div className='infopedidos'>
+            
                 {pedidos.map((pedido) => (
-                    <div key={pedido.id}>
-                        <img src={burger} className='burger' alt="" />
-                        <p className='nrodeorden'>
-                            <b>Orden #{pedido.id}</b>
-                            <br />
-                            Total: ${pedido.subTotal}
-                        </p>
-                        <div className='div-form'>
-                            <form onSubmit={(e) => { e.preventDefault; actualizarEstado(pedido.id); }}>
-                                <select className='form-estado' value={estado[pedido.id] || 'En preparación'} onChange={(e) => cambiarEstado(pedido.id, e.target.value)}>
-                                    <option value="En preparación">En preparación</option>
-                                    <option value="En camino">En camino</option>
-                                    <option value="Entregado">Entregado</option>
-                                </select>
-                            </form>
-                            <input type="submit" value='Enviar' className='enviar-estado' />
+                    <div>
+                        <div className='infopedidos' key={pedido.id}>
+                            <img src={burger} className='burger' alt="" />
+                            <p className='nrodeorden'>
+                                <b>Orden #{pedido.id}</b>
+                                <br />
+                                Total: ${pedido.subTotal}
+                            </p>
+                            <div className='div-form'>
+                                <form onSubmit={(e) => { e.preventDefault; actualizarEstado(pedido.id); }}>
+                                    <select className='form-estado' value={estado[pedido.id] || 'En preparación'} onChange={(e) => cambiarEstado(pedido.id, e.target.value)}>
+                                        <option value="En preparación">En preparación</option>
+                                        <option value="En camino">En camino</option>
+                                        <option value="Entregado">Entregado</option>
+                                    </select>
+                                </form>
+                                <input type="submit" value='Enviar' className='enviar-estado' />
+                            </div>
                         </div>
+                        <hr/>
                     </div>
                 ))}
-            </div>
-            <hr />
+            
+            
         </>
     )
 }
