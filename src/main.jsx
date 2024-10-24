@@ -25,6 +25,7 @@ import { AsientosContables } from './bigBite/pages/AsientosContables';
 import { GestionPedidos } from './bigBite/pages/GestionPedidos';
 import { UserProvider } from './context/UserContext';
 import { Administradores } from './bigBite/pages/Administradores';
+import { MisPedidos } from './bigBite/pages/MisPedidos';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
@@ -51,6 +52,7 @@ root.render(
             <Route path="/AsientosContables" element={<AsientosContables />} />
             <Route path="/GestionPedidos" element={<GestionPedidos />} />
             <Route path="/Administradores" element={<Administradores />} />
+            <Route path="/misPedidos" element={<MisPedidos />} />
 
           </Routes>
         </Router>

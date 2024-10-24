@@ -1,0 +1,144 @@
+.contenedor {
+    padding: 80px 50px;
+}
+
+.divpedidos p {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+
+.arriba {
+    align-items: center;
+}
+
+.botonescolor {
+    width: 30vh;
+    margin: 15px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+}
+
+.botonescolor:hover {
+    color: white;
+}
+
+.medio {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.paddingtitulos {
+    padding-top: 30px;
+}
+
+.infopedidos {
+    display: flex;
+    justify-content: space-around;
+    font-family: "Poppins", sans-serif;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.botones {
+    width: 25vh;
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+}
+
+.burger {
+    background-color: #ece6f09c;
+    border-radius: 50px;
+    width: 50px;
+    height: 45px;
+}
+
+.nrodeorden {
+    padding: 0 40vh 0 30px;
+}
+
+.estado {
+    padding-top: 15px;
+    width: 120px;
+    text-align: end;
+}
+
+.entregados {
+    background-color: rgba(184, 179, 179, 0.5);
+    border-radius: 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.pedido-seleccionado {
+    background-color: rgba(0, 0, 0, 0.2); /* Cambia este valor según la intensidad que desees */
+    border-radius: 5px;
+}
+
+.detalles-pedido {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.lista-detalle {
+    list-style-type: none; /* Quita los puntos de la lista */
+    margin-top: 10px;
+}
+
+.total-detalle {
+    padding-left: 35px;
+}
+
+@media (max-width: 1000px) {
+    .buscarpedidos {
+        width: 30vh;
+        margin-left: 10px;
+    }
+
+    .botonescolor {
+        width: 14vh;
+        margin: 10px 5px 0 7px;
+    }
+
+    .botones {
+        width: 12vh;
+        font-size: 12px; 
+    }
+
+    .nrodeorden {
+        padding: 0 40px 0 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .divpedidos {
+        text-align: center;
+        display: block;
+        flex-direction: column;
+    }
+
+    .paddingtitulos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .botonescolor {
+        width: 15vh;
+        margin: 10px 5px;
+        font-size: 13px;
+    }
+
+    .botones {
+        width: 15vh;
+        font-size: 13px; 
+        margin-bottom: 50px;
+    }
+
+    .nrodeorden {
+        padding: 0 17px 0 2px;
+    }
+}
