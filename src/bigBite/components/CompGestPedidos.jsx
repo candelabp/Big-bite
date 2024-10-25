@@ -118,7 +118,7 @@ export const CompGestPedidos = () => {
 
                 </div>
                 <div>
-                    {pedidosEntregados.length > 0 (
+                    {pedidosEntregados.length > 0 && (
                         pedidosEntregados.map((pedido) => (
                         <div key={pedido.id}>
                             <div className='infopedidos'>
