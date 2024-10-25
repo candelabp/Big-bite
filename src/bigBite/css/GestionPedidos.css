@@ -92,6 +92,10 @@
     padding-bottom: 20px;
 }
 
+.estado {
+    padding-top: 15px;
+}
+
 @media (max-width: 1000px){
     .buscarpedidos {
         width: 30vh;

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import burger from '../assets/burgerInicio.png';
 import '../css/gestionPedidos.css';
 import axios from 'axios';
+import { p } from 'framer-motion/client';
 
 export const CompGestPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -117,7 +118,8 @@ export const CompGestPedidos = () => {
 
                 </div>
                 <div>
-                    {pedidosEntregados.map((pedido) => (
+                    {pedidosEntregados.length > 0 (
+                        pedidosEntregados.map((pedido) => (
                         <div key={pedido.id}>
                             <div className='infopedidos'>
                                 <img src={burger} className='burger' alt="" />
@@ -127,23 +129,11 @@ export const CompGestPedidos = () => {
                                     Total: ${pedido.subTotal}
                                 </p>
                                 <p className='estado'>Entregado</p>
-                                {/* <div className='div-form'>
-                                    <form onSubmit={(e) => { e.preventDefault(); actualizarEstado(pedido.id); mostrarAlerta(); }}>
-                                        <select className='form-estado'
-                                            value={estado[pedido.id] || 'En preparación'}
-                                            onChange={(e) => cambiarEstado(pedido.id, e.target.value)}>
-                                            <option value="En preparación">En preparación</option>
-                                            <option value="En camino">En camino</option>
-                                            <option value="Entregado">Entregado</option>
-                                        </select>
-                                        <br />
-                                        <input type="submit" value='Enviar' className='enviar-estado' />
-                                    </form>
-                                </div> */}
                             </div>
                             <hr />
                         </div>
-                    ))}
+                        ))
+                    )}
                 </div>
             </div>
         </>
