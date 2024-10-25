@@ -39,14 +39,15 @@ export const CompGestPedidos = () => {
 
     const actualizarEstado = (id) => {
         const nuevoEstado = estado[id];
-        console.log(`${nuevoEstado}`);
+        
+        if (nuevoEstado === 'Entregado') {
+            moverPedidoAEntregados(id);
+        }
+
         if (nuevoEstado) {
             axios.put(`http://localhost:8080/pedidos/editar/${id}`, { estadoPedido: nuevoEstado })
                 .then(() => {
                     console.log(`Estado del pedido ${id} actualizado a ${nuevoEstado}`);
-                    if (nuevoEstado === 'Entregado') {
-                        moverPedidoAEntregados(id);
-                    }
                 })
                 .catch((error) => console.error('Error actualizando el pedido:', error));
         } else {
@@ -55,10 +56,12 @@ export const CompGestPedidos = () => {
     };
 
     const moverPedidoAEntregados = (id) => {
-        const pedido = pedidos.find(pedido => pedido.id === id);
+        const pedidoEntregado = pedidos.find(pedido => pedido.id === id);
         if(pedido){
-            setPedidos(pedidos.filter(pedido => pedido.id !== id));
-            setPedidosEntregados([...pedidosEntregados, {...pedido, estadoPedido: 'Entregado'}])
+            setPedidos((prevPedidos) => prevPedidos.filter(pedido => pedido.id !== id));
+            setPedidosEntregados((prevEntregados) => [pedidoEntregado, ...prevEntregados]);
+            // setPedidos(pedidos.filter(pedido => pedido.id !== id));
+            // setPedidosEntregados([...pedidosEntregados, {...pedido, estadoPedido: 'Entregado'}])
         }
     }
 
