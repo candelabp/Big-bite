@@ -23,13 +23,6 @@
     border: 1px solid black;
 }
 
-/* .botonescolor {
-    width: 30vh;
-    margin: 15px;
-    font-size: 15px;
-    font-family: "Poppins", sans-serif;
-} */
-
 .botonescolor:hover {
     color: white;
 }
@@ -81,7 +74,6 @@
     border-radius: 6px;
     padding: 1px;
     text-align: center;
-    /* font-size: 15px; */
 }
 
 .enviar-estado {
@@ -98,7 +90,6 @@
     border-radius: 5px;
     padding-top: 20px;
     padding-bottom: 20px;
-
 }
 
 @media (max-width: 1000px){
