@@ -92,8 +92,8 @@
     padding-bottom: 20px;
 }
 
-.estado {
-    padding-top: 15px;
+.estado-entregado {
+    padding-top: 25px;
 }
 
 @media (max-width: 1000px){

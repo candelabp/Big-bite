@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import burger from '../assets/burgerInicio.png';
 import '../css/gestionPedidos.css';
 import axios from 'axios';
-import { p } from 'framer-motion/client';
 
 export const CompGestPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -39,15 +38,14 @@ export const CompGestPedidos = () => {
 
     const actualizarEstado = (id) => {
         const nuevoEstado = estado[id];
-        
-        if (nuevoEstado === 'Entregado') {
-            moverPedidoAEntregados(id);
-        }
-
+        console.log(`${nuevoEstado}`);
         if (nuevoEstado) {
             axios.put(`http://localhost:8080/pedidos/editar/${id}`, { estadoPedido: nuevoEstado })
                 .then(() => {
                     console.log(`Estado del pedido ${id} actualizado a ${nuevoEstado}`);
+                    if (nuevoEstado === 'Entregado') {
+                        moverPedidoAEntregados(id);
+                    }
                 })
                 .catch((error) => console.error('Error actualizando el pedido:', error));
         } else {
@@ -56,12 +54,10 @@ export const CompGestPedidos = () => {
     };
 
     const moverPedidoAEntregados = (id) => {
-        const pedidoEntregado = pedidos.find(pedido => pedido.id === id);
+        const pedido = pedidos.find(pedido => pedido.id === id);
         if(pedido){
-            setPedidos((prevPedidos) => prevPedidos.filter(pedido => pedido.id !== id));
-            setPedidosEntregados((prevEntregados) => [pedidoEntregado, ...prevEntregados]);
-            // setPedidos(pedidos.filter(pedido => pedido.id !== id));
-            // setPedidosEntregados([...pedidosEntregados, {...pedido, estadoPedido: 'Entregado'}])
+            setPedidos(pedidos.filter(pedido => pedido.id !== id));
+            setPedidosEntregados([ {...pedido, estadoPedido: 'Entregado'}, ...pedidosEntregados ]);
         }
     }
 
@@ -131,7 +127,7 @@ export const CompGestPedidos = () => {
                                     <br />
                                     Total: ${pedido.subTotal}
                                 </p>
-                                <p className='estado'>Entregado</p>
+                                <p className='estado-entregado'>Entregado</p>
                             </div>
                             <hr />
                         </div>
