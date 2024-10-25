@@ -13,7 +13,7 @@ export const GestionPedidos = () => {
                         <p>Mira y actualiza el estado de los pedidos de hamburguesas</p>
                     </div>
                     <div>
-                        <input type="text" placeholder='Buscar pedidos...' className='buscarpedidos' />
+                        <input type="text" placeholder='Buscar pedidos...' className='div-buscarpedidos' />
                     </div>                    
                 </div>
 

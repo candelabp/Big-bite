@@ -7,9 +7,9 @@
     font-size: 14px;
 }
 
-.buscarpedidos {
+.div-buscarpedidos {
     font-size: 12px;
-    width: 50vh;
+    width: 60vh;
     height: 30px;
     padding-left: 6px;
     margin-left: 50px;
@@ -85,15 +85,17 @@
     border: rgb(116, 115, 115) 1px solid;
 }
 
-.entregados {
+.div-entregados {
     background-color: rgba(184, 179, 179, 0.5);
     border-radius: 5px;
     padding-top: 20px;
     padding-bottom: 20px;
+    padding-right: 25px;
 }
 
 .estado-entregado {
     padding-top: 25px;
+    padding-left: 50px;
 }
 
 @media (max-width: 1000px){
