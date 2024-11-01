@@ -1,6 +1,7 @@
 import NavbarAdmin from '../components/NavbarAdmin';
-import {CompGestPedidos} from '../components/CompGestPedidos';
-import '../css/gestionPedidos.css'
+import { CompGestPedidos } from '../components/CompGestPedidos';
+import '../css/gestionPedidos.css';
+
 
 export const GestionPedidos = () => {
     return (
@@ -13,15 +14,16 @@ export const GestionPedidos = () => {
                         <p>Mira y actualiza el estado de los pedidos de hamburguesas</p>
                     </div>
                     <div>
-                        <input type="text" placeholder='Buscar pedidos...' className='div-buscarpedidos' />
-                    </div>                    
+                        <input id='buscarPedido' type="text" placeholder='Buscar pedidos...' className='div-buscarpedidos' />
+                    </div>
                 </div>
 
                 <br />
                 <hr />
                 <br />
 
-                <CompGestPedidos/>
+                <CompGestPedidos />
+
             </section>
         </>
     )

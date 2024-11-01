@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import burger from '../assets/burgerInicio.png';
 import '../css/gestionPedidos.css';
 import axios from 'axios';
+import ModalVerDetalles from './modalVerDetalles';
 
 export const CompGestPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
     const [pedidosEntregados, setPedidosEntregados] = useState([]);
     const [estado, setEstado] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         axios(`http://localhost:8080/pedidos`)
@@ -65,13 +67,17 @@ export const CompGestPedidos = () => {
         alert("Se cambió correctamente el estado del pedido");
     };
 
+    // Funciones para controlar la visibilidad del modal
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
     return (
         <>
             <div className='divpedidos'>
                 <div className='paddingtitulos'>
                     <h1>Pedidos en curso</h1>
                     <p>Lista de todos los pedidos en curso</p>
-                    <button type="button" className='btn btn-outline-warning botones'>Ver detalles</button>
+                    <button onClick={openModal} type="button" className='btn btn-outline-warning botones'>Ver detalles</button>
                 </div>
 
                 <div>
@@ -113,7 +119,7 @@ export const CompGestPedidos = () => {
                 <div className='paddingtitulos'>
                     <h1>Pedidos anteriores</h1>
                     <p>Lista de todos los pedidos entregados</p>
-                    <button type="button" className='btn btn-outline-danger botones'>Ver detalles</button>
+                    <button onClick={openModal} type="button" className='btn btn-outline-danger botones'>Ver detalles</button>
 
                 </div>
                 <div>
@@ -135,6 +141,8 @@ export const CompGestPedidos = () => {
                     )}
                 </div>
             </div>
+            {/* Renderiza el modal sólo si isModalOpen es true */}
+            {isModalOpen && <ModalVerDetalles onClose={closeModal} />}
         </>
     );
 };
