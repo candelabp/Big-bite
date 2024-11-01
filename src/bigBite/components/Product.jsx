@@ -21,15 +21,17 @@ const Product = ({products}) => {
     return (
         <div className="product-grid">
             {products.map((product) => (
-                <div className="product-card" key={product.id}>
+                <div className="product-card" key={product.id} >
+                    <div
+                    onClick={() => openModal(product)}>
                     <h3>{product.nombre}</h3>
                     <img 
                         src={product.urlImagen} 
                         alt={product.nombre} 
-                        onClick={() => openModal(product)} 
                         style={{ cursor: 'pointer' }} 
                     />
                     <h3 className='precio-card'>${product.precioCombo}</h3>
+                    </div>
                     <button className="cart-button" onClick={() => agregarCarrito(product)}>
                         <img src={ShoppingCart} alt="Agregar al carrito" />
                     </button>
