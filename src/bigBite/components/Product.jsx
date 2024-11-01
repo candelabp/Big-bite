@@ -3,8 +3,8 @@ import { dataContext } from './Context/DataContext';
 import '../css/menu.css';
 import ShoppingCart from '../assets/shopping-cart.png';
 
-const Product = () => {
-    const { data, agregarCarrito } = useContext(dataContext);
+const Product = ({products}) => {
+    const { agregarCarrito } = useContext(dataContext);
     const [showModal, setShowModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -20,7 +20,7 @@ const Product = () => {
 
     return (
         <div className="product-grid">
-            {data.map((product) => (
+            {products.map((product) => (
                 <div className="product-card" key={product.id}>
                     <h3>{product.nombre}</h3>
                     <img 
