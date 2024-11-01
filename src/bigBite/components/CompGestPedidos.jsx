@@ -56,7 +56,7 @@ export const CompGestPedidos = () => {
     };
 
     const moverPedidoAEntregados = (id) => {
-        const pedido = pedidos.find(pedido => pedido.id === id);
+        const pedido = pedidos.find(pedido => pedido.id === id); 
         if(pedido){
             setPedidos(pedidos.filter(pedido => pedido.id !== id));
             setPedidosEntregados([ {...pedido, estadoPedido: 'Entregado'}, ...pedidosEntregados ]);

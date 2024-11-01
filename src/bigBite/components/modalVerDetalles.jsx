@@ -1,14 +1,11 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 const ModalVerDetalles = ({ onClose }) => {
     const [pedidos, setPedidos] = useState([]);
     const [pedidosEntregados, setPedidosEntregados] = useState([]);
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
-
-    const closeDetailsModal = () => setIsDetailsModalOpen(false);
-
-    const openDetailsModal = () => setIsDetailsModalOpen(true);
 
     useEffect(() => {
         axios(`http://localhost:8080/pedidos`)
@@ -65,6 +62,25 @@ const ModalVerDetalles = ({ onClose }) => {
         };
     }, []);
 
+    const closeDetailsModal = () => setIsDetailsModalOpen(false);
+
+    const openDetailsModal = () => setIsDetailsModalOpen(true);
+
+    const validarId = () => {
+        const id = document.getElementById("nroOrden").value;
+        const pedido = pedidos.find(pedido => pedido.id === id);
+        if(pedido){
+            openDetailsModal();
+        } else {
+            Swal.fire({
+                title: "Error!",
+                text: "Ingrese un id valido!",
+                icon: "warning"
+            });
+        };
+        
+    };
+
     return (
         <>
             <div className="container-modal" id="modal">
@@ -77,7 +93,7 @@ const ModalVerDetalles = ({ onClose }) => {
                     </div>
                     <div className="container-buttons-modal">
                         <button className="button-modal cancel" onClick={onClose}>Cancelar</button>
-                        <button className="button-modal accept" onClick={openDetailsModal}>Aceptar</button>
+                        <button className="button-modal accept" onClick={validarId}>Aceptar</button>
                     </div>
                 </div>
             </div>
