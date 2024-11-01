@@ -59,11 +59,12 @@
     background-color: #d32f2f;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 6px;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
     transition: background-color 0.3s;
+    margin-right: 5px;
   }
   
   .asientos-contables__boton:disabled {
