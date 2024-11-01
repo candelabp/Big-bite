@@ -121,3 +121,153 @@
     background-color: #b71c1c;
   }
   
+  /* Estilos para el contenedor del Libro Mayor */
+.libro-mayor {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 40px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.libro-mayor__cuenta {
+  margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.libro-mayor h2 {
+  color: #d32f2f;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.libro-mayor__cuenta h3 {
+  color: #333;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #d32f2f;
+  padding-bottom: 5px;
+}
+
+/* Estilos para la tabla del Libro Mayor */
+.libro-mayor__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.libro-mayor__tabla th,
+.libro-mayor__tabla td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.libro-mayor__tabla th {
+  background-color: #d32f2f;
+  color: #fff;
+  font-weight: bold;
+}
+
+.libro-mayor__tabla td {
+  background-color: #f9f9f9;
+}
+
+/* Estilo para la fila de saldo */
+.libro-mayor__tabla tr:last-child td {
+  font-weight: bold;
+  color: #333;
+  background-color: #f1f1f1;
+}
+
+/* Estilo para el botón de Mostrar Libro Mayor */
+.asientos-contables__boton {
+  display: inline-block;
+  background-color: #d32f2f;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.asientos-contables__boton:hover {
+  background-color: #b71c1c;
+}
+/* Contenedor del Libro Diario */
+.libro-diario {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 40px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.libro-diario h2 {
+  color: #d32f2f;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Contenedor individual de cada asiento en el Libro Diario */
+.libro-diario__asiento {
+  margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.libro-diario__asiento h3 {
+  color: #333;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #d32f2f;
+  padding-bottom: 5px;
+}
+
+.libro-diario__asiento p {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+/* Listas de cuentas Debe y Haber en el Libro Diario */
+.libro-diario__asiento ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.libro-diario__asiento li {
+  padding: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.libro-diario__asiento li span {
+  font-weight: normal;
+  color: #333;
+}
+
+/* Encabezados de Debe y Haber */
+.libro-diario__asiento h4 {
+  color: #d32f2f;
+  font-size: 1.1em;
+  margin-top: 15px;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../css/asientosContables.css';
 import NavbarAdmin from "../components/NavbarAdmin";
 
@@ -11,6 +11,102 @@ export const AsientosContables = () => {
   const [asientos, setAsientos] = useState([]);
   const [cuentasDebe, setCuentasDebe] = useState([]);
   const [cuentasHaber, setCuentasHaber] = useState([]);
+  const [mostrarLibro, setMostrarLibro] = useState("diario"); // Estado para controlar qué libro mostrar
+  const [cuentas, setCuentas] = useState([]); // Estado para las cuentas
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Efecto para cargar cuentas desde el servidor
+  useEffect(() => {
+    const fetchCuentas = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/cuentas'); // Asegúrate de que esta URL es correcta
+        if (!response.ok) {
+          throw new Error('Error al obtener las cuentas');
+        }
+        const data = await response.json();
+        setCuentas(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCuentas();
+  }, []);
+
+  const generarLibroMayor = () => {
+    const libroMayor = {};
+
+    asientos.forEach((asiento) => {
+      asiento.debe.forEach((cuenta) => {
+        if (!libroMayor[cuenta.cuenta]) {
+          libroMayor[cuenta.cuenta] = { movimientos: [], saldo: 0 };
+        }
+        libroMayor[cuenta.cuenta].movimientos.push({
+          fecha: asiento.fecha,
+          descripcion: asiento.descripcion,
+          monto: cuenta.monto,
+          tipo: "Debe",
+        });
+        libroMayor[cuenta.cuenta].saldo += cuenta.monto;
+      });
+
+      asiento.haber.forEach((cuenta) => {
+        if (!libroMayor[cuenta.cuenta]) {
+          libroMayor[cuenta.cuenta] = { movimientos: [], saldo: 0 };
+        }
+        libroMayor[cuenta.cuenta].movimientos.push({
+          fecha: asiento.fecha,
+          descripcion: asiento.descripcion,
+          monto: cuenta.monto,
+          tipo: "Haber",
+        });
+        libroMayor[cuenta.cuenta].saldo -= cuenta.monto;
+      });
+    });
+
+    return libroMayor;
+  };
+
+  const mostrarLibroMayor = () => {
+    const libroMayor = generarLibroMayor();
+    return (
+      <div className="libro-mayor">
+        <h2>Libro Mayor</h2>
+        {Object.entries(libroMayor).map(([cuenta, data], index) => (
+          <div key={index} className="libro-mayor__cuenta">
+            <h3>{cuenta}</h3>
+            <table className="libro-mayor__tabla">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Descripción</th>
+                  <th>Debe</th>
+                  <th>Haber</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.movimientos.map((movimiento, idx) => (
+                  <tr key={idx}>
+                    <td>{movimiento.fecha}</td>
+                    <td>{movimiento.descripcion}</td>
+                    <td>{movimiento.tipo === "Debe" ? `$${movimiento.monto.toFixed(2)}` : ""}</td>
+                    <td>{movimiento.tipo === "Haber" ? `$${movimiento.monto.toFixed(2)}` : ""}</td>
+                  </tr>
+                ))}
+                <tr>
+                  <td colSpan="2"><strong>Saldo Final</strong></td>
+                  <td colSpan="2"><strong>${data.saldo.toFixed(2)}</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   const handleAddCuenta = () => {
     if (monto && tipo && cuenta) {
@@ -20,11 +116,16 @@ export const AsientosContables = () => {
       } else {
         setCuentasHaber([...cuentasHaber, nuevaCuenta]);
       }
+  
+      // Restablece los campos después de agregar la cuenta
       setCuenta("");
       setMonto("");
       setTipo("");
+    } else {
+      console.log("Debe ingresar todos los datos para agregar una cuenta.");
     }
   };
+  
 
   const handleGuardarAsiento = () => {
     const nuevoAsiento = {
@@ -49,6 +150,9 @@ export const AsientosContables = () => {
 
   const isAgregarCuentaEnabled = cuenta && monto && tipo;
   const isGuardarAsientoEnabled = descripcion && isBalanceado() && cuentasDebe.length > 0 && cuentasHaber.length > 0;
+
+  if (loading) return <p>Cargando cuentas...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <>
@@ -81,9 +185,13 @@ export const AsientosContables = () => {
             <label>Cuenta:</label>
             <select value={cuenta} onChange={(e) => setCuenta(e.target.value)}>
               <option value="">Seleccione una cuenta</option>
-              <option value="Cuenta 1">Cuenta 1</option>
-              <option value="Cuenta 2">Cuenta 2</option>
+              {cuentas.map((cuenta) => (
+                <option key={cuenta.nombre} value={cuenta.nombre}>
+                  {cuenta.nombre}
+                </option>
+              ))}
             </select>
+
           </div>
           <div className="asientos-contables__campo">
             <label>Monto:</label>
@@ -125,56 +233,49 @@ export const AsientosContables = () => {
           </button>
         </div>
 
-        <h2 className="asientos-contables__libro-titulo">Libro Diario</h2>
-        <table className="asientos-contables__tabla">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Descripción</th>
-              <th>Cuenta</th>
-              <th>Monto</th>
-              <th>Tipo</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className="asientos-contables__botones">
+          <button
+            onClick={() => setMostrarLibro("diario")}
+            className={`asientos-contables__boton ${mostrarLibro === "diario" ? "activo" : ""}`}
+          >
+            Mostrar Libro Diario
+          </button>
+          <button
+            onClick={() => setMostrarLibro("mayor")}
+            className={`asientos-contables__boton ${mostrarLibro === "mayor" ? "activo" : ""}`}
+          >
+            Mostrar Libro Mayor
+          </button>
+        </div>
+
+        {mostrarLibro === "diario" && (
+          <div className="libro-diario">
+            <h2>Libro Diario</h2>
             {asientos.map((asiento, index) => (
-              <React.Fragment key={index}>
-                <tr>
-                  <td rowSpan={asiento.debe.length + asiento.haber.length}>
-                    {asiento.fecha}
-                  </td>
-                  <td rowSpan={asiento.debe.length + asiento.haber.length}>
-                    {asiento.descripcion}
-                  </td>
-                  {asiento.debe.length > 0 && (
-                    <>
-                      <td>{asiento.debe[0].cuenta}</td>
-                      <td>${asiento.debe[0].monto.toFixed(2)}</td>
-                      <td>Debe</td>
-                    </>
-                  )}
-                </tr>
-
-                {asiento.debe.slice(1).map((cuenta, idx) => (
-                  <tr key={`${index}-debe-${idx}`}>
-                    <td>{cuenta.cuenta}</td>
-                    <td>${cuenta.monto.toFixed(2)}</td>
-                    <td>Debe</td>
-                  </tr>
-                ))}
-
-                {asiento.haber.map((cuenta, idx) => (
-                  <tr key={`${index}-haber-${idx}`}>
-                    <td>{cuenta.cuenta}</td>
-                    <td>${cuenta.monto.toFixed(2)}</td>
-                    <td>Haber</td>
-                  </tr>
-                ))}
-              </React.Fragment>
+              <div key={index} className="libro-diario__asiento">
+                <h3>Asiento #{index + 1}</h3>
+                <p>Fecha: {asiento.fecha}</p>
+                <p>Descripción: {asiento.descripcion}</p>
+                <h4>Debe:</h4>
+                <ul>
+                  {asiento.debe.map((cuenta, idx) => (
+                    <li key={idx}>{cuenta.cuenta}: ${cuenta.monto.toFixed(2)}</li>
+                  ))}
+                </ul>
+                <h4>Haber:</h4>
+                <ul>
+                  {asiento.haber.map((cuenta, idx) => (
+                    <li key={idx}>{cuenta.cuenta}: ${cuenta.monto.toFixed(2)}</li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        )}
+        {mostrarLibro === "mayor" && mostrarLibroMayor()}
       </div>
     </>
   );
 };
+
+export default AsientosContables;
