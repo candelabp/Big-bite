@@ -249,29 +249,48 @@ export const AsientosContables = () => {
         </div>
 
         {mostrarLibro === "diario" && (
-          <div className="libro-diario">
-            <h2>Libro Diario</h2>
-            {asientos.map((asiento, index) => (
-              <div key={index} className="libro-diario__asiento">
-                <h3>Asiento #{index + 1}</h3>
-                <p>Fecha: {asiento.fecha}</p>
-                <p>Descripción: {asiento.descripcion}</p>
-                <h4>Debe:</h4>
-                <ul>
-                  {asiento.debe.map((cuenta, idx) => (
-                    <li key={idx}>{cuenta.cuenta}: ${cuenta.monto.toFixed(2)}</li>
-                  ))}
-                </ul>
-                <h4>Haber:</h4>
-                <ul>
-                  {asiento.haber.map((cuenta, idx) => (
-                    <li key={idx}>{cuenta.cuenta}: ${cuenta.monto.toFixed(2)}</li>
-                  ))}
-                </ul>
-              </div>
+  <div className="libro-diario">
+    <h2>Libro Diario</h2>
+    <table className="libro-diario__tabla">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Descripción</th>
+          <th>Cuenta</th>
+          <th>Monto</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {asientos.map((asiento, index) => (
+          <React.Fragment key={index}>
+            {asiento.debe.map((cuentaDebe, i) => (
+              <tr key={`${index}-debe-${i}`}>
+                {i === 0 && (
+                  <>
+                    <td rowSpan={asiento.debe.length + asiento.haber.length}>{asiento.fecha}</td>
+                    <td rowSpan={asiento.debe.length + asiento.haber.length}>{asiento.descripcion}</td>
+                  </>
+                )}
+                <td>{cuentaDebe.cuenta}</td>
+                <td>${cuentaDebe.monto.toFixed(2)}</td>
+                <td>Debe</td>
+              </tr>
             ))}
-          </div>
-        )}
+            {asiento.haber.map((cuentaHaber, i) => (
+              <tr key={`${index}-haber-${i}`}>
+                <td>{cuentaHaber.cuenta}</td>
+                <td>${cuentaHaber.monto.toFixed(2)}</td>
+                <td>Haber</td>
+              </tr>
+            ))}
+          </React.Fragment>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
         {mostrarLibro === "mayor" && mostrarLibroMayor()}
       </div>
     </>
