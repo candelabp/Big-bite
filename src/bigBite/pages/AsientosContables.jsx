@@ -47,133 +47,134 @@ export const AsientosContables = () => {
     return calcularTotal(cuentasDebe) === calcularTotal(cuentasHaber);
   };
 
+  const isAgregarCuentaEnabled = cuenta && monto && tipo;
+  const isGuardarAsientoEnabled = descripcion && isBalanceado() && cuentasDebe.length > 0 && cuentasHaber.length > 0;
+
   return (
     <>
-    <NavbarAdmin />
-    <div className="asientos-contables">
+      <NavbarAdmin />
+      <div className="asientos-contables">
         <div className="asientos-contables-header">
-      <h1 className="asientos-contables__titulo">Registrar Asientos Contables</h1>
-      <p className="asientos-contables__subtitulo">Complete los campos con la información necesaria</p>
+          <h1 className="asientos-contables__titulo">Registrar Asientos Contables</h1>
+          <p className="asientos-contables__subtitulo">Complete los campos con la información necesaria</p>
+        </div>
+
+        <div className="asientos-contables__formulario">
+          <div className="asientos-contables__campo">
+            <label>Fecha:</label>
+            <input
+              type="date"
+              value={fecha}
+              onChange={(e) => setFecha(e.target.value)}
+            />
+          </div>
+          <div className="asientos-contables__campo">
+            <label>Descripción:</label>
+            <input
+              type="text"
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
+              placeholder="Ingrese una descripción"
+            />
+          </div>
+          <div className="asientos-contables__campo">
+            <label>Cuenta:</label>
+            <select value={cuenta} onChange={(e) => setCuenta(e.target.value)}>
+              <option value="">Seleccione una cuenta</option>
+              <option value="Cuenta 1">Cuenta 1</option>
+              <option value="Cuenta 2">Cuenta 2</option>
+            </select>
+          </div>
+          <div className="asientos-contables__campo">
+            <label>Monto:</label>
+            <input
+              type="number"
+              value={monto}
+              onChange={(e) => {
+                const valor = parseFloat(e.target.value);
+                if (valor >= 1 || e.target.value === "") {
+                  setMonto(e.target.value);
+                }
+              }}
+              placeholder="Ingrese el monto del asiento"
+              min="1"
+              step="0.01"
+            />
+          </div>
+          <div className="asientos-contables__campo">
+            <label>Tipo:</label>
+            <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+              <option value="">Seleccione el tipo</option>
+              <option value="Debe">Debe</option>
+              <option value="Haber">Haber</option>
+            </select>
+          </div>
+          <button
+            onClick={handleAddCuenta}
+            className="asientos-contables__boton"
+            disabled={!isAgregarCuentaEnabled}
+          >
+            Agregar Cuenta
+          </button>
+          <button
+            onClick={handleGuardarAsiento}
+            className="asientos-contables__boton"
+            disabled={!isGuardarAsientoEnabled}
+          >
+            Guardar Asiento
+          </button>
+        </div>
+
+        <h2 className="asientos-contables__libro-titulo">Libro Diario</h2>
+        <table className="asientos-contables__tabla">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Descripción</th>
+              <th>Cuenta</th>
+              <th>Monto</th>
+              <th>Tipo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {asientos.map((asiento, index) => (
+              <React.Fragment key={index}>
+                <tr>
+                  <td rowSpan={asiento.debe.length + asiento.haber.length}>
+                    {asiento.fecha}
+                  </td>
+                  <td rowSpan={asiento.debe.length + asiento.haber.length}>
+                    {asiento.descripcion}
+                  </td>
+                  {asiento.debe.length > 0 && (
+                    <>
+                      <td>{asiento.debe[0].cuenta}</td>
+                      <td>${asiento.debe[0].monto.toFixed(2)}</td>
+                      <td>Debe</td>
+                    </>
+                  )}
+                </tr>
+
+                {asiento.debe.slice(1).map((cuenta, idx) => (
+                  <tr key={`${index}-debe-${idx}`}>
+                    <td>{cuenta.cuenta}</td>
+                    <td>${cuenta.monto.toFixed(2)}</td>
+                    <td>Debe</td>
+                  </tr>
+                ))}
+
+                {asiento.haber.map((cuenta, idx) => (
+                  <tr key={`${index}-haber-${idx}`}>
+                    <td>{cuenta.cuenta}</td>
+                    <td>${cuenta.monto.toFixed(2)}</td>
+                    <td>Haber</td>
+                  </tr>
+                ))}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
       </div>
-
-      <div className="asientos-contables__formulario">
-        <div className="asientos-contables__campo">
-          <label>Fecha:</label>
-          <input
-            type="date"
-            value={fecha}
-            onChange={(e) => setFecha(e.target.value)}
-          />
-        </div>
-        <div className="asientos-contables__campo">
-          <label>Descripción:</label>
-          <input
-            type="text"
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            placeholder="Ingrese una descripción"
-          />
-        </div>
-        <div className="asientos-contables__campo">
-          <label>Cuenta:</label>
-          <select value={cuenta} onChange={(e) => setCuenta(e.target.value)}>
-            <option value="">Seleccione una cuenta</option>
-            <option value="Cuenta 1">Cuenta 1</option>
-            <option value="Cuenta 2">Cuenta 2</option>
-          </select>
-        </div>
-        <div className="asientos-contables__campo">
-          <label>Monto:</label>
-          <input
-    type="number"
-    value={monto}
-    onChange={(e) => {
-      const valor = parseFloat(e.target.value);
-      if (valor >= 1 || e.target.value === "") {
-        setMonto(e.target.value);
-      }
-    }}
-    placeholder="Ingrese el monto del asiento"
-    min="1" // Establece el valor mínimo a 1
-    step="0.01" // Permite que el usuario ingrese decimales, si es necesario
-  />
-        </div>
-        <div className="asientos-contables__campo">
-          <label>Tipo:</label>
-          <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
-            <option value="">Seleccione el tipo</option>
-            <option value="Debe">Debe</option>
-            <option value="Haber">Haber</option>
-          </select>
-        </div>
-        <button onClick={handleAddCuenta} className="asientos-contables__boton">
-          Agregar Cuenta
-        </button>
-        <button
-          onClick={handleGuardarAsiento}
-          className="asientos-contables__boton"
-          disabled={!descripcion || !isBalanceado()}
-        >
-          Guardar Asiento
-        </button>
-      </div>
-
-      <h2 className="asientos-contables__libro-titulo">Libro Diario</h2>
-      <table className="asientos-contables__tabla">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Descripción</th>
-            <th>Cuenta</th>
-            <th>Monto</th>
-            <th>Tipo</th>
-          </tr>
-        </thead>
-      <tbody>
-  {asientos.map((asiento, index) => (
-    <React.Fragment key={index}>
-      {/* Fila inicial para mostrar la Fecha y Descripción, abarcando el total de filas de Debe y Haber */}
-      <tr>
-        <td rowSpan={asiento.debe.length + asiento.haber.length}>
-          {asiento.fecha}
-        </td>
-        <td rowSpan={asiento.debe.length + asiento.haber.length}>
-          {asiento.descripcion}
-        </td>
-        {/* Primera cuenta del Debe, si existe */}
-        {asiento.debe.length > 0 && (
-          <>
-            <td>{asiento.debe[0].cuenta}</td>
-            <td>${asiento.debe[0].monto.toFixed(2)}</td>
-            <td>Debe</td>
-          </>
-        )}
-      </tr>
-
-      {/* Mostrar el resto de las cuentas del Debe, si existen */}
-      {asiento.debe.slice(1).map((cuenta, idx) => (
-        <tr key={`${index}-debe-${idx}`}>
-          <td>{cuenta.cuenta}</td>
-          <td>${cuenta.monto.toFixed(2)}</td>
-          <td>Debe</td>
-        </tr>
-      ))}
-
-      {/* Mostrar todas las cuentas del Haber */}
-      {asiento.haber.map((cuenta, idx) => (
-        <tr key={`${index}-haber-${idx}`}>
-          <td>{cuenta.cuenta}</td>
-          <td>${cuenta.monto.toFixed(2)}</td>
-          <td>Haber</td>
-        </tr>
-      ))}
-    </React.Fragment>
-  ))}
-</tbody>
-
-      </table>
-    </div>
     </>
   );
 };
-
