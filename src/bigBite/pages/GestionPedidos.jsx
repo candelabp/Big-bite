@@ -1,6 +1,8 @@
 import burger from '../assets/burgerInicio.png'
-import '../css/GestionPedidos.css'
+import '../css/gestionPedidos.css'
 import NavbarAdmin from '../components/NavbarAdmin';
+import {CompGestPedidos} from '../components/CompGestPedidos';
+
 export const GestionPedidos = () => {
     return (
         <>
@@ -13,9 +15,9 @@ export const GestionPedidos = () => {
                     </div>
                     <div>
                         <input type="text" placeholder='Buscar pedidos...' className='buscarpedidos' />
-                        <br />
+                        {/* <br />
                         <button type="button" className='btn btn-outline-warning botonescolor'>Exportar pedidos</button>
-                        <button type="button" className='btn btn-outline-danger botonescolor'>Filtrar</button>
+                        <button type="button" className='btn btn-outline-danger botonescolor'>Filtrar</button> */}
                     </div>                    
                 </div>
 
@@ -27,11 +29,14 @@ export const GestionPedidos = () => {
                     <div className='paddingtitulos'>
                         <h1>Pedidos en curso</h1>
                         <p>Lista de todos los pedidos en curso</p>
-                        <button type="button" className='btn btn-outline-dark botones'>Ver detalles</button>
-                        <button type="button" className='btn btn-dark botones'>Actualizar estado</button>
+                        <button type="button" className='btn btn-outline-warning botones'>Ver detalles</button>
+                        {/* <button type="button" className='btn btn-dark botones'>Actualizar estado</button> */}
+                        
                     </div>
+                    
                     <div>
-                        <div className='infopedidos'>
+                        <CompGestPedidos />
+                        {/* <div className='infopedidos'>
                             <img src={burger} className='burger' alt=""/>
                             <p className='nrodeorden'>
                                 <b>Orden #006</b>
@@ -61,7 +66,7 @@ export const GestionPedidos = () => {
                                 Total: $20.000
                             </p>
                             <p className='estado'>En camino</p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -73,11 +78,11 @@ export const GestionPedidos = () => {
                     <div className='paddingtitulos'>
                         <h1>Pedidos anteriores</h1>
                         <p>Lista de todos los pedidos entregados</p>
-                        <button type="button" className='btn btn-outline-dark botones'>Revisar</button>
-                        <button type="button" className='btn btn-dark botones'>Repetir pedido</button>
+                        <button type="button" className='btn btn-outline-danger botones'>Ver detalles</button>
+                        {/* <button type="button" className='btn btn-dark botones'>Repetir pedido</button> */}
                     </div>
                     <div>
-                        <div className='infopedidos'>
+                        {/* <div className='infopedidos'>
                             <img src={burger} className='burger' alt=""/>
                             <p className='nrodeorden'>
                                 <b>Orden #003</b>
@@ -107,7 +112,7 @@ export const GestionPedidos = () => {
                                 Total:$ 24.500
                             </p>
                             <p className='estado'>Entregado</p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

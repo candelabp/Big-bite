@@ -79,14 +79,17 @@ export const AdminPpal = () => {
     { ingreso: 3800, egreso: 1250, date: new Date(2024, 5, 1) },
     { ingreso: 5500, egreso: 2340, date: new Date(2024, 6, 1) },
     { ingreso: 7300, egreso: 4780, date: new Date(2024, 7, 1) },
-    { ingreso: 2300, egreso: 678, date: new Date(2024, 8, 1) }
+    { ingreso: 2300, egreso: 678, date: new Date(2024, 8, 3) },
+    { ingreso: 2300, egreso: 678, date: new Date(2024, 9, 4) },
+    { ingreso: 2300, egreso: 678, date: new Date(2024, 9, 10) }
+
+
   ];
 
   useEffect(() => {
     const filtered = data.filter((item) => item.date >= startDate && item.date <= endDate);
-    const formattedData = filtered.length > 0 ? filtered : data;
 
-    const updatedData = formattedData.map((item) => ({
+    const updatedData = filtered.map((item) => ({
       ...item,
       name: item.date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' })
     }));
@@ -136,7 +139,7 @@ export const AdminPpal = () => {
           <div className="date-range">
             <p>Filtrar por rango de fechas:</p>
             <div>
-              <DatePicker
+              <DatePicker className='datepicker'
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 selectsStart
@@ -145,6 +148,7 @@ export const AdminPpal = () => {
                 dateFormat="dd/MM/yyyy"
               />
               <DatePicker
+              className='datepicker'
                 selected={endDate}
                 onChange={(date) => setEndDate(date)}
                 selectsEnd

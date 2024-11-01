@@ -173,6 +173,72 @@ button {
   width: 30px;
   height: 30px;
 }
+/* Estilos del modal */
+.modal-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 90%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+}
+
+.modal-content img {
+  max-width: 40%;
+  max-height: 250px;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+}
+
+.modal-text {
+  flex: 1;
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.modal-content img {
+  max-width: 40%; /* Ajusta el tamaño de la imagen para que ocupe el 40% del ancho del modal */
+    max-height: 250px; /* Limita la altura máxima a 250px */
+  width: auto; /* Mantiene la proporción del ancho */
+  height: auto; /* Mantiene la proporción de la altura */
+  display: block; /* Centra la imagen */
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+  border-radius: 8px; /* Opcional: redondear bordes */
+}
+
 
 /* Para pantallas más grandes de 736px */
 @media (min-width: 736px) {

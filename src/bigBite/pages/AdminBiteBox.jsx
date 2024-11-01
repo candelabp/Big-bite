@@ -7,6 +7,7 @@ export const AdminBiteBox = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
   const [biteBoxes, setBiteBoxes] = useState([]);
   const [hamburguesas, setHamburguesas] = useState([]);
+  const [bebidas, setBebidas] = useState([]);
   const [selectedBiteBox, setSelectedBiteBox] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +24,18 @@ export const AdminBiteBox = () => {
       .then(response => response.json())
       .then(data => setHamburguesas(data))
       .catch(error => console.error('Error al cargar las hamburguesas:', error));
+
+    // Cargar bebidas desde el backend para el desplegable
+    fetch('http://localhost:8080/bebidas')
+      .then(response => response.json())
+      .then(data => setBebidas(data))
+      .catch(error => console.error('Error al cargar las bebidas:', error));
   }, []);
+
+  const handleEditBiteBoxes = (e) => {
+    e.preventDefault(); 
+    setIsModalOpen(true); 
+  };
 
   const onSubmit = (data) => {
     // Determina si "disponible" debe ser true o false
@@ -78,7 +90,8 @@ export const AdminBiteBox = () => {
     setValue('stock', biteBox.stock);
     setValue('disponible', biteBox.disponible);
     setValue('contieneJuguete', biteBox.contieneJuguete);
-    setValue('hamburguesa', biteBox.hamburguesa.id); // Asumiendo que biteBox.hamburguesa es un objeto con ID
+    setValue('hamburguesa', biteBox.hamburguesa.id);
+    setValue('bebida', biteBox.bebida.id);
     setImagePreview(biteBox.urlImagen || null);
     setIsModalOpen(false);
   };
@@ -98,7 +111,7 @@ export const AdminBiteBox = () => {
 
   // Verifica si todos los campos requeridos están llenos
   const isFormComplete = () => {
-    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'stock', 'hamburguesa'];
+    const requiredFields = ['nombre', 'descripcion', 'precio', 'precioCombo', 'stock'];
     return requiredFields.every(field => watch(field) !== undefined && watch(field) !== null && watch(field) !== '');
   };
 
@@ -159,18 +172,29 @@ export const AdminBiteBox = () => {
               </select>
               {errors.hamburguesa && <span className="error-message">{errors.hamburguesa.message}</span>}
             </div>
-            
+
             <div>
-              <label className='label-producto'>¿Contiene juguete?</label>
-              <input type="checkbox" {...register("contieneJuguete")} />
+              <label className='label-producto'>Bebida:</label>
+              <select className='input-producto' {...register("bebida", { required: "Selecciona una bebida" })}>
+                <option value="">Seleccionar</option>
+                {bebidas.map(bebida => (
+                  <option key={bebida.id} value={bebida.id}>{bebida.nombre}</option>
+                ))}
+              </select>
+              {errors.bebida && <span className="error-message">{errors.bebida.message}</span>}
             </div>
-            {/* Casilla disponible que solo aparece al editar */}
-            {selectedBiteBox && (
-              <div>
-                <label className='label-producto'>Disponible:</label>
-                <input type="checkbox" {...register("disponible")} />
-              </div>
-            )}
+            
+            <div className="container-cbx-productos">
+              <span className="label-producto">¿Contiene juguete?</span>
+              <input type="checkbox" id="contieneJuguete" {...register("contieneJuguete")} />
+              <label htmlFor="contieneJuguete" className="checkmark-cbx-productos"></label>
+            </div>
+
+            <div className="container-cbx-productos">
+              <span className="label-producto">Disponible:</span>
+              <input type="checkbox" id="disponible" {...register("disponible")} />
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
+            </div>
             <div>
               <label className='label-producto'>Imagen:</label>
               <input type="file" accept="image/*" {...register("imagen")} onChange={handleImageChange} />
@@ -189,7 +213,7 @@ export const AdminBiteBox = () => {
               <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
                 {selectedBiteBox ? 'Editar BiteBox' : 'Registrar Bite Box'}
               </button>
-              <button onClick={() => setIsModalOpen(true)} className="btn-modal btnRegistrarHamburguesa">
+              <button type="button" onClick={handleEditBiteBoxes} className="btnRegistrarHamburguesa">
                 Editar BiteBox existente
               </button>
             </div>
@@ -198,8 +222,8 @@ export const AdminBiteBox = () => {
 
         {/* Modal para seleccionar BiteBoxes */}
         {isModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="products-modal">
+            <div className="products-modal-content">
               <h2>Selecciona una BiteBox</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">

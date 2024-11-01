@@ -57,6 +57,11 @@ export const AdminProductos = () => {
     fetchInsumos();  // Cargar los insumos cuando se abre el modal
   };
 
+  const handleEditHamburguesa = (e) => {
+    e.preventDefault(); // Evita el envío del formulario
+    setIsModalOpen(true); // Abre el modal para seleccionar hamburguesas existentes
+  };
+
   const onSubmit = (data) => {
     data.disponible = data.disponible;
   
@@ -120,20 +125,21 @@ export const AdminProductos = () => {
     setValue('tiempoPreparacion', hamburguesa.tiempoPreparacion);
     setValue('disponible', hamburguesa.disponible);
     setImagePreview(hamburguesa.urlImagen || null);
-    
-    // Establecer insumos con sus cantidades
-    if (hamburguesa.detalleInsumos && hamburguesa.detalleInsumos.length > 0) {
-      const insumosConCantidad = hamburguesa.detalleInsumos.map(detalle => ({
-        insumoId: detalle.insumoId,
+  
+    // Establecer los insumos y sus cantidades
+    if (hamburguesa.insumos && hamburguesa.insumos.length > 0) {
+      const insumosConCantidad = hamburguesa.insumos.map(detalle => ({
+        insumoId: detalle.insumo.id,
         cantidad: detalle.cantidad
       }));
-      setSelectedInsumos(insumosConCantidad);
+      setSelectedInsumos(insumosConCantidad);  // Aquí estás cargando los insumos correctamente
     } else {
-      setSelectedInsumos([]);
+      setSelectedInsumos([]);  // Si no hay insumos, limpiamos la selección
     }
   
     setIsModalOpen(false);
   };
+  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -203,10 +209,12 @@ export const AdminProductos = () => {
               {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
             </div>
 
-            <div>
-              <label className='label-producto'>Disponible:</label>
-              <input type="checkbox" {...register("disponible")} />
+            <div className="container-cbx-productos">
+              <span className="label-producto">Disponible:</span>
+              <input type="checkbox" id="disponible" {...register("disponible")} />
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
             </div>
+
 
             <div>
               <label className='label-producto'>Imagen:</label>
@@ -230,7 +238,7 @@ export const AdminProductos = () => {
                 {selectedHamburguesa ? 'Editar Hamburguesa' : 'Registrar Hamburguesa'}
               </button>
               
-              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+              <button type="button" onClick={handleEditHamburguesa} className="btnRegistrarHamburguesa">
                 Editar Hamburguesa existente
               </button>
             </div>
@@ -239,8 +247,8 @@ export const AdminProductos = () => {
 
         {/* Modal para seleccionar hamburguesas */}
         {isModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="products-modal">
+            <div className="products-modal-content">
               <h2>Selecciona una Hamburguesa</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
@@ -265,36 +273,34 @@ export const AdminProductos = () => {
 
         {/* Modal para seleccionar Insumos */}
         {isInsumosModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="products-modal">
+            <div className="products-modal-content">
               <h2>Selecciona los Insumos</h2>
               <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
               <div className="modal-body">
-                {insumos.map(insumo => {
-                  const selectedInsumo = selectedInsumos.find(item => item.insumoId === insumo.id);
-                  const cantidad = selectedInsumo ? selectedInsumo.cantidad : 0;
+              {insumos.map(insumo => {
+                const selectedInsumo = selectedInsumos.find(item => item.insumoId === insumo.id);
+                const cantidad = selectedInsumo ? selectedInsumo.cantidad : 0; // Establece la cantidad si existe, si no, 0
 
-                  return (
-                    <div key={insumo.id} className="product-item">
-                      <div className="product-details">
-                        <p><strong>{insumo.nombre}</strong></p>
-                        <p>{insumo.unidadMedida}</p>
-                        {/* Campo para ingresar la cantidad del insumo */}
-                        <input
-                          type="number"
-                          min="0"
-                          placeholder="Cantidad"
-                          value={cantidad}
-                          onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
-                          className="cantidad-input"
-                        />
-                      </div>
+                return (
+                  <div key={insumo.id} className="product-item">
+                    <div className="product-details">
+                      <p><strong>{insumo.nombre}</strong></p>
+                      <p>{insumo.unidadMedida}</p>
+                      {/* Campo para ingresar la cantidad del insumo */}
+                      <input
+                        type="number"
+                        min="0"
+                        placeholder="Cantidad"
+                        value={cantidad} // Aquí es donde se muestra la cantidad actual
+                        onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
+                        className="input-producto"
+                      />
                     </div>
-                  );
-                })}
-              </div>
-              <div className="modal-footer">
-                <button onClick={confirmInsumoSelection} className="btn-confirmar">
+                  </div>
+                );
+              })}
+                <button onClick={confirmInsumoSelection} className="btnRegistrarHamburguesa">
                   Confirmar
                 </button>
               </div>

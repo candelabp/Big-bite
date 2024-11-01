@@ -5,11 +5,11 @@
   text-align: center;
 }
 
-select {
+select, input.input-producto {
   padding: 10px;
   font-size: 16px;
-
-  width: 300px;
+  width: 100%; /* Ajusta el ancho al 100% del contenedor */
+  box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho */
 }
 
 .editar-hamburguesa {
@@ -21,7 +21,7 @@ select {
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   margin: 20px auto;
-  max-width: 600px;
+  max-width: 800px; /* Aumenté el ancho máximo para dar más espacio */
 }
 
 .label-producto {
@@ -36,6 +36,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
 
 .content-buttons-adminProducts {
   width: 100%;
@@ -62,7 +63,7 @@ select {
 }
 
 .btnModal{
-  width: 400px;
+  width: 400px; /* Botón con ancho total del contenedor */
   padding: 10px;
   background-color: rgb(236, 158, 31);
   color: white;
@@ -175,7 +176,7 @@ h2 {
 }
 
 /* Estilos del modal */
-.modal {
+.products-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -187,11 +188,11 @@ h2 {
   align-items: center;
 }
 
-.modal-content {
+.products-modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  width: 80%;
+  min-width: 400px;
   max-width: 600px;
   position: relative;
   overflow: auto;
@@ -243,9 +244,15 @@ h2 {
 
 .product-details p {
   margin: 0;
-  white-space: nowrap;
+  white-space: normal; /* Permite que el texto se envuelva */
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.product-details p strong {
+  white-space: normal;
+  word-wrap: break-word; 
+  word-break: break-all;
 }
 
 .btn-select {
@@ -259,19 +266,6 @@ h2 {
 
 .btn-select:hover {
   background-color: #fca110;
-}
-
-/* Estilo para el contenedor del checkbox */
-.checkbox-container {
-    display: flex;
-    align-items: center; /* Alinear verticalmente el checkbox y el texto */
-    margin: 10px 0; /* Margen superior e inferior */
-}
-
-/* Estilo para la etiqueta del checkbox */
-.checkbox-container label {
-    margin-left: 8px; /* Espaciado entre el checkbox y la etiqueta */
-    font-size: 16px; /* Tamaño de fuente de la etiqueta */
 }
 
 .nav-categorias ul {
@@ -297,3 +291,56 @@ h2 {
 .nav-categorias li a:active {
   color: red; /* Cambiar color de las letras a rojo cuando se hace clic */
 }
+
+/* CHEEEEEEEEEEEEEEEEEEECKBOOOOOOOOOOOOOOOOOX */
+.container-cbx-productos {
+  --input-focus: #DF1C1C;
+  --input-out-of-focus: #ccc;
+  --bg-color: #fff;
+  --bg-color-alt: #666;
+  --main-color: #323232;
+  position: relative;
+  cursor: pointer;
+}
+
+.container-cbx-productos input {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkmark-cbx-productos {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  box-shadow: 4px 4px var(--main-color);
+  background-color: var(--input-out-of-focus);
+  transition: all 0.3s;
+}
+
+.container-cbx-productos input:checked ~ .checkmark-cbx-productos {
+  background-color: var(--input-focus);
+}
+
+.checkmark-cbx-productos:after {
+  content: "";
+  width: 7px;
+  height: 15px;
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  display: none;
+  border: solid var(--bg-color);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.container-cbx-productos input:checked ~ .checkmark-cbx-productos:after {
+  display: block;
+}
+
+
+/* ACA TERMINA EL CHEEEEEEEEEEEEEEEEEEEECKBOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOX */

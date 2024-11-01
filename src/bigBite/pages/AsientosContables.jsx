@@ -1,21 +1,16 @@
-import '../css/asientosContables.css';
-import NavbarAdmin from '../components/NavbarAdmin';
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from 'react';
+import NavbarAdmin from '../components/NavbarAdmin';
+import '../css/asientosContables.css';
 
 export const AsientosContables = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    
-    // Estado para almacenar las cuentas traídas del backend
     const [planDeCuentas, setPlanDeCuentas] = useState([]);
-    
-    // Estado para almacenar los asientos contables en el libro diario
-    const [libroDiario, setLibroDiario] = useState([]);
-
-    // Estado para mostrar el aviso de que se ingresó un nuevo asiento
+    const [asientos, setAsientos] = useState([]);
+    const [cuentasAsiento, setCuentasAsiento] = useState([]);
+    const [descripcion, setDescripcion] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-    // Función para obtener las cuentas desde el backend
     useEffect(() => {
         const fetchCuentas = async () => {
             try {
@@ -29,57 +24,55 @@ export const AsientosContables = () => {
         fetchCuentas();
     }, []);
 
-    // Función para obtener los asientos desde el backend (ahora fuera de useEffect)
-    const fetchAsientos = async () => {
-        try {
-            const response = await fetch('http://localhost:8080/asientos');
-            const data = await response.json();
-            setLibroDiario(data);
-        } catch (error) {
-            console.error("Error al obtener los asientos:", error);
-        }
+    const agregarCuentaAsiento = () => {
+        setCuentasAsiento([...cuentasAsiento, { cuenta: '', monto: 0, tipo: '' }]);
     };
 
-    // Llamada inicial para obtener los asientos al cargar el componente
-    useEffect(() => {
-        fetchAsientos();
-    }, []);
+    const actualizarCuentaAsiento = (index, field, value) => {
+        const nuevasCuentas = [...cuentasAsiento];
+        nuevasCuentas[index][field] = value;
+        setCuentasAsiento(nuevasCuentas);
+    };
 
-    const onSubmit = async (data) => {
-        const cuentaSeleccionada = planDeCuentas.find(cuenta => cuenta.id === parseInt(data.cuenta, 10));
+    const eliminarCuentaAsiento = (index) => {
+        const nuevasCuentas = cuentasAsiento.filter((_, i) => i !== index);
+        setCuentasAsiento(nuevasCuentas);
+    };
 
-        if (!cuentaSeleccionada) {
-            alert("Error: La cuenta seleccionada no es válida.");
+    const onSubmit = async () => {
+        const totalDebe = cuentasAsiento
+            .filter(cuenta => cuenta.tipo === 'debe')
+            .reduce((sum, cuenta) => sum + parseFloat(cuenta.monto), 0);
+
+        const totalHaber = cuentasAsiento
+            .filter(cuenta => cuenta.tipo === 'haber')
+            .reduce((sum, cuenta) => sum + parseFloat(cuenta.monto), 0);
+
+        if (totalDebe !== totalHaber) {
+            alert("Los montos de 'Debe' y 'Haber' deben estar igualados.");
             return;
         }
 
-        const asientoData = {
-            cuenta: cuentaSeleccionada.id, // Enviar el ID numérico de la cuenta
-            monto: data.monto,
-            tipo: data.tipo
+        const data = {
+            descripcion,
+            cuentasAsiento
         };
 
         try {
-            // Enviar el asiento al backend
             const response = await fetch('http://localhost:8080/asientos/agregar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(asientoData),
+                body: JSON.stringify(data),
             });
 
             if (response.ok) {
-                // Mostrar el mensaje de éxito
                 setShowSuccessMessage(true);
-
-                // Volver a cargar los asientos desde el backend para actualizar la tabla
-                fetchAsientos();
-
-                // Ocultar el mensaje después de 3 segundos
                 setTimeout(() => setShowSuccessMessage(false), 3000);
-
                 reset();
+                setCuentasAsiento([]);
+                setDescripcion('');
             } else {
                 alert("Error al guardar el asiento.");
             }
@@ -92,87 +85,52 @@ export const AsientosContables = () => {
         <>
             <NavbarAdmin />
             <div className="Asientos">
-                <div className="titulo-asientos">
-                    <h1>Registrar asientos contables</h1>
-                    <p>Complete los campos con la información necesaria</p>
-                </div>
-                <div className="formulario-asiento">
-                    {/* Mostrar el mensaje de éxito */}
-                    {showSuccessMessage && (
-                        <div className="mensaje-exito">
-                            ¡Asiento contable ingresado con éxito!
+                <h1>Registrar Asientos Contables</h1>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div>
+                        <label>Descripción:</label>
+                        <input
+                            type="text"
+                            value={descripcion}
+                            onChange={(e) => setDescripcion(e.target.value)}
+                        />
+                    </div>
+                    {cuentasAsiento.map((cuenta, index) => (
+                        <div key={index}>
+                            <label>Cuenta:</label>
+                            <select
+                                value={cuenta.cuenta}
+                                onChange={(e) => actualizarCuentaAsiento(index, 'cuenta', e.target.value)}
+                            >
+                                <option value="">Seleccione una cuenta</option>
+                                {planDeCuentas.map((cuenta) => (
+                                    <option key={cuenta.id} value={cuenta.id}>
+                                        {cuenta.codigo} - {cuenta.nombre}
+                                    </option>
+                                ))}
+                            </select>
+                            <label>Monto:</label>
+                            <input
+                                type="number"
+                                value={cuenta.monto}
+                                onChange={(e) => actualizarCuentaAsiento(index, 'monto', e.target.value)}
+                            />
+                            <label>Tipo:</label>
+                            <select
+                                value={cuenta.tipo}
+                                onChange={(e) => actualizarCuentaAsiento(index, 'tipo', e.target.value)}
+                            >
+                                <option value="">Seleccione el tipo</option>
+                                <option value="debe">Debe</option>
+                                <option value="haber">Haber</option>
+                            </select>
+                            <button type="button" onClick={() => eliminarCuentaAsiento(index)}>Eliminar</button>
                         </div>
-                    )}
-
-                    <form className='formulario-contable' onSubmit={handleSubmit(onSubmit)}>
-                        <div className="relleno">
-                            <div>
-                                <label>Cuenta:</label>
-                                <select
-                                    {...register("cuenta", { required: "Debe seleccionar una cuenta" })}
-                                >
-                                    <option value="">Seleccione una cuenta</option>
-                                    {planDeCuentas.map((cuenta) => (
-                                        <option key={cuenta.id} value={cuenta.id}>
-                                            {cuenta.codigo} - {cuenta.nombre}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.cuenta && <span className="error">{errors.cuenta.message}</span>}
-                            </div>
-
-                            <div>
-                                <label>Monto:</label>
-                                <input
-                                    type="number"
-                                    placeholder="Ingrese el monto del asiento"
-                                    {...register("monto", { required: "El monto es obligatorio" })}
-                                />
-                                {errors.monto && <span className="error">{errors.monto.message}</span>}
-                            </div>
-
-                            {/* Selector para Debe o Haber */}
-                            <div>
-                                <label>Tipo:</label>
-                                <select
-                                    {...register("tipo", { required: "Debe seleccionar si es Debe o Haber" })}
-                                >
-                                    <option value="">Seleccione el tipo</option>
-                                    <option value="debe">Debe</option>
-                                    <option value="haber">Haber</option>
-                                </select>
-                                {errors.tipo && <span className="error">{errors.tipo.message}</span>}
-                            </div>
-                        </div>
-
-                        <button type="submit" className="btn-submit">Guardar Asiento</button>
-                    </form>
-                </div>
-
-                {/* Mostrar tabla del libro diario */}
-                <div className="libro-diario">
-                    <h2>Libro Diario</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Cuenta</th>
-                                <th>Monto</th>
-                                <th>Tipo</th> {/* Nuevo campo para Debe/Haber */}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {libroDiario.map((asiento, index) => (
-                                <tr key={index}>
-                                    <td>{asiento.fecha}</td>
-                                    <td>{asiento.cuenta.codigo}</td>
-                                    <td>{asiento.monto}</td>
-                                    <td>{asiento.tipo}</td> {/* Mostrar Debe o Haber */}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                    ))}
+                    <button type="button" onClick={agregarCuentaAsiento}>Agregar Cuenta</button>
+                    <button type="submit">Guardar Asiento</button>
+                    {showSuccessMessage && <div>¡Asiento guardado exitosamente!</div>}
+                </form>
             </div>
         </>
     );

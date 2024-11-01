@@ -18,6 +18,11 @@ export const AdminBebidas = () => {
       .catch(error => console.error('Error al cargar las bebidas:', error));
   }, []);
 
+  const handleEditBebidas = (e) => {
+    e.preventDefault(); 
+    setIsModalOpen(true); 
+  };
+
   const onSubmit = (data) => {
     // Asignar tiempo de preparación 0 automáticamente
     data.tiempoPreparacion = 0;
@@ -149,13 +154,11 @@ export const AdminBebidas = () => {
               {errors.marca && <span className="error-message">{errors.marca.message}</span>}
             </div>
 
-             {/* Disponible que sale solo al editar */}
-             {selectedBebida && (
-              <div>
-                <label className='label-producto'>Disponible:</label>
-                <input type="checkbox" {...register("disponible")} />
-              </div>
-            )}
+            <div className="container-cbx-productos">
+              <span className="label-producto">Disponible:</span>
+              <input type="checkbox" id="disponible" {...register("disponible")} />
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
+            </div>
             
             <div>
               <label className='label-producto'>Imagen:</label>
@@ -176,7 +179,7 @@ export const AdminBebidas = () => {
               <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
                 {selectedBebida ? 'Editar Bebida' : 'Registrar Bebida'}
               </button>
-              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+              <button type="button" onClick={handleEditBebidas} className="btnRegistrarHamburguesa">
                 Editar Bebida existente
               </button>
 
@@ -186,8 +189,8 @@ export const AdminBebidas = () => {
 
         {/* Modal para seleccionar bebidas */}
         {isModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="products-modal">
+            <div className="products-modal-content">
               <h2>Selecciona una Bebida</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">

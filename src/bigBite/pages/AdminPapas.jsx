@@ -57,6 +57,11 @@ export const AdminPapas = () => {
     fetchInsumos();  // Cargar los insumos cuando se abre el modal
   };
 
+  const handleEditPapasFritas = (e) => {
+    e.preventDefault(); 
+    setIsModalOpen(true); 
+  };
+
   const onSubmit = (data) => {
     data.disponible = data.disponible;
   
@@ -124,7 +129,19 @@ export const AdminPapas = () => {
     setValue('tiempoPreparacion', papasFritas.tiempoPreparacion); // Asegúrate de asignar el tiempo de preparación
     setValue('disponible', papasFritas.disponible);
     setImagePreview(papasFritas.urlImagen || null);
-    setIsModalOpen(false); // Cierra el modal al editar
+
+    // Establecer insumos con sus cantidades
+    if (papasFritas.insumos && papasFritas.insumos.length > 0) {
+      const insumosConCantidad = papasFritas.insumos.map(detalle => ({
+        insumoId: detalle.insumo.id,
+        cantidad: detalle.cantidad
+      }));
+      setSelectedInsumos(insumosConCantidad);
+    } else {
+      setSelectedInsumos([]);
+    }
+
+    setIsModalOpen(false);
   };
 
   const handleImageChange = (e) => {
@@ -192,10 +209,6 @@ export const AdminPapas = () => {
               {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
             </div>
             <div>
-              <label className='label-producto'>Disponible:</label>
-              <input type="checkbox" {...register("disponible")} />
-            </div>
-            <div>
               <label className='label-producto'>Tamaño:</label>
               <select className='input-producto' {...register("tamanio", { required: "El tamaño es obligatorio" })}>
                 <option value="">Seleccionar tamaño</option>
@@ -203,6 +216,12 @@ export const AdminPapas = () => {
                 <option value="GRANDES">GRANDES</option>
               </select>
               {errors.tamanio && <span className="error-message">{errors.tamanio.message}</span>}
+            </div>
+
+            <div className="container-cbx-productos">
+              <span className="label-producto">Disponible:</span>
+              <input type="checkbox" id="disponible" {...register("disponible")} />
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
             </div>
 
             <div>
@@ -226,7 +245,7 @@ export const AdminPapas = () => {
                 {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
               </button>
               
-              <button onClick={() => setIsModalOpen(true)} className="btnRegistrarHamburguesa">
+              <button type="button" onClick={handleEditPapasFritas} className="btnRegistrarHamburguesa">
                 Editar Papas Fritas existentes
               </button>
             </div>          
@@ -234,8 +253,8 @@ export const AdminPapas = () => {
         </section>
 
         {isModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="products-modal">
+            <div className="products-modal-content">
               <h2>Selecciona unas Papas Fritas</h2>
               <button className="btn-close" onClick={() => setIsModalOpen(false)}></button>
               <div className="modal-body">
@@ -258,9 +277,10 @@ export const AdminPapas = () => {
           </div>
         )}
 
+        {/* Modal para seleccionar Insumos */}
         {isInsumosModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="products-modal">
+            <div className="products-modal-content">
               <h2>Selecciona los Insumos</h2>
               <button className="btn-close" onClick={() => setIsInsumosModalOpen(false)}></button>
               <div className="modal-body">
@@ -273,21 +293,21 @@ export const AdminPapas = () => {
                       <div className="product-details">
                         <p><strong>{insumo.nombre}</strong></p>
                         <p>{insumo.unidadMedida}</p>
+                        {/* Campo para ingresar la cantidad del insumo */}
                         <input
                           type="number"
                           min="0"
                           placeholder="Cantidad"
                           value={cantidad}
                           onChange={(e) => handleInsumoSelection(insumo.id, e.target.value)}
-                          className="cantidad-input"
+                          className="input-producto"
                         />
                       </div>
                     </div>
+                    
                   );
                 })}
-              </div>
-              <div className="modal-footer">
-                <button onClick={confirmInsumoSelection} className="btn-confirmar">
+                <button onClick={confirmInsumoSelection} className="btnRegistrarHamburguesa">
                   Confirmar
                 </button>
               </div>
