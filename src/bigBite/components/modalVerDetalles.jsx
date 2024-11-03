@@ -67,7 +67,7 @@ const ModalVerDetalles = ({ onClose }) => {
     const openDetailsModal = () => setIsDetailsModalOpen(true);
 
     const validarId = () => {
-        const id = document.getElementById("nroOrden").value;
+        const id = Number(document.getElementById("nroOrden").value);
         const pedido = pedidos.find(pedido => pedido.id === id);
         if(pedido){
             openDetailsModal();
