@@ -110,47 +110,60 @@ export const AsientosContables = () => {
 
   const handleAddCuenta = () => {
     if (monto && tipo && cuenta) {
-      const nuevaCuenta = { cuenta, monto: parseFloat(monto), tipo };
-      if (tipo === "Debe") {
-        setCuentasDebe([...cuentasDebe, nuevaCuenta]);
-      } else {
-        setCuentasHaber([...cuentasHaber, nuevaCuenta]);
-      }
+      // Encuentra la cuenta correspondiente al nombre seleccionado
+      const cuentaSeleccionada = cuentas.find(c => c.nombre === cuenta);
+      if (cuentaSeleccionada) {
+        const nuevaCuenta = {
+          cuentaId: cuentaSeleccionada.id, // Asegúrate de que el campo del ID sea el correcto
+          cuenta: cuentaSeleccionada.nombre,
+          monto: parseFloat(monto),
+          tipo
+        };
+        if (tipo === "Debe") {
+          setCuentasDebe([...cuentasDebe, nuevaCuenta]);
+        } else {
+          setCuentasHaber([...cuentasHaber, nuevaCuenta]);
+        }
   
-      // Restablece los campos después de agregar la cuenta
-      setCuenta("");
-      setMonto("");
-      setTipo("");
+        // Restablece los campos después de agregar la cuenta
+        setCuenta("");
+        setMonto("");
+        setTipo("");
+      }
     } else {
       console.log("Debe ingresar todos los datos para agregar una cuenta.");
     }
   };
-  
 
- const handleGuardarAsiento = async () => {
-  const nuevoAsiento = {
-    fecha,
-    descripcion,
-    cuentaAsiento: [...cuentasDebe, ...cuentasHaber]
+  const handleGuardarAsiento = async () => {
+    const nuevoAsiento = {
+      fecha,
+      descripcion,
+      cuentaAsientoDTO: cuentasDebe.concat(cuentasHaber).map(cuenta => {
+          console.log("Cuenta ID:", cuenta.cuentaId); // Verifica que el ID esté presente
+          return {
+              cuentaId: cuenta.cuentaId,
+              monto: cuenta.monto,
+              tipo: cuenta.tipo
+          };
+      })
   };
 
-  try {
-    const response = await fetch('http://localhost:8080/asientos/agregar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nuevoAsiento)
-    });
-    if (!response.ok) throw new Error('Error al registrar el asiento');
-    setAsientos([...asientos, nuevoAsiento]);
-    setCuentasDebe([]);
-    setCuentasHaber([]);
-    setDescripcion("");
-  } catch (err) {
-    console.error(err.message);
-  }
+    try {
+        const response = await fetch('http://localhost:8080/asientos/agregar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(nuevoAsiento)
+        });
+        if (!response.ok) throw new Error('Error al registrar el asiento');
+        setAsientos([...asientos, nuevoAsiento]);
+        setCuentasDebe([]);
+        setCuentasHaber([]);
+        setDescripcion("");
+    } catch (err) {
+        console.error(err.message);
+    }
 };
-
-  
 
   const calcularTotal = (cuentas) => {
     return cuentas.reduce((acc, cuenta) => acc + cuenta.monto, 0);
