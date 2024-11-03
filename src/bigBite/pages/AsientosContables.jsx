@@ -8,11 +8,11 @@ export const AsientosContables = () => {
   const [tipo, setTipo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
-  const [asientos, setAsientos] = useState([]);
+  const [asientos, setAsientos] = useState([]); // Initialize asientos with an empty array
   const [cuentasDebe, setCuentasDebe] = useState([]);
   const [cuentasHaber, setCuentasHaber] = useState([]);
-  const [mostrarLibro, setMostrarLibro] = useState("diario"); // Estado para controlar qué libro mostrar
-  const [cuentas, setCuentas] = useState([]); // Estado para las cuentas
+  const [mostrarLibro, setMostrarLibro] = useState("diario");
+  const [cuentas, setCuentas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -276,12 +276,12 @@ export const AsientosContables = () => {
       <tbody>
         {asientos.map((asiento, index) => (
           <React.Fragment key={index}>
-            {asiento.debe.map((cuentaDebe, i) => (
+            {(asiento.debe || []).map((cuentaDebe, i) => (
               <tr key={`${index}-debe-${i}`}>
                 {i === 0 && (
                   <>
-                    <td rowSpan={asiento.debe.length + asiento.haber.length}>{asiento.fecha}</td>
-                    <td rowSpan={asiento.debe.length + asiento.haber.length}>{asiento.descripcion}</td>
+                    <td rowSpan={(asiento.debe || []).length + (asiento.haber || []).length}>{asiento.fecha}</td>
+                    <td rowSpan={(asiento.debe || []).length + (asiento.haber || []).length}>{asiento.descripcion}</td>
                   </>
                 )}
                 <td>{cuentaDebe.cuenta}</td>
@@ -289,7 +289,7 @@ export const AsientosContables = () => {
                 <td>Debe</td>
               </tr>
             ))}
-            {asiento.haber.map((cuentaHaber, i) => (
+            {(asiento.haber || []).map((cuentaHaber, i) => (
               <tr key={`${index}-haber-${i}`}>
                 <td>{cuentaHaber.cuenta}</td>
                 <td>${cuentaHaber.monto.toFixed(2)}</td>
