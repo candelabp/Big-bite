@@ -127,18 +127,30 @@ export const AsientosContables = () => {
   };
   
 
-  const handleGuardarAsiento = () => {
-    const nuevoAsiento = {
-      fecha,
-      descripcion,
-      debe: cuentasDebe,
-      haber: cuentasHaber,
-    };
+ const handleGuardarAsiento = async () => {
+  const nuevoAsiento = {
+    fecha,
+    descripcion,
+    cuentaAsiento: [...cuentasDebe, ...cuentasHaber]
+  };
+
+  try {
+    const response = await fetch('http://localhost:8080/asientos/agregar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nuevoAsiento)
+    });
+    if (!response.ok) throw new Error('Error al registrar el asiento');
     setAsientos([...asientos, nuevoAsiento]);
     setCuentasDebe([]);
     setCuentasHaber([]);
     setDescripcion("");
-  };
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+  
 
   const calcularTotal = (cuentas) => {
     return cuentas.reduce((acc, cuenta) => acc + cuenta.monto, 0);
