@@ -108,7 +108,7 @@ export const AdminInsumos = () => {
                 <option value="">Seleccionar</option>
                 <option value="Unidades">Unidades</option>
                 <option value="Kg">Kg</option>
-                <option value="Gr">Gg</option>
+                <option value="Gr">Gr</option>
               </select>
               {errors.unidadMedida && <span className="error-message">{errors.unidadMedida.message}</span>}
             </div>
