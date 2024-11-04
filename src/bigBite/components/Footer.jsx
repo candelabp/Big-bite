@@ -14,7 +14,7 @@ export const Footer = () => {
                     <Link className='footer-links' to='/'>Inicio</Link>
                     <Link className='footer-links' to=''>Servicios</Link>
                     <Link className='footer-links' to=''>Terminos</Link>
-                    <Link className='footer-links' to=''>Politicas</Link>
+                    <Link className='footer-links' to='/AdminPpal'>Politicas</Link>
                 </div>
 
                 <div>
