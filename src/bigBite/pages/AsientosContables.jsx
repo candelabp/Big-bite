@@ -32,43 +32,63 @@ export const AsientosContables = () => {
         setLoading(false);
       }
     };
-
+    const fetchAsientos = async () => {
+      const asientosGuardados = localStorage.getItem("asientos");
+      if (asientosGuardados) {
+        setAsientos(JSON.parse(asientosGuardados));
+      } else {
+        try {
+          const response = await fetch('http://localhost:8080/asientos');
+          if (!response.ok) throw new Error('Error al obtener los asientos');
+          const data = await response.json();
+          setAsientos(data);
+          localStorage.setItem("asientos", JSON.stringify(data)); // Guardar en localStorage
+        } catch (err) {
+          console.error(err.message);
+        }
+      }
+    };
+    console.log(asientos);
     fetchCuentas();
+    fetchAsientos();
   }, []);
 
   const generarLibroMayor = () => {
     const libroMayor = {};
-
+  
     asientos.forEach((asiento) => {
-      asiento.debe.forEach((cuenta) => {
-        if (!libroMayor[cuenta.cuenta]) {
-          libroMayor[cuenta.cuenta] = { movimientos: [], saldo: 0 };
+      asiento.cuentaAsientoDTO.forEach((cuenta) => {
+        // Obtenemos el nombre de la cuenta usando el ID
+        const cuentaNombre = cuentas.find(c => c.id === cuenta.cuentaId)?.nombre || cuenta.cuentaId;
+        
+        // Inicializamos la cuenta en el libro mayor si no existe
+        if (!libroMayor[cuentaNombre]) {
+          libroMayor[cuentaNombre] = { movimientos: [], saldo: 0 };
         }
-        libroMayor[cuenta.cuenta].movimientos.push({
+  
+        // Registramos el movimiento en función del tipo (Debe o Haber)
+        libroMayor[cuentaNombre].movimientos.push({
           fecha: asiento.fecha,
           descripcion: asiento.descripcion,
           monto: cuenta.monto,
-          tipo: "Debe",
+          tipo: cuenta.tipo,
         });
-        libroMayor[cuenta.cuenta].saldo += cuenta.monto;
-      });
-
-      asiento.haber.forEach((cuenta) => {
-        if (!libroMayor[cuenta.cuenta]) {
-          libroMayor[cuenta.cuenta] = { movimientos: [], saldo: 0 };
+  
+        // Actualizamos el saldo de acuerdo al tipo
+        if (cuenta.tipo === "Debe") {
+          libroMayor[cuentaNombre].saldo += cuenta.monto;
+        } else if (cuenta.tipo === "Haber") {
+          libroMayor[cuentaNombre].saldo -= cuenta.monto;
         }
-        libroMayor[cuenta.cuenta].movimientos.push({
-          fecha: asiento.fecha,
-          descripcion: asiento.descripcion,
-          monto: cuenta.monto,
-          tipo: "Haber",
-        });
-        libroMayor[cuenta.cuenta].saldo -= cuenta.monto;
       });
     });
-
+  
+    console.log("Libro Mayor generado:", libroMayor);
     return libroMayor;
   };
+  
+  
+  
 
   const mostrarLibroMayor = () => {
     const libroMayor = generarLibroMayor();
@@ -139,31 +159,32 @@ export const AsientosContables = () => {
     const nuevoAsiento = {
       fecha,
       descripcion,
-      cuentaAsientoDTO: cuentasDebe.concat(cuentasHaber).map(cuenta => {
-          console.log("Cuenta ID:", cuenta.cuentaId); // Verifica que el ID esté presente
-          return {
-              cuentaId: cuenta.cuentaId,
-              monto: cuenta.monto,
-              tipo: cuenta.tipo
-          };
-      })
-  };
-
+      cuentaAsientoDTO: cuentasDebe.concat(cuentasHaber).map(cuenta => ({
+        cuentaId: cuenta.cuentaId,
+        monto: cuenta.monto,
+        tipo: cuenta.tipo
+      }))
+    };
+  
     try {
-        const response = await fetch('http://localhost:8080/asientos/agregar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(nuevoAsiento)
-        });
-        if (!response.ok) throw new Error('Error al registrar el asiento');
-        setAsientos([...asientos, nuevoAsiento]);
-        setCuentasDebe([]);
-        setCuentasHaber([]);
-        setDescripcion("");
+      const response = await fetch('http://localhost:8080/asientos/agregar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nuevoAsiento)
+      });
+      if (!response.ok) throw new Error('Error al registrar el asiento');
+  
+      const updatedAsientos = [...asientos, nuevoAsiento];
+      setAsientos(updatedAsientos);
+      localStorage.setItem("asientos", JSON.stringify(updatedAsientos)); // Actualizar localStorage
+      setCuentasDebe([]);
+      setCuentasHaber([]);
+      setDescripcion("");
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
     }
-};
+  };
+  
 
   const calcularTotal = (cuentas) => {
     return cuentas.reduce((acc, cuenta) => acc + cuenta.monto, 0);
@@ -289,32 +310,30 @@ export const AsientosContables = () => {
       <tbody>
         {asientos.map((asiento, index) => (
           <React.Fragment key={index}>
-            {(asiento.debe || []).map((cuentaDebe, i) => (
-              <tr key={`${index}-debe-${i}`}>
-                {i === 0 && (
-                  <>
-                    <td rowSpan={(asiento.debe || []).length + (asiento.haber || []).length}>{asiento.fecha}</td>
-                    <td rowSpan={(asiento.debe || []).length + (asiento.haber || []).length}>{asiento.descripcion}</td>
-                  </>
-                )}
-                <td>{cuentaDebe.cuenta}</td>
-                <td>${cuentaDebe.monto.toFixed(2)}</td>
-                <td>Debe</td>
-              </tr>
-            ))}
-            {(asiento.haber || []).map((cuentaHaber, i) => (
-              <tr key={`${index}-haber-${i}`}>
-                <td>{cuentaHaber.cuenta}</td>
-                <td>${cuentaHaber.monto.toFixed(2)}</td>
-                <td>Haber</td>
-              </tr>
-            ))}
+            {(asiento.cuentaAsientoDTO || []).map((cuenta, i) => {
+              // Buscar el nombre de la cuenta usando cuentaId
+              const cuentaNombre = cuentas.find(c => c.id === cuenta.cuentaId)?.nombre || cuenta.cuentaId;
+              return (
+                <tr key={`${index}-${i}`}>
+                  {i === 0 && (
+                    <>
+                      <td rowSpan={asiento.cuentaAsientoDTO.length}>{asiento.fecha}</td>
+                      <td rowSpan={asiento.cuentaAsientoDTO.length}>{asiento.descripcion}</td>
+                    </>
+                  )}
+                  <td>{cuentaNombre}</td>
+                  <td>${cuenta.monto.toFixed(2)}</td>
+                  <td>{cuenta.tipo}</td>
+                </tr>
+              );
+            })}
           </React.Fragment>
         ))}
       </tbody>
     </table>
   </div>
 )}
+
 
         {mostrarLibro === "mayor" && mostrarLibroMayor()}
       </div>
