@@ -6,6 +6,8 @@ const ModalVerDetalles = ({ onClose }) => {
     const [pedidos, setPedidos] = useState([]);
     const [pedidosEntregados, setPedidosEntregados] = useState([]);
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+    const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
+
 
     useEffect(() => {
         axios(`http://localhost:8080/pedidos`)
@@ -62,15 +64,23 @@ const ModalVerDetalles = ({ onClose }) => {
         };
     }, []);
 
-    const closeDetailsModal = () => setIsDetailsModalOpen(false);
+    const closeDetailsModal = () => {
+        setIsDetailsModalOpen(false);
+        setPedidoSeleccionado(null); // Resetear el pedido seleccionado al cerrar
+    };
+    
 
-    const openDetailsModal = () => setIsDetailsModalOpen(true);
+    const openDetailsModal = (pedido) => {
+        setPedidoSeleccionado(pedido); // Establecer el pedido seleccionado
+        setIsDetailsModalOpen(true);
+    };
+    
 
     const validarId = () => {
         const id = Number(document.getElementById("nroOrden").value);
         const pedido = pedidos.find(pedido => pedido.id === id);
         if(pedido){
-            openDetailsModal();
+            openDetailsModal(pedido);
         } else {
             Swal.fire({
                 title: "Error!",
@@ -99,24 +109,24 @@ const ModalVerDetalles = ({ onClose }) => {
             </div>
 
 
-            {isDetailsModalOpen && pedidos.map((pedido) => (
-                <div key={pedido.id} className="container-modal-detalles" id="modalDetails">
+            {isDetailsModalOpen && pedidoSeleccionado && ( // Verificar si hay un pedido seleccionado
+                <div className="container-modal-detalles" id="modalDetails">
                     <div className="div-modal">
                         <div className="container-titulo-modal">
-                            <h1>Detalles del pedido #{pedido.id}</h1>
+                            <h1>Detalles del pedido #{pedidoSeleccionado.id}</h1>
                         </div>
                         <div className='div-detalles'>
-                            <p><b>Numero de orden:</b> {pedido.id}</p>
-                            <p><b>Fecha del pedido:</b> {pedido.fechaSolicitado}</p>
-                            <p><b>Total:</b> ${pedido.subTotal}</p>
+                            <p><b>Número de orden:</b> {pedidoSeleccionado.id}</p>
+                            <p><b>Fecha del pedido:</b> {pedidoSeleccionado.fechaSolicitado}</p>
+                            <p><b>Total:</b> ${pedidoSeleccionado.subTotal}</p>
                             <hr className="solid-divider" />
                             <h2>Productos:</h2>
-                            {pedido.productos.map((producto, index) => (
+                            {pedidoSeleccionado.productos.map((producto, index) => (
                                 <div key={index} className='producto-detalle'>
                                     <p><b>Producto:</b> {producto.nombre}</p>
                                     <p><b>Cantidad:</b> {producto.cantItems}</p>
                                     <p><b>Precio:</b> ${producto.precioCombo}</p>
-                                    {index < pedido.productos.length - 1 && <hr className="dotted-divider" />}
+                                    {index < pedidoSeleccionado.productos.length - 1 && <hr className="dotted-divider" />}
                                 </div>
                             ))}
                         </div>
@@ -125,7 +135,8 @@ const ModalVerDetalles = ({ onClose }) => {
                         </div>
                     </div>
                 </div>
-            ))}
+            )}
+
             {/* {isModalOpen && (
                 <div className="container-modal" id="modal">
                     <div className="div-modal">
