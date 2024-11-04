@@ -139,13 +139,15 @@
 
 .div-modal {
     width: 50vw;
-    height: 45vh;
+    min-height: 45vh;
+    max-height: 80vh;
     background-color: white;
     box-shadow: 5px 2px 10px 10px rgba(0, 0, 0, 0.3);
     border-radius: 0.4rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    overflow-y: auto;
 }
 
 .container-titulo-modal {
