@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import burger from '../assets/burgerInicio.png';
-import '../css/gestionPedidos.css';
+import '../css/GestionPedidos.css';
 import axios from 'axios';
 
 export const CompGestPedidos = () => {
