@@ -26,6 +26,7 @@ import { GestionPedidos } from './bigBite/pages/GestionPedidos';
 import { UserProvider } from './context/UserContext';
 import { Administradores } from './bigBite/pages/Administradores';
 import { MisPedidos } from './bigBite/pages/MisPedidos';
+import { MisPedidosProvider } from './bigBite/components/Context/MisPedidosContext';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
@@ -43,7 +44,9 @@ root.render(
             <Route path="/menu" element={<Menu />} />
             <Route path="/carrito" element={<Carrito />} />
             <Route path="/contacto" element={<Contacto />} />
-            <Route path="/misPedidos" element={<MisPedidos />} />
+
+            <Route path="/misPedidos" element={ <MisPedidosProvider> <MisPedidos /> </MisPedidosProvider> } />
+
             <Route path="/AdminProductos" element={<AdminProductos />} />
             <Route path="/AdminBebidas" element={<AdminBebidas />} />
             <Route path="/AdminPapas" element={<AdminPapas />} />
