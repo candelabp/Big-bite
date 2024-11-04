@@ -1,6 +1,6 @@
 import NavbarAdmin from '../components/NavbarAdmin';
 import { CompGestPedidos } from '../components/CompGestPedidos';
-import '../css/gestionPedidos.css';
+import '../css/GestionPedidos.css';
 
 
 export const GestionPedidos = () => {
