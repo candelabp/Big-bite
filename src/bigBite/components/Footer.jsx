@@ -20,7 +20,7 @@ export const Footer = () => {
                 <div>
                     <Link to='https://www.instagram.com/?hl=es' target='_blank'><i className="bi bi-instagram footer-redes"></i></Link>
                     <Link to='https://facebook.com/?locale=es_LA' target='_blank'><i className="bi bi-facebook footer-redes"></i></Link>
-                    <Link to='https://x.com/?lang=es' target='_blank'><i className="bi bi-twitter footer-redes"></i></Link>
+                    <Link to='https://x.com/?lang=es' target='_blank'><i className="bi bi-twitter-x footer-redes"></i></Link>
                 </div>
 
                 <hr className='footer-linea' />
