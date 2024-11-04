@@ -40,6 +40,7 @@
 }
 
 .botones {
+    /* display: none; */
     width: 25vh;
     margin-right: 10px;
     font-size: 15px;
@@ -49,6 +50,19 @@
 .botones:hover {
     color: white;
 }
+
+/* .botonesEntregado {
+    display: none;
+    justify-content: center;
+    width: 25vh;
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+}
+
+.botonesEntregado:hover {
+    color: white;
+} */
 
 .burger {
     background-color: #ece6f09c;
@@ -196,11 +210,6 @@
         margin-left: 10px;
     }
 
-    .botonescolor {
-        width: 14vh;
-        margin: 10px 5px 0 7px;
-    }
-
     .botones {
         width: 12vh;
         font-size: 12px; 
@@ -217,12 +226,6 @@
         text-align: center;
         display: block;
 
-    }
-
-    .botonescolor {
-        width: 15vh;
-        margin: 10px 5px;
-        font-size: 13px;
     }
 
     .botones {

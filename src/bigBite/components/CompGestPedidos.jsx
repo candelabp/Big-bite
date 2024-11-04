@@ -3,12 +3,15 @@ import burger from '../assets/burgerInicio.png';
 import '../css/gestionPedidos.css';
 import axios from 'axios';
 import ModalVerDetalles from './modalVerDetalles';
+import Swal from 'sweetalert2';
 
-export const CompGestPedidos = () => {
+export const CompGestPedidos = ({pedidosBuscados, pedidosEntregadosBuscados}) => {
     const [pedidos, setPedidos] = useState([]);
     const [pedidosEntregados, setPedidosEntregados] = useState([]);
     const [estado, setEstado] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [pedidoSeleccionado, setPedidoSeleccionado] = useState(false);
+    const [pedidoEntregadoSeleccionado, setPedidoEntregadoSeleccionado] = useState(false);
 
     useEffect(() => {
         axios(`http://localhost:8080/pedidos`)
@@ -30,6 +33,9 @@ export const CompGestPedidos = () => {
             })
             .catch((error) => console.error('Error fetching pedidos:', error));
     }, []);
+
+    const mostrarPedidos = () => (pedidosBuscados && pedidosBuscados.length > 0 ? pedidosBuscados : pedidos);
+    const mostrarPedidosEntregados = () => (pedidosEntregadosBuscados && pedidosEntregadosBuscados.length > 0 ? pedidosEntregadosBuscados : pedidosEntregados)
 
     const cambiarEstado = (id, nuevoEstado) => {
         setEstado((estadoAnterior) => ({
@@ -64,12 +70,12 @@ export const CompGestPedidos = () => {
     }
 
     const mostrarAlerta = () => {
-        alert("Se cambió correctamente el estado del pedido");
+        Swal.fire({
+            // title: "!",
+            text: "Se cambió correctamente el estado del pedido!",
+            icon: "success"
+        });
     };
-
-    // Funciones para controlar la visibilidad del modal
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
 
     return (
         <>
@@ -77,13 +83,13 @@ export const CompGestPedidos = () => {
                 <div className='paddingtitulos'>
                     <h1>Pedidos en curso</h1>
                     <p>Lista de todos los pedidos en curso</p>
-                    <button onClick={openModal} type="button" className='btn btn-outline-warning botones'>Ver detalles</button>
+                    <button onClick={() => setIsModalOpen(true)} disabled={!pedidoSeleccionado} type="button" className='btn btn-outline-warning botones'>Ver detalles</button>
                 </div>
 
                 <div>
-                    {pedidos.map((pedido) => (
+                    {mostrarPedidos().map((pedido) => (
                         <div key={pedido.id}>
-                            <div className='infopedidos'>
+                            <div className='infopedidos' onClick={() => setPedidoSeleccionado(pedido)}>
                                 <img src={burger} className='burger' alt="" />
                                 <p className='nrodeorden'>
                                     <b>Orden #{pedido.id}</b>
@@ -119,14 +125,14 @@ export const CompGestPedidos = () => {
                 <div className='paddingtitulos'>
                     <h1>Pedidos anteriores</h1>
                     <p>Lista de todos los pedidos entregados</p>
-                    <button onClick={openModal} type="button" className='btn btn-outline-danger botones'>Ver detalles</button>
+                    <button onClick={() => setIsModalOpen(true)} disabled={!pedidoEntregadoSeleccionado} type="button" className='btn btn-outline-danger botones'>Ver detalles</button>
 
                 </div>
                 <div>
                     {pedidosEntregados.length > 0 && (
-                        pedidosEntregados.map((pedido) => (
+                        mostrarPedidosEntregados().map((pedido) => (
                         <div key={pedido.id}>
-                            <div className='infopedidos'>
+                            <div className='infopedidos' onClick={() => setPedidoEntregadoSeleccionado(pedido)}>
                                 <img src={burger} className='burger' alt="" />
                                 <p className='nrodeorden'>
                                     <b>Orden #{pedido.id}</b>
@@ -141,8 +147,9 @@ export const CompGestPedidos = () => {
                     )}
                 </div>
             </div>
+
             {/* Renderiza el modal sólo si isModalOpen es true */}
-            {isModalOpen && <ModalVerDetalles onClose={closeModal} />}
+            {isModalOpen && <ModalVerDetalles pedido={pedidoSeleccionado || pedidoEntregadoSeleccionado} onClose={() => setIsModalOpen(false)} />}
         </>
     );
 };
