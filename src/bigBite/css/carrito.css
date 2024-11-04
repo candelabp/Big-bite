@@ -1,0 +1,329 @@
+
+.resumencompra {
+    margin: 0px;
+    margin-left: 2.3vh;
+    bottom: 0px;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.division2{
+    width: 100%;
+}
+
+.linea { 
+    color: #ff9d00;
+    border-radius: 10px;
+    border: 1px solid #ff9d00;
+    margin: 10px;
+}
+
+
+.contenedor{
+    padding: 2.5vh;
+}
+
+.contenedor{
+    padding: 50px;
+}
+  
+.section {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin-bottom: 5px;
+    padding: 0px 10px;
+}
+
+.nombreArticuloCarrito{
+    width: 20vh;
+    font-family: "Poppins", sans-serif;
+
+}
+  
+.divimg {
+    background-color: #ece6f09c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+  
+.imgburger {
+    width: 100%;
+}
+
+.contOpcionesCarrito{
+    width: 20vh;
+}
+  
+.divinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+
+}
+  
+.divcantidad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+  
+.btncant {
+    padding: 0;
+    margin: 10px;
+    width: 28px;
+    height: 28px;
+}
+  
+.cantidadCarrito {
+    text-align: center;
+    margin: 0px;
+}
+  
+.eliminar { 
+    padding: 0;
+    color: red;
+    font-family: "Poppins", sans-serif;
+
+}
+  
+.editar { 
+    color: #FFBA49;
+    font-family: "Poppins", sans-serif;
+
+}
+  
+.sectionArticulo {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5vh;
+}
+  
+.productoscompra { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    width: 100%;
+    height: 200%;
+    margin-top: 5vh;
+    font-family: "Poppins", sans-serif;
+
+}
+  
+.total { 
+    font-weight: bold;
+    padding-bottom: 1px;
+    background-color: #FFBA49;
+    padding: 0px 10px;
+}
+  
+.btnpagar { 
+    border-radius: 10px;
+    margin-top: 30px;
+    background-color: #C10000;
+    color: white;
+    margin-bottom: 10vh;
+}
+  
+.lineagris {
+    color: #a29fa3;
+    border-radius: 10px;
+    border: 1.5px solid #a29fa3;
+    margin: 10px;
+    width: 60%;
+}
+
+.celdaCantidad{
+    margin: 0px;
+
+}
+
+.payment-form {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    width: 100%;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .btnes {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #c10000;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  
+  .btnes.active {
+    background-color: #ffba49;
+  }
+  
+  .form-btns{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .btnes.btnpagar {
+    margin-top: 20px;
+    background-color: #c10000;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .btnes.btnpagar:hover {
+    background-color: #a00000;
+  }
+  
+  
+
+@media (min-width: 490px) {
+    .nombreArticuloCarrito{
+        width: 35vh;
+    }
+
+    .contOpcionesCarrito{
+        width: 35vh;
+    }
+
+    .btncant{
+        width: 40px;
+    }
+
+    .sectionArticulo {
+        width: 90%;
+        margin: auto;
+        margin-top: 5vh;
+    }
+}
+
+@media (min-width: 550px) {
+    .divimg {
+        width: 130px;
+    }
+}
+
+@media (min-width: 720px) {
+
+    .divimg {
+        width: 150px;
+    }
+
+    .nombreArticuloCarrito{
+        font-size: 1.25rem;
+        width: 60vh;
+    }
+
+    .contOpcionesCarrito{
+        width: 60vh;
+    }
+
+    .productoscompra{
+        width: 65%;
+        margin: auto;
+        margin-top: 5vh;
+    }
+}
+
+@media (min-width: 980px) {
+    .division{
+        display: flex;
+        justify-content: space-between;
+        margin: 0px 5vh;
+    }
+
+    .division2{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .lineagris{
+        display: none;
+    }
+
+    .productoscompra{
+        width: 40%;
+        padding-top: 5vh;
+    }
+
+    .sectionArticulo{
+        width: 50%;
+    }
+
+    .nombreArticuloCarrito, .contOpcionesCarrito{
+        width: 30vh;
+    }
+    
+    .sectionArticulo{
+        width: 65%;
+    }
+
+    .contenedor{
+        margin-bottom: 5vh;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .divimg{
+        width: 220px;
+    }
+
+    .sectionArticulo{
+        width: 80%;
+    }
+
+    .nombreArticuloCarrito, .contOpcionesCarrito{
+        width: 50vh;
+    }
+
+    .nombreArticuloCarrito{
+        font-size: 1.50rem;
+    }
+
+    .eliminar{
+        font-size: 1.25rem;
+    }
+
+    .btncant{
+        width: 50px;
+    }
+
+    
+}
+  
+
+    

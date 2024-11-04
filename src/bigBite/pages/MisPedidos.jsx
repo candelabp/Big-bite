@@ -1,0 +1,202 @@
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import burger from '../assets/burgerInicio.png'
+import '../css/misPedidos.css'
+import { Footer } from '../components/Footer';
+import { NavBar } from "../components/NavBarRojo";
+
+const pedidos = [
+    {
+      id: 1,
+      estado: "En preparación",
+      productos: [
+        { producto: "Hamburguesa clásica", cantidad: 2, precio: 500 },
+        { producto: "Papas fritas", cantidad: 1, precio: 200 }
+      ],
+      total: 1200,
+    },
+    {
+      id: 2,
+      estado: "Entregado",
+      productos: [
+        { producto: "Hamburguesa doble", cantidad: 1, precio: 800 },
+        { producto: "Bebida", cantidad: 2, precio: 150 }
+      ],
+      total: 1100,
+    },
+    {
+      id: 3,
+      estado: "En camino",
+      productos: [
+        { producto: "Hamburguesa vegetariana", cantidad: 1, precio: 600 },
+        { producto: "Batido", cantidad: 1, precio: 250 }
+      ],
+      total: 850,
+    },
+    {
+        id: 4,
+        estado: "Entregado",
+        productos: [
+          { producto: "BiteBox", cantidad: 1, precio: 1100 },
+          { producto: "Bebida", cantidad: 2, precio: 150 }
+        ],
+        total: 2100,
+      }
+  ];
+
+export const MisPedidos = () => {
+
+    const [selectedPedido, setSelectedPedido] = useState(null);
+    const [selectedPedidoEntregado, setSelectedPedidoEntregado] = useState(null);
+    const [isViewPedido, setIsViewPedido] = useState(false);
+    const [isViewPedidoEntregado, setIsViewPedidoEntregado] = useState(false);
+    
+
+    const handleSelectPedido = (pedido) => {
+        if (pedido.estado !== "Entregado") {
+            setSelectedPedido(pedido);
+            setSelectedPedidoEntregado(null);
+            setIsViewPedido(false)
+            setIsViewPedidoEntregado(false)
+        }
+    };
+
+    const handleSelectPedidoEntregado = (pedido) => {
+        if (pedido.estado === "Entregado") {
+            setSelectedPedidoEntregado(pedido);
+            setSelectedPedido(null);
+            setIsViewPedido(false)
+            setIsViewPedidoEntregado(false)
+        }
+    };
+
+    // Mostrar detalles de pedido en curso
+    const handleViewPedido = () => {
+        setIsViewPedido(true);
+    };
+
+    // Mostrar detalles de pedido entregado
+    const handleViewPedidoEntregado = () => {
+        setIsViewPedidoEntregado(true);
+    };
+
+    const handleCerrarPedido = () => {
+        setSelectedPedido(null);
+        setSelectedPedidoEntregado(null);
+        setIsViewPedido(false);
+    };
+
+    // Filtrar pedidos en curso y entregados
+    const pedidosEnCurso = pedidos.filter(pedido => pedido.estado !== "Entregado");
+    const pedidosEntregados = pedidos.filter(pedido => pedido.estado === "Entregado");
+
+    return (
+        <>
+         <NavBar />
+            <section className='contenedor'>
+                <div className='divpedidos arriba'>
+                    <div className='arriba-izq'>
+                        <h1>Mis Pedidos</h1>
+                        <p>Mira el estado de tus pedidos</p>
+                    </div>
+                    <div className='arriba_der'>
+                        <button type="button" className='btn btn-outline-danger botonescolor'>Filtrar</button>
+                    </div>                    
+                </div>
+
+                <br />
+                <hr className='line'/>
+                <br />
+
+                {/* Sección Pedidos en curso */}
+                <div className='divpedidos medio'>
+                    <div className='paddingtitulos'>
+                        <h1>Pedidos en curso</h1>
+                        <p>Lista de todos los pedidos en curso</p>
+                        {selectedPedido && (
+                        <>
+                            <button type="button" className='btn btn-outline-dark botones' onClick={handleViewPedido}>Ver detalles</button>
+                        </>
+                        )}
+                    </div>
+                    <div>
+                        {pedidosEnCurso.map((pedido) => (
+                            <div
+                                key={pedido.id}
+                                className={`infopedidos ${selectedPedido?.id === pedido.id ? 'pedido-seleccionado' : ''}`}
+                                onClick={() => handleSelectPedido(pedido)}
+                            >
+                                <img src={burger} className='burger' alt=""/>
+                                <p className='nrodeorden'>
+                                    <b>Orden #{pedido.id}</b>
+                                    <br />
+                                    Total: {pedido.total}
+                                </p>
+                                <p className='estado'>{pedido.estado}</p>
+                            </div>
+                        ))}
+                        {isViewPedido && (
+                        <div className='detalles-pedido'>
+                            <h2 className='titulo-detalle'>Detalles del Pedido #{selectedPedido.id}</h2>
+                            <ul className='lista-detalle'>
+                                {selectedPedido.productos.map((producto, index) => (
+                                    <li key={index}>
+                                        {producto.producto} - Cantidad: {producto.cantidad} - Precio: ${producto.precio}
+                                    </li>
+                                ))}
+                            </ul>
+                            <p className='total-detalle'><b>Total:</b> ${selectedPedido.total}</p>
+                        </div>
+                    )}
+                    </div>
+
+                </div>
+
+                {/* Sección Pedidos entregados */}
+                <div className='divpedidos entregados'>
+                    <div className='paddingtitulos'>
+                        <h1>Pedidos anteriores</h1>
+                        <p>Lista de todos los pedidos entregados</p>
+                        {selectedPedidoEntregado && (
+                        <>
+                            <button type="button" className='btn btn-outline-dark botones' onClick={handleViewPedidoEntregado}>Revisar</button>
+                        </>
+                        )}
+                    </div>
+                    <div>
+                        {pedidosEntregados.map((pedido) => (
+                            <div
+                                key={pedido.id}
+                                className={`infopedidos ${selectedPedidoEntregado?.id === pedido.id ? 'pedido-seleccionado' : ''}`}
+                                onClick={() => handleSelectPedidoEntregado(pedido)}
+                            >
+                                <img src={burger} className='burger' alt=""/>
+                                <p className='nrodeorden'>
+                                    <b>Orden #{pedido.id}</b>
+                                    <br />
+                                    Total: {pedido.total}
+                                </p>
+                                <p className='estado'>{pedido.estado}</p>
+                            </div>
+                        ))}
+                        {/* Renderizado condicional de detalles del pedido entregado */}
+                    {isViewPedidoEntregado && (
+                          <div className='detalles-pedido'>
+                          <h2 className='titulo-detalle'>Detalles del Pedido #{selectedPedidoEntregado.id}</h2>
+                          <ul className='lista-detalle'>
+                              {selectedPedidoEntregado.productos.map((producto, index) => (
+                                  <li key={index}>
+                                      {producto.producto} - Cantidad: {producto.cantidad} - Precio: ${producto.precio}
+                                  </li>
+                              ))}
+                          </ul>
+                          <p className='total-detalle'><b>Total:</b> ${selectedPedidoEntregado.total}</p>
+                            </div>
+                    )}
+                    </div>
+                </div>
+            </section>
+            <Footer />
+        </>
+    );
+}

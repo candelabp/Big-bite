@@ -1,0 +1,129 @@
+/* ingresar.css */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.form-container {
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+.inicio-sesion {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 40vh;
+    margin-top: 20vh;
+
+}
+
+.inicio-sesion label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+    color: #333;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+.inicio-sesion input[type="email"],
+.inicio-sesion input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.inicio-sesion input::placeholder {
+    color: #aaa;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.checkbox-container input {
+    margin-right: 10px;
+}
+
+.checkbox-container label {
+    font-size: 14px;
+    color: #555;
+   
+}
+
+.login-btn{
+    background-color: #ff3d3d;
+    color: white;
+    padding: 12px;
+    /*width: 100%;*/
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 2vh;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+   
+}
+
+.loginGoogle-btn{
+    background-color: #ff3d3d;
+    color: white;
+    padding: 12px;
+    /*width: 100%;*/
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 2vh;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+   
+}
+
+.register-btn {
+    background-color: #FFBA49;
+    color: white;
+    padding: 12px;
+    /*width: 100%;*/
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 2vh;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+   
+}
+
+.login-btn:hover  {
+    background-color: #e32d2d;
+}
+.loginGoogle-btn:hover  {
+    background-color: #e32d2d;
+}
+ .register-btn:hover {
+    background-color: #e99b1e;
+}
+
+@media screen and (max-width: 480px) {
+    .inicio-sesion {
+        padding: 20px;
+    }
+}

@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.mensaje {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.buttons{
+    padding: 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+} 
+
+
+ .contenedor-mensaje{
+    align-items: center;
+    margin-bottom: 30vh;
+ }
+ .mensaje{
+    text-align: center;
+    margin-top: 30vh;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+ }
+
+.login-btn {
+    background-color: #e62b1e;
+    color: white;
+    width: 30vh;
+}
+
+.login-btn:hover {
+    background-color: #b92018; /* Cambio de color en hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+    transform: scale(1.05); /* Agrandar un poco */
+}
+
+.login-btn:active {
+    transform: scale(0.98); /* Se achica un poco al hacer clic */
+    background-color: #a51c14; /* Cambio de color al hacer clic */
+}
+.btns{
+    align-items: center;
+}
+.register-btn {
+    background-color: #f7b21a;
+    width: 30vh;
+}
+
+.textRegister-btn, .textLogin-btn{
+    color: white;
+}
+
+.register-btn:hover {
+    background-color: #d89e15; /* Cambio de color en hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+    transform: scale(1.05); /* Agrandar un poco */
+}
+
+.register-btn:active {
+    transform: scale(0.98); /* Se achica un poco al hacer clic */
+    background-color: #c89111; /* Cambio de color al hacer clic */
+}
+
+
+
+@media (min-width: 768px) {
+    .contenedor-mensaje {
+        margin-top: 10%; /* Ajusta este valor para pantallas más grandes */
+    }
+
+
+}

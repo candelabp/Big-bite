@@ -1,0 +1,261 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+  background-color: #ffffff;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+}
+
+/*Menu*/
+.menu {
+  width: 90%;
+  padding-top: 20px;
+  margin: 0 auto;
+  padding-bottom: 25px;
+}
+
+.menu-tittle {
+  text-align: center;
+  font-size: 2em;
+  color: #333;
+}
+
+.menu-line {
+  background-color: #FFBA49;
+  height: 2px;
+  border: none;
+  margin-top: 10px;
+}
+
+.menu-top {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search-container {
+  position: relative;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.menu-search {
+  padding: 10px;
+  width: 100%;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  background-color: #ECE6F0;
+  padding-right: 40px;
+  transition: box-shadow 0.3s ease;
+}
+
+.menu-search:focus {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1.2em;
+}
+
+.menu-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.menu-buttons button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #FFBA49;
+  color: white;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
+}
+
+.menu-buttons button:hover {
+  background-color: #ff9530;
+}
+
+/* Boton filtros */
+
+
+.filter-menu {
+ 
+  flex-direction: column;
+  background-color: #FFBA49;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+
+}
+
+.filter-menu a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  text-align: center;
+  color: #ffffff;
+  
+}
+
+
+.filter-menu a:hover {
+  background-color: #ff9530;
+
+}
+
+
+
+/*  Productos   */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Por defecto, una columna para pantallas pequeñas */
+  gap: 20px;
+  margin: 20px auto;
+  width: 90%;
+  padding: 0px 20px;
+ justify-content:center ;
+}
+
+.product-card {
+  background-color: #ECE6F0;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-card img {
+  height: 200px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.precio-card{
+  margin-top: 20px;
+}
+
+.cart-button {
+  position: absolute;
+  bottom: 23px;
+  right: 10px;
+  border: 0px solid transparent;
+  cursor: pointer;
+  border-radius: 20%;
+  align-self: center;
+  transition-duration: 0.25s;
+}
+
+.cart-button img {
+  width: 30px;
+  height: 30px;
+}
+/* Estilos del modal */
+.modal-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 90%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+}
+
+.modal-content img {
+  max-width: 40%;
+  max-height: 250px;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+}
+
+.modal-text {
+  flex: 1;
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.modal-content img {
+  max-width: 40%; /* Ajusta el tamaño de la imagen para que ocupe el 40% del ancho del modal */
+    max-height: 250px; /* Limita la altura máxima a 250px */
+  width: auto; /* Mantiene la proporción del ancho */
+  height: auto; /* Mantiene la proporción de la altura */
+  display: block; /* Centra la imagen */
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+  border-radius: 8px; /* Opcional: redondear bordes */
+}
+
+
+/* Para pantallas más grandes de 736px */
+@media (min-width: 736px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Múltiples columnas en pantallas grandes */
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ri-home-line {
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+
+  .ri-restaurant-line {
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+}
