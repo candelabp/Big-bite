@@ -1,5 +1,5 @@
 import burger from '../assets/burgerInicio.png'
-import '../css/gestionPedidos.css'
+import '../css/GestionPedidos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
 import {CompGestPedidos} from '../components/CompGestPedidos';
 
