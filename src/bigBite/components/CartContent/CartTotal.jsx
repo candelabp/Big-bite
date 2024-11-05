@@ -34,7 +34,7 @@ function CartTotal() {
 
     const crearPreferencia = async () => {
         try {
-            const respuesta = await axios.post("http://localhost:3000/create_preference", {
+            const respuesta = await axios.post("https://backbigbite.vercel.app/create_preference", {
                 title: "Pedido Big Bite",
                 cantidad: 1,
                 price: total,
