@@ -5,13 +5,15 @@ import axios from 'axios';
 import ModalVerDetalles from './modalVerDetalles';
 import Swal from 'sweetalert2';
 
-export const CompGestPedidos = ({pedidosBuscados, pedidosEntregadosBuscados}) => {
+export const CompGestPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
     const [pedidosEntregados, setPedidosEntregados] = useState([]);
     const [estado, setEstado] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [pedidoSeleccionado, setPedidoSeleccionado] = useState(false);
     const [pedidoEntregadoSeleccionado, setPedidoEntregadoSeleccionado] = useState(false);
+    const [buscarPedido, setBuscarPedido] = useState('');
+    const [buscarPedidoEntregado, setBuscarPedidoEntregado] = useState('');
 
     useEffect(() => {
         axios(`http://localhost:8080/pedidos`)
@@ -22,8 +24,6 @@ export const CompGestPedidos = ({pedidosBuscados, pedidosEntregadosBuscados}) =>
                 setPedidos(pedidos)
                 setPedidosEntregados(pedidosEntregados)
 
-                // console.log('Respuesta del backend:', respuesta.data); // Verifica la respuesta del backend
-                // setPedidos(respuesta.data);
                 const estadoActual = {};
                 respuesta.data.forEach((pedido) => {
                     estadoActual[pedido.id] = pedido.estadoPedido || 'En preparación';
@@ -34,8 +34,16 @@ export const CompGestPedidos = ({pedidosBuscados, pedidosEntregadosBuscados}) =>
             .catch((error) => console.error('Error fetching pedidos:', error));
     }, []);
 
-    const mostrarPedidos = () => (pedidosBuscados && pedidosBuscados.length > 0 ? pedidosBuscados : pedidos);
-    const mostrarPedidosEntregados = () => (pedidosEntregadosBuscados && pedidosEntregadosBuscados.length > 0 ? pedidosEntregadosBuscados : pedidosEntregados)
+    const pedidosFiltrados = pedidos.filter(pedido =>
+        pedido.id.toString().includes(buscarPedido) || pedido.email.includes(buscarPedido)
+    );
+
+    const pedidosEntregadosFiltrados = pedidosEntregados.filter(pedido =>
+        pedido.id.toString().includes(buscarPedidoEntregado) || pedido.email.includes(buscarPedidoEntregado)
+    );
+
+    const mostrarPedidos = () => (pedidosFiltrados && pedidosFiltrados.length > 0 ? pedidosFiltrados : pedidos);
+    const mostrarPedidosEntregados = () => (pedidosEntregadosFiltrados && pedidosEntregadosFiltrados.length > 0 ? pedidosEntregadosFiltrados : pedidosEntregados)
 
     const cambiarEstado = (id, nuevoEstado) => {
         setEstado((estadoAnterior) => ({
@@ -62,20 +70,25 @@ export const CompGestPedidos = ({pedidosBuscados, pedidosEntregadosBuscados}) =>
     };
 
     const moverPedidoAEntregados = (id) => {
-        const pedido = pedidos.find(pedido => pedido.id === id); 
-        if(pedido){
+        const pedido = pedidos.find(pedido => pedido.id === id);
+        if (pedido) {
             setPedidos(pedidos.filter(pedido => pedido.id !== id));
-            setPedidosEntregados([ {...pedido, estadoPedido: 'Entregado'}, ...pedidosEntregados ]);
+            setPedidosEntregados([{ ...pedido, estadoPedido: 'Entregado' }, ...pedidosEntregados]);
         }
     }
 
     const mostrarAlerta = () => {
         Swal.fire({
-            // title: "!",
             text: "Se cambió correctamente el estado del pedido!",
             icon: "success"
         });
     };
+
+    const openModal = (pedido, pedidoEntregado) => {
+        setIsModalOpen(true);
+        setPedidoSeleccionado(pedido);
+        setPedidoEntregadoSeleccionado(pedidoEntregado);
+    }
 
     return (
         <>
@@ -83,19 +96,21 @@ export const CompGestPedidos = ({pedidosBuscados, pedidosEntregadosBuscados}) =>
                 <div className='paddingtitulos'>
                     <h1>Pedidos en curso</h1>
                     <p>Lista de todos los pedidos en curso</p>
-                    <button onClick={() => setIsModalOpen(true)} disabled={!pedidoSeleccionado} type="button" className='btn btn-outline-warning botones'>Ver detalles</button>
+                    <input id='buscarPedido' type="text" placeholder='Buscar pedidos...' className='buscar-pedidos' value={buscarPedido} onChange={(e) => setBuscarPedido(e.target.value)} />
                 </div>
 
                 <div>
                     {mostrarPedidos().map((pedido) => (
                         <div key={pedido.id}>
-                            <div className='infopedidos' onClick={() => setPedidoSeleccionado(pedido)}>
-                                <img src={burger} className='burger' alt="" />
-                                <p className='nrodeorden'>
-                                    <b>Orden #{pedido.id}</b>
-                                    <br />
-                                    Total: ${pedido.subTotal}
-                                </p>
+                            <div className='info-pedidos'>
+                                <div className='divpedidos' onClick={() => openModal(pedido, null)}>
+                                    <img src={burger} className='burger' alt="" />
+                                    <p className='nro-orden'>
+                                        <b>Orden #{pedido.id}</b>
+                                        <br />
+                                        Total: ${pedido.subTotal}
+                                    </p>
+                                </div>
                                 <div className='div-form'>
                                     <form onSubmit={(e) => { e.preventDefault(); actualizarEstado(pedido.id); mostrarAlerta(); }}>
                                         <select className='form-estado'
@@ -125,24 +140,23 @@ export const CompGestPedidos = ({pedidosBuscados, pedidosEntregadosBuscados}) =>
                 <div className='paddingtitulos'>
                     <h1>Pedidos anteriores</h1>
                     <p>Lista de todos los pedidos entregados</p>
-                    <button onClick={() => setIsModalOpen(true)} disabled={!pedidoEntregadoSeleccionado} type="button" className='btn btn-outline-danger botones'>Ver detalles</button>
-
+                    <input id='buscarPedidoEntregado' type="text" placeholder='Buscar pedidos...' className='buscar-pedidos' value={buscarPedidoEntregado} onChange={(e) => setBuscarPedidoEntregado(e.target.value)} />
                 </div>
                 <div>
                     {pedidosEntregados.length > 0 && (
                         mostrarPedidosEntregados().map((pedido) => (
-                        <div key={pedido.id}>
-                            <div className='infopedidos' onClick={() => setPedidoEntregadoSeleccionado(pedido)}>
-                                <img src={burger} className='burger' alt="" />
-                                <p className='nrodeorden'>
-                                    <b>Orden #{pedido.id}</b>
-                                    <br />
-                                    Total: ${pedido.subTotal}
-                                </p>
-                                <p className='estado-entregado'>Entregado</p>
+                            <div key={pedido.id}>
+                                <div className='info-pedidos' onClick={() => openModal(pedido, null)}>
+                                    <img src={burger} className='burger' alt="" />
+                                    <p className='nro-orden'>
+                                        <b>Orden #{pedido.id}</b>
+                                        <br />
+                                        Total: ${pedido.subTotal}
+                                    </p>
+                                    <p className='estado-entregado'>Entregado</p>
+                                </div>
+                                <hr />
                             </div>
-                            <hr />
-                        </div>
                         ))
                     )}
                 </div>
