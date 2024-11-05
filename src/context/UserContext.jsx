@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
-        const userDoc = await getDoc(doc(db, `users/${user.uid}/profile/info`));
+        const userDoc = await getDoc(doc(db, `usuarios/${user.uid}`));
         if (userDoc.exists()) {
           setRole(userDoc.data().rol);
           // console.log(userDoc.data().rol)

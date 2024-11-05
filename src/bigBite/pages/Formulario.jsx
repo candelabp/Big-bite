@@ -7,7 +7,7 @@ import { FirebaseApp, FirebaseAuth, FirebaseDB } from '../../firebase/config';
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
 
 import { ref, uploadBytesResumable, getDownloadURL, getStorage } from 'firebase/storage';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore/lite';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { useContext, useState } from 'react';
@@ -90,7 +90,7 @@ export const Formulario = () => {
       });
 
       // Guardar el usuario en Firestore
-      const newDoc = doc(FirebaseDB, `users/${user.uid}/profile/info`);
+      const newDoc = doc(FirebaseDB, `usuarios/${user.uid}`);
       await setDoc(newDoc, {
         rol: 'cliente',
         nombre,
@@ -102,7 +102,7 @@ export const Formulario = () => {
 
 
 
-      console.log('User Info:', user);
+      // console.log('User Info:', user);
       // Aquí puedes guardar el usuario en el estado o hacer cualquier otra cosa necesaria
 
       setUser(result.user);

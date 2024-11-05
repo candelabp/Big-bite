@@ -11,20 +11,22 @@ import maslatonimage from '../assets/maslaton.jpg';
 import cobriximage from '../assets/cobrix.jpg';
 import NavbarAdmin from '../components/NavbarAdmin';
 import { fetchSignInMethodsForEmail, getAuth, onAuthStateChanged } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
+// import { collection, doc, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { FirebaseDB } from '../../firebase/config';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore/lite';
 
 
 export const Administradores = () => {
 
 
   const fetchAndPrintUsers = async () => {
-    const db = getFirestore();
 
     try {
-      const usersCollection = collection(db, "users");
+
+      const usersCollection = collection(FirebaseDB, 'usuarios');
       const usersSnapshot = await getDocs(usersCollection);
       const users = [];
+
 
       console.log('usersSnapshot.docs:', usersSnapshot.docs); // Verifica el contenido de usersSnapshot.docs
 
@@ -36,7 +38,7 @@ export const Administradores = () => {
 
       for (const userDoc of usersSnapshot.docs) {
         console.log('Procesando usuario:', userDoc.id); // Verifica que está entrando en el bucle
-        const profileDocRef = doc(FirebaseDB, `users/${userDoc.id}/profile/info`);
+        const profileDocRef = doc(FirebaseDB, `usuarios/${userDoc.id}`);
         const profileDoc = await getDoc(profileDocRef);
 
         if (profileDoc.exists()) {
