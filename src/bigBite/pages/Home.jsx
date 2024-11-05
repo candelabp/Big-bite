@@ -21,7 +21,7 @@ export const Home = () => {
           animate={{ opacity: 1, y: 0 }}   // Aparece y se mueve a su posición original
           transition={{ duration: 1 }}     // Duración de 1 segundo
         >
-          Gran <span className="separador">Sabor,</span>
+          Gran <span className="separador">Sabor, </span>
           <motion.span
             className="tituloDestacado"
             initial={{ scale: 0 }}           // Empieza con tamaño 0
