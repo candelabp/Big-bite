@@ -56,7 +56,7 @@ root.render(
               <Route path="/GestionPedidos" element={<GestionPedidos />} />
               <Route path="/Administradores" element={<Administradores />} />
             </Route>
-            <Route path="/misPedidos" element={<MisPedidos />} />
+            <Route path="/misPedidos" element={ <MisPedidosProvider> <MisPedidos /> </MisPedidosProvider> } />
             
           </Routes>
         </Router>
