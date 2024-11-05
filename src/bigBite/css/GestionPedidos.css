@@ -2,24 +2,32 @@
     padding: 80px 50px;
 }
 
+.divInicio {
+    text-align: center;
+}
+
+.divInicio h1{
+    color: #e61603;
+}
+
 .divpedidos p{
     font-family: "Poppins", sans-serif;
     font-size: 14px;
 }
 
-.div-buscarpedidos {
+.buscar-pedidos {
     font-size: 12px;
-    width: 60vh;
+    width: 50vh;
     height: 30px;
     padding-left: 6px;
-    margin-left: 50px;
-    margin-top: 20px;
+    margin-top: 10px;
     border: 1px solid black;
     border-radius: 3px;
     font-family: "Poppins", sans-serif;
+    background-color: transparent;
 }
 
-.buscarpedidos:focus {
+.buscar-pedidos:focus {
     border: 1px solid black;
 }
 
@@ -33,21 +41,20 @@
 
 }
 
-.infopedidos {
+.info-pedidos {
     display: flex;
     justify-content: space-around;
     font-family: "Poppins", sans-serif;
+    transition: background-color 0.2s ease;
+    border-radius: 10px;
+    padding: 0 5px 3px 5px;
 }
 
-.botones {
-    width: 25vh;
-    margin-right: 10px;
-    font-size: 15px;
-    font-family: "Poppins", sans-serif;
-}
-
-.botones:hover {
-    color: white;
+.info-pedidos:hover {
+    cursor: pointer;
+    background-color: rgb(190, 182, 182);
+    /* border-radius: 10px;
+    padding: 0 5px 0 5px; */
 }
 
 .burger {
@@ -58,7 +65,7 @@
     margin-top: 15px;
 }
 
-.nrodeorden {
+.nro-orden {
     padding: 0 40vh 0 30px;
     margin-top: 15px;
 }
@@ -68,6 +75,8 @@
 }
 
 .form-estado {
+    background-color: transparent;
+    margin-top: 18px;
     font-size: 15px;
     width: 145px;
     height: 30px;
@@ -80,7 +89,7 @@
     width: 45px;
     height: 20px;
     font-size: 12px;
-    background-color: white;
+    background-color: transparent;
     border-radius: 5px;
     border: rgb(116, 115, 115) 1px solid;
 }
@@ -99,18 +108,6 @@
 }
 
 /* ---modal--- */
-.container-modal {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(4px);
-}
-
 .container-modal-detalles {
     width: 100vw;
     height: 100vh;
@@ -142,24 +139,6 @@
     padding-top: 3vh;
 }
 
-.container-input-modal {
-    display: flex;
-    justify-content: center;
-}
-
-.container-input-modal input {
-    width: 60%;
-    border: 1px solid grey;
-    padding: 0.4rem;
-    border-radius: 0.4rem;
-}
-
-.container-buttons-modal {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-}
-
 .container-buttons-modal-detalles {
     width: 100%;
     display: flex;
@@ -174,17 +153,8 @@
     font-size: 2vh;
 }
 
-.div-modal button{
-    width: 15%;
-}
-
 .div-detalles {
     padding: 10px 30px 0;
-}
-
-.accept {
-    background-color: #ffed49;
-    color: white;
 }
 
 .cancel {
@@ -193,23 +163,16 @@
 }
 
 @media (max-width: 1000px){
-    .buscarpedidos {
-        width: 30vh;
-        margin-left: 10px;
+    .buscar-pedidos {
+       width: 25vh;  
     }
 
-    .botonescolor {
-        width: 14vh;
-        margin: 10px 5px 0 7px;
-    }
-
-    .botones {
-        width: 12vh;
-        font-size: 12px; 
-    }
-
-    .nrodeorden {
+    .nro-orden {
         padding: 0 40px 0 8px;
+    }
+
+    .div-modal {
+        width: 85vw;
     }
 }
 
@@ -218,22 +181,19 @@
     .divpedidos {
         text-align: center;
         display: block;
-
     }
 
-    .botonescolor {
-        width: 15vh;
-        margin: 10px 5px;
-        font-size: 13px;
+    .buscar-pedidos {
+        margin-bottom: 20px;
     }
 
-    .botones {
-        width: 15vh;
-        font-size: 13px; 
-        margin-bottom: 50px;
+    .nro-orden {
+        padding: 0 5px 0 5px;
     }
 
-    .nrodeorden {
-        padding: 0 17px 0 2px;
+    .estado-entregado {
+        padding-left: 0;
     }
+
+    
 }
