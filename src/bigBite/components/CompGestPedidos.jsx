@@ -42,8 +42,23 @@ export const CompGestPedidos = () => {
         pedido.id.toString().includes(buscarPedidoEntregado) || pedido.email.includes(buscarPedidoEntregado)
     );
 
-    const mostrarPedidos = () => (pedidosFiltrados && pedidosFiltrados.length > 0 ? pedidosFiltrados : pedidos);
-    const mostrarPedidosEntregados = () => (pedidosEntregadosFiltrados && pedidosEntregadosFiltrados.length > 0 ? pedidosEntregadosFiltrados : pedidosEntregados)
+    const mostrarPedidos = () => {
+        if(buscarPedido && pedidosFiltrados && pedidosFiltrados.length > 0 ){
+            return pedidosFiltrados;
+        }else if(buscarPedido && (!pedidosFiltrados || pedidosFiltrados.length === 0)){
+            return [];
+        }
+        return pedidos;
+    };
+
+    const mostrarPedidosEntregados = () => {
+        if(buscarPedidoEntregado && pedidosEntregadosFiltrados && pedidosEntregadosFiltrados.length > 0 ){
+            return pedidosEntregadosFiltrados;
+        }else if(buscarPedidoEntregado && (!pedidosEntregadosFiltrados || pedidosEntregadosFiltrados.length === 0)){
+            return [];
+        }
+        return pedidosEntregados;
+    };
 
     const cambiarEstado = (id, nuevoEstado) => {
         setEstado((estadoAnterior) => ({
