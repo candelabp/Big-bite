@@ -1,209 +1,244 @@
-/* Estilos principales */
-.titulo-asientos {
-    background-color: #DF1C1C;
-    color: white;
-    text-align: center;
-    margin-bottom: 40px;
-    padding: 40px;
-    font-family: "Poppins", sans-serif;
-}
-.titulo-asiento {
-    color: #f7f7f7;
-}
-.formulario-asiento form .relleno {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 20px;
-    align-items: center;
-}
-
-.formulario-asiento label {
-    font-family: "Poppins", sans-serif;
-    font-size: 1rem;
-    color: #555;
-}
-
-.formulario-asiento input, 
-.formulario-asiento select {
-    font-family: "Poppins", sans-serif;
-    padding: 10px;
-    width: 100%;
-    max-width: 350px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    flex:2;
-    -webkit-appearance: none;
-    margin: 0;
-    -moz-appearance: textfield; 
-}
-
-.formulario-asiento input:focus, 
-.formulario-asiento select:focus {
-    border-color: #DF1C1C;
-    box-shadow: 0px 2px 8px rgba(223, 28, 28, 0.3);
-}
-
-.tipo-asiento .botones-tipo button {
-    background-color: #868282;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-right: 10px;
-    font-family: "Poppins", sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.tipo-asiento .botones-tipo button.selected {
-    background-color: #DF1C1C;
-    font-weight: bold;
-}
-
-.error {
-    color: red;
-    font-size: 12px;
-    font-family: "Poppins", sans-serif;
-}
-
-.btn-submit {
-    font-family: "Poppins", sans-serif;
-    background-color: #DF1C1C;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 30px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 5px;
-}
-.btn-excel{
-    
-        font-family: "Poppins", sans-serif;
-        background-color: #DF1C1C;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        margin-top: 30px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        margin-left: 44%;
-        margin-right: auto;
-        border-radius: 5px;
-    
-    
-}
-.btn-excel:hover {
-    background-color: #ff5757;
-    transform: scale(1.05);
-}
-.btn-submit:hover {
-    background-color: #ff5757;
-    transform: scale(1.05);
-}
-
-.formulario-contable {
+/* Contenedor principal */
+.asientos-contables {
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 950px;
-}
-
-/* Estilos para el mensaje de éxito */
-.mensaje-exito {
-    background-color: #f3e70f;
-    color: white;
-    font-size: 18px;
-    padding: 15px 25px;
-    border-radius: 8px;
-    margin: 20px 0;
+    width: 100%;
+  }
+  .asientos-contables-header{
+    background-color: #d32f2f;
+    width: 100%;
     text-align: center;
-    font-family: "Poppins", sans-serif;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    margin-bottom: 30px;
+    padding: 20px;
+  }
+  
+  /* Títulos */
+  .asientos-contables__titulo {
+    color: #fff;
+    background-color: #d32f2f;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  .asientos-contables__subtitulo {
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  .asientos-contables__libro-titulo {
+    margin-top: 40px;
+    font-weight: 600;
+    color: #d32f2f;
+  }
+  
+  /* Formulario */
+  .asientos-contables__campo {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    width: 300px;
+  }
+  
+  .asientos-contables__campo label {
+    font-weight: bold;
+  }
+  
+  .asientos-contables__campo input,
+  .asientos-contables__campo select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  .asientos-contables__boton {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 10px 6px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    margin-right: 5px;
+  }
+  
+  .asientos-contables__boton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .asientos-contables__boton:hover:enabled {
+    background-color: #b71c1c;
+  }
+  
+  /* Tabla */
+  .asientos-contables__tabla {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .asientos-contables__tabla,
+  .asientos-contables__tabla th,
+  .asientos-contables__tabla td {
+    border: 1px solid #ddd;
+  }
+  
+  .asientos-contables__tabla th,
+  .asientos-contables__tabla td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .asientos-contables__tabla th {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .asientos-contables__tabla td {
+    background-color: #f9f9f9;
+  }
+  
+  /* Botón de descargar */
+  .asientos-contables__boton-descargar {
+    background-color: #d32f2f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .asientos-contables__boton-descargar:hover {
+    background-color: #b71c1c;
+  }
+  
+  /* Estilos para el contenedor del Libro Mayor */
+.libro-mayor {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 40px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos para el libro diario */
+.libro-mayor__cuenta {
+  margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.libro-mayor h2 {
+  color: #d32f2f;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.libro-mayor__cuenta h3 {
+  color: #333;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #d32f2f;
+  padding-bottom: 5px;
+}
+
+/* Estilos para la tabla del Libro Mayor */
+.libro-mayor__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.libro-mayor__tabla th,
+.libro-mayor__tabla td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.libro-mayor__tabla th {
+  background-color: #d32f2f;
+  color: #fff;
+  font-weight: bold;
+}
+
+.libro-mayor__tabla td {
+  background-color: #f9f9f9;
+}
+
+/* Estilo para la fila de saldo */
+.libro-mayor__tabla tr:last-child td {
+  font-weight: bold;
+  color: #333;
+  background-color: #f1f1f1;
+}
+
+/* Estilo para el botón de Mostrar Libro Mayor */
+.asientos-contables__boton {
+  display: inline-block;
+  background-color: #d32f2f;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.asientos-contables__boton:hover {
+  background-color: #b71c1c;
+}
+/* Contenedor del Libro Diario */
 .libro-diario {
-    margin-top: 60px;
-    padding: 40px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  margin-top: 40px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .libro-diario h2 {
-    text-align: center;
-    color: #333;
+  color: #d32f2f;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
-.libro-diario table {
-    width: 80%;
-    margin: 30px auto;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 8px;
-    overflow: hidden;
+.libro-diario__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.libro-diario th, 
-.libro-diario td {
-    padding: 15px;
-    text-align: center;
-    border: 1px solid #ddd;
+.libro-diario__tabla th,
+.libro-diario__tabla td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
 }
 
-.libro-diario th {
-    background-color: #DF1C1C;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
+.libro-diario__tabla th {
+  background-color: #d32f2f;
+  color: white;
 }
 
-.libro-diario tr:nth-child(even) {
-    background-color: #f7f7f7;
-}
-
-.libro-diario tr:hover {
-    background-color: #ffe5e5;
-}
-
-/* Fuente y tipografía */
-.titulo-asientos h1 {
-    font-size: 2.5rem;
-    color: #ffffff;
-}
-
-.relleno label {
-    font-size: 1rem;
-    color: #555;
-    flex: 1;
-}
-
-.relleno input, 
-.relleno select {
-    font-size: 1.1rem;
-}
-
-/* Navbar estilo sombra */
-.navbar {
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-}
-.input-asiento[type="text"] {
-    padding: 10px;
-    width: 100%;
-    max-width: 300px;
-    margin: 20px auto;
-    display: block;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.libro-diario__tabla td[colspan="2"] {
+  font-weight: bold;
 }

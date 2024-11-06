@@ -9,7 +9,7 @@ const CartCount = ({ product }) => {
   const decremento = () =>{
     const productRepeat = cart.find((element) => element.id === product.id)
 
-    productRepeat.cantItems !== 1 && setCart(cart.map((element) => element.id === product.id ? {...product, cantItems: productRepeat.repeticion-1} : element))
+    productRepeat.cantItems !== 1 && setCart(cart.map((element) => element.id === product.id ? {...product, cantItems: productRepeat.cantItems-1} : element))
   }
     
   return (

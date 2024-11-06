@@ -49,7 +49,7 @@ const Product = ({products}) => {
                     </div>
                     <span className="close-button" onClick={closeModal}>&times;</span>
                 </div>
-                <div className="modal-overlay" onClick={closeModal}></div>
+                <div className="modal-overlay-menu" onClick={closeModal}></div>
             </div>
         )}
 
