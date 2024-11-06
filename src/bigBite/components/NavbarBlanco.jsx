@@ -100,18 +100,27 @@ export const NavBarBlanco = () => {
                     <Link className="tituloLinkNegro" to="/menu">Menu</Link>
                 </li>
 
+                {(user !== null) && (
+                    <li className="contLinks">
+                    <i class="bi bi-list-check"></i>
+                    <Link className="tituloLinkNegro" to="/mispedidos">Mis Pedidos</Link>
+                </li>
+
+
+                )}
+
                 <li className="contLinks">
                     <i className="bi bi-question-circle"></i>
                     <Link className="tituloLinkNegro" to="/contacto">Contacto</Link>
                 </li>
-
+                {(user !== null) && (
                 <li className="contLinks">
                     <div className="salirBlanco">
                         <button className="bi bi-box-arrow-left buttonSalirRojo" onClick={handleSignOut}></button>
                     </div>
 
                 </li>
-
+                )}
 
                 <li className="redesNav">
                     <i className="bi bi-twitter"></i>
