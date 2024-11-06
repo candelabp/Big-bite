@@ -37,7 +37,7 @@ export const Ingresar = () => {
         try {
           const result = await signInWithEmailAndPassword(auth, email, password);
           const user = result.user;
-          console.log('User Info:', user);
+        //   console.log('User Info:', user);
     
           setUser(user);
           navigate('/');

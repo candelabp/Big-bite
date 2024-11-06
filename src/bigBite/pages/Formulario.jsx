@@ -7,7 +7,7 @@ import { FirebaseApp, FirebaseAuth, FirebaseDB } from '../../firebase/config';
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
 
 import { ref, uploadBytesResumable, getDownloadURL, getStorage } from 'firebase/storage';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore/lite';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { useContext, useState } from 'react';
@@ -28,11 +28,19 @@ export const Formulario = () => {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       setImage(file);
-    } 
+    } else {
+      alert('Por favor selecciona un archivo de imagen válido.');
+    }
   };
 
   // Función para manejar la subida de la imagen
   const handleImageUpload = async (userId) => {
+
+    if (!image) {
+      // Si no hay imagen, resolver la promesa con una cadena vacía
+      // console.log('sin imagen');
+      return '';
+    }
 
     const storage = getStorage();
     const storageRef = ref(storage, `profile-images/${userId}`);
@@ -47,13 +55,13 @@ export const Formulario = () => {
           setProgress(progressPercent);
         },
         (error) => {
-          console.error('Error al subir la imagen:', error);
+          // console.error('Error al subir la imagen:', error);
           reject(error);
         },
         async () => {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setImageURL(downloadURL);
-          console.log('URL de la imagen:', downloadURL);
+          // console.log('URL de la imagen:', downloadURL);
           resolve(downloadURL);
         }
       );
@@ -77,23 +85,24 @@ export const Formulario = () => {
       // Actualizar el perfil del usuario
       await updateProfile(user, {
         displayName: `${nombre} ${apellido}`,
-        photoURL: `${imageURL}`,
+        photoURL: imageURL ? `${imageURL}` : '', 
         phoneNumber: `${telefono}`
       });
 
       // Guardar el usuario en Firestore
-      const newDoc = doc(FirebaseDB, `users/${user.uid}/profile/info`);
+      const newDoc = doc(FirebaseDB, `usuarios/${user.uid}`);
       await setDoc(newDoc, {
+        rol: 'cliente',
         nombre,
         apellido,
         telefono,
         email,
-        photoURL: imageURL
+        photoURL: imageURL || ''
       });
 
 
 
-      console.log('User Info:', user);
+      // console.log('User Info:', user);
       // Aquí puedes guardar el usuario en el estado o hacer cualquier otra cosa necesaria
 
       setUser(result.user);
@@ -165,10 +174,8 @@ export const Formulario = () => {
             <label>Imagen de perfil:</label>
             <input
               type="file"
-              accept="image/*" // Restringe a archivos de imagen
               onChange={handleImageChange}
             />
-            
             {errors.imagen && <span>{errors.imagen.message}</span>}
           </div>
 
