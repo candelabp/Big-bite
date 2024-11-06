@@ -8,6 +8,7 @@ import burgerInicio2 from '../assets/burguerInicio2.png';
 
 
 export const Home = () => {
+  
   return (
     <>
       {/* navbar */}

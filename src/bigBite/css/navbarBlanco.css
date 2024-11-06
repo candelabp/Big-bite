@@ -87,6 +87,12 @@
     color: white;
     margin-right: 5px;
   }
+
+  .salirBlanco .bi-box-arrow-left{
+    margin-left: 10px;
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+  }
   
   .menu-icon {
     display: flex;
