@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, useState, useEffect } from 'react';
 import { json } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 export const dataContext = createContext();
@@ -20,6 +21,7 @@ const DataProvider = ({ children }) => {
     }, []);
 
     const agregarCarrito = (product ) =>{
+        if(user!== null){
         const productRepeat = cart.find((element) => element.id === product.id)
 
         if (productRepeat){
@@ -28,7 +30,7 @@ const DataProvider = ({ children }) => {
             setCart([...cart,product]);
             console.log(product)
         }
-
+        }
     }
 
     return(
