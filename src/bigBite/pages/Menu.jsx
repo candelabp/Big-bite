@@ -12,7 +12,7 @@ export const Menu = () => {
     const { data } = useContext(dataContext);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const pedidosDisp = data.filter(product => product.disponible == "true");
+    const pedidosDisp = data.filter(product => product.disponible == true);
 
     const filteredProducts = searchTerm
     ? pedidosDisp.filter((product) =>

@@ -5,6 +5,7 @@ import TotalCart from "./CartContent/TotalCart";
 import { UserContext } from '../../context/UserContext';
 import logoBlanco from '../assets/logo blanco.png'
 import { getAuth, signOut } from "firebase/auth";
+import { div } from "framer-motion/client";
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
@@ -97,18 +98,33 @@ export const NavBar = () => {
                     <Link className="tituloLinkRojo" to="/menu">Menu</Link>
                 </li>
 
+                {(user !== null) && (
+                    <div>
+                <li className="contLinks">
+                    <i class="bi bi-list-check"></i>
+                    <Link className="tituloLinkRojo" to="/mispedidos">Mis Pedidos</Link>
+                </li>
+                <li className="contLinks">
+                <svg xmlns="http://www.w3.org/2000/svg" className="ri-restaurant-line" viewBox="0 0 24 24" width="28" height="43" fill="currentColor">
+                    <path d="M21 2V22H19V14H16V7C16 4.23858 18.2386 2 21 2ZM9 13.9V22H7V13.9C4.71776 13.4367 3 11.419 3 9V3H5V10H7V3H9V10H11V3H13V9C13 11.419 11.2822 13.4367 9 13.9Z"></path>
+                </svg>
+                <Link className="tituloLinkRojo" to="/menu">Menu</Link>
+            </li>
+            </div>
+                )}
+
                 <li className="contLinks">
                     <i className="bi bi-question-circle iconPreguntaRojo"></i>
                     <Link className="tituloLinkRojo" to="/contacto">Contacto</Link>
                 </li>
-
+                {(user !== null) && (
                 <li className="contLinks">
                     <div className="salirRojo">
                         <button className="bi bi-box-arrow-left buttonSalirRojo" onClick={handleSignOut}></button>
                     </div>
 
                 </li>
-
+                )}
 
                 <li className="redesNav">
                     <i className="bi bi-twitter redesNavRojo"></i>

@@ -273,7 +273,11 @@ inputRojo:hover {
   justify-content: center;
 }
 
+.bi-list-check{
+  font-size: 1.5rem;
+  margin-right: 1vw;
 
+}
 
 
 
@@ -303,12 +307,22 @@ inputRojo:hover {
   .bi-list {
     font-size: 2.5rem;
   }
+
+  .bi-list-check{
+    font-size: 1.5rem;
+  }
+
 }
 
 @media (min-width: 480px) {
 
   .nav-linksNR {
-    width: 25%;
+    width: 30%;
+  }
+  
+  .bi-list-check{
+    font-size: 2rem;
+    margin-right: 15px;
   }
 
 }
@@ -317,8 +331,7 @@ inputRojo:hover {
 
 @media (min-width: 768px) {
 
-
-
+  .bi-list-check,
   .bi-question-circle,
   .bi-house-door,
   .ri-restaurant-line {
@@ -330,9 +343,6 @@ inputRojo:hover {
   .nav-links {
     padding-right: 30px;
   }
-
-
-
 
   .bi-x {
     font-size: 3rem;
