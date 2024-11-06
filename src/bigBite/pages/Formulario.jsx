@@ -28,14 +28,12 @@ export const Formulario = () => {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       setImage(file);
-    } else {
-      alert('Por favor selecciona un archivo de imagen válido.');
-    }
+    } 
   };
 
   // Función para manejar la subida de la imagen
   const handleImageUpload = async (userId) => {
-    
+
     const storage = getStorage();
     const storageRef = ref(storage, `profile-images/${userId}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
@@ -61,7 +59,7 @@ export const Formulario = () => {
       );
     });
   };
-  
+
 
 
   const handleRegister = async (data) => {
@@ -72,7 +70,7 @@ export const Formulario = () => {
       const result = await createUserWithEmailAndPassword(auth, email, password);
       const user = result.user;
 
-    
+
       // Subir la imagen a Firebase Storage
       const imageURL = await handleImageUpload(user.uid);
 
@@ -83,16 +81,16 @@ export const Formulario = () => {
         phoneNumber: `${telefono}`
       });
 
-       // Guardar el usuario en Firestore
-       const newDoc = doc(FirebaseDB, `users/${user.uid}/profile/info`);
-       await setDoc(newDoc, {
-         nombre,
-         apellido,
-         telefono,
-         email,
-         photoURL: imageURL
-       });
-       
+      // Guardar el usuario en Firestore
+      const newDoc = doc(FirebaseDB, `users/${user.uid}/profile/info`);
+      await setDoc(newDoc, {
+        nombre,
+        apellido,
+        telefono,
+        email,
+        photoURL: imageURL
+      });
+
 
 
       console.log('User Info:', user);
@@ -122,94 +120,96 @@ export const Formulario = () => {
   };
 
 
-    return (
-      <div>
-        <NavBarBlanco />
-        <div className='titulo-form'>
-          <h1>Formulario de registro</h1>
-        </div>
-        <div className='formulario'>
-          <form onSubmit={handleSubmit(handleRegister)}>
-            <div>
-              <label>Nombre:</label>
-              <input {...register("nombre", { required: "El nombre es obligatorio" })} />
-              {errors.nombre && <span>{errors.nombre.message}</span>}
-            </div>
-
-            <div>
-              <label>Apellido:</label>
-              <input {...register("apellido", { required: "El apellido es obligatorio" })} />
-              {errors.apellido && <span>{errors.apellido.message}</span>}
-            </div>
-
-            <div>
-              <label>Telefono:</label>
-              <input {...register("telefono", { required: "El telefono es obligatorio" })} />
-              {errors.telefono && <span>{errors.telefono.message}</span>}
-            </div>
-
-            <div>
-              <label>Email:</label>
-              <input
-                type="email"
-                {...register("email", {
-                  required: "El email es obligatorio",
-                  pattern: {
-                    value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-                    message: "Email no válido",
-                  },
-                })}
-              />
-              {errors.email && <span>{errors.email.message}</span>}
-            </div>
-
-            <div>
-              <label>Imagen de perfil:</label>
-              <input
-                type="file"
-                onChange={handleImageChange}
-              />
-              {errors.imagen && <span>{errors.imagen.message}</span>}
-            </div>
-
-            <div>
-              <label>Contraseña:</label>
-              <input
-                type="password"
-                {...register("password", {
-                  required: "La contraseña es obligatoria",
-                  minLength: {
-                    value: 6,
-                    message: "La contraseña debe tener al menos 6 caracteres",
-                  },
-                })}
-              />
-              {errors.password && <span>{errors.password.message}</span>}
-            </div>
-
-            <div>
-              <label>Repetir contraseña:</label>
-              <input
-                type="password"
-                {...register("confirmPassword", {
-                  required: "Debes repetir la contraseña",
-                  validate: (value) =>
-                    value === password || "Las contraseñas no coinciden",
-                })}
-              />
-              {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
-            </div>
-
-            <div className="formulario-buttons">
-              <button type="submit" className='boton-enviar'>Registrar</button>
-              <button type="button" className='boton-reset' onClick={() => reset()}>Limpiar</button>
-            </div>
-            <div>
-              <button type="button" className='boton-google' onClick={handleLogin}>Registrarse con <i className="bi bi-google"></i>oogle</button>
-            </div>
-          </form>
-        </div>
-        <Footer />
+  return (
+    <div>
+      <NavBarBlanco />
+      <div className='titulo-form'>
+        <h1>Formulario de registro</h1>
       </div>
-    );
-  };
+      <div className='formulario'>
+        <form onSubmit={handleSubmit(handleRegister)}>
+          <div>
+            <label>Nombre:</label>
+            <input {...register("nombre", { required: "El nombre es obligatorio" })} />
+            {errors.nombre && <span>{errors.nombre.message}</span>}
+          </div>
+
+          <div>
+            <label>Apellido:</label>
+            <input {...register("apellido", { required: "El apellido es obligatorio" })} />
+            {errors.apellido && <span>{errors.apellido.message}</span>}
+          </div>
+
+          <div>
+            <label>Telefono:</label>
+            <input {...register("telefono", { required: "El telefono es obligatorio" })} />
+            {errors.telefono && <span>{errors.telefono.message}</span>}
+          </div>
+
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              {...register("email", {
+                required: "El email es obligatorio",
+                pattern: {
+                  value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                  message: "Email no válido",
+                },
+              })}
+            />
+            {errors.email && <span>{errors.email.message}</span>}
+          </div>
+
+          <div>
+            <label>Imagen de perfil:</label>
+            <input
+              type="file"
+              accept="image/*" // Restringe a archivos de imagen
+              onChange={handleImageChange}
+            />
+            
+            {errors.imagen && <span>{errors.imagen.message}</span>}
+          </div>
+
+          <div>
+            <label>Contraseña:</label>
+            <input
+              type="password"
+              {...register("password", {
+                required: "La contraseña es obligatoria",
+                minLength: {
+                  value: 6,
+                  message: "La contraseña debe tener al menos 6 caracteres",
+                },
+              })}
+            />
+            {errors.password && <span>{errors.password.message}</span>}
+          </div>
+
+          <div>
+            <label>Repetir contraseña:</label>
+            <input
+              type="password"
+              {...register("confirmPassword", {
+                required: "Debes repetir la contraseña",
+                validate: (value) =>
+                  value === password || "Las contraseñas no coinciden",
+              })}
+            />
+            {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
+          </div>
+
+          <div className="formulario-buttons">
+            <button type="submit" className='boton-enviar'>Registrar</button>
+            <button type="button" className='boton-reset' onClick={() => reset()}>Limpiar</button>
+          </div>
+          <div>
+            <button type="button" className='boton-google' onClick={handleLogin}>Registrarse con <i className="bi bi-google"></i>oogle</button>
+          </div>
+        </form>
+      </div>
+      <Footer />
+    </div>
+  );
+};
