@@ -11,7 +11,7 @@ function CartTotal() {
     const [deliveryType, setDeliveryType] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
 
-    const subtotal = Math.round(cart.reduce((acumulador, element) => acumulador + element.precioCombo * element.repeticion , 0));
+    const subtotal = Math.round(cart.reduce((acumulador, element) => acumulador + element.precioCombo * element.cantItems , 0));
     const envio = Math.round(subtotal - subtotal * 0.90);
     const total = Math.round(subtotal + envio);
 

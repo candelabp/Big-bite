@@ -9,13 +9,13 @@ const CartCount = ({ product }) => {
   const decremento = () =>{
     const productRepeat = cart.find((element) => element.id === product.id)
 
-    productRepeat.repeticion !== 1 && setCart(cart.map((element) => element.id === product.id ? {...product, repeticion: productRepeat.repeticion-1} : element))
+    productRepeat.cantItems !== 1 && setCart(cart.map((element) => element.id === product.id ? {...product, cantItems: productRepeat.repeticion-1} : element))
   }
     
   return (
     <div className='divcantidad'>
         <button type="button" className='btn btn-outline-danger btncant' onClick={() => agregarCarrito(product)}>+</button>
-        <p className='cantidadCarrito'>{product.repeticion}</p>
+        <p className='cantidadCarrito'>{product.cantItems}</p>
         <button type="button" className='btn btn-outline-danger btncant' onClick={decremento}>-</button>
     </div>
   )
