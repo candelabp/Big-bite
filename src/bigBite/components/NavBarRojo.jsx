@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import TotalCart from "./CartContent/TotalCart";
 import { UserContext } from '../../context/UserContext';
 import logoBlanco from '../assets/logo blanco.png'
+import { getAuth, signOut } from "firebase/auth";
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     // Función para abrir/cerrar el menú
     const abrirMenu = () => {
@@ -18,9 +19,21 @@ export const NavBar = () => {
     const cerrarMenu = () => {
         setMenuAbierto(false);
     };
-    
 
-    
+    const handleSignOut = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            console.log("Sign-out successful.");
+            window.location.reload();
+        }).catch((error) => {
+            // An error happened.
+            console.error("An error happened during sign-out:", error);
+        });
+    };
+
+
+
 
     return (
         <nav className="navbarRojo">
@@ -37,6 +50,7 @@ export const NavBar = () => {
                 <Link to='/carrito'><button className="btn-amarillo"><i className="bi bi-cart-fill"></i><TotalCart></TotalCart></button></Link>
             </div>
 
+
             {/* Lista de enlaces de navegación */}
             <ul className={`nav-linksNR ${menuAbierto ? 'active' : ''}`} id="nav-linksNR">
                 <li className="headerNavBarRojo">
@@ -52,18 +66,22 @@ export const NavBar = () => {
 
                 {user ? (
                     <li>
-                    <div className="contPerfil">
-                        <img className="logoLogeado" src={user.photoURL} alt="Logo" />
-                        <h3 className="nombrePerfilLogeado">{user.displayName}</h3>
-                    </div>
-                </li> 
+                        <div className="contPerfil">
+                            {user.photoURL ? (
+                                <img src={user.photoURL} alt="User Profile" className="logoLogeado" />
+                            ) : (
+                                <i className="bi bi-person-circle iconLogeadoRojo"></i>
+                            )}
+                            <h3 className="nombrePerfilLogeado">{user.displayName}</h3>
+                        </div>
+                    </li>
                 ) : (
                     <li>
-                    <div className="contPerfil">
-                        <i className="bi bi-person-circle iconLogeadoRojo"></i>
-                        <h3 className="nombrePerfilRojo"><Link to="/login" className="inicioSesionRojo">Iniciar Sesion</Link></h3>
-                    </div>
-                </li>
+                        <div className="contPerfil">
+                            <i className="bi bi-person-circle iconLogeadoRojo"></i>
+                            <h3 className="nombrePerfilRojo"><Link to="/login" className="inicioSesionRojo">Iniciar Sesion</Link></h3>
+                        </div>
+                    </li>
                 )}
 
 
@@ -84,12 +102,21 @@ export const NavBar = () => {
                     <Link className="tituloLinkRojo" to="/contacto">Contacto</Link>
                 </li>
 
-            
+                <li className="contLinks">
+                    <div className="salirRojo">
+                        <button className="bi bi-box-arrow-left buttonSalirRojo" onClick={handleSignOut}></button>
+                    </div>
+
+                </li>
+
+
                 <li className="redesNav">
                     <i className="bi bi-twitter redesNavRojo"></i>
                     <i className="bi bi-instagram redesNavRojo"></i>
                     <i className="bi bi-facebook redesNavRojo"></i>
                 </li>
+
+
                 <img src={logoBlanco} alt="Logo" className="imgNavbarRojo" />
             </ul>
         </nav>

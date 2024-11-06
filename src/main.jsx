@@ -26,6 +26,8 @@ import { GestionPedidos } from './bigBite/pages/GestionPedidos';
 import { UserProvider } from './context/UserContext';
 import { Administradores } from './bigBite/pages/Administradores';
 import { MisPedidos } from './bigBite/pages/MisPedidos';
+import { MisPedidosProvider } from './bigBite/components/Context/MisPedidosContext';
+import { ProtectedRoute } from './router/ProtectedRoute';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
@@ -43,17 +45,19 @@ root.render(
             <Route path="/menu" element={<Menu />} />
             <Route path="/carrito" element={<Carrito />} />
             <Route path="/contacto" element={<Contacto />} />
-            <Route path="/AdminProductos" element={<AdminProductos />} />
-            <Route path="/AdminBebidas" element={<AdminBebidas />} />
-            <Route path="/AdminPapas" element={<AdminPapas />} />
-            <Route path="/AdminBiteBox" element={<AdminBiteBox />} />
-            <Route path="/AdminInsumos" element={<AdminInsumos />} />
-            <Route path="/AdminPpal" element={<AdminPpal />} />
-            <Route path="/AsientosContables" element={<AsientosContables />} />
-            <Route path="/GestionPedidos" element={<GestionPedidos />} />
-            <Route path="/Administradores" element={<Administradores />} />
-            <Route path="/misPedidos" element={<MisPedidos />} />
-
+            <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin', 'cliente']} />}>
+              <Route path="/AdminProductos" element={<AdminProductos />} />
+              <Route path="/AdminBebidas" element={<AdminBebidas />} />
+              <Route path="/AdminPapas" element={<AdminPapas />} />
+              <Route path="/AdminBiteBox" element={<AdminBiteBox />} />
+              <Route path="/AdminInsumos" element={<AdminInsumos />} />
+              <Route path="/AdminPpal" element={<AdminPpal />} />
+              <Route path="/AsientosContables" element={<AsientosContables />} />
+              <Route path="/GestionPedidos" element={<GestionPedidos />} />
+              <Route path="/Administradores" element={<Administradores />} />
+            </Route>
+            <Route path="/misPedidos" element={ <MisPedidosProvider> <MisPedidos /> </MisPedidosProvider> } />
+            
           </Routes>
         </Router>
       </UserProvider>

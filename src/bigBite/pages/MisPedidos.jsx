@@ -1,48 +1,50 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import burger from '../assets/burgerInicio.png'
 import '../css/misPedidos.css'
 import { Footer } from '../components/Footer';
 import { NavBar } from "../components/NavBarRojo";
+import { usePedidos } from '../components/Context/MisPedidosContext';
 
-const pedidos = [
-    {
-      id: 1,
-      estado: "En preparación",
-      productos: [
-        { producto: "Hamburguesa clásica", cantidad: 2, precio: 500 },
-        { producto: "Papas fritas", cantidad: 1, precio: 200 }
-      ],
-      total: 1200,
-    },
-    {
-      id: 2,
-      estado: "Entregado",
-      productos: [
-        { producto: "Hamburguesa doble", cantidad: 1, precio: 800 },
-        { producto: "Bebida", cantidad: 2, precio: 150 }
-      ],
-      total: 1100,
-    },
-    {
-      id: 3,
-      estado: "En camino",
-      productos: [
-        { producto: "Hamburguesa vegetariana", cantidad: 1, precio: 600 },
-        { producto: "Batido", cantidad: 1, precio: 250 }
-      ],
-      total: 850,
-    },
-    {
-        id: 4,
-        estado: "Entregado",
-        productos: [
-          { producto: "BiteBox", cantidad: 1, precio: 1100 },
-          { producto: "Bebida", cantidad: 2, precio: 150 }
-        ],
-        total: 2100,
-      }
-  ];
+
+// const pedidos = [
+//     {
+//       id: 1,
+//       estado: "En preparación",
+//       productos: [
+//         { producto: "Hamburguesa clásica", cantidad: 2, precio: 500 },
+//         { producto: "Papas fritas", cantidad: 1, precio: 200 }
+//       ],
+//       total: 1200,
+//     },
+//     {
+//       id: 2,
+//       estado: "Entregado",
+//       productos: [
+//         { producto: "Hamburguesa doble", cantidad: 1, precio: 800 },
+//         { producto: "Bebida", cantidad: 2, precio: 150 }
+//       ],
+//       total: 1100,
+//     },
+//     {
+//       id: 3,
+//       estado: "En camino",
+//       productos: [
+//         { producto: "Hamburguesa vegetariana", cantidad: 1, precio: 600 },
+//         { producto: "Batido", cantidad: 1, precio: 250 }
+//       ],
+//       total: 850,
+//     },
+//     {
+//         id: 4,
+//         estado: "Entregado",
+//         productos: [
+//           { producto: "BiteBox", cantidad: 1, precio: 1100 },
+//           { producto: "Bebida", cantidad: 2, precio: 150 }
+//         ],
+//         total: 2100,
+//       }
+//   ];
 
 export const MisPedidos = () => {
 
@@ -50,10 +52,11 @@ export const MisPedidos = () => {
     const [selectedPedidoEntregado, setSelectedPedidoEntregado] = useState(null);
     const [isViewPedido, setIsViewPedido] = useState(false);
     const [isViewPedidoEntregado, setIsViewPedidoEntregado] = useState(false);
+    const { pedidos } =usePedidos();
     
 
     const handleSelectPedido = (pedido) => {
-        if (pedido.estado !== "Entregado") {
+        if (pedido.estadoPedido !== "Entregado") {
             setSelectedPedido(pedido);
             setSelectedPedidoEntregado(null);
             setIsViewPedido(false)
@@ -62,11 +65,11 @@ export const MisPedidos = () => {
     };
 
     const handleSelectPedidoEntregado = (pedido) => {
-        if (pedido.estado === "Entregado") {
+        if (pedido.estadoPedido === "Entregado") {
             setSelectedPedidoEntregado(pedido);
             setSelectedPedido(null);
-            setIsViewPedido(false)
-            setIsViewPedidoEntregado(false)
+            setIsViewPedido(false);
+            setIsViewPedidoEntregado(false);
         }
     };
 
@@ -87,8 +90,8 @@ export const MisPedidos = () => {
     };
 
     // Filtrar pedidos en curso y entregados
-    const pedidosEnCurso = pedidos.filter(pedido => pedido.estado !== "Entregado");
-    const pedidosEntregados = pedidos.filter(pedido => pedido.estado === "Entregado");
+    const pedidosEnCurso = pedidos.filter(pedido => pedido.estadoPedido !== "Entregado");
+    const pedidosEntregados = pedidos.filter(pedido => pedido.estadoPedido === "Entregado");
 
     return (
         <>
@@ -128,11 +131,13 @@ export const MisPedidos = () => {
                             >
                                 <img src={burger} className='burger' alt=""/>
                                 <p className='nrodeorden'>
-                                    <b>Orden #{pedido.id}</b>
+                                <b>Orden #{pedido.id}</b>
                                     <br />
-                                    Total: {pedido.total}
-                                </p>
-                                <p className='estado'>{pedido.estado}</p>
+                                    <b>Total:</b> {pedido.subTotal}
+                                    <br />
+                                    <b>Fecha:</b> {pedido.fechaSolicitado}     <b>Hora:</b>{pedido.horaSolicitado}
+                                    </p>
+                                <p className='estado'>{pedido.estadoPedido}</p>
                             </div>
                         ))}
                         {isViewPedido && (
@@ -141,11 +146,14 @@ export const MisPedidos = () => {
                             <ul className='lista-detalle'>
                                 {selectedPedido.productos.map((producto, index) => (
                                     <li key={index}>
-                                        {producto.producto} - Cantidad: {producto.cantidad} - Precio: ${producto.precio}
+                                        {producto.nombre} - Cantidad: {producto.cantItems} - Precio: ${producto.precioCombo}
                                     </li>
                                 ))}
                             </ul>
-                            <p className='total-detalle'><b>Total:</b> ${selectedPedido.total}</p>
+                            <p className='total-detalle'><b>Total:</b> ${selectedPedido.subTotal}
+                            <br />
+                            <b>Fecha:</b> {selectedPedido.fechaSolicitado}     <b>Hora:</b>{selectedPedido.horaSolicitado}
+                            </p>
                         </div>
                     )}
                     </div>
@@ -174,9 +182,11 @@ export const MisPedidos = () => {
                                 <p className='nrodeorden'>
                                     <b>Orden #{pedido.id}</b>
                                     <br />
-                                    Total: {pedido.total}
+                                    <b>Total:</b> {pedido.subTotal}
+                                    <br />
+                                    <b>Fecha:</b> {pedido.fechaSolicitado}     <b>Hora:</b>{pedido.horaSolicitado}
                                 </p>
-                                <p className='estado'>{pedido.estado}</p>
+                                <p className='estado'>{pedido.estadoPedido}</p>
                             </div>
                         ))}
                         {/* Renderizado condicional de detalles del pedido entregado */}
@@ -186,11 +196,14 @@ export const MisPedidos = () => {
                           <ul className='lista-detalle'>
                               {selectedPedidoEntregado.productos.map((producto, index) => (
                                   <li key={index}>
-                                      {producto.producto} - Cantidad: {producto.cantidad} - Precio: ${producto.precio}
+                                      {producto.nombre} - Cantidad: {producto.cantItems} - Precio: ${producto.precioCombo}
                                   </li>
                               ))}
                           </ul>
-                          <p className='total-detalle'><b>Total:</b> ${selectedPedidoEntregado.total}</p>
+                          <p className='total-detalle'><b>Total:</b> ${selectedPedidoEntregado.subTotal} 
+                          <br />
+                          <b>Fecha:</b> {selectedPedidoEntregado.fechaSolicitado}     <b>Hora:</b>{selectedPedidoEntregado.horaSolicitado}
+                          </p>
                             </div>
                     )}
                     </div>
