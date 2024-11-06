@@ -1,26 +1,38 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { CompGestPedidos } from "./CompGestPedidos";
+import { useEffect, useState } from 'react';
+import NavbarAdmin from '../components/NavbarAdmin';
+import { CompGestPedidos } from '../components/CompGestPedidos';
+import '../css/GestionPedidos.css';
 
-const GestionPedidos = () => {
+export const GestionPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
 
     useEffect(() => {
-        const obtenerPedidos = async () => {
-            const response = await axios.get("https://bigbitebackend-diegocanaless-projects.vercel.app/api/pedidos");
-            setPedidos(response.data);
-        };
-        obtenerPedidos();
+        // Llamada inicial para obtener pedidos
+        fetch('https://bigbitebackend-diegocanaless-projects.vercel.app/api/pedidos')
+            .then(response => response.json())
+            .then(data => setPedidos(data))
+            .catch(error => console.error('Error al obtener pedidos:', error));
     }, []);
 
     return (
-        <div>
-            <h2>Gestión de Pedidos</h2>
-            {pedidos.map(pedido => (
-                <CompGestPedidos key={pedido.paymentId} pedido={pedido} />
-            ))}
-        </div>
+        <>
+            <NavbarAdmin />
+            <section className='contenedor'>
+                <div className='divInicio'>
+                    <h1>GestiÃ³n de Pedidos</h1>
+                    <p>Mira y actualiza el estado de los pedidos de hamburguesas</p>
+                </div>
+
+                <br />
+                <hr />
+                <br />
+
+                <div className='pedidos-lista'>
+                    {pedidos.map((pedido) => (
+                        <CompGestPedidos key={pedido.id} pedido={pedido} />
+                    ))}
+                </div>
+            </section>
+        </>
     );
 };
-
-export default GestionPedidos;
