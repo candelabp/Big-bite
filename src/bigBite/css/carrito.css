@@ -1,7 +1,7 @@
 
 .resumencompra {
     margin: 0px;
-    margin-left: 2.3vh;
+    margin-left: 13vh;
     bottom: 0px;
     font-family: "Poppins", sans-serif;
 
@@ -11,16 +11,12 @@
     width: 100%;
 }
 
-.linea { 
+.linea-carrito{ 
     color: #ff9d00;
     border-radius: 10px;
     border: 1px solid #ff9d00;
     margin: 10px;
-}
-
-
-.contenedor{
-    padding: 2.5vh;
+    margin-left: 10vh;
 }
 
 .contenedor{
