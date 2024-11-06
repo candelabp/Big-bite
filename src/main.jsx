@@ -26,6 +26,7 @@ import { GestionPedidos } from './bigBite/pages/GestionPedidos';
 import { UserProvider } from './context/UserContext';
 import { Administradores } from './bigBite/pages/Administradores';
 import { MisPedidos } from './bigBite/pages/MisPedidos';
+import { MisPedidosProvider } from './bigBite/components/Context/MisPedidosContext';
 import { ProtectedRoute } from './router/ProtectedRoute';
 
 const rootElement = document.getElementById('root');
@@ -55,7 +56,7 @@ root.render(
               <Route path="/GestionPedidos" element={<GestionPedidos />} />
               <Route path="/Administradores" element={<Administradores />} />
             </Route>
-            <Route path="/misPedidos" element={<MisPedidos />} />
+            <Route path="/misPedidos" element={ <MisPedidosProvider> <MisPedidos /> </MisPedidosProvider> } />
             
           </Routes>
         </Router>

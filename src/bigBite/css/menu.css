@@ -147,12 +147,12 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .product-card img {
   height: 200px;
   border-radius: 10px;
-  cursor: pointer;
 }
 .precio-card{
   margin-top: 20px;

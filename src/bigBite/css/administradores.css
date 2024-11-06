@@ -132,6 +132,8 @@ button:focus {
 .linea {
   width: 100vw;
   color: black;
+  margin: 0px;
+  border: none;
 }
 
 .linea hr {
