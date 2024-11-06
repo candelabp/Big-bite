@@ -35,7 +35,8 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <DataProvider>
     <React.StrictMode>
-      <UserProvider>
+    <UserProvider>
+      <DataProvider>
         <Router> {/* Configura Router */}
           <Routes> {/* Define las rutas */}
             <Route path="/" element={<Home />} />
@@ -61,7 +62,8 @@ root.render(
             </Route>
           </Routes>
         </Router>
-      </UserProvider>
+      </DataProvider>
+    </UserProvider>
     </React.StrictMode>
   </DataProvider>
 );
