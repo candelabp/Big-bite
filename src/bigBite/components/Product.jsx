@@ -45,7 +45,7 @@ const Product = ({products}) => {
                     <div className="modal-text">
                         <h3>{selectedProduct.nombre}</h3>
                         <p> {selectedProduct.descripcion}</p>
-                        <h4>Precio: ${selectedProduct.precio}</h4>
+                        <h4>Precio: ${selectedProduct.precioCombo}</h4>
                     </div>
                     <span className="close-button" onClick={closeModal}>&times;</span>
                 </div>

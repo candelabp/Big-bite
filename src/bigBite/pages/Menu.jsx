@@ -12,11 +12,13 @@ export const Menu = () => {
     const { data } = useContext(dataContext);
     const [searchTerm, setSearchTerm] = useState('');
 
+    const pedidosDisp = data.filter(product => product.disponible == "true");
+
     const filteredProducts = searchTerm
-    ? data.filter((product) =>
+    ? pedidosDisp.filter((product) =>
         product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    : data;
+    : pedidosDisp;
 
     return (
         <>
