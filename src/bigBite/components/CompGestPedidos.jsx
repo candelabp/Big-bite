@@ -1,58 +1,68 @@
-import React, { useState } from "react";
-import ModalVerDetalles from "./ModalVerDetalles"; // Asegúrate de tener el componente ModalVerDetalles
-import Swal from "sweetalert2"; // Para las notificaciones
+import { useState } from 'react';
+import burger from '../assets/burgerInicio.png';
+import '../css/GestionPedidos.css';
+import axios from 'axios';
+import ModalVerDetalles from './modalVerDetalles';
+import Swal from 'sweetalert2';
 
 export const CompGestPedidos = ({ pedido }) => {
-    const [showDetails, setShowDetails] = useState(false); // Estado para mostrar los detalles del pedido
-    const [status, setStatus] = useState(pedido.status); // Estado para mostrar el estado del pago
+    const [estado, setEstado] = useState(pedido.estadoPedido || 'En preparación');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleStatusChange = (newStatus) => {
-        setStatus(newStatus); // Cambia el estado del pedido
-        // Aquí podrías hacer una llamada a la API para actualizar el estado en el backend si lo deseas
-        Swal.fire({
-            title: "Estado actualizado",
-            text: `El estado del pedido ha sido actualizado a: ${newStatus}`,
-            icon: "success",
-        });
+    const cambiarEstado = (nuevoEstado) => {
+        setEstado(nuevoEstado);
     };
 
-    const toggleDetails = () => {
-        setShowDetails(!showDetails); // Muestra u oculta los detalles del pedido
+    const actualizarEstado = () => {
+        axios.put(`http://localhost:8080/pedidos/editar/${pedido.id}`, { estadoPedido: estado })
+            .then(() => {
+                Swal.fire({
+                    text: "Se cambió correctamente el estado del pedido!",
+                    icon: "success"
+                });
+                if (estado === 'Entregado') {
+                    // lógica para mover a pedidos entregados
+                }
+            })
+            .catch((error) => console.error('Error actualizando el pedido:', error));
     };
 
-    return (
-        <div className="divpedidos">
-            <div className="info-pedidos">
-                <div className="pedido-header">
-                    <p><strong>Correo:</strong> {pedido.email}</p>
-                    <p><strong>Dirección:</strong> {pedido.direccion}</p>
-                    <p><strong>Total:</strong> ${pedido.total}</p>
-                    <p><strong>Estado del pago:</strong> {status}</p>
-                    <button onClick={toggleDetails}>
-                        {showDetails ? "Ocultar detalles" : "Ver detalles"}
-                    </button>
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+return (
+        <div className='divpedidos'>
+            <div className='info-pedidos'>
+                <div className='divpedidos' onClick={openModal}>
+                    <img src={burger} className='burger' alt="" />
+                    <p className='nro-orden'>
+                        <b>Orden #{pedido.id}</b>
+                        <br />
+                        Total: ${pedido.subTotal}
+                    </p>
                 </div>
-
-                {/* Si el usuario quiere ver los detalles del pedido, mostrar la información del carrito */}
-                {showDetails && (
-                    <div className="pedido-detalles">
-                        <h4>Detalles del carrito:</h4>
-                        <ul>
-                            {pedido.carrito.map((item, index) => (
-                                <li key={index}>
-                                    {item.title} - {item.cantItems} x ${item.unit_price}
-                                </li>
-                            ))}
-                        </ul>
-                        <button onClick={() => handleStatusChange("Entregado")}>Marcar como entregado</button>
-                        <button onClick={() => handleStatusChange("Pendiente")}>Marcar como pendiente</button>
-                        <button onClick={() => handleStatusChange("Cancelado")}>Marcar como cancelado</button>
-                    </div>
-                )}
+                <div className='div-form'>
+                    <form onSubmit={(e) => { e.preventDefault(); actualizarEstado(); }}>
+                        <select
+                            className='form-estado'
+                            value={estado}
+                            onChange={(e) => cambiarEstado(e.target.value)}
+                        >
+                            <option value="En preparación">En preparación</option>
+                            <option value="En camino">En camino</option>
+                            <option value="Entregado">Entregado</option>
+                        </select>
+                        <br />
+                        <input type="submit" value='Enviar' className='enviar-estado' />
+                    </form>
+                </div>
             </div>
+            <hr />
 
-            {/* Modal para ver detalles adicionales del pedido */}
-            <ModalVerDetalles pedido={pedido} />
+            {/* Renderiza el modal sólo si isModalOpen es true */}
+            {isModalOpen && (
+                <ModalVerDetalles pedido={pedido} onClose={() => setIsModalOpen(false)} />
+            )}
         </div>
     );
 };
