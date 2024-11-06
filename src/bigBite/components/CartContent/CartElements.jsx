@@ -27,7 +27,7 @@ const CartElements = () => {
                     <img src={product.urlImagen} className='imgburger' alt="" />
                 </div>
                 <div className='divinfo'>
-                    <p className="nombreArticuloCarrito">{product.nombre}<br />{'$'+product.precioCombo*product.repeticion}<br /></p>
+                    <p className="nombreArticuloCarrito">{product.nombre}<br />{'$'+product.precioCombo*product.cantItems}<br /></p>
                     <div className="contOpcionesCarrito">
                         <button type="button" className='btn eliminar' onClick={() => borrarProduct(product.id)}>Eliminar</button>
                     </div>
