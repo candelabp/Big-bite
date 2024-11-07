@@ -15,16 +15,18 @@ export const AdminProductos = () => {
   const [isInsumosModalOpen, setIsInsumosModalOpen] = useState(false);
   const [selectedInsumos, setSelectedInsumos] = useState([]);
 
+  let urlBack = "http://localhost:8080";
+
   useEffect(() => {
     // Cargar hamburguesas desde el backend
-    fetch('http://localhost:8080/api/hamburguesas')
+    fetch(`${urlBack}/api/hamburguesas`)
         .then(response => response.json())
         .then(data => setHamburguesas(data))
         .catch(error => console.error('Error al cargar las hamburguesas:', error));
   }, []);
 
   const fetchInsumos = () => {
-    fetch('http://localhost:8080/api/insumos')  // GET al endpoint de insumos
+    fetch(`${urlBack}/api/insumos`)  // GET al endpoint de insumos
         .then(response => response.json())
         .then(data => setInsumos(Array.isArray(data) ? data : []))  // Asegura que sea un array
         .catch(error => {
@@ -98,8 +100,8 @@ export const AdminProductos = () => {
 
             // Enviar el DTO al backend
             const url = selectedHamburguesa ?
-                `http://localhost:8080/api/hamburguesas/editar/${selectedHamburguesa.id}` :
-                'http://localhost:8080/api/hamburguesas/registrar';
+                `${urlBack}/api/hamburguesas/editar/${selectedHamburguesa.id}` :
+                `${urlBack}/api/hamburguesas/registrar`;
 
             const method = selectedHamburguesa ? 'PUT' : 'POST';
 
@@ -117,7 +119,7 @@ export const AdminProductos = () => {
                   setSelectedHamburguesa(null);
                   setImagePreview(null);
                   setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
-                  return fetch('http://localhost:8080/api/hamburguesas')
+                  return fetch(`${urlBack}/api/hamburguesas`)
                       .then(response => response.json())
                       .then(data => setHamburguesas(data));
                 })
@@ -127,8 +129,8 @@ export const AdminProductos = () => {
     } else {
       // Enviar el DTO al backend sin imagen
       const url = selectedHamburguesa ?
-          `http://localhost:8080/api/hamburguesas/editar/${selectedHamburguesa.id}` :
-          'http://localhost:8080/api/hamburguesas/registrar';
+          `${urlBack}/api/hamburguesas/editar/${selectedHamburguesa.id}` :
+          `${urlBack}/api/hamburguesas/registrar`;
 
       const method = selectedHamburguesa ? 'PUT' : 'POST';
 
@@ -146,7 +148,7 @@ export const AdminProductos = () => {
             setSelectedHamburguesa(null);
             setImagePreview(null);
             setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
-            return fetch('http://localhost:8080/api/hamburguesas')
+            return fetch(`${urlBack}/api/hamburguesas`)
                 .then(response => response.json())
                 .then(data => setHamburguesas(data));
           })

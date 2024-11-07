@@ -12,9 +12,11 @@ export const AdminBebidas = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
 
+  let urlBack = "http://localhost:8080";
+
   useEffect(() => {
     // Cargar bebidas desde el backend
-    fetch('http://localhost:8080/api/bebidas')
+    fetch(`${urlBack}/api/bebidas`)
       .then(response => response.json())
       .then(data => setBebidas(data))
       .catch(error => console.error('Error al cargar las bebidas:', error));
@@ -49,8 +51,8 @@ export const AdminBebidas = () => {
   
           // Enviar el DTO al backend
           const url = selectedBebida ? 
-            `http://localhost:8080/api/bebidas/editar/${selectedBebida.id}` :
-            'http://localhost:8080/api/bebidas/registrar';
+            `${urlBack}/api/bebidas/editar/${selectedBebida.id}` :
+            `${urlBack}/api/bebidas/registrar`;
   
           const method = selectedBebida ? 'PUT' : 'POST';
   
@@ -67,7 +69,7 @@ export const AdminBebidas = () => {
               reset();
               setSelectedBebida(null);
               setImagePreview(null);
-              return fetch('http://localhost:8080/api/bebidas')
+              return fetch(`${urlBack}/api/bebidas`)
                 .then(response => response.json())
                 .then(data => setBebidas(data));
             })
@@ -77,8 +79,8 @@ export const AdminBebidas = () => {
     } else {
       // Enviar el DTO al backend sin imagen
       const url = selectedBebida ? 
-        `http://localhost:8080/api/bebidas/editar/${selectedBebida.id}` :
-        'http://localhost:8080/api/bebidas/registrar';
+        `${urlBack}/api/bebidas/editar/${selectedBebida.id}` :
+        `${urlBack}/api/bebidas/registrar`;
   
       const method = selectedBebida ? 'PUT' : 'POST';
   
@@ -95,7 +97,7 @@ export const AdminBebidas = () => {
           reset();
           setSelectedBebida(null);
           setImagePreview(null);
-          return fetch('http://localhost:8080/api/bebidas')
+          return fetch(`${urlBack}/api/bebidas`)
             .then(response => response.json())
             .then(data => setBebidas(data));
         })

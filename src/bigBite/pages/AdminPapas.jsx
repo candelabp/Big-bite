@@ -15,16 +15,18 @@ export const AdminPapas = () => {
   const [isInsumosModalOpen, setIsInsumosModalOpen] = useState(false);
   const [selectedInsumos, setSelectedInsumos] = useState([]);
 
+  let urlBack = "http://localhost:8080";
+
   useEffect(() => {
     // Cargar papas fritas desde el backend
-    fetch('http://localhost:8080/api/papas-fritas')
+    fetch(`${urlBack}/api/papas-fritas`)
       .then(response => response.json())
       .then(data => setPapasFritas(data))
       .catch(error => console.error('Error al cargar las papas fritas:', error));
   }, []);
 
   const fetchInsumos = () => {
-    fetch('http://localhost:8080/api/insumos')  // GET al endpoint de insumos
+    fetch(`${urlBack}/api/insumos`)  // GET al endpoint de insumos
       .then(response => response.json())
       .then(data => setInsumos(data))  // Guardar los insumos en el estado
       .catch(error => console.error('Error al cargar los insumos:', error));
@@ -96,8 +98,8 @@ export const AdminPapas = () => {
 
             // Enviar el DTO al backend
             const url = selectedPapasFritas ?
-                `http://localhost:8080/api/papas-fritas/editar/${selectedPapasFritas.id}` :
-                'http://localhost:8080/api/papas-fritas/registrar';
+                `${urlBack}/api/papas-fritas/editar/${selectedPapasFritas.id}` :
+                `${urlBack}/api/papas-fritas/registrar`;
 
             const method = selectedPapasFritas ? 'PUT' : 'POST';
 
@@ -121,7 +123,7 @@ export const AdminPapas = () => {
                   setSelectedPapasFritas(null);
                   setImagePreview(null);
                   setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
-                  return fetch('http://localhost:8080/api/papas-fritas')
+                  return fetch(`${urlBack}/api/papas-fritas`)
                       .then(response => response.json())
                       .then(data => setPapasFritas(data));
                 })
@@ -134,8 +136,8 @@ export const AdminPapas = () => {
     } else {
       // Enviar el DTO al backend sin imagen
       const url = selectedPapasFritas ?
-          `http://localhost:8080/api/papas-fritas/editar/${selectedPapasFritas.id}` :
-          'http://localhost:8080/api/papas-fritas/registrar';
+          `${urlBack}/api/papas-fritas/editar/${selectedPapasFritas.id}` :
+          `${urlBack}/api/papas-fritas/registrar`;
 
       const method = selectedPapasFritas ? 'PUT' : 'POST';
 
@@ -159,7 +161,7 @@ export const AdminPapas = () => {
             setSelectedPapasFritas(null);
             setImagePreview(null);
             setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
-            return fetch('http://localhost:8080/api/papas-fritas')
+            return fetch(`${urlBack}/api/papas-fritas`)
                 .then(response => response.json())
                 .then(data => setPapasFritas(data));
           })
