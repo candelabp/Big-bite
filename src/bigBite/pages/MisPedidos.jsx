@@ -102,9 +102,9 @@ export const MisPedidos = () => {
                         <h1>Mis Pedidos</h1>
                         <p>Mira el estado de tus pedidos</p>
                     </div>
-                    <div className='arriba_der'>
+                    {/* <div className='arriba_der'>
                         <button type="button" className='btn btn-outline-danger botonescolor'>Filtrar</button>
-                    </div>                    
+                    </div>                     */}
                 </div>
 
                 <br />
