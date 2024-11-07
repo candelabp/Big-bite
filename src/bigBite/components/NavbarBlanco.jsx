@@ -45,11 +45,6 @@ export const NavBarBlanco = () => {
         });
     }
 
-    const mostrar = () => {
-        if (user == null) {
-
-        }
-    }
 
     return (
         <nav className="navbarBlanco">
