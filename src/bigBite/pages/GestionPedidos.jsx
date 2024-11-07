@@ -28,6 +28,7 @@ export const GestionPedidos = () => {
                 <br />
 
                 <div className='pedidos-lista'>
+                    {console.log(pedidos)}
                     {pedidos.map((pedido) => (
                         <CompGestPedidos key={pedido.id} pedido={pedido} />
                     ))}
