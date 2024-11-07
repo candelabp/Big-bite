@@ -121,7 +121,7 @@ export const NavBar = () => {
                 )}
                 
                 <li className="redesNav">
-                    <i className="bi bi-twitter redesNavRojo"></i>
+                    <i className="bi bi-twitter-x redesNavRojo"></i>
                     <i className="bi bi-instagram redesNavRojo"></i>
                     <i className="bi bi-facebook redesNavRojo"></i>
                 </li>

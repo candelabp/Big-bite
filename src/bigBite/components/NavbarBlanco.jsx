@@ -130,7 +130,7 @@ export const NavBarBlanco = () => {
                 )}
 
                 <li className="redesNav">
-                    <i className="bi bi-twitter"></i>
+                    <i className="bi bi-twitter-x"></i>
                     <i className="bi bi-instagram"></i>
                     <i className="bi bi-facebook"></i>
                 </li>
