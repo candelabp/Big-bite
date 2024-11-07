@@ -9,6 +9,10 @@
 
 .arriba {
     align-items: center;
+    h1{
+        text-align: center;
+        color: #e61603;
+    }
 }
 
 .botonescolor {

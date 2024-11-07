@@ -9,13 +9,11 @@ export const Carrito = () => {
 
     return (
         <>
-            <NavBar/>
+            <NavBar />
             <div className='contenedor'>
                 <br />
                 <h3 className='resumencompra'>Resumen de compra</h3>
-                <div className='contenedorLineaAmarilla'>
-                    <hr className='linea'/>
-                </div>
+                <hr className='linea-carrito' />
                 <div className='division'>
                     <div className='division2'>
                         <CartElements></CartElements>
@@ -23,7 +21,7 @@ export const Carrito = () => {
                     <CartTotal></CartTotal>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 }
