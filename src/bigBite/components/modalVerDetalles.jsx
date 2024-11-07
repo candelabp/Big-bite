@@ -1,4 +1,4 @@
-import '../css/GestionPedidos.css';
+import '../css/gestionPedidos.css';
 
 const ModalVerDetalles = ({ pedido, onClose }) => {
     if (!pedido) return null;

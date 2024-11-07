@@ -3,6 +3,7 @@ import { createContext, useState, useEffect, useContext} from 'react';
 import { json } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { UserContext } from '../../../context/UserContext';
+import { getEnvironments } from '../../../helpers/getEnvironments';
 
 
 
@@ -10,6 +11,10 @@ import { UserContext } from '../../../context/UserContext';
 export const dataContext = createContext();
 
 const DataProvider = ({ children }) => {
+
+    const {
+      VITE_API_HOST
+    } = getEnvironments();
 
     const guardarCarrito = JSON.parse(localStorage.getItem("cart")) || []
     const[data, setData] = useState([]);
@@ -21,7 +26,7 @@ const DataProvider = ({ children }) => {
     }, [cart]);
     
     useEffect(() => {
-        axios("http://localhost:8080/productos").then((respuesta) => setData(respuesta.data));
+        axios(`${VITE_API_HOST}/api/productos`).then((respuesta) => setData(respuesta.data));
     }, []);
 
     const agregarCarrito = (product ) =>{

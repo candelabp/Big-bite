@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import '../css/adminProductos.css'; // Usa el mismo CSS que AdminProductos
 import NavbarAdmin from '../components/NavbarAdmin';
-import Swal from 'sweetalert2';
+import { v4 as uuidv4 } from 'uuid';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminBebidas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -11,9 +13,14 @@ export const AdminBebidas = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
 
+  const {
+    VITE_API_HOST
+  } = getEnvironments();
+
   useEffect(() => {
     // Cargar bebidas desde el backend
-    fetch('http://localhost:8080/bebidas')
+    fetch(`${VITE_API_HOST}/api/bebidas`)
+
       .then(response => response.json())
       .then(data => setBebidas(data))
       .catch(error => console.error('Error al cargar las bebidas:', error));
@@ -24,47 +31,82 @@ export const AdminBebidas = () => {
     setIsModalOpen(true); 
   };
 
-  const onSubmit = (data) => {
-    // Asignar tiempo de preparación 0 automáticamente
+  const onSubmit = async (data) => {
     data.tiempoPreparacion = 0;
-
-    // Determinar si "disponible" debe ser true o false
     data.disponible = selectedBebida ? data.disponible : (data.stock > 0);
-
-    const formData = new FormData();
-    formData.append('bebidaDTO', new Blob([JSON.stringify(data)], {
-      type: 'application/json'
-    }));
-
-    // Agregar imagen si hay una nueva
-    if (selectedBebida && !data.imagenBebida.length) {
-      formData.append('imagenBebida', selectedBebida.urlImagen);
-    } else if (data.imagenBebida && data.imagenBebida.length > 0) {
-      formData.append('imagenBebida', data.imagenBebida[0]);
-    }
-
-    const url = selectedBebida ? 
-      `http://localhost:8080/bebidas/editar/${selectedBebida.id}` :
-      'http://localhost:8080/bebidas/agregar';
-
-    const method = selectedBebida ? 'PUT' : 'POST';
-
-    fetch(url, {
-      method: method,
-      body: formData
-    })
-      .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
-      .then(message => {
-        selectedBebida ? Swal.fire({text: "Se editó correctamente!", icon: "success"}) : Swal.fire({text: "Se registró correctamente!", icon: "success"});
-        //alert(selectedBebida ? 'Edición exitosa' : 'Registro exitoso');
-        reset();
-        setSelectedBebida(null);
-        setImagePreview(null);
-        return fetch('http://localhost:8080/bebidas')
-          .then(response => response.json())
-          .then(data => setBebidas(data));
+  
+    if (data.imagenBebida && data.imagenBebida.length > 0) {
+      const file = data.imagenBebida[0];
+      const uid = uuidv4();
+      const storage = getStorage();
+      const storageRef = ref(storage, `bebidas-images/bebida-${uid}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+  
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          // Progress function
+        }, 
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        }, 
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          data.urlImagen = downloadURL;
+  
+          // Enviar el DTO al backend
+          const url = selectedBebida ? 
+            `${VITE_API_HOST}/api/bebidas/editar/${selectedBebida.id}` :
+            `${VITE_API_HOST}/api/bebidas/registrar`;
+  
+          const method = selectedBebida ? 'PUT' : 'POST';
+  
+          fetch(url, {
+            method: method,
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+            .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
+            .then(message => {
+              alert(selectedBebida ? 'Edición exitosa' : 'Registro exitoso');
+              reset();
+              setSelectedBebida(null);
+              setImagePreview(null);
+              return fetch(`${VITE_API_HOST}/api/bebidas`)
+                .then(response => response.json())
+                .then(data => setBebidas(data));
+            })
+            .catch(error => alert('Error al enviar los datos'));
+        }
+      );
+    } else {
+      // Enviar el DTO al backend sin imagen
+      const url = selectedBebida ? 
+        `${VITE_API_HOST}/api/bebidas/editar/${selectedBebida.id}` :
+        `${VITE_API_HOST}/api/bebidas/registrar`;
+  
+      const method = selectedBebida ? 'PUT' : 'POST';
+  
+      fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
-      .catch(error => Swal.fire({text: "Error al enviar los datos.", icon: "error", denyButtonText: `Cerrar`}));
+        .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
+        .then(message => {
+          alert(selectedBebida ? 'Edición exitosa' : 'Registro exitoso');
+          reset();
+          setSelectedBebida(null);
+          setImagePreview(null);
+          return fetch(`${VITE_API_HOST}/api/bebidas`)
+            .then(response => response.json())
+            .then(data => setBebidas(data));
+        })
+        .catch(error => alert('Error al enviar los datos'));
+    }
   };
 
   const editarBebida = (bebida) => {

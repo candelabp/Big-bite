@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../../context/UserContext';
+import { getEnvironments } from '../../../helpers/getEnvironments';
 
 // Crear el contexto
 const misPedidosContext = createContext();
@@ -10,11 +11,15 @@ export const MisPedidosProvider = ({ children }) => {
     const [pedidos, setPedidos] = useState([]);
     const { user } = useContext(UserContext); // Accede al contexto del usuario
 
+    const {
+        VITE_API_HOST
+    } = getEnvironments();
+
     useEffect(() => {
         if (user) {
             const userEmail = user.email; // Obtiene el email del usuario activo
             // Enviar el email después del /email
-            axios(`http://localhost:8080/pedidos/email/${userEmail}`)
+            axios(`${VITE_API_HOST}/api/pedidos/email/${userEmail}`)
                 .then((respuesta) => {
                     console.log('Respuesta del backend:', respuesta.data); // Verifica la respuesta del backend
                     setPedidos(respuesta.data);

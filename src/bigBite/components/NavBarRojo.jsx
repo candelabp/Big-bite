@@ -111,7 +111,7 @@ export const NavBar = () => {
                 {(user !== null) && (
                     <div>
                 <li className="contLinks">
-                    <i class="bi bi-list-check"></i>
+                    <i className="bi bi-list-check"></i>
                     <Link className="tituloLinkRojo" to="/mispedidos">Mis Pedidos</Link>
                 </li>
             </div>

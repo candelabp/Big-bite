@@ -14,10 +14,14 @@ import { fetchSignInMethodsForEmail, getAuth, onAuthStateChanged } from 'firebas
 // import { collection, doc, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { FirebaseDB } from '../../firebase/config';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore/lite';
-import Swal from 'sweetalert2';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 
 export const Administradores = () => {
+
+  const {
+    VITE_API_HOST
+  } = getEnvironments();
 
 
   const fetchAndPrintUsers = async () => {
@@ -194,7 +198,7 @@ export const Administradores = () => {
     }));
     formData.append('imagenPerfil', data.imagen[0]);
 
-    fetch('http://localhost:8080/usuarios/registrar', {
+    fetch(`${VITE_API_HOST}/api/usuarios/registrar`, {
       method: 'POST',
       body: formData
     })
@@ -206,13 +210,11 @@ export const Administradores = () => {
       })
       .then((message) => {
         console.log('Respuesta del servidor:', message);
-        Swal.fire({text: message, icon: "success"});
-        // alert(message);
+        alert(message);
       })
       .catch((error) => {
         console.error('Hubo un error:', error);
-        Swal.fire({text: error.message, icon: "error"});
-        // alert(error.message);
+        alert(error.message);
       });
   };
 
