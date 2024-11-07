@@ -14,14 +14,14 @@ export const CompGestPedidos = ({ pedido }) => {
     };
 
     const actualizarEstado = () => {
-        axios.put(`http://localhost:8080/pedidos/editar/${pedido.preferenceId}`, { estadoPedido: estado })
+        axios.put(`https://bigbitebackend-diegocanaless-diegocanaless-projects.vercel.app/pedidos/editar/${pedido.preferenceId}`, { estadoPedido: estado })
             .then(() => {
                 Swal.fire({
                     text: "Se cambió correctamente el estado del pedido!",
                     icon: "success"
                 });
                 if (estado === 'Entregado') {
-                    // lógica para mover a pedidos entregados
+                    // Lógica para mover a pedidos entregados
                 }
             })
             .catch((error) => console.error('Error actualizando el pedido:', error));

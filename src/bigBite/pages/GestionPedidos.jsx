@@ -4,7 +4,9 @@ import { CompGestPedidos } from '../components/CompGestPedidos';
 import '../css/GestionPedidos.css';
 import io from 'socket.io-client';
 
-const socket = io('https://bigbitebackend-diegocanaless-diegocanaless-projects.vercel.app');
+const socket = io('https://bigbitebackend-diegocanaless-diegocanaless-projects.vercel.app', {
+    transports: ['websocket', 'polling'],
+});
 
 export const GestionPedidos = () => {
     const [pedidos, setPedidos] = useState([]);

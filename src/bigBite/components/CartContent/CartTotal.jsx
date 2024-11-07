@@ -24,22 +24,47 @@ function CartTotal() {
         initMercadoPago("APP_USR-f181386b-0e32-4a84-9dfe-6cd67bd73f20", { locale: "es-AR" });
     }, []);
 
-    const crearPreferencia = async () => {
+    app.post("/create_preference", async (req, res) => {
         try {
-            const respuesta = await axios.post("https://bigbitebackend-diegocanaless-diegocanaless-projects.vercel.app/create_preference", {
-                title: "Pedido Big Bite",
-                cantidad: 1,
-                price: total,
-                descripcion: cart,
+            const { title, price, description, userEmail, address, cart } = req.body;
+    
+            const items = cart.map(item => ({
+                title: item.title,
+                quantity: item.quantity,
+                unit_price: item.price,
+            }));
+    
+            const preferenceData = {
+                items,
+                back_urls: {
+                    success: "https://big-bite-teal.vercel.app/",
+                    failure: "https://www.youtube.com/",
+                    pending: "https://www.youtube.com/",
+                },
+                auto_return: "approved",
+                external_reference: userEmail,  // Cambia esto si necesitas identificar pedidos
+                notification_url: "https://bigbitebackend-diegocanaless-diegocanaless-projects.vercel.app/webhook",
+            };
+    
+            const preference = await client.preferences.create(preferenceData);
+    
+            const orderData = {
+                preferenceId: preference.body.id,
                 userEmail,
                 address,
-            });
-            const { id } = respuesta.data;
-            return id;
+                cart,
+                total: price,
+            };
+    
+            orders.push(orderData);
+            res.json({ id: preference.body.id });
         } catch (error) {
-            console.error("Error al crear la preferencia:", error);
+            console.error(error);
+            res.status(500).json({ error: "Error al crear la preferencia" });
         }
-    };
+    });
+    
+
 
     const manejoCompra = async () => {
         const id = await crearPreferencia();
