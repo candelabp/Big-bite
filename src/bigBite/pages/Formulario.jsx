@@ -1,45 +1,133 @@
 import '../css/formulario.css';
 import { useForm } from "react-hook-form";
-import { NavBarBlanco } from '../components/NavBarBlanco';
+
 import { Footer } from '../components/Footer';
+import { NavBarBlanco } from '../components/NavbarBlanco';
+import { FirebaseApp, FirebaseAuth, FirebaseDB } from '../../firebase/config';
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
+
+import { ref, uploadBytesResumable, getDownloadURL, getStorage } from 'firebase/storage';
+import { collection, doc, setDoc } from 'firebase/firestore/lite';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import { useContext, useState } from 'react';
+
 
 export const Formulario = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const password = watch("password");
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [image, setImage] = useState(null);
+  const [imageURL, setImageURL] = useState('');
+  const [progress, setProgress] = useState(0);
 
-  
 
-  const onSubmit = (data) => {
-    const formData = new FormData();
-  
-    // Agrega los datos del usuario
-    formData.append('usuario', new Blob([JSON.stringify(data)], {
-      type: 'application/json'
-    }));
-  
-    // Agrega la imagen de perfil
-    formData.append('imagenPerfil', data.imagen[0]);
-  
-    // Llamada al backend usando fetch
-    fetch('http://localhost:8080/usuarios/registrar', {
-      method: 'POST',
-      body: formData
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => { throw new Error(text); });
-        }
-        return response.text();
-      })
-      .then((message) => {
-        console.log('Respuesta del servidor:', message);
-        alert(message);
-      })
-      .catch((error) => {
-        console.error('Hubo un error:', error);
-        alert(error.message);
-      });
+  // Función para manejar la selección de la imagen
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      setImage(file);
+    } else {
+      alert('Por favor selecciona un archivo de imagen válido.');
+    }
   };
+
+  // Función para manejar la subida de la imagen
+  const handleImageUpload = async (userId) => {
+
+    if (!image) {
+      // Si no hay imagen, resolver la promesa con una cadena vacía
+      // console.log('sin imagen');
+      return '';
+    }
+
+    const storage = getStorage();
+    const storageRef = ref(storage, `profile-images/${userId}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progressPercent =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progressPercent);
+        },
+        (error) => {
+          // console.error('Error al subir la imagen:', error);
+          reject(error);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setImageURL(downloadURL);
+          // console.log('URL de la imagen:', downloadURL);
+          resolve(downloadURL);
+        }
+      );
+    });
+  };
+
+
+
+  const handleRegister = async (data) => {
+    const auth = getAuth();
+    const { email, password, nombre, apellido, telefono } = data;
+
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const user = result.user;
+
+
+      // Subir la imagen a Firebase Storage
+      const imageURL = await handleImageUpload(user.uid);
+
+      // Actualizar el perfil del usuario
+      await updateProfile(user, {
+        displayName: `${nombre} ${apellido}`,
+        photoURL: imageURL ? `${imageURL}` : '', 
+        phoneNumber: `${telefono}`
+      });
+
+      // Guardar el usuario en Firestore
+      const newDoc = doc(FirebaseDB, `usuarios/${user.uid}`);
+      await setDoc(newDoc, {
+        rol: 'cliente',
+        nombre,
+        apellido,
+        telefono,
+        email,
+        photoURL: imageURL || ''
+      });
+
+
+
+      // console.log('User Info:', user);
+      // Aquí puedes guardar el usuario en el estado o hacer cualquier otra cosa necesaria
+
+      setUser(result.user);
+      navigate('/');
+    } catch (error) {
+      console.error('Error during sign-up:', error);
+    }
+  };
+
+  const handleLogin = async () => {
+    const auth = getAuth(FirebaseApp);
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // El usuario ha iniciado sesión con éxito
+      console.log('User Info:', result.user);
+      console.log('user name:', result.user.displayName);
+      console.log('userphoto:', result.user.photoURL);
+      setUser(result.user);
+      navigate('/')
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+    }
+  };
+
 
   return (
     <div>
@@ -48,7 +136,7 @@ export const Formulario = () => {
         <h1>Formulario de registro</h1>
       </div>
       <div className='formulario'>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(handleRegister)}>
           <div>
             <label>Nombre:</label>
             <input {...register("nombre", { required: "El nombre es obligatorio" })} />
@@ -86,9 +174,7 @@ export const Formulario = () => {
             <label>Imagen de perfil:</label>
             <input
               type="file"
-              accept="image/*"
-              {...register("imagen", { required: "La imagen es obligatoria" })}
-            
+              onChange={handleImageChange}
             />
             {errors.imagen && <span>{errors.imagen.message}</span>}
           </div>
@@ -122,8 +208,11 @@ export const Formulario = () => {
           </div>
 
           <div className="formulario-buttons">
-            <button type="submit" className='boton-enviar'>Enviar</button>
+            <button type="submit" className='boton-enviar'>Registrar</button>
             <button type="button" className='boton-reset' onClick={() => reset()}>Limpiar</button>
+          </div>
+          <div>
+            <button type="button" className='boton-google' onClick={handleLogin}>Registrarse con <i className="bi bi-google"></i>oogle</button>
           </div>
         </form>
       </div>

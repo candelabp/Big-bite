@@ -1,0 +1,199 @@
+.contenedor{
+    padding: 80px 50px;
+}
+
+.divInicio {
+    text-align: center;
+}
+
+.divInicio h1{
+    color: #e61603;
+}
+
+.divpedidos p{
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+
+.buscar-pedidos {
+    font-size: 12px;
+    width: 50vh;
+    height: 30px;
+    padding-left: 6px;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 3px;
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+}
+
+.buscar-pedidos:focus {
+    border: 1px solid black;
+}
+
+.divpedidos {
+    display: flex;
+    justify-content: space-around;
+}
+
+.paddingtitulos {
+    padding-top: 30px;
+
+}
+
+.info-pedidos {
+    display: flex;
+    justify-content: space-around;
+    font-family: "Poppins", sans-serif;
+    transition: background-color 0.2s ease;
+    border-radius: 10px;
+    padding: 0 5px 3px 5px;
+}
+
+.info-pedidos:hover {
+    cursor: pointer;
+    background-color: rgb(190, 182, 182);
+    /* border-radius: 10px;
+    padding: 0 5px 0 5px; */
+}
+
+.burger {
+    background-color: #ece6f09c;
+    border-radius: 50px;
+    width: 50px;
+    height: 45px;
+    margin-top: 15px;
+}
+
+.nro-orden {
+    padding: 0 40vh 0 30px;
+    margin-top: 15px;
+}
+
+.div-form {
+    text-align: end;
+}
+
+.form-estado {
+    background-color: transparent;
+    margin-top: 18px;
+    font-size: 15px;
+    width: 145px;
+    height: 30px;
+    border-radius: 6px;
+    padding: 1px;
+    text-align: center;
+}
+
+.enviar-estado {
+    width: 45px;
+    height: 20px;
+    font-size: 12px;
+    background-color: transparent;
+    border-radius: 5px;
+    border: rgb(116, 115, 115) 1px solid;
+}
+
+.div-entregados {
+    background-color: rgba(184, 179, 179, 0.5);
+    border-radius: 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 25px;
+}
+
+.estado-entregado {
+    padding-top: 25px;
+    padding-left: 50px;
+}
+
+/* ---modal--- */
+.container-modal-detalles {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.div-modal {
+    width: 50vw;
+    min-height: 45vh;
+    max-height: 80vh;
+    background-color: white;
+    box-shadow: 5px 2px 10px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    overflow-y: auto;
+}
+
+.container-titulo-modal {
+    width: 100%;
+    text-align: center;
+    padding-top: 3vh;
+}
+
+.container-buttons-modal-detalles {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 25px 15px 0;
+}
+
+.button-modal {
+    padding: 0.6rem;
+    border: none;
+    border-radius: 0.4rem;
+    font-size: 2vh;
+}
+
+.div-detalles {
+    padding: 10px 30px 0;
+}
+
+.cancel {
+    background-color: rgb(238, 74, 74);
+    color: white;
+}
+
+@media (max-width: 1000px){
+    .buscar-pedidos {
+       width: 25vh;  
+    }
+
+    .nro-orden {
+        padding: 0 40px 0 8px;
+    }
+
+    .div-modal {
+        width: 85vw;
+    }
+}
+
+
+@media (max-width: 600px){
+    .divpedidos {
+        text-align: center;
+        display: block;
+    }
+
+    .buscar-pedidos {
+        margin-bottom: 20px;
+    }
+
+    .nro-orden {
+        padding: 0 5px 0 5px;
+    }
+
+    .estado-entregado {
+        padding-left: 0;
+    }
+
+    
+}
