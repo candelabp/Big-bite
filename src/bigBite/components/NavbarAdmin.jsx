@@ -5,6 +5,10 @@ import logoNegro from '../assets/logoNegro.png'
 import { UserContext } from "../../context/UserContext";
 const NavbarAdmin = () =>{
   const { user, role } = useContext(UserContext);
+  const navigate=useNavigate();
+  const handleImageClick=()=>{
+    navigate("/")
+  }
   return(
     <div>
       <header className="header">

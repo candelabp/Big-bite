@@ -13,7 +13,6 @@ import NavbarAdmin from '../components/NavbarAdmin';
 import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 // import { collection, doc, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { FirebaseDB } from '../../firebase/config';
-import { getEnvironments } from '../../helpers/getEnvironments';
 import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore/lite';
 import { UserContext } from '../../context/UserContext';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
@@ -21,63 +20,6 @@ import { v4 as uuidv4 } from 'uuid'; // Para generar un UID único
 
 
 export const Administradores = () => {
-
-  const {
-    VITE_API_HOST
-  } = getEnvironments();
-
-
-  const fetchAndPrintUsers = async () => {
-
-    try {
-
-      const usersCollection = collection(FirebaseDB, 'usuarios');
-      const usersSnapshot = await getDocs(usersCollection);
-      const users = [];
-
-
-      console.log('usersSnapshot.docs:', usersSnapshot.docs); // Verifica el contenido de usersSnapshot.docs
-
-      if (usersSnapshot.empty) {
-        console.log('No hay usuarios en la colección "users".');
-      } else {
-        console.log(`Se encontraron ${usersSnapshot.docs.length} usuarios.`);
-      }
-
-      for (const userDoc of usersSnapshot.docs) {
-        console.log('Procesando usuario:', userDoc.id); // Verifica que está entrando en el bucle
-        const profileDocRef = doc(FirebaseDB, `usuarios/${userDoc.id}`);
-        const profileDoc = await getDoc(profileDocRef);
-
-        if (profileDoc.exists()) {
-          const userData = profileDoc.data();
-          const user = {
-            id: userDoc.id,
-            photoURL: userData.photoURL || '',
-            phoneNumber: userData.telefono || '',
-            displayName: `${userData.nombre} ${userData.apellido}`,
-            role: userData.rol || ''
-          };
-          users.push(user);
-          console.log(user);
-        } else {
-          console.log(`No se encontró el documento de perfil para el usuario ${userDoc.id}`);
-        }
-      }
-
-      setAdmins(users);
-    } catch (error) {
-      console.error("Error al obtener los usuarios:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndPrintUsers();
-  }, []);
-
-
-
-
 
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const password = watch("password");
@@ -380,7 +322,7 @@ export const Administradores = () => {
     }));
     formData.append('imagenPerfil', data.imagen[0]);
 
-    fetch(`${VITE_API_HOST}/api/usuarios/registrar`, {
+    fetch('http://localhost:8080/usuarios/registrar', {
       method: 'POST',
       body: formData
     })
