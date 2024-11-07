@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import '../css/adminProductos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
+import { v4 as uuidv4 } from 'uuid';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 export const AdminBiteBox = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -12,21 +14,23 @@ export const AdminBiteBox = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  let urlBack = "http://localhost:8080";
+
   useEffect(() => {
     // Cargar BiteBoxes desde el backend
-    fetch('http://localhost:8080/bite-box')
+    fetch(`${urlBack}/api/bite-box`)
       .then(response => response.json())
       .then(data => setBiteBoxes(data))
       .catch(error => console.error('Error al cargar las BiteBoxes:', error));
     
     // Cargar hamburguesas desde el backend para el desplegable
-    fetch('http://localhost:8080/hamburguesas')
+    fetch(`${urlBack}/api/hamburguesas`)
       .then(response => response.json())
       .then(data => setHamburguesas(data))
       .catch(error => console.error('Error al cargar las hamburguesas:', error));
 
     // Cargar bebidas desde el backend para el desplegable
-    fetch('http://localhost:8080/bebidas')
+    fetch(`${urlBack}/api/bebidas`)
       .then(response => response.json())
       .then(data => setBebidas(data))
       .catch(error => console.error('Error al cargar las bebidas:', error));
@@ -37,48 +41,99 @@ export const AdminBiteBox = () => {
     setIsModalOpen(true); 
   };
 
-  const onSubmit = (data) => {
-    // Determina si "disponible" debe ser true o false
+  const onSubmit = async (data) => {
     data.disponible = selectedBiteBox ? data.disponible : (data.stock > 0);
-
-    const formData = new FormData();
-    formData.append('biteBoxDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-    
-    // Agregar la imagen
+  
     if (data.imagen && data.imagen.length > 0) {
-      formData.append('imagen', data.imagen[0]);
-    }
-
-    const url = selectedBiteBox ?
-      `http://localhost:8080/bite-box/editar/${selectedBiteBox.id}` :
-      'http://localhost:8080/bite-box/agregar';
-
-    const method = selectedBiteBox ? 'PUT' : 'POST';
-
-    fetch(url, {
-      method: method,
-      body: formData
-    })
-      .then(response => {
-        if (!response.ok) {
-          return response.text().then(text => { throw new Error(text); });
+      const file = data.imagen[0];
+      const storage = getStorage();
+      const fileName = `bitebox-${uuidv4()}`;
+      const storageRef = ref(storage, `bitebox-images/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+  
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          // Progress function
+        },
+        (error) => {
+          console.error('Error al subir la imagen:', error);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          data.urlImagen = downloadURL;
+  
+          // Enviar el DTO al backend
+          const url = selectedBiteBox ?
+            `${urlBack}/api/bite-box/editar/${selectedBiteBox.id}` :
+            `${urlBack}/api/bite-box/registrar`;
+  
+          const method = selectedBiteBox ? 'PUT' : 'POST';
+  
+          fetch(url, {
+            method: method,
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+            .then(response => {
+              if (!response.ok) {
+                return response.text().then(text => { throw new Error(text); });
+              }
+              return response.text();
+            })
+            .then(message => {
+              console.log('Respuesta del servidor:', message);
+              alert(selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso');
+              reset();
+              setSelectedBiteBox(null);
+              setImagePreview(null);
+              return fetch('${urlBack}/api/bite-box')
+                .then(response => response.json())
+                .then(data => setBiteBoxes(data));
+            })
+            .catch(error => {
+              console.error('Hubo un error:', error);
+              alert('Error al enviar los datos');
+            });
         }
-        return response.text();
+      );
+    } else {
+      // Enviar el DTO al backend sin imagen
+      const url = selectedBiteBox ?
+        `${urlBack}/api/bite-box/editar/${selectedBiteBox.id}` :
+        `${urlBack}/api/bite-box/registrar`;
+  
+      const method = selectedBiteBox ? 'PUT' : 'POST';
+  
+      fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
-      .then(message => {
-        console.log('Respuesta del servidor:', message);
-        alert(selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso');
-        reset();
-        setSelectedBiteBox(null);
-        setImagePreview(null);
-        return fetch('http://localhost:8080/bite-box')
-          .then(response => response.json())
-          .then(data => setBiteBoxes(data));
-      })
-      .catch(error => {
-        console.error('Hubo un error:', error);
-        alert('Error al enviar los datos');
-      });
+        .then(response => {
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+          }
+          return response.text();
+        })
+        .then(message => {
+          console.log('Respuesta del servidor:', message);
+          alert(selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso');
+          reset();
+          setSelectedBiteBox(null);
+          setImagePreview(null);
+          return fetch(`${urlBack}/api/bite-box`)
+            .then(response => response.json())
+            .then(data => setBiteBoxes(data));
+        })
+        .catch(error => {
+          console.error('Hubo un error:', error);
+          alert('Error al enviar los datos');
+        });
+    }
   };
 
   const editarBiteBox = (biteBox) => {
