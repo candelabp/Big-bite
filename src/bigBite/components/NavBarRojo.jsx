@@ -6,6 +6,8 @@ import { UserContext } from '../../context/UserContext';
 import logoBlanco from '../assets/logo blanco.png'
 import { getAuth, signOut } from "firebase/auth";
 import { div } from "framer-motion/client";
+import Swal from "sweetalert2";
+
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
@@ -22,17 +24,25 @@ export const NavBar = () => {
     };
 
     const handleSignOut = () => {
-        const auth = getAuth();
-        signOut(auth).then(() => {
-            // Sign-out successful.
-            console.log("Sign-out successful.");
-            window.location.reload();
-        }).catch((error) => {
-            // An error happened.
-            console.error("An error happened during sign-out:", error);
+        Swal.fire({
+            text: "Deaseas cerrar sesión?",
+            showDenyButton: true,
+            confirmButtonText: "Aceptar",
+            denyButtonText: `Cancelar`
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                const auth = getAuth();
+                signOut(auth).then(() => {
+                    // Sign-out successful.
+                    window.location.reload();
+                }).catch((error) => {
+                    // An error happened.
+                    console.error("An error happened during sign-out:", error);
+                });
+            }
         });
-    };
-
+    }
 
 
 
@@ -111,17 +121,18 @@ export const NavBar = () => {
                     <i className="bi bi-question-circle iconPreguntaRojo"></i>
                     <Link className="tituloLinkRojo" to="/contacto">Contacto</Link>
                 </li>
-                {(user !== null) && (
-                <li className="contLinks">
-                    <div className="salirRojo">
-                        <button className="bi bi-box-arrow-left buttonSalirRojo" onClick={handleSignOut}></button>
-                    </div>
 
-                </li>
+                {user && (
+                    <li className="contLinks" onClick={handleSignOut}>
+                        <div className="salirRojo">
+                            <i className="bi bi-box-arrow-left buttonSalirRojo"></i>
+                        </div>
+                        <Link className="tituloLinkRojo">Cerrar Sesión</Link>
+                    </li>
                 )}
-
+                
                 <li className="redesNav">
-                    <i className="bi bi-twitter redesNavRojo"></i>
+                    <i className="bi bi-twitter-x redesNavRojo"></i>
                     <i className="bi bi-instagram redesNavRojo"></i>
                     <i className="bi bi-facebook redesNavRojo"></i>
                 </li>

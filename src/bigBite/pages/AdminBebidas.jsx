@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import '../css/adminProductos.css'; // Usa el mismo CSS que AdminProductos
 import NavbarAdmin from '../components/NavbarAdmin';
+import Swal from 'sweetalert2';
 
 export const AdminBebidas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -54,7 +55,8 @@ export const AdminBebidas = () => {
     })
       .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
       .then(message => {
-        alert(selectedBebida ? 'Edición exitosa' : 'Registro exitoso');
+        selectedBebida ? Swal.fire({text: "Se editó correctamente!", icon: "success"}) : Swal.fire({text: "Se registró correctamente!", icon: "success"});
+        //alert(selectedBebida ? 'Edición exitosa' : 'Registro exitoso');
         reset();
         setSelectedBebida(null);
         setImagePreview(null);
@@ -62,7 +64,7 @@ export const AdminBebidas = () => {
           .then(response => response.json())
           .then(data => setBebidas(data));
       })
-      .catch(error => alert('Error al enviar los datos'));
+      .catch(error => Swal.fire({text: "Error al enviar los datos.", icon: "error", denyButtonText: `Cerrar`}));
   };
 
   const editarBebida = (bebida) => {

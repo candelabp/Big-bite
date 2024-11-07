@@ -6,6 +6,7 @@ import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopu
 import { FirebaseApp } from '../../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import Swal from 'sweetalert2';
 
 
 export const Ingresar = () => {
@@ -43,7 +44,8 @@ export const Ingresar = () => {
           navigate('/');
         } catch (error) {
           console.error('Error during login:', error);
-          alert(error.message);
+          Swal.fire({text: error.message, icon: "warning"});
+        //   alert(error.message);
         }
       };
     return (
@@ -74,13 +76,13 @@ export const Ingresar = () => {
 
                     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
-                    <div className="btns">
-                        <button type="submit" className="login-btn">Ingresar</button>
+                    <div className="div-btns">
+                        <button type="submit" className="ingresar-btn">Ingresar</button>
                         <button type="button" className='loginGoogle-btn' onClick={handleLoginWithGoogle}>Iniciar con <i className="bi bi-google"></i>oogle</button>
                         <button 
-                            className="register-btn" 
+                            className="cont-btn" 
                             type="button" 
-                            onClick={() => alert("Recuperar contraseña")}
+                            onClick={() => Swal.fire({text: "Recuperar contraseña"})}
                         >
                             Olvidé mi contraseña
                         </button>

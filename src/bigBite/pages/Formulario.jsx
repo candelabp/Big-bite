@@ -28,9 +28,7 @@ export const Formulario = () => {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       setImage(file);
-    } else {
-      alert('Por favor selecciona un archivo de imagen válido.');
-    }
+    } 
   };
 
   // Función para manejar la subida de la imagen
@@ -85,7 +83,7 @@ export const Formulario = () => {
       // Actualizar el perfil del usuario
       await updateProfile(user, {
         displayName: `${nombre} ${apellido}`,
-        photoURL: imageURL ? `${imageURL}` : '', 
+        photoURL: imageURL ? `${imageURL}` : '',
         phoneNumber: `${telefono}`
       });
 
@@ -174,6 +172,7 @@ export const Formulario = () => {
             <label>Imagen de perfil:</label>
             <input
               type="file"
+              accept="image/*" // Restringe a archivos de imagen
               onChange={handleImageChange}
             />
             {errors.imagen && <span>{errors.imagen.message}</span>}

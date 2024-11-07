@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import '../css/adminProductos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
+import Swal from 'sweetalert2';
 
 export const AdminBiteBox = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -67,7 +68,8 @@ export const AdminBiteBox = () => {
       })
       .then(message => {
         console.log('Respuesta del servidor:', message);
-        alert(selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso');
+        selectedBiteBox ? Swal.fire({text: "Se editó correctamente!", icon: "success"}) : Swal.fire({text: "Se registró correctamente!", icon: "success"});
+        // alert(selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso');
         reset();
         setSelectedBiteBox(null);
         setImagePreview(null);
@@ -77,7 +79,7 @@ export const AdminBiteBox = () => {
       })
       .catch(error => {
         console.error('Hubo un error:', error);
-        alert('Error al enviar los datos');
+        Swal.fire({text: "Error al enviar los datos.", icon: "error"});
       });
   };
 
