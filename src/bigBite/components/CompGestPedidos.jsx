@@ -6,7 +6,7 @@ import ModalVerDetalles from './modalVerDetalles';
 import Swal from 'sweetalert2';
 
 export const CompGestPedidos = ({ pedido }) => {
-    const [estado, setEstado] = useState(pedido.estadoPedido || 'En preparación');
+    const [estado, setEstado] = useState(pedido.status || 'En preparación');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const cambiarEstado = (nuevoEstado) => {
@@ -14,7 +14,7 @@ export const CompGestPedidos = ({ pedido }) => {
     };
 
     const actualizarEstado = () => {
-        axios.put(`http://localhost:8080/pedidos/editar/${pedido.id}`, { estadoPedido: estado })
+        axios.put(`http://localhost:8080/pedidos/editar/${pedido.preferenceId}`, { estadoPedido: estado })
             .then(() => {
                 Swal.fire({
                     text: "Se cambió correctamente el estado del pedido!",
@@ -37,9 +37,13 @@ export const CompGestPedidos = ({ pedido }) => {
                 <div className='divpedidos' onClick={openModal}>
                     <img src={burger} className='burger' alt="" />
                     <p className='nro-orden'>
-                        <b>Orden #{pedido.id}</b>
+                        <b>Orden #{pedido.preferenceId}</b>
                         <br />
-                        Total: ${pedido.subTotal}
+                        Total: ${pedido.total}
+                        <br />
+                        Correo: {pedido.userEmail}
+                        <br />
+                        Dirección: {pedido.address}
                     </p>
                 </div>
                 <div className='div-form'>
@@ -64,6 +68,18 @@ export const CompGestPedidos = ({ pedido }) => {
             {isModalOpen && (
                 <ModalVerDetalles pedido={pedido} onClose={() => setIsModalOpen(false)} />
             )}
+
+            {/* Renderiza la lista del carrito */}
+            <div className='carrito-lista'>
+                <h3>Carrito:</h3>
+                <ul>
+                    {pedido.cart.map((item, index) => (
+                        <li key={index}>
+                            {item.title} - Cantidad: {item.quantity} - Precio: ${item.price}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
