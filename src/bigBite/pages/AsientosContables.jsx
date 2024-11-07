@@ -55,34 +55,36 @@ export const AsientosContables = () => {
 
   const generarLibroMayor = () => {
     const libroMayor = {};
-  
+
     asientos.forEach((asiento) => {
-      asiento.cuentaAsientoDTO.forEach((cuenta) => {
-        // Obtenemos el nombre de la cuenta usando el ID
-        const cuentaNombre = cuentas.find(c => c.id === cuenta.cuentaId)?.nombre || cuenta.cuentaId;
-        
-        // Inicializamos la cuenta en el libro mayor si no existe
-        if (!libroMayor[cuentaNombre]) {
-          libroMayor[cuentaNombre] = { movimientos: [], saldo: 0 };
-        }
-  
-        // Registramos el movimiento en función del tipo (Debe o Haber)
-        libroMayor[cuentaNombre].movimientos.push({
-          fecha: asiento.fecha,
-          descripcion: asiento.descripcion,
-          monto: cuenta.monto,
-          tipo: cuenta.tipo,
+      if (asiento && asiento.cuentasAsiento) {
+        asiento.cuentasAsiento.forEach((cuenta) => {
+          // Obtenemos el nombre de la cuenta usando el ID
+          const cuentaNombre = cuentas.find(c => c.id === cuenta.id)?.nombre || cuenta.cuentaId;
+
+          // Inicializamos la cuenta en el libro mayor si no existe
+          if (!libroMayor[cuentaNombre]) {
+            libroMayor[cuentaNombre] = { movimientos: [], saldo: 0 };
+          }
+
+          // Registramos el movimiento en función del tipo (Debe o Haber)
+          libroMayor[cuentaNombre].movimientos.push({
+            fecha: asiento.fecha,
+            descripcion: asiento.descripcion,
+            monto: cuenta.monto,
+            tipo: cuenta.tipo,
+          });
+
+          // Actualizamos el saldo de acuerdo al tipo
+          if (cuenta.tipo === "Debe") {
+            libroMayor[cuentaNombre].saldo += cuenta.monto;
+          } else if (cuenta.tipo === "Haber") {
+            libroMayor[cuentaNombre].saldo -= cuenta.monto;
+          }
         });
-  
-        // Actualizamos el saldo de acuerdo al tipo
-        if (cuenta.tipo === "Debe") {
-          libroMayor[cuentaNombre].saldo += cuenta.monto;
-        } else if (cuenta.tipo === "Haber") {
-          libroMayor[cuentaNombre].saldo -= cuenta.monto;
-        }
-      });
+      }
     });
-  
+
     console.log("Libro Mayor generado:", libroMayor);
     return libroMayor;
   };
