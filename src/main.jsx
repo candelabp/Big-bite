@@ -34,8 +34,8 @@ const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
- 
-    <React.StrictMode>
+
+  <React.StrictMode>
     <UserProvider>
       <DataProvider>
         <Router> {/* Configura Router */}
@@ -49,7 +49,7 @@ root.render(
             <Route path="/menu" element={<Menu />} />
             <Route path="/contacto" element={<Contacto />} />
 
-            <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin', 'cliente']} />}>
+            <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin']} />}>
               <Route path="/AdminProductos" element={<AdminProductos />} />
               <Route path="/AdminBebidas" element={<AdminBebidas />} />
               <Route path="/GestionPedidos" element={<GestionPedidos />} />
@@ -60,15 +60,21 @@ root.render(
               <Route path="/AsientosContables" element={<AsientosContables />} />
             </Route>
 
+            <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin', 'cliente', 'empleadoInactivo']} />}>
+              <Route path="/misPedidos" element={<MisPedidosProvider> <MisPedidos /> </MisPedidosProvider>} />
+
+              <Route path="/carrito" element={<Carrito />} />
+            </Route>
+
             <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
               <Route path="/Administradores" element={<Administradores />} />
             </Route>
-            <Route path="/misPedidos" element={<MisPedidos />} />
+
 
           </Routes>
         </Router>
       </DataProvider>
     </UserProvider>
-    </React.StrictMode>
-  
+  </React.StrictMode>
+
 );

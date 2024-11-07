@@ -12,6 +12,7 @@ import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firesto
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { v4 as uuidv4 } from 'uuid'; // Para generar un UID único
+import Swal from 'sweetalert2';
 
 
 export const Formulario = () => {
@@ -30,7 +31,11 @@ export const Formulario = () => {
       setImage(file);
       console.log(file);
     } else {
-      alert('Por favor selecciona un archivo de imagen válido.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Imagen no seleccionada',
+      });
     }
   };
 
@@ -82,7 +87,11 @@ export const Formulario = () => {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        alert('El correo electrónico ya está registrado.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'El correo ya se encuentra en uso',
+        });
         return;
       }
 
@@ -123,10 +132,18 @@ export const Formulario = () => {
       navigate('/');
 
       // Mostrar mensaje de éxito
-      alert('El usuario ha sido registrado correctamente.');
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuario Creado',
+        text: 'Usuario Registrado Con Éxito',
+      });
     } catch (error) {
       console.error('Error durante el registro:', error);
-      alert('Hubo un error durante el registro. Por favor, inténtalo de nuevo.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un error durante el registro',
+      });
     }
   };
 
@@ -187,7 +204,12 @@ export const Formulario = () => {
 
           <div>
             <label>Telefono:</label>
-            <input {...register("telefono", { required: "El telefono es obligatorio" })} />
+            <input {...register("telefono", {
+              required: "El telefono es obligatorio", minLength: {
+                value: 9,
+                message: "el telefono debe tener al menos 9 numeros",
+              },
+            })} />
             {errors.telefono && <span>{errors.telefono.message}</span>}
           </div>
 

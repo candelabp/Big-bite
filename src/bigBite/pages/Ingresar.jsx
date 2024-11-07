@@ -7,7 +7,7 @@ import { FirebaseApp } from '../../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore/lite';
-
+import Swal from 'sweetalert2';
 
 export const Ingresar = () => {
   const [email, setEmail] = useState('');
@@ -42,7 +42,11 @@ export const Ingresar = () => {
       }
     } catch (error) {
       console.error('Error during sign-in:', error);
-      setErrorMessage('Error during sign-in. Please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text:'Error iniciando sesión, inténtelo de nuevo',
+      });
     }
   };
 
@@ -85,7 +89,11 @@ export const Ingresar = () => {
       }
     } catch (error) {
       console.error('Error during login:', error);
-      setErrorMessage('Hubo un error durante el inicio de sesión. Por favor, inténtalo de nuevo.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text:'Error iniciando sesión, inténtelo de nuevo',
+      });
     }
   };
   return (

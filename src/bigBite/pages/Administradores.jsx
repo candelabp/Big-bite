@@ -17,6 +17,7 @@ import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } fro
 import { UserContext } from '../../context/UserContext';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid'; // Para generar un UID único
+import Swal from 'sweetalert2';
 
 
 export const Administradores = () => {
@@ -33,8 +34,6 @@ export const Administradores = () => {
   const [image, setImage] = useState(null);
   const [imageURL, setImageURL] = useState('');
   const [progress, setProgress] = useState(0);
-  // Estado local para los campos del formulario
-
 
   // Función para obtener usuarios con rol 'empleado'
   const getEmpleados = async () => {
@@ -145,11 +144,19 @@ export const Administradores = () => {
         );
 
         // Mostrar mensaje de éxito
-        alert('Los cambios se han guardado correctamente.');
+        Swal.fire({
+          icon: 'success',
+          title: 'Cambios Guardados',
+          text: 'Cambios guardados éxitosamente',
+        });
       } catch (error) {
         // Mostrar mensaje de error
         console.error('Error al guardar los cambios:', error);
-        alert('Hubo un error al guardar los cambios. Por favor, inténtalo de nuevo.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al guardar los cambios, inténtelo de nuevo',
+        });
       }
     } else {
       console.error('selectedAdmin.id no está definido');
@@ -158,6 +165,7 @@ export const Administradores = () => {
 
   // Cambiar el rol del empleado a 'empleadoInactivo'
   const handleDeleteAdmin = async () => {
+
     if (selectedAdmin?.id) {
       const adminDocRef = doc(FirebaseDB, `usuarios/${selectedAdmin.id}`);
       try {
@@ -168,11 +176,23 @@ export const Administradores = () => {
           prevAdmins.filter((admin) => admin.id !== selectedAdmin.id)
         );
 
+        // Limpiar el administrador seleccionado
+        setSelectedAdmin(null);
+        setIsViewAdmin(false);
+
         // Mostrar mensaje de éxito
-        alert('El empleado ha sido marcado como inactivo.');
+        Swal.fire({
+          icon: 'success',
+          title: 'Empleado Inactivo',
+          text: 'Empleado dado de baja correctamente',
+        });
       } catch (error) {
         console.error('Error al cambiar el rol del empleado:', error);
-        alert('Hubo un error al cambiar el rol del empleado. Por favor, inténtalo de nuevo.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error, inténtelo de nuevo',
+        });
       }
     } else {
       console.error('selectedAdmin.id no está definido');
@@ -186,7 +206,11 @@ export const Administradores = () => {
       setImage(file);
       console.log(file);
     } else {
-      alert('Por favor selecciona un archivo de imagen válido.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor seleccione una imagen válida',
+      });
     }
   };
 
@@ -237,7 +261,11 @@ export const Administradores = () => {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        alert('El correo electrónico ya está registrado.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ese correo ya está en uso',
+        });
         return;
       }
 
@@ -271,17 +299,24 @@ export const Administradores = () => {
         photoURL: imageURL || '',
         rol: 'empleado'
       };
-      setAdmins((prevAdmins) => [...prevAdmins, newAdmin]);
 
       // Limpiar los campos del formulario
       reset();
 
       // Mostrar mensaje de éxito
-      alert('El usuario ha sido registrado correctamente.');
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro Éxitoso',
+        text: 'Empleado registrado correctamente',
+      });
       window.location.reload()
     } catch (error) {
       console.error('Error durante el registro:', error);
-      alert('Hubo un error durante el registro. Por favor, inténtalo de nuevo.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al agregar empleado, inténtelo de nuevo',
+      });
     }
   };
 
@@ -314,33 +349,6 @@ export const Administradores = () => {
     setIsViewAdmin(false);
   };
 
-  const onSubmit = (data) => {
-    const formData = new FormData();
-
-    formData.append('usuario', new Blob([JSON.stringify(data)], {
-      type: 'application/json'
-    }));
-    formData.append('imagenPerfil', data.imagen[0]);
-
-    fetch('http://localhost:8080/usuarios/registrar', {
-      method: 'POST',
-      body: formData
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => { throw new Error(text); });
-        }
-        return response.text();
-      })
-      .then((message) => {
-        console.log('Respuesta del servidor:', message);
-        alert(message);
-      })
-      .catch((error) => {
-        console.error('Hubo un error:', error);
-        alert(error.message);
-      });
-  };
 
   return (
     <div className="app-container">
