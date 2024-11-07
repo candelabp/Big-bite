@@ -1,11 +1,14 @@
 import { useContext, useState, useEffect } from "react";
 import { dataContext } from "../Context/DataContext";
+import { UserContext } from "../../../context/UserContext"; // Asegúrate de importar tu contexto de usuario
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 import CryptoModal from "../CryptoModal";
 
 function CartTotal() {
     const { cart } = useContext(dataContext);
+    const { user } = useContext(UserContext); // Accede al contexto del usuario
+    const userEmail = user.email; // Obtiene el email del usuario activo
     const itemsEnCarrito = cart.reduce((acumulador, element) => acumulador + element.cantItems, 0);
     const [showCryptoModal, setShowCryptoModal] = useState(false);  // Estado para el modal de cripto
 
@@ -13,6 +16,7 @@ function CartTotal() {
     const [deliveryType, setDeliveryType] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
     const [preferenceId, setPreferenceId] = useState(null);
+    const [address, setAddress] = useState("");
 
     const subtotal = Math.round(cart.reduce((acumulador, element) => acumulador + element.precioCombo * element.cantItems, 0));
     const envio = Math.round(subtotal - subtotal * 0.90);
@@ -29,7 +33,7 @@ function CartTotal() {
             setShowForm(true);
         }
     };
-    
+
     const handleCancelar = () => {
         setShowForm(false);
     };
@@ -41,12 +45,15 @@ function CartTotal() {
                 cantidad: 1,
                 price: total,
                 descripcion: cart,
+                userEmail,
+                address,
             });
 
+            console.log("Respuesta del servidor:", respuesta.data);
             const { id } = respuesta.data;
             return id;
         } catch (error) {
-            console.log(error);
+            console.error("Error al crear la preferencia:", error);
         }
     };
 
@@ -55,6 +62,10 @@ function CartTotal() {
         if (id) {
             setPreferenceId(id);
         }
+    };
+
+    const handleAddressChange = (e) => {
+        setAddress(e.target.value);
     };
 
     return (
@@ -104,7 +115,7 @@ function CartTotal() {
                     {deliveryType === "envio" && (
                         <div className="form-group">
                             <label htmlFor="address">Dirección de envío</label>
-                            <input type="text" id="address" className="form-control" />
+                            <input type="text" id="address" className="form-control" value={address} onChange={handleAddressChange} />
                         </div>
                     )}
 
@@ -158,7 +169,7 @@ function CartTotal() {
                     </div>
                 </div>
             )}
-            
+
             {/* Modal de Pago con Cripto */}
             {showCryptoModal && <CryptoModal totalPesos={total} onClose={() => setShowCryptoModal(false)} />}
         </div>
