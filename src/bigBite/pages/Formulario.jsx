@@ -8,7 +8,7 @@ import { FirebaseApp, FirebaseAuth, FirebaseDB } from '../../firebase/config';
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
 
 import { ref, uploadBytesResumable, getDownloadURL, getStorage } from 'firebase/storage';
-import { collection, doc, setDoc } from 'firebase/firestore/lite';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore/lite';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { v4 as uuidv4 } from 'uuid'; // Para generar un UID único
@@ -71,54 +71,64 @@ export const Formulario = () => {
 
 
 
- // Función para registrar un empleado
- const handleRegister = async (data) => {
-  const { email, password, nombre, apellido, telefono } = data;
+  // Función para registrar un empleado
+  const handleRegister = async (data) => {
+    const { email, password, nombre, apellido, telefono } = data;
 
-  try {
-    // Generar un UID único para el usuario
-    const userId = uuidv4();
-    console.log(userId)
+    try {
 
-    // Subir la imagen a Firebase Storage
-    const imageURL = await handleImageUpload(userId);
+      // Verificar si el correo ya existe en Firestore
+      const q = query(collection(FirebaseDB, "usuarios"), where("email", "==", email));
+      const querySnapshot = await getDocs(q);
 
-    // Guardar el usuario en Firestore
-    const newDoc = doc(FirebaseDB, `usuarios/${userId}`);
-   
-    await setDoc(newDoc, {
-      rol: 'cliente',
-      displayName: `${nombre} ${apellido}`,
-      nombre,
-      apellido,
-      telefono,
-      email,
-      photoURL: imageURL || '',
-      password // Guardar la contraseña en Firestore (no recomendado para producción)
-    });
+      if (!querySnapshot.empty) {
+        alert('El correo electrónico ya está registrado.');
+        return;
+      }
 
-    // Guardar los datos del usuario en localStorage
-    const userData = {
-      displayName: `${nombre} ${apellido}`,
-      nombre,
-      apellido,
-      telefono,
-      email,
-      photoURL: imageURL || '',
-      rol: 'cliente'
-    };
+      // Generar un UID único para el usuario
+      const userId = uuidv4();
+      console.log(userId)
 
-    localStorage.setItem('user', JSON.stringify(userData));
-    setUser(userData);
-    navigate('/');
+      // Subir la imagen a Firebase Storage
+      const imageURL = await handleImageUpload(userId);
 
-    // Mostrar mensaje de éxito
-    alert('El usuario ha sido registrado correctamente.');
-  } catch (error) {
-    console.error('Error durante el registro:', error);
-    alert('Hubo un error durante el registro. Por favor, inténtalo de nuevo.');
-  }
-};
+      // Guardar el usuario en Firestore
+      const newDoc = doc(FirebaseDB, `usuarios/${userId}`);
+
+      await setDoc(newDoc, {
+        rol: 'cliente',
+        displayName: `${nombre} ${apellido}`,
+        nombre,
+        apellido,
+        telefono,
+        email,
+        photoURL: imageURL || '',
+        password // Guardar la contraseña en Firestore (no recomendado para producción)
+      });
+
+      // Guardar los datos del usuario en localStorage
+      const userData = {
+        displayName: `${nombre} ${apellido}`,
+        nombre,
+        apellido,
+        telefono,
+        email,
+        photoURL: imageURL || '',
+        rol: 'cliente'
+      };
+
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
+      navigate('/');
+
+      // Mostrar mensaje de éxito
+      alert('El usuario ha sido registrado correctamente.');
+    } catch (error) {
+      console.error('Error durante el registro:', error);
+      alert('Hubo un error durante el registro. Por favor, inténtalo de nuevo.');
+    }
+  };
 
   const handleLogin = async () => {
     const auth = getAuth(FirebaseApp);

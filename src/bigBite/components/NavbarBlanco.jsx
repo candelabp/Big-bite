@@ -27,10 +27,10 @@ export const NavBarBlanco = () => {
         signOut(auth).then(() => {
             // Sign-out successful.
             console.log("Sign-out successful.");
-            
+
             // Eliminar el usuario de localStorage
             localStorage.removeItem('user');
-            
+
             // Recargar la página
             window.location.reload();
         }).catch((error) => {
@@ -110,12 +110,13 @@ export const NavBarBlanco = () => {
                     <Link className="tituloLinkNegro" to="/contacto">Contacto</Link>
                 </li>
 
-                <li className="contLinks">
-                    <div className="salirBlanco">
-                        <button className="bi bi-box-arrow-left buttonSalirRojo" onClick={handleSignOut}></button>
-                    </div>
-
-                </li>
+                {user && (
+                    <li className="contLinks">
+                        <div className="salirBlanco">
+                            <button className="bi bi-box-arrow-left buttonSalirRojo" onClick={handleSignOut}></button>
+                        </div>
+                    </li>
+                )}
 
 
                 <li className="redesNav">

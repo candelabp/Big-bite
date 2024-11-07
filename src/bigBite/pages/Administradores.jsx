@@ -227,58 +227,63 @@ export const Administradores = () => {
 
 
 
- // Función para registrar un empleado
- const handleRegisterEmpleado = async (data) => {
-  const { email, password, nombre, apellido, telefono } = data;
+  // Función para registrar un empleado
+  const handleRegisterEmpleado = async (data) => {
+    const { email, password, nombre, apellido, telefono } = data;
 
-  try {
-    // Generar un UID único para el usuario
-    const userId = uuidv4();
-    console.log(userId)
+    try {
+      // Verificar si el correo ya existe en Firestore
+      const q = query(collection(FirebaseDB, "usuarios"), where("email", "==", email));
+      const querySnapshot = await getDocs(q);
 
-    // Subir la imagen a Firebase Storage
-    const imageURL = await handleImageUpload(userId);
+      if (!querySnapshot.empty) {
+        alert('El correo electrónico ya está registrado.');
+        return;
+      }
 
-    // Guardar el usuario en Firestore
-    const newDoc = doc(FirebaseDB, `usuarios/${userId}`);
-   
-    await setDoc(newDoc, {
-      rol: 'empleado',
-      displayName: `${nombre} ${apellido}`,
-      nombre,
-      apellido,
-      telefono,
-      email,
-      photoURL: imageURL || '',
-      password // Guardar la contraseña en Firestore (no recomendado para producción)
-    });
+      // Generar un UID único para el usuario
+      const userId = uuidv4();
 
-    // Actualizar el estado `admins` para incluir el nuevo empleado
-    const newAdmin = {
-      id: userId,
-      displayName: `${nombre} ${apellido}`,
-      nombre,
-      apellido,
-      telefono,
-      email,
-      photoURL: imageURL || '',
-      rol: 'empleado'
-    };
-    setAdmins((prevAdmins) => [...prevAdmins, newAdmin]);
+      // Subir la imagen a Firebase Storage
+      const imageURL = await handleImageUpload(userId);
 
-    // Limpiar los campos del formulario
-    reset();
+      // Guardar el usuario en Firestore
+      const newDoc = doc(FirebaseDB, `usuarios/${userId}`);
+      await setDoc(newDoc, {
+        rol: 'empleado',
+        displayName: `${nombre} ${apellido}`,
+        nombre,
+        apellido,
+        telefono,
+        email,
+        photoURL: imageURL || '',
+        password // Guardar la contraseña en Firestore (no recomendado para producción)
+      });
 
-    // Recargar la página
-    window.location.reload();
+      // Actualizar el estado `admins` para incluir el nuevo empleado
+      const newAdmin = {
+        id: userId,
+        displayName: `${nombre} ${apellido}`,
+        nombre,
+        apellido,
+        telefono,
+        email,
+        photoURL: imageURL || '',
+        rol: 'empleado'
+      };
+      setAdmins((prevAdmins) => [...prevAdmins, newAdmin]);
 
-    // Mostrar mensaje de éxito
-    alert('El usuario ha sido registrado correctamente.');
-  } catch (error) {
-    console.error('Error durante el registro:', error);
-    alert('Hubo un error durante el registro. Por favor, inténtalo de nuevo.');
-  }
-};
+      // Limpiar los campos del formulario
+      reset();
+
+      // Mostrar mensaje de éxito
+      alert('El usuario ha sido registrado correctamente.');
+      window.location.reload()
+    } catch (error) {
+      console.error('Error durante el registro:', error);
+      alert('Hubo un error durante el registro. Por favor, inténtalo de nuevo.');
+    }
+  };
 
   const handleSelectAdmin = (admin) => {
     setSelectedAdmin(admin);
@@ -300,6 +305,7 @@ export const Administradores = () => {
     setSelectedAdmin(null);
     setIsAddingAdmin(true);
     setIsViewAdmin(false);
+    reset(); // Limpiar los campos del formulario
   };
 
   const handleRemoveAdmin = () => {
