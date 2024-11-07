@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import '../css/asientosContables.css';
 import NavbarAdmin from "../components/NavbarAdmin";
-
+import LibroDiario from "../components/LibroDiario"; // Importa el componente
+import LibroMayor from "../components/LibroMayor";
 export const AsientosContables = () => {
   const [cuenta, setCuenta] = useState("");
   const [monto, setMonto] = useState("");
   const [tipo, setTipo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
-  const [asientos, setAsientos] = useState([]); // Initialize asientos with an empty array
+  const [asientos, setAsientos] = useState([]); // Solo en estado, no en localStorage
   const [cuentasDebe, setCuentasDebe] = useState([]);
   const [cuentasHaber, setCuentasHaber] = useState([]);
   const [mostrarLibro, setMostrarLibro] = useState("diario");
@@ -18,6 +19,7 @@ export const AsientosContables = () => {
 
   // Efecto para cargar cuentas desde el servidor
   useEffect(() => {
+    console.log("Datos de asientos:", asientos);
     const fetchCuentas = async () => {
       try {
         const response = await fetch('http://localhost:8080/cuentas'); // Asegúrate de que esta URL es correcta
@@ -32,101 +34,21 @@ export const AsientosContables = () => {
         setLoading(false);
       }
     };
+
     const fetchAsientos = async () => {
-      const asientosGuardados = localStorage.getItem("asientos");
-      if (asientosGuardados) {
-        setAsientos(JSON.parse(asientosGuardados));
-      } else {
-        try {
-          const response = await fetch('http://localhost:8080/asientos');
-          if (!response.ok) throw new Error('Error al obtener los asientos');
-          const data = await response.json();
-          setAsientos(data);
-          localStorage.setItem("asientos", JSON.stringify(data)); // Guardar en localStorage
-        } catch (err) {
-          console.error(err.message);
-        }
+      try {
+        const response = await fetch('http://localhost:8080/asientos');
+        if (!response.ok) throw new Error('Error al obtener los asientos');
+        const data = await response.json();
+        setAsientos(data);
+      } catch (err) {
+        console.error(err.message);
       }
     };
-    console.log(asientos);
+
     fetchCuentas();
     fetchAsientos();
   }, []);
-
-  const generarLibroMayor = () => {
-    const libroMayor = {};
-  
-    asientos.forEach((asiento) => {
-      asiento.cuentaAsientoDTO.forEach((cuenta) => {
-        // Obtenemos el nombre de la cuenta usando el ID
-        const cuentaNombre = cuentas.find(c => c.id === cuenta.cuentaId)?.nombre || cuenta.cuentaId;
-        
-        // Inicializamos la cuenta en el libro mayor si no existe
-        if (!libroMayor[cuentaNombre]) {
-          libroMayor[cuentaNombre] = { movimientos: [], saldo: 0 };
-        }
-  
-        // Registramos el movimiento en función del tipo (Debe o Haber)
-        libroMayor[cuentaNombre].movimientos.push({
-          fecha: asiento.fecha,
-          descripcion: asiento.descripcion,
-          monto: cuenta.monto,
-          tipo: cuenta.tipo,
-        });
-  
-        // Actualizamos el saldo de acuerdo al tipo
-        if (cuenta.tipo === "Debe") {
-          libroMayor[cuentaNombre].saldo += cuenta.monto;
-        } else if (cuenta.tipo === "Haber") {
-          libroMayor[cuentaNombre].saldo -= cuenta.monto;
-        }
-      });
-    });
-  
-    console.log("Libro Mayor generado:", libroMayor);
-    return libroMayor;
-  };
-  
-  
-  
-
-  const mostrarLibroMayor = () => {
-    const libroMayor = generarLibroMayor();
-    return (
-      <div className="libro-mayor">
-        <h2>Libro Mayor</h2>
-        {Object.entries(libroMayor).map(([cuenta, data], index) => (
-          <div key={index} className="libro-mayor__cuenta">
-            <h3>{cuenta}</h3>
-            <table className="libro-mayor__tabla">
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Descripción</th>
-                  <th>Debe</th>
-                  <th>Haber</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.movimientos.map((movimiento, idx) => (
-                  <tr key={idx}>
-                    <td>{movimiento.fecha}</td>
-                    <td>{movimiento.descripcion}</td>
-                    <td>{movimiento.tipo === "Debe" ? `$${movimiento.monto.toFixed(2)}` : ""}</td>
-                    <td>{movimiento.tipo === "Haber" ? `$${movimiento.monto.toFixed(2)}` : ""}</td>
-                  </tr>
-                ))}
-                <tr>
-                  <td colSpan="2"><strong>Saldo Final</strong></td>
-                  <td colSpan="2"><strong>${data.saldo.toFixed(2)}</strong></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   const handleAddCuenta = () => {
     if (monto && tipo && cuenta) {
@@ -176,7 +98,6 @@ export const AsientosContables = () => {
   
       const updatedAsientos = [...asientos, nuevoAsiento];
       setAsientos(updatedAsientos);
-      localStorage.setItem("asientos", JSON.stringify(updatedAsientos)); // Actualizar localStorage
       setCuentasDebe([]);
       setCuentasHaber([]);
       setDescripcion("");
@@ -184,7 +105,6 @@ export const AsientosContables = () => {
       console.error(err.message);
     }
   };
-  
 
   const calcularTotal = (cuentas) => {
     return cuentas.reduce((acc, cuenta) => acc + cuenta.monto, 0);
@@ -237,7 +157,6 @@ export const AsientosContables = () => {
                 </option>
               ))}
             </select>
-
           </div>
           <div className="asientos-contables__campo">
             <label>Monto:</label>
@@ -278,65 +197,11 @@ export const AsientosContables = () => {
             Guardar Asiento
           </button>
         </div>
-
-        <div className="asientos-contables__botones">
-          <button
-            onClick={() => setMostrarLibro("diario")}
-            className={`asientos-contables__boton ${mostrarLibro === "diario" ? "activo" : ""}`}
-          >
-            Mostrar Libro Diario
-          </button>
-          <button
-            onClick={() => setMostrarLibro("mayor")}
-            className={`asientos-contables__boton ${mostrarLibro === "mayor" ? "activo" : ""}`}
-          >
-            Mostrar Libro Mayor
-          </button>
-        </div>
-
-        {mostrarLibro === "diario" && (
-  <div className="libro-diario">
-    <h2>Libro Diario</h2>
-    <table className="libro-diario__tabla">
-      <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Descripción</th>
-          <th>Cuenta</th>
-          <th>Monto</th>
-          <th>Tipo</th>
-        </tr>
-      </thead>
-      <tbody>
-        {asientos.map((asiento, index) => (
-          <React.Fragment key={index}>
-            {(asiento.cuentaAsientoDTO || []).map((cuenta, i) => {
-              // Buscar el nombre de la cuenta usando cuentaId
-              const cuentaNombre = cuentas.find(c => c.id === cuenta.cuentaId)?.nombre || cuenta.cuentaId;
-              return (
-                <tr key={`${index}-${i}`}>
-                  {i === 0 && (
-                    <>
-                      <td rowSpan={asiento.cuentaAsientoDTO.length}>{asiento.fecha}</td>
-                      <td rowSpan={asiento.cuentaAsientoDTO.length}>{asiento.descripcion}</td>
-                    </>
-                  )}
-                  <td>{cuentaNombre}</td>
-                  <td>${cuenta.monto.toFixed(2)}</td>
-                  <td>{cuenta.tipo}</td>
-                </tr>
-              );
-            })}
-          </React.Fragment>
-        ))}
-      </tbody>
-    </table>
-  </div>
-)}
-
-
-        {mostrarLibro === "mayor" && mostrarLibroMayor()}
+          {/* Mostrar el Libro Diario con la lista de asientos */}
+          <LibroDiario asientos={asientos} />
+          <LibroMayor asientos={asientos}/>
       </div>
+      
     </>
   );
 };
