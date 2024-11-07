@@ -170,3 +170,19 @@ function CartTotal() {
                         {preferenceId && (
                             <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: "smart_option" } }} />
                         )}
+                    </div>
+
+                    <div className="form-btns">
+                        <button type="button" className="btnes btnpagar" onClick={handleCancelar}>
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {showCryptoModal && <CryptoModal totalPesos={total} onClose={() => setShowCryptoModal(false)} />}
+        </div>
+    );
+}
+
+export default CartTotal;
