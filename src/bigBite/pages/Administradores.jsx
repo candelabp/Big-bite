@@ -14,9 +14,14 @@ import { fetchSignInMethodsForEmail, getAuth, onAuthStateChanged } from 'firebas
 // import { collection, doc, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { FirebaseDB } from '../../firebase/config';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore/lite';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 
 export const Administradores = () => {
+
+  const {
+    VITE_API_HOST
+  } = getEnvironments();
 
 
   const fetchAndPrintUsers = async () => {
@@ -193,7 +198,7 @@ export const Administradores = () => {
     }));
     formData.append('imagenPerfil', data.imagen[0]);
 
-    fetch('http://localhost:8080/usuarios/registrar', {
+    fetch(`${VITE_API_HOST}/api/usuarios/registrar`, {
       method: 'POST',
       body: formData
     })

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import '../css/adminProductos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminInsumos = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -9,11 +10,13 @@ export const AdminInsumos = () => {
   const [selectedInsumo, setSelectedInsumo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  let urlBack = "http://localhost:8080";
+  const {
+    VITE_API_HOST
+  } = getEnvironments();
 
   useEffect(() => {
     // Cargar insumos desde el backend
-    fetch(`${urlBack}/api/insumos`)
+    fetch(`${VITE_API_HOST}/api/insumos`)
       .then(response => response.json())
       .then(data => setInsumos(data))
       .catch(error => console.error('Error al cargar los insumos:', error));
@@ -21,8 +24,8 @@ export const AdminInsumos = () => {
 
   const onSubmit = (data) => {
     const url = selectedInsumo ?
-      `${urlBack}/api/insumos/editar/${selectedInsumo.id}` :
-      `${urlBack}/api/insumos/registrar`;
+      `${VITE_API_HOST}/api/insumos/editar/${selectedInsumo.id}` :
+      `${VITE_API_HOST}/api/insumos/registrar`;
   
     const method = selectedInsumo ? 'PUT' : 'POST';
   
@@ -49,7 +52,7 @@ export const AdminInsumos = () => {
           unidadMedida: ''
         });
         setSelectedInsumo(null);
-        return fetch(`${urlBack}/api/insumos`)
+        return fetch(`${VITE_API_HOST}/api/insumos`)
           .then(response => response.json())
           .then(data => setInsumos(data));
       })

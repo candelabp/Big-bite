@@ -4,17 +4,22 @@ import '../css/GestionPedidos.css';
 import axios from 'axios';
 import ModalVerDetalles from './modalVerDetalles';
 import Swal from 'sweetalert2';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const CompGestPedidos = ({ pedido }) => {
     const [estado, setEstado] = useState(pedido.status || 'En preparación');
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const {
+        VITE_API_HOST
+    } = getEnvironments();
 
     const cambiarEstado = (nuevoEstado) => {
         setEstado(nuevoEstado);
     };
 
     const actualizarEstado = () => {
-        axios.put(`http://localhost:8080/pedidos/editar/${pedido.preferenceId}`, { estadoPedido: estado })
+        axios.put(`${VITE_API_HOST}/api/pedidos/editar/${pedido.preferenceId}`, { estadoPedido: estado })
             .then(() => {
                 Swal.fire({
                     text: "Se cambió correctamente el estado del pedido!",

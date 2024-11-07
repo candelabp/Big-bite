@@ -4,6 +4,7 @@ import '../css/adminProductos.css'; // Usa el mismo CSS que AdminProductos
 import NavbarAdmin from '../components/NavbarAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminBebidas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -12,11 +13,14 @@ export const AdminBebidas = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
 
-  let urlBack = "http://localhost:8080";
+  const {
+    VITE_API_HOST
+  } = getEnvironments();
 
   useEffect(() => {
     // Cargar bebidas desde el backend
-    fetch(`${urlBack}/api/bebidas`)
+    fetch(`${VITE_API_HOST}/api/bebidas`)
+
       .then(response => response.json())
       .then(data => setBebidas(data))
       .catch(error => console.error('Error al cargar las bebidas:', error));
@@ -51,8 +55,8 @@ export const AdminBebidas = () => {
   
           // Enviar el DTO al backend
           const url = selectedBebida ? 
-            `${urlBack}/api/bebidas/editar/${selectedBebida.id}` :
-            `${urlBack}/api/bebidas/registrar`;
+            `${VITE_API_HOST}/api/bebidas/editar/${selectedBebida.id}` :
+            `${VITE_API_HOST}/api/bebidas/registrar`;
   
           const method = selectedBebida ? 'PUT' : 'POST';
   
@@ -69,7 +73,7 @@ export const AdminBebidas = () => {
               reset();
               setSelectedBebida(null);
               setImagePreview(null);
-              return fetch(`${urlBack}/api/bebidas`)
+              return fetch(`${VITE_API_HOST}/api/bebidas`)
                 .then(response => response.json())
                 .then(data => setBebidas(data));
             })
@@ -79,8 +83,8 @@ export const AdminBebidas = () => {
     } else {
       // Enviar el DTO al backend sin imagen
       const url = selectedBebida ? 
-        `${urlBack}/api/bebidas/editar/${selectedBebida.id}` :
-        `${urlBack}/api/bebidas/registrar`;
+        `${VITE_API_HOST}/api/bebidas/editar/${selectedBebida.id}` :
+        `${VITE_API_HOST}/api/bebidas/registrar`;
   
       const method = selectedBebida ? 'PUT' : 'POST';
   
@@ -97,7 +101,7 @@ export const AdminBebidas = () => {
           reset();
           setSelectedBebida(null);
           setImagePreview(null);
-          return fetch(`${urlBack}/api/bebidas`)
+          return fetch(`${VITE_API_HOST}/api/bebidas`)
             .then(response => response.json())
             .then(data => setBebidas(data));
         })

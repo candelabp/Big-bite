@@ -4,6 +4,7 @@ import '../css/adminProductos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminProductos = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -15,18 +16,20 @@ export const AdminProductos = () => {
   const [isInsumosModalOpen, setIsInsumosModalOpen] = useState(false);
   const [selectedInsumos, setSelectedInsumos] = useState([]);
 
-  let urlBack = "http://localhost:8080";
+  const {
+    VITE_API_HOST
+  } = getEnvironments();
 
   useEffect(() => {
     // Cargar hamburguesas desde el backend
-    fetch(`${urlBack}/api/hamburguesas`)
+    fetch(`${VITE_API_HOST}/api/hamburguesas`)
         .then(response => response.json())
         .then(data => setHamburguesas(data))
         .catch(error => console.error('Error al cargar las hamburguesas:', error));
   }, []);
 
   const fetchInsumos = () => {
-    fetch(`${urlBack}/api/insumos`)  // GET al endpoint de insumos
+    fetch(`${VITE_API_HOST}/api/insumos`)  // GET al endpoint de insumos
         .then(response => response.json())
         .then(data => setInsumos(Array.isArray(data) ? data : []))  // Asegura que sea un array
         .catch(error => {
@@ -100,8 +103,8 @@ export const AdminProductos = () => {
 
             // Enviar el DTO al backend
             const url = selectedHamburguesa ?
-                `${urlBack}/api/hamburguesas/editar/${selectedHamburguesa.id}` :
-                `${urlBack}/api/hamburguesas/registrar`;
+                `${VITE_API_HOST}/api/hamburguesas/editar/${selectedHamburguesa.id}` :
+                `${VITE_API_HOST}/api/hamburguesas/registrar`;
 
             const method = selectedHamburguesa ? 'PUT' : 'POST';
 
@@ -119,7 +122,7 @@ export const AdminProductos = () => {
                   setSelectedHamburguesa(null);
                   setImagePreview(null);
                   setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
-                  return fetch(`${urlBack}/api/hamburguesas`)
+                  return fetch(`${VITE_API_HOST}/api/hamburguesas`)
                       .then(response => response.json())
                       .then(data => setHamburguesas(data));
                 })
@@ -129,8 +132,8 @@ export const AdminProductos = () => {
     } else {
       // Enviar el DTO al backend sin imagen
       const url = selectedHamburguesa ?
-          `${urlBack}/api/hamburguesas/editar/${selectedHamburguesa.id}` :
-          `${urlBack}/api/hamburguesas/registrar`;
+          `${VITE_API_HOST}/api/hamburguesas/editar/${selectedHamburguesa.id}` :
+          `${VITE_API_HOST}/api/hamburguesas/registrar`;
 
       const method = selectedHamburguesa ? 'PUT' : 'POST';
 
@@ -148,7 +151,7 @@ export const AdminProductos = () => {
             setSelectedHamburguesa(null);
             setImagePreview(null);
             setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
-            return fetch(`${urlBack}/api/hamburguesas`)
+            return fetch(`${VITE_API_HOST}/api/hamburguesas`)
                 .then(response => response.json())
                 .then(data => setHamburguesas(data));
           })

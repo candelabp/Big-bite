@@ -4,6 +4,7 @@ import '../css/adminProductos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminBiteBox = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -14,23 +15,25 @@ export const AdminBiteBox = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  let urlBack = "http://localhost:8080";
+  const {
+    VITE_API_HOST
+  } = getEnvironmentsments();
 
   useEffect(() => {
     // Cargar BiteBoxes desde el backend
-    fetch(`${urlBack}/api/bite-box`)
+    fetch(`${VITE_API_HOST}/api/bite-box`)
       .then(response => response.json())
       .then(data => setBiteBoxes(data))
       .catch(error => console.error('Error al cargar las BiteBoxes:', error));
     
     // Cargar hamburguesas desde el backend para el desplegable
-    fetch(`${urlBack}/api/hamburguesas`)
+    fetch(`${VITE_API_HOST}/api/hamburguesas`)
       .then(response => response.json())
       .then(data => setHamburguesas(data))
       .catch(error => console.error('Error al cargar las hamburguesas:', error));
 
     // Cargar bebidas desde el backend para el desplegable
-    fetch(`${urlBack}/api/bebidas`)
+    fetch(`${VITE_API_HOST}/api/bebidas`)
       .then(response => response.json())
       .then(data => setBebidas(data))
       .catch(error => console.error('Error al cargar las bebidas:', error));
@@ -64,8 +67,8 @@ export const AdminBiteBox = () => {
   
           // Enviar el DTO al backend
           const url = selectedBiteBox ?
-            `${urlBack}/api/bite-box/editar/${selectedBiteBox.id}` :
-            `${urlBack}/api/bite-box/registrar`;
+            `${VITE_API_HOST}/api/bite-box/editar/${selectedBiteBox.id}` :
+            `${VITE_API_HOST}/api/bite-box/registrar`;
   
           const method = selectedBiteBox ? 'PUT' : 'POST';
   
@@ -88,7 +91,7 @@ export const AdminBiteBox = () => {
               reset();
               setSelectedBiteBox(null);
               setImagePreview(null);
-              return fetch('${urlBack}/api/bite-box')
+              return fetch(`${VITE_API_HOST}/api/bite-box`)
                 .then(response => response.json())
                 .then(data => setBiteBoxes(data));
             })
@@ -101,8 +104,8 @@ export const AdminBiteBox = () => {
     } else {
       // Enviar el DTO al backend sin imagen
       const url = selectedBiteBox ?
-        `${urlBack}/api/bite-box/editar/${selectedBiteBox.id}` :
-        `${urlBack}/api/bite-box/registrar`;
+        `${VITE_API_HOST}/api/bite-box/editar/${selectedBiteBox.id}` :
+        `${VITE_API_HOST}/api/bite-box/registrar`;
   
       const method = selectedBiteBox ? 'PUT' : 'POST';
   
@@ -125,7 +128,7 @@ export const AdminBiteBox = () => {
           reset();
           setSelectedBiteBox(null);
           setImagePreview(null);
-          return fetch(`${urlBack}/api/bite-box`)
+          return fetch(`${VITE_API_HOST}/api/bite-box`)
             .then(response => response.json())
             .then(data => setBiteBoxes(data));
         })
