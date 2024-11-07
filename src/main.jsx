@@ -45,7 +45,7 @@ root.render(
             <Route path="/menu" element={<Menu />} />
             <Route path="/carrito" element={<Carrito />} />
             <Route path="/contacto" element={<Contacto />} />
-            <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin', 'cliente']} />}>
+            {/* <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin', 'cliente']} />}> */}
               <Route path="/AdminProductos" element={<AdminProductos />} />
               <Route path="/AdminBebidas" element={<AdminBebidas />} />
               <Route path="/AdminPapas" element={<AdminPapas />} />
@@ -55,7 +55,7 @@ root.render(
               <Route path="/AsientosContables" element={<AsientosContables />} />
               <Route path="/GestionPedidos" element={<GestionPedidos />} />
               <Route path="/Administradores" element={<Administradores />} />
-            </Route>
+            {/* </Route> */}
             <Route path="/misPedidos" element={ <MisPedidosProvider> <MisPedidos /> </MisPedidosProvider> } />
             
           </Routes>

@@ -111,7 +111,7 @@ export const CompGestPedidos = () => {
                 <div className='paddingtitulos'>
                     <h1>Pedidos en curso</h1>
                     <p>Lista de todos los pedidos en curso</p>
-                    <input id='buscarPedido' type="text" placeholder='Buscar pedidos...' className='buscar-pedidos' value={buscarPedido} onChange={(e) => setBuscarPedido(e.target.value)} />
+                    <input id='buscarPedido' type="text" placeholder='Buscar pedidos por id o mail...' className='buscar-pedidos' value={buscarPedido} onChange={(e) => setBuscarPedido(e.target.value)} />
                 </div>
 
                 <div>
@@ -155,7 +155,7 @@ export const CompGestPedidos = () => {
                 <div className='paddingtitulos'>
                     <h1>Pedidos anteriores</h1>
                     <p>Lista de todos los pedidos entregados</p>
-                    <input id='buscarPedidoEntregado' type="text" placeholder='Buscar pedidos...' className='buscar-pedidos' value={buscarPedidoEntregado} onChange={(e) => setBuscarPedidoEntregado(e.target.value)} />
+                    <input id='buscarPedidoEntregado' type="text" placeholder='Buscar pedidos por id o mail...' className='buscar-pedidos' value={buscarPedidoEntregado} onChange={(e) => setBuscarPedidoEntregado(e.target.value)} />
                 </div>
                 <div>
                     {pedidosEntregados.length > 0 && (
