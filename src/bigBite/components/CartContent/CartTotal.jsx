@@ -2,11 +2,13 @@ import { useContext, useState, useEffect } from "react";
 import { dataContext } from "../Context/DataContext";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
+import CryptoModal from "../CryptoModal";
 
 function CartTotal() {
     const { cart } = useContext(dataContext);
     const itemsEnCarrito = cart.reduce((acumulador, element) => acumulador + element.cantItems, 0);
-    
+    const [showCryptoModal, setShowCryptoModal] = useState(false);  // Estado para el modal de cripto
+
     const [showForm, setShowForm] = useState(false);
     const [deliveryType, setDeliveryType] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
@@ -119,6 +121,16 @@ function CartTotal() {
                                 Efectivo
                             </button>
                         )}
+                           <button
+                                type="button"
+                                className={`btnes ${paymentMethod === "cripto" ? "active" : ""}`}
+                                onClick={() => {
+                                    setPaymentMethod("cripto");
+                                    setShowCryptoModal(true);  // Abrir el modal de cripto
+                                }}
+                            >
+                                Pagar con cripto
+                            </button>
                         <button
                             type="button"
                             className={`btnes ${paymentMethod === "mercadopago" ? "active" : ""}`}
@@ -146,6 +158,9 @@ function CartTotal() {
                     </div>
                 </div>
             )}
+            
+            {/* Modal de Pago con Cripto */}
+            {showCryptoModal && <CryptoModal totalPesos={total} onClose={() => setShowCryptoModal(false)} />}
         </div>
     );
 }
