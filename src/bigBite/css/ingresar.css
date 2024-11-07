@@ -10,7 +10,7 @@
 
 .inicio-sesion {
     background-color: white;
-    padding: 40px;
+    padding: 50px 50px 25px 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 400px;
@@ -61,19 +61,26 @@
    
 }
 
-.login-btn{
+.div-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: center;
+}
+
+.ingresar-btn{
     background-color: #ff3d3d;
     color: white;
-    padding: 12px;
-    /*width: 100%;*/
+    padding: 8px 15px;
+    width: 85%;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-bottom: 2vh;
     font-family: "Poppins", sans-serif;
-    font-weight: 400;
+    /* font-weight: 300; */
     font-style: normal;
    
 }
@@ -81,45 +88,48 @@
 .loginGoogle-btn{
     background-color: #ff3d3d;
     color: white;
-    padding: 12px;
-    /*width: 100%;*/
+    padding: 8px 10px;
+    width: 85%;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-bottom: 2vh;
     font-family: "Poppins", sans-serif;
-    font-weight: 400;
+    
     font-style: normal;
    
 }
 
-.register-btn {
+.cont-btn {
     background-color: #FFBA49;
     color: white;
-    padding: 12px;
-    /*width: 100%;*/
+    padding: 8px 10px;
+    width: 85%;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     margin-bottom: 2vh;
     font-family: "Poppins", sans-serif;
-    font-weight: 400;
+    /* font-weight: 300; */
     font-style: normal;
    
 }
 
-.login-btn:hover  {
+.ingresar-btn:hover  {
     background-color: #e32d2d;
+    transform: scale(1.02);
 }
 .loginGoogle-btn:hover  {
     background-color: #e32d2d;
+    transform: scale(1.02);
 }
- .register-btn:hover {
+ .cont-btn:hover {
     background-color: #e99b1e;
+    transform: scale(1.02);
 }
 
 @media screen and (max-width: 480px) {

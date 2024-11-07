@@ -28,42 +28,53 @@ import { Administradores } from './bigBite/pages/Administradores';
 import { MisPedidos } from './bigBite/pages/MisPedidos';
 import { MisPedidosProvider } from './bigBite/components/Context/MisPedidosContext';
 import { ProtectedRoute } from './router/ProtectedRoute';
+import { PublicRoute } from './router/PublicRouter';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
- 
-    <React.StrictMode>
+
+  <React.StrictMode>
     <UserProvider>
       <DataProvider>
         <Router> {/* Configura Router */}
           <Routes> {/* Define las rutas */}
             <Route path="/" element={<Home />} />
-            <Route path="/formulario" element={<Formulario />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/ingresar" element={<Ingresar />} />
+            <Route element={<PublicRoute />}>
+              <Route path="/formulario" element={<Formulario />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/ingresar" element={<Ingresar />} />
+            </Route>
             <Route path="/menu" element={<Menu />} />
             <Route path="/contacto" element={<Contacto />} />
-            {/* <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin']} />}> */}
+
+            <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin']} />}>
               <Route path="/AdminProductos" element={<AdminProductos />} />
               <Route path="/AdminBebidas" element={<AdminBebidas />} />
+              <Route path="/GestionPedidos" element={<GestionPedidos />} />
               <Route path="/AdminPapas" element={<AdminPapas />} />
               <Route path="/AdminBiteBox" element={<AdminBiteBox />} />
               <Route path="/AdminInsumos" element={<AdminInsumos />} />
               <Route path="/AdminPpal" element={<AdminPpal />} />
               <Route path="/AsientosContables" element={<AsientosContables />} />
-              <Route path="/GestionPedidos" element={<GestionPedidos />} />
-              <Route path="/Administradores" element={<Administradores />} />
-            {/* </Route> */}
-            {/* <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin', 'cliente']} />}> */}
-              <Route path="/carrito" element={<Carrito />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin', 'cliente', 'empleadoInactivo']} />}>
               <Route path="/misPedidos" element={<MisPedidosProvider> <MisPedidos /> </MisPedidosProvider>} />
-            {/* </Route> */}
+
+              <Route path="/carrito" element={<Carrito />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+              <Route path="/Administradores" element={<Administradores />} />
+            </Route>
+
+
           </Routes>
         </Router>
       </DataProvider>
     </UserProvider>
-    </React.StrictMode>
-  
+  </React.StrictMode>
+
 );

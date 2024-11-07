@@ -40,6 +40,13 @@ const DataProvider = ({ children }) => {
             } else {
                 setCart([...cart, product]);
                 console.log(product);
+                Swal.fire({
+                    position: "bottom-end",
+                    text: "Se agregó al carrito",
+                    showConfirmButton: false,
+                    width: "37vh",
+                    timer: 1500
+                });
             }
         } else {
             Swal.fire({
