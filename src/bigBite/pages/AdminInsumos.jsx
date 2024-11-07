@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import '../css/adminProductos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminInsumos = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -9,9 +10,13 @@ export const AdminInsumos = () => {
   const [selectedInsumo, setSelectedInsumo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const {
+    VITE_API_HOST
+  } = getEnvironments();
+
   useEffect(() => {
     // Cargar insumos desde el backend
-    fetch('http://localhost:8080/insumos')
+    fetch(`${VITE_API_HOST}/api/insumos`)
       .then(response => response.json())
       .then(data => setInsumos(data))
       .catch(error => console.error('Error al cargar los insumos:', error));
@@ -19,11 +24,11 @@ export const AdminInsumos = () => {
 
   const onSubmit = (data) => {
     const url = selectedInsumo ?
-      `http://localhost:8080/insumos/editar/${selectedInsumo.id}` :
-      'http://localhost:8080/insumos/agregar';
-
+      `${VITE_API_HOST}/api/insumos/editar/${selectedInsumo.id}` :
+      `${VITE_API_HOST}/api/insumos/registrar`;
+  
     const method = selectedInsumo ? 'PUT' : 'POST';
-
+  
     fetch(url, {
       method: method,
       headers: {
@@ -40,9 +45,14 @@ export const AdminInsumos = () => {
       .then(message => {
         console.log('Respuesta del servidor:', message);
         alert(selectedInsumo ? 'Edición exitosa' : 'Registro exitoso');
-        reset();
+        reset({
+          nombre: '',
+          precio: '',
+          stock: '',
+          unidadMedida: ''
+        });
         setSelectedInsumo(null);
-        return fetch('http://localhost:8080/insumos')
+        return fetch(`${VITE_API_HOST}/api/insumos`)
           .then(response => response.json())
           .then(data => setInsumos(data));
       })

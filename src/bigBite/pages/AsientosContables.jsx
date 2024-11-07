@@ -3,6 +3,8 @@ import '../css/asientosContables.css';
 import NavbarAdmin from "../components/NavbarAdmin";
 import LibroDiario from "../components/LibroDiario"; // Importa el componente
 import LibroMayor from "../components/LibroMayor";
+import { getEnvironments } from "../../helpers/getEnvironments";
+
 export const AsientosContables = () => {
   const [cuenta, setCuenta] = useState("");
   const [monto, setMonto] = useState("");
@@ -17,12 +19,16 @@ export const AsientosContables = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const {
+    VITE_API_HOST
+  } = getEnvironments();
+
   // Efecto para cargar cuentas desde el servidor
   useEffect(() => {
     console.log("Datos de asientos:", asientos);
     const fetchCuentas = async () => {
       try {
-        const response = await fetch('http://localhost:8080/cuentas'); // Asegúrate de que esta URL es correcta
+        const response = await fetch(`${VITE_API_HOST}/api/cuentas`); // Asegúrate de que esta URL es correcta
         if (!response.ok) {
           throw new Error('Error al obtener las cuentas');
         }
@@ -37,7 +43,7 @@ export const AsientosContables = () => {
 
     const fetchAsientos = async () => {
       try {
-        const response = await fetch('http://localhost:8080/asientos');
+        const response = await fetch(`${VITE_API_HOST}/api/asientos`);
         if (!response.ok) throw new Error('Error al obtener los asientos');
         const data = await response.json();
         setAsientos(data);
@@ -89,7 +95,7 @@ export const AsientosContables = () => {
     };
   
     try {
-      const response = await fetch('http://localhost:8080/asientos/agregar', {
+      const response = await fetch(`${VITE_API_HOST}/asientos/registrar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(nuevoAsiento)

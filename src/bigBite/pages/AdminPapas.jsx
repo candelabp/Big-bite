@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import '../css/adminProductos.css';  // Usa el mismo CSS que AdminProductos
 import NavbarAdmin from '../components/NavbarAdmin';
+import { v4 as uuidv4 } from 'uuid';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 export const AdminPapas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -13,16 +15,20 @@ export const AdminPapas = () => {
   const [isInsumosModalOpen, setIsInsumosModalOpen] = useState(false);
   const [selectedInsumos, setSelectedInsumos] = useState([]);
 
+  const {
+    VITE_API_HOST
+  } = getEnvironmentsments();
+
   useEffect(() => {
     // Cargar papas fritas desde el backend
-    fetch('http://localhost:8080/papas-fritas')
+    fetch(`${VITE_API_HOST}/api/papas-fritas`)
       .then(response => response.json())
       .then(data => setPapasFritas(data))
       .catch(error => console.error('Error al cargar las papas fritas:', error));
   }, []);
 
   const fetchInsumos = () => {
-    fetch('http://localhost:8080/insumos')  // GET al endpoint de insumos
+    fetch(`${VITE_API_HOST}/api/insumos`)  // GET al endpoint de insumos
       .then(response => response.json())
       .then(data => setInsumos(data))  // Guardar los insumos en el estado
       .catch(error => console.error('Error al cargar los insumos:', error));
@@ -62,61 +68,110 @@ export const AdminPapas = () => {
     setIsModalOpen(true); 
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     data.disponible = data.disponible;
-  
+
     const detalleInsumos = selectedInsumos
-      .filter(insumo => insumo.cantidad > 0)
-      .map(insumo => ({
-        insumoId: insumo.insumoId,  // Asegúrate de que insumoId esté presente y no sea null
-        cantidad: parseInt(insumo.cantidad, 10),
-      }));
-  
+        .filter(insumo => insumo.cantidad > 0)
+        .map(insumo => ({
+          insumoId: insumo.insumoId,  // Asegúrate de que insumoId esté presente y no sea null
+          cantidad: parseInt(insumo.cantidad, 10),
+        }));
+
     data.detalleInsumos = detalleInsumos;
-  
-    const formData = new FormData();
-    formData.append('papasFritasDTO', new Blob([JSON.stringify(data)], {
-      type: 'application/json'
-    }));
-  
-    // Agregar imagen si hay una nueva
+
     if (data.imagenPapasFritas && data.imagenPapasFritas.length > 0) {
-      formData.append('imagenPapasFritas', data.imagenPapasFritas[0]);
-    } else if (selectedPapasFritas && selectedPapasFritas.urlImagen) {
-      formData.append('imagenPapasFritas', selectedPapasFritas.urlImagen);
+      const file = data.imagenPapasFritas[0];
+      const storage = getStorage();
+      const fileName = `papas-${uuidv4()}`;
+      const storageRef = ref(storage, `papas-images/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on('state_changed',
+          (snapshot) => {
+            // Progress function
+          },
+          (error) => {
+            console.error('Error al subir la imagen:', error);
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            data.urlImagen = downloadURL;
+
+            // Enviar el DTO al backend
+            const url = selectedPapasFritas ?
+                `${VITE_API_HOST}/api/papas-fritas/editar/${selectedPapasFritas.id}` :
+                `${VITE_API_HOST}/api/papas-fritas/registrar`;
+
+            const method = selectedPapasFritas ? 'PUT' : 'POST';
+
+            fetch(url, {
+              method: method,
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+                .then(response => {
+                  if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text); });
+                  }
+                  return response.text();
+                })
+                .then(message => {
+                  console.log('Respuesta del servidor:', message);
+                  alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
+                  reset();
+                  setSelectedPapasFritas(null);
+                  setImagePreview(null);
+                  setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
+                  return fetch(`${VITE_API_HOST}/api/papas-fritas`)
+                      .then(response => response.json())
+                      .then(data => setPapasFritas(data));
+                })
+                .catch(error => {
+                  console.error('Hubo un error:', error);
+                  alert('Error al enviar los datos');
+                });
+          }
+      );
+    } else {
+      // Enviar el DTO al backend sin imagen
+      const url = selectedPapasFritas ?
+          `${VITE_API_HOST}/api/papas-fritas/editar/${selectedPapasFritas.id}` :
+          `${VITE_API_HOST}/api/papas-fritas/registrar`;
+
+      const method = selectedPapasFritas ? 'PUT' : 'POST';
+
+      fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+          .then(response => {
+            if (!response.ok) {
+              return response.text().then(text => { throw new Error(text); });
+            }
+            return response.text();
+          })
+          .then(message => {
+            console.log('Respuesta del servidor:', message);
+            alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
+            reset();
+            setSelectedPapasFritas(null);
+            setImagePreview(null);
+            setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
+            return fetch(`${VITE_API_HOST}/api/papas-fritas`)
+                .then(response => response.json())
+                .then(data => setPapasFritas(data));
+          })
+          .catch(error => {
+            console.error('Hubo un error:', error);
+            alert('Error al enviar los datos');
+          });
     }
-  
-    const url = selectedPapasFritas ?
-      `http://localhost:8080/papas-fritas/editar/${selectedPapasFritas.id}` :
-      'http://localhost:8080/papas-fritas/agregar';
-  
-    const method = selectedPapasFritas ? 'PUT' : 'POST';
-  
-    fetch(url, {
-      method: method,
-      body: formData
-    })
-      .then(response => {
-        if (!response.ok) {
-          return response.text().then(text => { throw new Error(text); });
-        }
-        return response.text();
-      })
-      .then(message => {
-        console.log('Respuesta del servidor:', message);
-        alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
-        reset();
-        setSelectedPapasFritas(null);
-        setImagePreview(null);
-        setSelectedInsumos([]); // Limpiar el estado de selectedInsumos
-        return fetch('http://localhost:8080/papas-fritas')
-          .then(response => response.json())
-          .then(data => setPapasFritas(data));
-      })
-      .catch(error => {
-        console.error('Hubo un error:', error);
-        alert('Error al enviar los datos');
-      });
   };
 
   const editarPapasFritas = (papasFritas) => {
