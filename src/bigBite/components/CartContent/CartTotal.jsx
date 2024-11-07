@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { dataContext } from "../Context/DataContext";
-import { UserContext } from "../Context/UserContext";
+import { UserContext } from "../../../context/UserContext";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 import CryptoModal from "../CryptoModal";
