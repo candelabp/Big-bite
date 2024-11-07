@@ -184,8 +184,8 @@ export const AsientosContables = () => {
             <label>Tipo:</label>
             <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
               <option value="">Seleccione el tipo</option>
-              <option value="Debe">Debe</option>
-              <option value="Haber">Haber</option>
+              <option value="Debe">debe</option>
+              <option value="Haber">haber</option>
             </select>
           </div>
           <button
