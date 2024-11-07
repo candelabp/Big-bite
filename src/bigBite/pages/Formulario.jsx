@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from 'react';
 import '../css/formulario.css';
 import { useForm } from "react-hook-form";
 
@@ -10,7 +11,7 @@ import { ref, uploadBytesResumable, getDownloadURL, getStorage } from 'firebase/
 import { collection, doc, setDoc } from 'firebase/firestore/lite';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
-import { useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid'; // Para generar un UID único
 
 
 export const Formulario = () => {
@@ -22,12 +23,12 @@ export const Formulario = () => {
   const [imageURL, setImageURL] = useState('');
   const [progress, setProgress] = useState(0);
 
-
   // Función para manejar la selección de la imagen
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       setImage(file);
+      console.log(file);
     } else {
       alert('Por favor selecciona un archivo de imagen válido.');
     }
@@ -70,47 +71,54 @@ export const Formulario = () => {
 
 
 
-  const handleRegister = async (data) => {
-    const auth = getAuth();
-    const { email, password, nombre, apellido, telefono } = data;
+ // Función para registrar un empleado
+ const handleRegister = async (data) => {
+  const { email, password, nombre, apellido, telefono } = data;
 
-    try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      const user = result.user;
+  try {
+    // Generar un UID único para el usuario
+    const userId = uuidv4();
+    console.log(userId)
 
+    // Subir la imagen a Firebase Storage
+    const imageURL = await handleImageUpload(userId);
 
-      // Subir la imagen a Firebase Storage
-      const imageURL = await handleImageUpload(user.uid);
+    // Guardar el usuario en Firestore
+    const newDoc = doc(FirebaseDB, `usuarios/${userId}`);
+   
+    await setDoc(newDoc, {
+      rol: 'cliente',
+      displayName: `${nombre} ${apellido}`,
+      nombre,
+      apellido,
+      telefono,
+      email,
+      photoURL: imageURL || '',
+      password // Guardar la contraseña en Firestore (no recomendado para producción)
+    });
 
-      // Actualizar el perfil del usuario
-      await updateProfile(user, {
-        displayName: `${nombre} ${apellido}`,
-        photoURL: imageURL ? `${imageURL}` : '', 
-        phoneNumber: `${telefono}`
-      });
+    // Guardar los datos del usuario en localStorage
+    const userData = {
+      displayName: `${nombre} ${apellido}`,
+      nombre,
+      apellido,
+      telefono,
+      email,
+      photoURL: imageURL || '',
+      rol: 'cliente'
+    };
 
-      // Guardar el usuario en Firestore
-      const newDoc = doc(FirebaseDB, `usuarios/${user.uid}`);
-      await setDoc(newDoc, {
-        rol: 'cliente',
-        nombre,
-        apellido,
-        telefono,
-        email,
-        photoURL: imageURL || ''
-      });
+    localStorage.setItem('user', JSON.stringify(userData));
+    setUser(userData);
+    navigate('/');
 
-
-
-      // console.log('User Info:', user);
-      // Aquí puedes guardar el usuario en el estado o hacer cualquier otra cosa necesaria
-
-      setUser(result.user);
-      navigate('/');
-    } catch (error) {
-      console.error('Error during sign-up:', error);
-    }
-  };
+    // Mostrar mensaje de éxito
+    alert('El usuario ha sido registrado correctamente.');
+  } catch (error) {
+    console.error('Error durante el registro:', error);
+    alert('Hubo un error durante el registro. Por favor, inténtalo de nuevo.');
+  }
+};
 
   const handleLogin = async () => {
     const auth = getAuth(FirebaseApp);
@@ -121,6 +129,24 @@ export const Formulario = () => {
       console.log('User Info:', result.user);
       console.log('user name:', result.user.displayName);
       console.log('userphoto:', result.user.photoURL);
+
+      // Separar displayName en nombre y apellido
+      const displayName = result.user.displayName || '';
+      const nameParts = displayName.split(' ');
+      const nombre = nameParts[0];
+      const apellido = nameParts.slice(1).join(' ');
+
+      // Guardar el usuario en Firestore
+      const newDoc = doc(FirebaseDB, `usuarios/${result.user.uid}`);
+      await setDoc(newDoc, {
+        rol: 'cliente',
+        nombre,
+        apellido,
+        telefono: result.user.phoneNumber || '',
+        email: result.user.email,
+        photoURL: result.user.photoURL || ''
+      });
+
       setUser(result.user);
       navigate('/')
     } catch (error) {

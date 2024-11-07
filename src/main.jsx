@@ -53,10 +53,13 @@ root.render(
               <Route path="/AdminPpal" element={<AdminPpal />} />
               <Route path="/AsientosContables" element={<AsientosContables />} />
               <Route path="/GestionPedidos" element={<GestionPedidos />} />
+
+            </Route>
+            <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
               <Route path="/Administradores" element={<Administradores />} />
             </Route>
             <Route path="/misPedidos" element={<MisPedidos />} />
-            
+
           </Routes>
         </Router>
       </UserProvider>

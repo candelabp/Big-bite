@@ -6,6 +6,7 @@ import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopu
 import { FirebaseApp } from '../../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore/lite';
 
 
 export const Ingresar = () => {
@@ -31,19 +32,40 @@ export const Ingresar = () => {
     };
 
     const handleLoginWithEmail = async (e) => {
+        const db = getFirestore();
         e.preventDefault();
-        const loginData = { email, password };
-        const auth = getAuth(FirebaseApp);
         try {
-          const result = await signInWithEmailAndPassword(auth, email, password);
-          const user = result.user;
-        //   console.log('User Info:', user);
+          // Buscar el usuario en Firestore por correo
+          const q = query(collection(db, 'usuarios'), where('email', '==', email));
+          const querySnapshot = await getDocs(q);
     
-          setUser(user);
-          navigate('/');
+          if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            const userData = userDoc.data();
+    
+            // Verificar la contraseña
+            if (userData.password === password) {
+              // Establecer el usuario en setUser
+              const user = {
+                uid: userDoc.id,
+                ...userData
+              };
+              setUser(user);
+    
+              // Guardar los datos del usuario en localStorage
+              localStorage.setItem('user', JSON.stringify(user));
+    
+              // Navegar a la página principal
+              navigate('/');
+            } else {
+              alert('Contraseña incorrecta.');
+            }
+          } else {
+            alert('No se encontró un usuario con ese correo.');
+          }
         } catch (error) {
           console.error('Error during login:', error);
-          alert(error.message);
+          alert('Hubo un error durante el inicio de sesión. Por favor, inténtalo de nuevo.');
         }
       };
     return (

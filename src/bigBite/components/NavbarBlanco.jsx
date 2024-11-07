@@ -27,6 +27,11 @@ export const NavBarBlanco = () => {
         signOut(auth).then(() => {
             // Sign-out successful.
             console.log("Sign-out successful.");
+            
+            // Eliminar el usuario de localStorage
+            localStorage.removeItem('user');
+            
+            // Recargar la página
             window.location.reload();
         }).catch((error) => {
             // An error happened.
