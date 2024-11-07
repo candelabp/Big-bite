@@ -129,7 +129,7 @@ function CartTotal() {
                                     setShowCryptoModal(true);  // Abrir el modal de cripto
                                 }}
                             >
-                                Pagar con cripto
+                                Pagar con Cripto
                             </button>
                         <button
                             type="button"
