@@ -8,7 +8,7 @@ export const GestionPedidos = () => {
 
     useEffect(() => {
         // Llamada inicial para obtener pedidos
-        fetch('https://bigbitebackend-diegocanaless-projects.vercel.app/api/pedidos')
+        fetch('https://bigbitebackend-diegocanaless-diegocanaless-projects.vercel.app/api/pedidos')
             .then(response => response.json())
             .then(data => setPedidos(data))
             .catch(error => console.error('Error al obtener pedidos:', error));
