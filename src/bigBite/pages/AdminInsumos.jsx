@@ -15,11 +15,8 @@ export const AdminInsumos = () => {
     fetch('http://localhost:8080/insumos')
       .then(response => response.json())
       .then(data => setInsumos(data))
-      .catch(error => console.error(Swal.fire({
-        text: "Error al cargar los insumos:",
-        icon: "error"
-  }), error));
-  }, []);
+      .catch(error => console.error('Error al cargar los insumos:', error));
+    }, []);
 
   const onSubmit = (data) => {
     const url = selectedInsumo ?
