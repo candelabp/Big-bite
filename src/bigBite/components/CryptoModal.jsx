@@ -1,52 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import "../css/cryptomodal.css"
+import "../css/cryptomodal.css";
+
 function CryptoModal({ totalPesos, onClose }) {
-    const [btcRate, setBtcRate] = useState(null);
-    const [ethRate, setEthRate] = useState(null);
-    const [arsToBusdRate, setArsToBusdRate] = useState(null);
+    // Actualización de las tasas de conversión manualmente
+    const [btcRate] = useState(88013248);  // Valor de 1 BTC en ARS
+    const [ethRate] = useState(3352196);   // Valor de 1 ETH en ARS
     const [selectedCrypto, setSelectedCrypto] = useState('BTC');
     const [convertedAmount, setConvertedAmount] = useState(0);
 
-    useEffect(() => {
-        fetchCryptoRates();
-    }, []);
-
-    const fetchCryptoRates = async () => {
-        try {
-            // Obtener tasa de cambio ARS a BUSD
-            const arsToBusdResponse = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=ARSBUSD');
-            setArsToBusdRate(parseFloat(arsToBusdResponse.data.price));
-
-            // Obtener tasa de cambio BTC a BUSD
-            const btcResponse = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=BTCBUSD');
-            setBtcRate(parseFloat(btcResponse.data.price));
-
-            // Obtener tasa de cambio ETH a BUSD
-            const ethResponse = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=ETHBUSD');
-            setEthRate(parseFloat(ethResponse.data.price));
-        } catch (error) {
-            console.error('Error fetching crypto rates from Binance:', error);
-        }
-    };
-
     const handleConversion = () => {
-        if (!arsToBusdRate) return;
+        let cryptoRate;
 
-        // Convertir ARS a BUSD
-        const busdAmount = totalPesos / arsToBusdRate;
-
-        // Convertir BUSD a criptomoneda seleccionada
-        const cryptoRate = selectedCrypto === 'BTC' ? btcRate : ethRate;
+        // Selección de la criptomoneda y tasa correspondiente
+        if (selectedCrypto === 'BTC') {
+            cryptoRate = btcRate;
+        } else if (selectedCrypto === 'ETH') {
+            cryptoRate = ethRate;
+        }
 
         if (cryptoRate) {
-            setConvertedAmount(busdAmount / cryptoRate);
+            // Convertir pesos a la criptomoneda seleccionada
+            const amountInCrypto = totalPesos / cryptoRate;
+            setConvertedAmount(amountInCrypto);
         }
     };
 
     useEffect(() => {
         handleConversion();
-    }, [selectedCrypto, btcRate, ethRate, arsToBusdRate, totalPesos]);
+    }, [selectedCrypto, btcRate, ethRate, totalPesos]);
 
     return (
         <div className="modal-overlay" onClick={onClose}>

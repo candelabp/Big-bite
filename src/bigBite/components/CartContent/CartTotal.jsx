@@ -4,6 +4,7 @@ import { UserContext } from "../../../context/UserContext";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 import CryptoModal from "../CryptoModal";
+import Swal from 'sweetalert2';
 
 function CartTotal() {
     const { cart } = useContext(dataContext);
@@ -22,11 +23,9 @@ function CartTotal() {
     const envio = Math.round(subtotal - subtotal * 0.90);
     const total = Math.round(subtotal + envio);
 
-    useEffect(() => {
-        initMercadoPago("APP_USR-f181386b-0e32-4a84-9dfe-6cd67bd73f20", {
-            locale: "es-AR",
-        });
-    }, []);
+    initMercadoPago("APP_USR-f181386b-0e32-4a84-9dfe-6cd67bd73f20", {
+        locale: "es-AR",
+    });
 
     const handleCheckout = () => {
         if (total > 0) {
@@ -38,42 +37,57 @@ function CartTotal() {
         setShowForm(false);
     };
 
-    const crearPreferencia = async (orderInfo) => {
+    const createPreference = async () => {
         try {
-            const respuesta = await axios.post("https://localhost:3000/create_preference", orderInfo);
-            const { id } = respuesta.data;
+            const response = await axios.post("http://localhost:3000/create_preference",{
+                title: "Pedido Big Bite",
+                quantity: 1,
+                price: total,
+            });
+
+            const { id } = response.data;
             return id;
         } catch (error) {
             console.log(error);
         }
     };
 
-    const manejoCompra = async () => {
-        if (!userName || !deliveryType || !paymentMethod || (deliveryType === "envio" && !userAddress)) {
-            alert("Por favor, complete todos los campos requeridos antes de continuar.");
-            return;
-        }
-
-        const orderInfo = {
-            user: {
-                id: user.id,
-                name: userName,
-                email: user.email,
-            },
-            carrito: cart,
-            precioTotal: total,
-            direccion: deliveryType === "envio" ? userAddress : "Retiro en local",
-            estadoPedido: "en preparacion",
-            metodoPago: paymentMethod,
-        };
-
-        console.log("Información del pedido:", orderInfo); // Console log para verificar la información
-
-        const id = await crearPreferencia(orderInfo);
+    const handleBuy = async () => {
+        const id = await createPreference();
         if (id) {
             setPreferenceId(id);
         }
     };
+
+    const guardarDatosPedido = () => {
+        const pedido = {
+            title: "Big Bite",
+            email: user.email,
+            price: total,
+            tipoEntrega: deliveryType === "envio" ? "Envío" : "Retiro en local",
+            estadoPedido: "En Preparación",
+            metodoPago: paymentMethod === "efectivo" ? "Efectivo" : 
+                         paymentMethod === "mercadopago" ? "Plataformas de Pago Mercado Pago" : 
+                         "Plataformas de Pago Binance",
+            descripcion: cart
+        };
+        console.log("Datos del pedido:", pedido);
+        return pedido;
+    };  
+
+    // Verificación para mostrar el botón de MercadoPago
+    const isMercadoPagoButtonVisible =
+        userName &&
+        deliveryType &&
+        (deliveryType === "local" || (deliveryType === "envio" && userAddress)) &&
+        paymentMethod === "mercadopago"; 
+
+    // Verificación para habilitar "Finalizar compra"
+    const isFinalizarCompraEnabled =
+        userName &&
+        deliveryType &&
+        paymentMethod &&
+        (deliveryType === "local" || (deliveryType === "envio" && userAddress));
 
     return (
         <div className="productoscompra">
@@ -162,17 +176,29 @@ function CartTotal() {
                             className={`btnes ${paymentMethod === "mercadopago" ? "active" : ""}`}
                             onClick={async () => {
                                 setPaymentMethod("mercadopago");
-                                await manejoCompra();
+                                await handleBuy();
+                                guardarDatosPedido();
                             }}
                         >
                             MercadoPago
                         </button>
-                        {paymentMethod === "mercadopago" && preferenceId && (
-                             <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: "smart_option" } }} />
-)}
+
+                        {isMercadoPagoButtonVisible && preferenceId && (
+                            <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: "smart_option" } }} />
+                        )}
                     </div>
 
                     <div className="form-btns">
+                        {paymentMethod !== "mercadopago" && (
+                            <button
+                                type="button"
+                                className="btnes btnpagar"
+                                onClick={guardarDatosPedido}
+                                disabled={!isFinalizarCompraEnabled}  // Deshabilitar si no cumple con las condiciones
+                            >
+                                Finalizar compra
+                            </button>
+                        )}
                         <button type="button" className="btnes btnpagar" onClick={handleCancelar}>
                             Cancelar
                         </button>

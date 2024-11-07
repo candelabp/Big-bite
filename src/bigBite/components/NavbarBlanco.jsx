@@ -102,7 +102,7 @@ export const NavBarBlanco = () => {
 
                 {(user !== null) && (
                     <li className="contLinks">
-                    <i class="bi bi-list-check"></i>
+                    <i className="bi bi-list-check"></i>
                     <Link className="tituloLinkNegro" to="/mispedidos">Mis Pedidos</Link>
                 </li>
 
