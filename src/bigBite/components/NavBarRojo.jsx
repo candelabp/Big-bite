@@ -111,13 +111,15 @@ export const NavBar = () => {
                     <Link className="tituloLinkRojo" to="/contacto">Contacto</Link>
                 </li>
 
-                <li className="contLinks" onClick={handleSignOut}>
-                    <div className="salirRojo">
-                        <i className="bi bi-box-arrow-left buttonSalirRojo"></i>
-                    </div>
-                    <Link className="tituloLinkRojo">Cerrar Sesión</Link>
-                </li>
-
+                {user && (
+                    <li className="contLinks" onClick={handleSignOut}>
+                        <div className="salirRojo">
+                            <i className="bi bi-box-arrow-left buttonSalirRojo"></i>
+                        </div>
+                        <Link className="tituloLinkRojo">Cerrar Sesión</Link>
+                    </li>
+                )}
+                
                 <li className="redesNav">
                     <i className="bi bi-twitter redesNavRojo"></i>
                     <i className="bi bi-instagram redesNavRojo"></i>

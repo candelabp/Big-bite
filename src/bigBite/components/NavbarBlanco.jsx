@@ -22,7 +22,7 @@ export const NavBarBlanco = () => {
     const cerrarMenu = () => {
         setMenuAbierto(false);
     };
-    
+
 
     const handleSignOut = () => {
         Swal.fire({
@@ -45,7 +45,11 @@ export const NavBarBlanco = () => {
         });
     }
 
+    const mostrar = () => {
+        if (user == null) {
 
+        }
+    }
 
     return (
         <nav className="navbarBlanco">
@@ -116,13 +120,14 @@ export const NavBarBlanco = () => {
                     <Link className="tituloLinkNegro" to="/contacto">Contacto</Link>
                 </li>
 
-                <li className="contLinks" onClick={handleSignOut}>
-                    <div className="salirBlanco">
-                        <i className="bi bi-box-arrow-left buttonSalirRojo"></i>
-                    </div>
-                    <Link className="tituloLinkNegro">Cerrar Sesión</Link>
-                </li>
-
+                {user && (
+                    <li className="contLinks" onClick={handleSignOut}>
+                        <div className="salirBlanco">
+                            <i className="bi bi-box-arrow-left buttonSalirRojo"></i>
+                        </div>
+                        <Link className="tituloLinkNegro">Cerrar Sesión</Link>
+                    </li>
+                )}
 
                 <li className="redesNav">
                     <i className="bi bi-twitter"></i>
