@@ -44,8 +44,36 @@
     background-color: #C10000;
     color: white;
     transition-duration: 0.5s;
+    padding: 0.4rem 0.8rem;
 }
 
 .btnSubmitContacto:hover {
     background-color: #970101;
 }
+
+@media (min-width: 769px) {
+    .formularioContactanos {
+        width: 60vw;
+    }
+
+    .inputsContactanos {
+        width: 50vw;
+    }
+
+    .textareaContacto {
+        width: 50vw;
+    }
+    .formularioContactanos label{
+        font-size: 1.1rem;
+    }
+}
+
+/* Asegúrate de que los label tengan display: flex y flex-direction: column */
+.formularioContactanos label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+

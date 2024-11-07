@@ -43,6 +43,12 @@
 
 }
 
-.logo-admin{
+.logo-admin {
     width: 5%;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Suaviza la transición */
+}
+
+.logo-admin:hover {
+    transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
 }
