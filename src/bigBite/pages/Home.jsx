@@ -8,7 +8,7 @@ import burgerInicio2 from '../assets/burguerInicio2.png';
 
 
 export const Home = () => {
-  
+
   return (
     <>
       {/* navbar */}
@@ -35,14 +35,14 @@ export const Home = () => {
 
         <div className="container-ppal">
           {/* Animación de la imagen */}
-          
-<motion.img
-  className="imgPrincipal"
-  src={burgerInicio2}
-  initial={{ opacity: 0, x: -100 }}
-  animate={{ opacity: 1, x: 0 }}
-  transition={{ duration: 1 }}
-/>
+
+          <motion.img
+            className="imgPrincipal"
+            src={burgerInicio2}
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+          />
         </div>
 
         {/* Animación del segundo título */}

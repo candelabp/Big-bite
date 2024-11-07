@@ -8,10 +8,11 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    align-items: center;
 }
 
 .buttons{
-    padding: 12px;
+    padding: 12px 15px;
     font-size: 14px;
     border: none;
     cursor: pointer;
@@ -35,25 +36,25 @@
 .login-btn {
     background-color: #e62b1e;
     color: white;
-    width: 30vh;
+    width: 38vh;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .login-btn:hover {
     background-color: #b92018; /* Cambio de color en hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    transform: scale(1.05); /* Agrandar un poco */
+    transform: scale(1.03); /* Agrandar un poco */
 }
 
 .login-btn:active {
     transform: scale(0.98); /* Se achica un poco al hacer clic */
     background-color: #a51c14; /* Cambio de color al hacer clic */
 }
-.btns{
-    align-items: center;
-}
+
 .register-btn {
     background-color: #f7b21a;
-    width: 30vh;
+    width: 38vh;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .textRegister-btn, .textLogin-btn{
@@ -63,7 +64,7 @@
 .register-btn:hover {
     background-color: #d89e15; /* Cambio de color en hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    transform: scale(1.05); /* Agrandar un poco */
+    transform: scale(1.03); /* Agrandar un poco */
 }
 
 .register-btn:active {
