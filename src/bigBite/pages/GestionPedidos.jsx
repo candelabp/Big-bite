@@ -29,6 +29,7 @@ export const GestionPedidos = () => {
 
                 <div className='pedidos-lista'>
                     {console.log(pedidos)}
+                    {console.log(pedidos.paymentId)}
                     {pedidos.map((pedido) => (
                         <CompGestPedidos key={pedido.id} pedido={pedido} />
                     ))}
