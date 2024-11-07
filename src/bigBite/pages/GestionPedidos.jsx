@@ -8,7 +8,7 @@ export const GestionPedidos = () => {
 
     useEffect(() => {
         // Llamada inicial para obtener pedidos
-        fetch('https://bigbitebackend-diegocanaless-diegocanaless-projects.vercel.app/api/pedidos')
+        fetch('https://bigbitebackend-diegocanaless-projects.vercel.app/api/pedidos')
             .then(response => response.json())
             .then(data => setPedidos(data))
             .catch(error => console.error('Error al obtener pedidos:', error));
@@ -19,7 +19,7 @@ export const GestionPedidos = () => {
             <NavbarAdmin />
             <section className='contenedor'>
                 <div className='divInicio'>
-                    <h1>GestiÃ³n de Pedidos</h1>
+                    <h1>Gestión de Pedidos</h1>
                     <p>Mira y actualiza el estado de los pedidos de hamburguesas</p>
                 </div>
 
@@ -27,9 +27,17 @@ export const GestionPedidos = () => {
                 <hr />
                 <br />
 
+                <CompGestPedidos />
+
                 <div className='pedidos-lista'>
-                    {pedidos.map((pedido) => (
-                        <CompGestPedidos key={pedido.id} pedido={pedido} />
+                    {pedidos.map((pedido, index) => (
+                        <div key={index} className='pedido'>
+                            <h3>Pedido #{index + 1}</h3>
+                            <p>ID de Pago: {pedido.paymentId}</p>
+                            <p>Estado: {pedido.status}</p>
+                            <p>Detalle: {pedido.descripcion}</p>
+                            {/* Agrega otros datos que quieras mostrar */}
+                        </div>
                     ))}
                 </div>
             </section>
