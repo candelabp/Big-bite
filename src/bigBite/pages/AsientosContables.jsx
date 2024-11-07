@@ -95,7 +95,7 @@ export const AsientosContables = () => {
     };
   
     try {
-      const response = await fetch(`${VITE_API_HOST}/asientos/registrar`, {
+      const response = await fetch(`${VITE_API_HOST}/api/asientos/registrar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(nuevoAsiento)
