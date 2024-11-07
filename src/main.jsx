@@ -33,7 +33,7 @@ const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <DataProvider>
+ 
     <React.StrictMode>
     <UserProvider>
       <DataProvider>
@@ -65,5 +65,5 @@ root.render(
       </DataProvider>
     </UserProvider>
     </React.StrictMode>
-  </DataProvider>
+  
 );
