@@ -11,7 +11,7 @@ export const AdminInsumos = () => {
 
   useEffect(() => {
     // Cargar insumos desde el backend
-    fetch('http://localhost:8080/insumos')
+    fetch('http://localhost:8080/api/insumos')
       .then(response => response.json())
       .then(data => setInsumos(data))
       .catch(error => console.error('Error al cargar los insumos:', error));
@@ -19,11 +19,11 @@ export const AdminInsumos = () => {
 
   const onSubmit = (data) => {
     const url = selectedInsumo ?
-      `http://localhost:8080/insumos/editar/${selectedInsumo.id}` :
-      'http://localhost:8080/insumos/agregar';
-
+      `http://localhost:8080/api/insumos/editar/${selectedInsumo.id}` :
+      'http://localhost:8080/api/insumos/registrar';
+  
     const method = selectedInsumo ? 'PUT' : 'POST';
-
+  
     fetch(url, {
       method: method,
       headers: {
@@ -40,9 +40,14 @@ export const AdminInsumos = () => {
       .then(message => {
         console.log('Respuesta del servidor:', message);
         alert(selectedInsumo ? 'Edición exitosa' : 'Registro exitoso');
-        reset();
+        reset({
+          nombre: '',
+          precio: '',
+          stock: '',
+          unidadMedida: ''
+        });
         setSelectedInsumo(null);
-        return fetch('http://localhost:8080/insumos')
+        return fetch('http://localhost:8080/api/insumos')
           .then(response => response.json())
           .then(data => setInsumos(data));
       })
