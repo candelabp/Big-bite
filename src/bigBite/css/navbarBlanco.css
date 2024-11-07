@@ -186,7 +186,15 @@
   
   
   /* Ocultar enlaces en pantallas pequeñas */
-  
+  .buttonSalirRojo {
+    margin-right: 10px;
+  }
+
+  .swal2-confirm {
+    background-color: #FFBA49;
+    color: white;
+  }
+
   .tituloLinkNegro{
     color: black;
     text-decoration: none;

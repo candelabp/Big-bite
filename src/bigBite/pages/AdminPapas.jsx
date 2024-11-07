@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import '../css/adminProductos.css';  // Usa el mismo CSS que AdminProductos
 import NavbarAdmin from '../components/NavbarAdmin';
+import Swal from 'sweetalert2';
 
 export const AdminPapas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -104,7 +105,7 @@ export const AdminPapas = () => {
       })
       .then(message => {
         console.log('Respuesta del servidor:', message);
-        alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
+        selectedPapasFritas ? Swal.fire({text: "Se editó correctamente!", icon: "success"}) : Swal.fire({text: "Se registró correctamente!", icon: "success"});
         reset();
         setSelectedPapasFritas(null);
         setImagePreview(null);
@@ -115,7 +116,7 @@ export const AdminPapas = () => {
       })
       .catch(error => {
         console.error('Hubo un error:', error);
-        alert('Error al enviar los datos');
+        Swal.fire({text: "Error al enviar los datos.", icon: "error"});
       });
   };
 

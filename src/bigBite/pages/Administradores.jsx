@@ -14,6 +14,7 @@ import { fetchSignInMethodsForEmail, getAuth, onAuthStateChanged } from 'firebas
 // import { collection, doc, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { FirebaseDB } from '../../firebase/config';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore/lite';
+import Swal from 'sweetalert2';
 
 
 export const Administradores = () => {
@@ -205,11 +206,13 @@ export const Administradores = () => {
       })
       .then((message) => {
         console.log('Respuesta del servidor:', message);
-        alert(message);
+        Swal.fire({text: message, icon: "success"});
+        // alert(message);
       })
       .catch((error) => {
         console.error('Hubo un error:', error);
-        alert(error.message);
+        Swal.fire({text: error.message, icon: "error"});
+        // alert(error.message);
       });
   };
 

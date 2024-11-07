@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, useState, useEffect } from 'react';
 import { json } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 export const dataContext = createContext();
@@ -26,7 +27,13 @@ const DataProvider = ({ children }) => {
             setCart(cart.map((element) => element.id === product.id ? {...product, cantItems: productRepeat.cantItems+1} : element))
         } else{
             setCart([...cart,product]);
-            console.log(product)
+            Swal.fire({
+                position: "bottom-end",
+                text: "Se agregó al carrito",
+                showConfirmButton: false,
+                width: "37vh",
+                timer: 1500
+            });
         }
 
     }
