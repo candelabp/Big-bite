@@ -21,25 +21,27 @@ export const NavBarBlanco = () => {
     const cerrarMenu = () => {
         setMenuAbierto(false);
     };
-
+    
     const handleSignOut = () => {
-        const auth = getAuth();
-        signOut(auth).then(() => {
-            // Sign-out successful.
-            console.log("Sign-out successful.");
-
-            // Eliminar el usuario de localStorage
-            localStorage.removeItem('user');
-
-            // Recargar la página
-            window.location.reload();
-        }).catch((error) => {
-            // An error happened.
-            console.error("An error happened during sign-out:", error);
+        Swal.fire({
+            text: "Deaseas cerrar sesión?",
+            showDenyButton: true,
+            confirmButtonText: "Aceptar",
+            denyButtonText: `Cancelar`
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                const auth = getAuth();
+                signOut(auth).then(() => {
+                    // Sign-out successful.
+                    window.location.reload();
+                }).catch((error) => {
+                    // An error happened.
+                    console.error("An error happened during sign-out:", error);
+                });
+            }
         });
-    };
-
-
+    }
 
     return (
         <nav className="navbarBlanco">
