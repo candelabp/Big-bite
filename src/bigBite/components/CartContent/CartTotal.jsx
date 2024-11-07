@@ -40,7 +40,7 @@ function CartTotal() {
 
     const crearPreferencia = async (orderInfo) => {
         try {
-            const respuesta = await axios.post("https://bigbitebackend-diegocanaless-projects.vercel.app/create_preference", orderInfo);
+            const respuesta = await axios.post("https://localhost:3000/create_preference", orderInfo);
             const { id } = respuesta.data;
             return id;
         } catch (error) {
@@ -167,9 +167,9 @@ function CartTotal() {
                         >
                             MercadoPago
                         </button>
-                        {preferenceId && (
-                            <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: "smart_option" } }} />
-                        )}
+                        {paymentMethod === "mercadopago" && preferenceId && (
+                             <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: "smart_option" } }} />
+)}
                     </div>
 
                     <div className="form-btns">
