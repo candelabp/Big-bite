@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { getEnvironments } from "../../../helpers/getEnvironments";
 
 function CartTotal() {
-    const { cart } = useContext(dataContext);
+    const { cart, resetCart } = useContext(dataContext);
     const { user } = useContext(UserContext);
     const itemsEnCarrito = cart.reduce((acumulador, element) => acumulador + element.cantItems, 0);
     const [showCryptoModal, setShowCryptoModal] = useState(false);
@@ -106,6 +106,7 @@ function CartTotal() {
             }
       
             console.log('Pedido registrado:', data);
+            resetCart();
           } catch (error) {
             console.error('Error en la solicitud:', error);
           }
