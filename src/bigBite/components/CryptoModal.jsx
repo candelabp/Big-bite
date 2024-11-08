@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import "../css/cryptomodal.css";
 
 function CryptoModal({ totalPesos, onClose }) {
-    // Actualización de las tasas de conversión manualmente
-    const [btcRate] = useState(88013248);  // Valor de 1 BTC en ARS
-    const [ethRate] = useState(3352196);   // Valor de 1 ETH en ARS
+    
+    const [btcRate] = useState(88013248);  
+    const [ethRate] = useState(3352196);   
     const [selectedCrypto, setSelectedCrypto] = useState('BTC');
     const [convertedAmount, setConvertedAmount] = useState(0);
     const fetchCryptoRates = async () => {
