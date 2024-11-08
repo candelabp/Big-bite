@@ -9,7 +9,7 @@ import { getAuth, signOut } from "firebase/auth";
 export const NavBarBlanco = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
-    const { user } = useContext(UserContext);
+    const { user, role } = useContext(UserContext);
 
 
     // Función para abrir/cerrar el menú
@@ -120,6 +120,13 @@ export const NavBarBlanco = () => {
                     <i className="bi bi-question-circle"></i>
                     <Link className="tituloLinkNegro" to="/contacto">Contacto</Link>
                 </li>
+
+                {(role =="admin" || role=="empleado")  && (
+                    <li className="contLinks">
+                        <i class="bi bi-gear-fill"></i>
+                        <Link className="tituloLinkNegro" to="/AdminPpal">Administración</Link>
+                    </li>
+                )}
 
                 {user && (
                     <li className="contLinks">

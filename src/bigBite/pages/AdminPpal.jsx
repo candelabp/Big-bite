@@ -6,12 +6,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { getEnvironments } from '../../helpers/getEnvironments';
 
+const {
+  VITE_API_HOST
+} = getEnvironments();
+
 const ResumenMensual = ({ data }) => {
   const [monthlyData, setMonthlyData] = useState([]);
-
-  const {
-    VITE_API_HOST
-  } = getEnvironments();
 
   useEffect(() => {
     const groupedData = data.reduce((acc, curr) => {
@@ -55,7 +55,7 @@ export const AdminPpal = () => {
 
   const fetchAsientos = async () => {
     try {
-      const response = await fetch(`${VITE_API_HOST}/asientos`);
+      const response = await fetch(`${VITE_API_HOST}/api/asientos`);
       if (!response.ok) {
         throw new Error('Error al obtener los datos');
       }

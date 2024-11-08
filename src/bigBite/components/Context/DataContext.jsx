@@ -56,9 +56,19 @@ const DataProvider = ({ children }) => {
         }
     ;}
 
+    const resetCart = () => {
+        setCart([]);
+        Swal.fire({
+            position: "bottom-end",
+            text: "El carrito ha sido reseteado",
+            showConfirmButton: false,
+            width: "37vh",
+            timer: 1500
+        });
+    };
 
     return(
-        <dataContext.Provider value={{ data, cart, setCart, agregarCarrito }}>
+        <dataContext.Provider value={{ data, cart, setCart, resetCart, agregarCarrito }}>
             {children}
         </dataContext.Provider>
     )
