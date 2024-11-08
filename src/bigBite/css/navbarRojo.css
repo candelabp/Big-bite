@@ -273,6 +273,7 @@ inputRojo:hover {
   justify-content: center;
 }
 
+.bi-gear-fill,
 .bi-list-check{
   font-size: 1.5rem;
   margin-right: 1vw;
@@ -317,9 +318,11 @@ inputRojo:hover {
 @media (min-width: 480px) {
 
   .nav-linksNR {
-    width: 30%;
+    width: 40%;
   }
-  
+  .bi-gear-fill{
+    font-size: 1.5rem;
+  }
   .bi-list-check{
     font-size: 2rem;
     margin-right: 15px;
@@ -330,7 +333,7 @@ inputRojo:hover {
 
 
 @media (min-width: 768px) {
-
+  .bi-gear-fill,
   .bi-list-check,
   .bi-question-circle,
   .bi-house-door,
@@ -346,5 +349,8 @@ inputRojo:hover {
 
   .bi-x {
     font-size: 3rem;
+  }
+  .nav-linksNR {
+    width: 25%;
   }
 }

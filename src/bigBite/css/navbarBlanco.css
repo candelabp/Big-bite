@@ -319,16 +319,15 @@
     .nav-linkss{
       width: 40%;
     }
+
+    
   }
 
   @media (min-width: 768px) {
 
     .nav-linkss{
-      width: 30%;
+      width: 35%;
     }
-
-
-
 
     .bi-question-circle,
     .bi-house-door,
@@ -355,7 +354,7 @@
     }
 
     .nav-linkss{
-      width: 25%;
+      width: 30%;
     }
   
     .logoContenedorBlanco{
