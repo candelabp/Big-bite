@@ -6,10 +6,11 @@ import { UserContext } from '../../context/UserContext';
 import logoBlanco from '../assets/logo blanco.png'
 import { getAuth, signOut } from "firebase/auth";
 import { div } from "framer-motion/client";
+import Swal from "sweetalert2";
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
-    const { user,role } = useContext(UserContext);
+    const { user, role } = useContext(UserContext);
 
     // Función para abrir/cerrar el menú
     const abrirMenu = () => {
@@ -26,7 +27,7 @@ export const NavBar = () => {
             text: "Deaseas cerrar sesión?",
             showDenyButton: true,
             confirmButtonText: "Aceptar",
-            denyButtonText: `Cancelar`
+            denyButtonText: "Cancelar"
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -34,6 +35,7 @@ export const NavBar = () => {
                 signOut(auth).then(() => {
                     // Sign-out successful.
                     window.location.reload();
+                    window.location.href = '/';
                 }).catch((error) => {
                     // An error happened.
                     console.error("An error happened during sign-out:", error);
@@ -119,24 +121,25 @@ export const NavBar = () => {
                     <Link className="tituloLinkRojo" to="/contacto">Contacto</Link>
                 </li>
 
-                {(role =="admin" || role=="empleado")  && (
+                {(role == "admin" || role == "empleado") && (
                     <li className="contLinks">
-                        <i class="bi bi-gear-fill"></i>
+                        <i className="bi bi-gear-fill"></i>
                         <Link className="tituloLinkRojo" to="/AdminPpal">Administración</Link>
                     </li>
                 )}
 
                 {user && (
-                    <li className="contLinks">
+                    <li className="contLinks" onClick={handleSignOut}>
                         <div className="salirRojo">
-                            <button className="bi bi-box-arrow-left buttonSalirRojo" onClick={handleSignOut}></button>
+                            <i className="bi bi-box-arrow-left buttonSalirRojo"></i>
                         </div>
+                        <Link className="tituloLinkRojo">Cerrar Sesión</Link>
                     </li>
                 )}
 
 
                 <li className="redesNav">
-                    <i className="bi bi-twitter redesNavRojo"></i>
+                    <i className="bi bi-twitter-x redesNavRojo"></i>
                     <i className="bi bi-instagram redesNavRojo"></i>
                     <i className="bi bi-facebook redesNavRojo"></i>
                 </li>

@@ -5,6 +5,7 @@ import TotalCart from "./CartContent/TotalCart";
 import { UserContext } from '../../context/UserContext';
 import logoNegro from '../assets/logoNegro.png'
 import { getAuth, signOut } from "firebase/auth";
+import Swal from "sweetalert2";
 
 export const NavBarBlanco = () => {
     // Estado para manejar si el menú está abierto o cerrado
@@ -21,13 +22,13 @@ export const NavBarBlanco = () => {
     const cerrarMenu = () => {
         setMenuAbierto(false);
     };
-    
+
     const handleSignOut = () => {
         Swal.fire({
-            text: "Deaseas cerrar sesión?",
+            text: "¿Deaseas cerrar sesión?",
             showDenyButton: true,
             confirmButtonText: "Aceptar",
-            denyButtonText: `Cancelar`
+            denyButtonText: "Cancelar"
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -35,6 +36,7 @@ export const NavBarBlanco = () => {
                 signOut(auth).then(() => {
                     // Sign-out successful.
                     window.location.reload();
+                    window.location.href = '/';
                 }).catch((error) => {
                     // An error happened.
                     console.error("An error happened during sign-out:", error);
@@ -109,9 +111,9 @@ export const NavBarBlanco = () => {
 
                 {(user !== null) && (
                     <li className="contLinks">
-                    <i className="bi bi-list-check"></i>
-                    <Link className="tituloLinkNegro" to="/mispedidos">Mis Pedidos</Link>
-                </li>
+                        <i className="bi bi-list-check"></i>
+                        <Link className="tituloLinkNegro" to="/mispedidos">Mis Pedidos</Link>
+                    </li>
 
 
                 )}
@@ -121,24 +123,25 @@ export const NavBarBlanco = () => {
                     <Link className="tituloLinkNegro" to="/contacto">Contacto</Link>
                 </li>
 
-                {(role =="admin" || role=="empleado")  && (
+                {(role == "admin" || role == "empleado") && (
                     <li className="contLinks">
-                        <i class="bi bi-gear-fill"></i>
+                        <i className="bi bi-gear-fill"></i>
                         <Link className="tituloLinkNegro" to="/AdminPpal">Administración</Link>
                     </li>
                 )}
 
                 {user && (
-                    <li className="contLinks">
+                    <li className="contLinks" onClick={handleSignOut}>
                         <div className="salirBlanco">
-                            <button className="bi bi-box-arrow-left buttonSalirRojo" onClick={handleSignOut}></button>
+                            <i className="bi bi-box-arrow-left buttonSalirRojo"></i>
                         </div>
+                        <Link className="tituloLinkNegro">Cerrar Sesión</Link>
                     </li>
                 )}
 
 
                 <li className="redesNav">
-                    <i className="bi bi-twitter"></i>
+                    <i className="bi bi-twitter-x"></i>
                     <i className="bi bi-instagram"></i>
                     <i className="bi bi-facebook"></i>
                 </li>
