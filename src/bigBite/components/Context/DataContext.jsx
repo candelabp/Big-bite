@@ -60,7 +60,7 @@ const DataProvider = ({ children }) => {
         setCart([]);
         Swal.fire({
             position: "bottom-end",
-            text: "El carrito ha sido reseteado",
+            text: "Compra realizada con éxito",
             showConfirmButton: false,
             width: "37vh",
             timer: 1500
