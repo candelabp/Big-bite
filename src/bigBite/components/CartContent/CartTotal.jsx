@@ -130,7 +130,7 @@ function CartTotal() {
         guardarDatosPedido();
         resetCart();
     };
-    
+
 
     return (
         <div className="productoscompra">
@@ -230,6 +230,27 @@ function CartTotal() {
                             <Wallet initialization={{ preferenceId }} customization={{ texts: { valueProp: "smart_option" } }} />
                         )}
                     </div>
+
+
+                    {/* {isMercadoPagoButtonVisible && preferenceId && (
+    <Wallet
+        initialization={{ preferenceId }}
+        customization={{
+            texts: { valueProp: "smart_option" },
+            onPaymentComplete: async () => {
+                // Aquí llamamos a guardarDatosPedido después de confirmar el pago
+                const paymentConfirmed = await confirmarPago(preferenceId);
+                if (paymentConfirmed) {
+                    guardarDatosPedido();  // Guardamos los datos del pedido
+                    resetCart();  // Reseteamos el carrito si el pago fue confirmado
+                    Swal.fire('Éxito', 'Tu pago fue confirmado. ¡Gracias por tu compra!', 'success');
+                } else {
+                    Swal.fire('Error', 'El pago no fue confirmado, intente de nuevo', 'error');
+                }
+            }
+        }}
+    />
+)} */}
 
                     <div className="form-btns">
                         {paymentMethod !== "mercadopago" && (
