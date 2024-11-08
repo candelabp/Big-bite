@@ -95,6 +95,19 @@
 .total-detalle {
     padding-left: 35px;
 }
+.btn-factura{
+    display: inline-block;
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-align: center;
+   
+    transition: background-color 0.3s;
+
+}
 
 @media (max-width: 1000px) {
     .buscarpedidos {
@@ -115,6 +128,7 @@
     .nrodeorden {
         padding: 0 40px 0 8px;
     }
+ 
 }
 
 @media (max-width: 600px) {
