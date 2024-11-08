@@ -33,7 +33,9 @@ export const NavBar = () => {
             if (result.isConfirmed) {
                 const auth = getAuth();
                 signOut(auth).then(() => {
-                    // Sign-out successful.
+                    // Sign-out successful.e
+                    // Eliminar el usuario de localStorage
+                    localStorage.removeItem('user');
                     window.location.reload();
                     window.location.href = '/';
                 }).catch((error) => {
