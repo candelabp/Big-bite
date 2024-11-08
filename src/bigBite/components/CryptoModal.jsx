@@ -7,7 +7,23 @@ function CryptoModal({ totalPesos, onClose }) {
     const [ethRate] = useState(3352196);   // Valor de 1 ETH en ARS
     const [selectedCrypto, setSelectedCrypto] = useState('BTC');
     const [convertedAmount, setConvertedAmount] = useState(0);
+    const fetchCryptoRates = async () => {
+        try {
+            // Obtener tasa de cambio ARS a BUSD
+            const arsToBusdResponse = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=ARSBUSD');
+            setArsToBusdRate(parseFloat(arsToBusdResponse.data.price));
 
+            // Obtener tasa de cambio BTC a BUSD
+            const btcResponse = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=BTCBUSD');
+            setBtcRate(parseFloat(btcResponse.data.price));
+
+            // Obtener tasa de cambio ETH a BUSD
+            const ethResponse = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=ETHBUSD');
+            setEthRate(parseFloat(ethResponse.data.price));
+        } catch (error) {
+            console.error('Error fetching crypto rates from Binance:', error);
+        }
+    };
     const handleConversion = () => {
         let cryptoRate;
 
