@@ -22,12 +22,15 @@ export const MisPedidosProvider = ({ children }) => {
             axios(`${VITE_API_HOST}/api/pedidos/email/${userEmail}`)
                 .then((respuesta) => {
                     console.log('Respuesta del backend:', respuesta.data); // Verifica la respuesta del backend
-                    setPedidos(respuesta.data);
+                    setPedidos(ordenarPedidosPorIdDesc(respuesta.data));
                 })
                 .catch((error) => console.error('Error fetching pedidos:', error));
         }
     }, [user]); // Dependencia en user para que se ejecute cada vez que cambie
 
+    const ordenarPedidosPorIdDesc = (pedidos) => {
+        return pedidos.sort((a, b) => b.id - a.id);
+    };
 
     return (
         <misPedidosContext.Provider value={{ pedidos }}>
