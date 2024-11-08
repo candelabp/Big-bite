@@ -4,6 +4,7 @@ import '../css/adminProductos.css';  // Usa el mismo CSS que AdminProductos
 import NavbarAdmin from '../components/NavbarAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminPapas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -17,7 +18,7 @@ export const AdminPapas = () => {
 
   const {
     VITE_API_HOST
-  } = getEnvironmentsments();
+  } = getEnvironments();
 
   useEffect(() => {
     // Cargar papas fritas desde el backend

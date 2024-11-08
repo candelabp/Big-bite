@@ -17,7 +17,7 @@ export const AdminBiteBox = () => {
 
   const {
     VITE_API_HOST
-  } = getEnvironmentsments();
+  } = getEnvironments();
 
   useEffect(() => {
     // Cargar BiteBoxes desde el backend
