@@ -9,7 +9,7 @@ import { div } from "framer-motion/client";
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
-    const { user } = useContext(UserContext);
+    const { user,role } = useContext(UserContext);
 
     // Función para abrir/cerrar el menú
     const abrirMenu = () => {
@@ -106,18 +106,25 @@ export const NavBar = () => {
                 </li>
 
                 {(user !== null) && (
-                    <div>
-                <li className="contLinks">
-                    <i className="bi bi-list-check"></i>
-                    <Link className="tituloLinkRojo" to="/mispedidos">Mis Pedidos</Link>
-                </li>
-            </div>
+
+                    <li className="contLinks">
+                        <i className="bi bi-list-check"></i>
+                        <Link className="tituloLinkRojo" to="/mispedidos">Mis Pedidos</Link>
+                    </li>
+
                 )}
 
                 <li className="contLinks">
                     <i className="bi bi-question-circle iconPreguntaRojo"></i>
                     <Link className="tituloLinkRojo" to="/contacto">Contacto</Link>
                 </li>
+
+                {(role =="admin" || role=="empleado")  && (
+                    <li className="contLinks">
+                        <i class="bi bi-gear-fill"></i>
+                        <Link className="tituloLinkRojo" to="/AdminPpal">Administración</Link>
+                    </li>
+                )}
 
                 {user && (
                     <li className="contLinks">
