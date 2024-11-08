@@ -130,8 +130,8 @@ const handleDescargarFactura = (pedido) => {
                             <ul className='lista-detalle'>
                                 {selectedPedido.productos.map((producto, index) => (
                                     <li key={index}>
-                                        {producto.nombre} - Precio: ${producto.precioCombo}
-                                        {/* - Cantidad: {producto.cantItems}  */}
+                                        {producto.nombre} - Cantidad: {producto.cantItems} - Precio: ${producto.precioCombo}
+                                        
                                     </li>
                                 ))}
                             </ul>
