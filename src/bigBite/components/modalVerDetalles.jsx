@@ -19,7 +19,7 @@ const ModalVerDetalles = ({ pedido, onClose }) => {
                         {pedido.productos.map((producto, index) => (
                             <div key={index} className='producto-detalle'>
                                 <p><b>Producto:</b> {producto.nombre}</p>
-                                {/* <p><b>Cantidad:</b> {producto.cantItems}</p> */}
+                                <p><b>Cantidad:</b> {producto.cantItems}</p>
                                 <p><b>Precio:</b> ${producto.precioCombo}</p>
                                 {index < pedido.productos.length - 1 && <hr className="dotted-divider" />}
                             </div>
