@@ -33,7 +33,15 @@ function CartTotal() {
     });
 
     const handleCheckout = () => {
-        if (total > 0) {
+        if (itemsEnCarrito === 0) {
+            // Mostrar alerta si el carrito está vacío
+            Swal.fire({
+                icon: 'warning',
+                title: 'Carrito vacío',
+                text: 'No hay productos en el carrito. Agrega productos antes de proceder al pago.',
+            });
+        } else {
+            // Mostrar el formulario si hay productos en el carrito
             setShowForm(true);
         }
     };

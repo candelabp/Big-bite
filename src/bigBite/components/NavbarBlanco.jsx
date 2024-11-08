@@ -35,6 +35,7 @@ export const NavBarBlanco = () => {
                 const auth = getAuth();
                 signOut(auth).then(() => {
                     // Sign-out successful.
+                    localStorage.removeItem('user');
                     window.location.reload();
                     window.location.href = '/';
                 }).catch((error) => {
