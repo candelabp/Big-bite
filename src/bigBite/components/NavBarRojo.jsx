@@ -139,9 +139,9 @@ export const NavBar = () => {
 
 
                 <li className="redesNav">
-                    <i className="bi bi-twitter-x redesNavRojo"></i>
-                    <i className="bi bi-instagram redesNavRojo"></i>
-                    <i className="bi bi-facebook redesNavRojo"></i>
+                    <Link to='https://x.com/?lang=es' target='_blank'><i className="bi bi-twitter-x redesNavRojo"></i></Link>
+                    <Link to='https://www.instagram.com/?hl=es' target='_blank'><i className="bi bi-instagram redesNavRojo"></i></Link>
+                    <Link to='https://facebook.com/?locale=es_LA' target='_blank'><i className="bi bi-facebook redesNavRojo"></i></Link>
                 </li>
 
 

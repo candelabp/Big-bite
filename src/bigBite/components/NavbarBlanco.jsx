@@ -141,9 +141,9 @@ export const NavBarBlanco = () => {
 
 
                 <li className="redesNav">
-                    <i className="bi bi-twitter-x"></i>
-                    <i className="bi bi-instagram"></i>
-                    <i className="bi bi-facebook"></i>
+                    <Link to='https://x.com/?lang=es' target='_blank'><i className="bi bi-twitter-x tituloLinkNegro"></i></Link>
+                    <Link to='https://www.instagram.com/?hl=es' target='_blank'><i className="bi bi-instagram tituloLinkNegro"></i></Link>
+                    <Link to='https://facebook.com/?locale=es_LA' target='_blank'><i className="bi bi-facebook tituloLinkNegro"></i></Link>
                 </li>
 
                 <img src={logoNegro} alt="Logo" className="imgNavbar" />
