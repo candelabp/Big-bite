@@ -23,10 +23,10 @@ const LibroMayor = ({ asientos }) => {
       <h2 className="libro-mayor__titulo">LIBRO MAYOR</h2>
       {Object.entries(agrupadoPorCuenta).map(([nombreCuenta, movimientos], index) => {
         const totalDebe = movimientos
-          .filter((mov) => mov.tipo === "Debe")
+          .filter((mov) => mov.tipo === "debe")
           .reduce((acc, mov) => acc + mov.monto, 0);
         const totalHaber = movimientos
-          .filter((mov) => mov.tipo === "Haber")
+          .filter((mov) => mov.tipo === "haber")
           .reduce((acc, mov) => acc + mov.monto, 0);
         const saldoFinal = totalDebe - totalHaber;
 
@@ -47,8 +47,8 @@ const LibroMayor = ({ asientos }) => {
                   <tr key={i}>
                     <td>{mov.fecha}</td>
                     <td>{mov.descripcion}</td>
-                    <td>{mov.tipo === "Debe" ? `$${mov.monto.toFixed(2)}` : ""}</td>
-                    <td>{mov.tipo === "Haber" ? `$${mov.monto.toFixed(2)}` : ""}</td>
+                    <td>{mov.tipo === "debe" ? `$${mov.monto.toFixed(2)}` : ""}</td>
+                    <td>{mov.tipo === "haber" ? `$${mov.monto.toFixed(2)}` : ""}</td>
                   </tr>
                 ))}
                 <tr>

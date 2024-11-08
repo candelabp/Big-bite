@@ -5,9 +5,10 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
 import CryptoModal from "../CryptoModal";
 import Swal from 'sweetalert2';
+import { getEnvironments } from "../../../helpers/getEnvironments";
 
 function CartTotal() {
-    const { cart } = useContext(dataContext);
+    const { cart, resetCart } = useContext(dataContext);
     const { user } = useContext(UserContext);
     const itemsEnCarrito = cart.reduce((acumulador, element) => acumulador + element.cantItems, 0);
     const [showCryptoModal, setShowCryptoModal] = useState(false);
@@ -18,6 +19,10 @@ function CartTotal() {
     const [preferenceId, setPreferenceId] = useState(null);
     const [userName, setUserName] = useState("");
     const [userAddress, setUserAddress] = useState("");
+
+    const {
+        VITE_API_HOST
+      } = getEnvironments();
 
     const subtotal = Math.round(cart.reduce((acumulador, element) => acumulador + element.precioCombo * element.cantItems, 0));
     const envio = Math.round(subtotal - subtotal * 0.90);
@@ -72,8 +77,40 @@ function CartTotal() {
             descripcion: cart
         };
         console.log("Datos del pedido:", pedido);
+        registrarPedido(pedido);
         return pedido;
     };  
+
+    const registrarPedido = async (pedido) => {
+        try {
+            const response = await fetch(`${VITE_API_HOST}/api/pedidos/registrar`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(pedido),
+            });
+      
+            if (!response.ok) {
+              // Manejar el error
+              console.error('Error al registrar el pedido');
+              return;
+            }
+      
+            const contentType = response.headers.get('content-type');
+            let data;
+            if (contentType && contentType.includes('application/json')) {
+              data = await response.json();
+            } else {
+              data = await response.text();
+            }
+      
+            console.log('Pedido registrado:', data);
+            resetCart();
+          } catch (error) {
+            console.error('Error en la solicitud:', error);
+          }
+      };
 
     // Verificación para mostrar el botón de MercadoPago
     const isMercadoPagoButtonVisible =

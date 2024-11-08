@@ -34,17 +34,6 @@ export const GestionPedidos = () => {
 
                 <CompGestPedidos />
 
-                <div className='pedidos-lista'>
-                    {pedidos.map((pedido, index) => (
-                        <div key={index} className='pedido'>
-                            <h3>Pedido #{index + 1}</h3>
-                            <p>ID de Pago: {pedido.paymentId}</p>
-                            <p>Estado: {pedido.status}</p>
-                            <p>Detalle: {pedido.descripcion}</p>
-                            {/* Agrega otros datos que quieras mostrar */}
-                        </div>
-                    ))}
-                </div>
             </section>
         </>
     );
