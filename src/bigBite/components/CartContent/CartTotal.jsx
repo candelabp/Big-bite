@@ -22,7 +22,7 @@ function CartTotal() {
 
     const {
         VITE_API_HOST
-      } = getEnvironments();
+    } = getEnvironments();
 
     const subtotal = Math.round(cart.reduce((acumulador, element) => acumulador + element.precioCombo * element.cantItems, 0));
     const envio = Math.round(subtotal - subtotal * 0.90);
@@ -44,7 +44,7 @@ function CartTotal() {
 
     const createPreference = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/create_preference",{
+            const response = await axios.post("http://localhost:3000/create_preference", {
                 title: "Pedido Big Bite",
                 quantity: 1,
                 price: total,
@@ -71,53 +71,53 @@ function CartTotal() {
             price: total,
             tipoEntrega: deliveryType === "envio" ? "Envío" : "Retiro en local",
             estadoPedido: "En Preparación",
-            metodoPago: paymentMethod === "efectivo" ? "Efectivo" : 
-                         paymentMethod === "mercadopago" ? "Plataformas de Pago Mercado Pago" : 
-                         "Plataformas de Pago Binance",
+            metodoPago: paymentMethod === "efectivo" ? "Efectivo" :
+                paymentMethod === "mercadopago" ? "Plataformas de Pago Mercado Pago" :
+                    "Plataformas de Pago Binance",
             descripcion: cart
         };
         console.log("Datos del pedido:", pedido);
         registrarPedido(pedido);
         return pedido;
-    };  
+    };
 
     const registrarPedido = async (pedido) => {
         try {
             const response = await fetch(`${VITE_API_HOST}/api/pedidos/registrar`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(pedido),
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(pedido),
             });
-      
+
             if (!response.ok) {
-              // Manejar el error
-              console.error('Error al registrar el pedido');
-              return;
+                // Manejar el error
+                console.error('Error al registrar el pedido');
+                return;
             }
-      
+
             const contentType = response.headers.get('content-type');
             let data;
             if (contentType && contentType.includes('application/json')) {
-              data = await response.json();
+                data = await response.json();
             } else {
-              data = await response.text();
+                data = await response.text();
             }
-      
+
             console.log('Pedido registrado:', data);
-            resetCart();
-          } catch (error) {
+            //resetCart();
+        } catch (error) {
             console.error('Error en la solicitud:', error);
-          }
-      };
+        }
+    };
 
     // Verificación para mostrar el botón de MercadoPago
     const isMercadoPagoButtonVisible =
         userName &&
         deliveryType &&
         (deliveryType === "local" || (deliveryType === "envio" && userAddress)) &&
-        paymentMethod === "mercadopago"; 
+        paymentMethod === "mercadopago";
 
     // Verificación para habilitar "Finalizar compra"
     const isFinalizarCompraEnabled =
@@ -125,6 +125,12 @@ function CartTotal() {
         deliveryType &&
         paymentMethod &&
         (deliveryType === "local" || (deliveryType === "envio" && userAddress));
+
+    const handleFinalizar = async () => {
+        guardarDatosPedido();
+        resetCart();
+    };
+    
 
     return (
         <div className="productoscompra">
@@ -230,7 +236,7 @@ function CartTotal() {
                             <button
                                 type="button"
                                 className="btnes btnpagar"
-                                onClick={guardarDatosPedido}
+                                onClick={handleFinalizar}
                                 disabled={!isFinalizarCompraEnabled}  // Deshabilitar si no cumple con las condiciones
                             >
                                 Finalizar compra
