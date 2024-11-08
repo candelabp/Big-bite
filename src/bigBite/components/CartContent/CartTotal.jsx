@@ -137,6 +137,15 @@ function CartTotal() {
     const handleFinalizar = async () => {
         guardarDatosPedido();
         resetCart();
+        resetForm();
+    };
+    const resetForm = () => {
+        setUserName("");
+        setUserAddress("");
+        setDeliveryType("");
+        setPaymentMethod("");
+        setShowForm(false);
+        setPreferenceId(null);
     };
 
 
