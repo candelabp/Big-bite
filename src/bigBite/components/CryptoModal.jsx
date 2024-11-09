@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import "../css/cryptomodal.css";
-
+import axios from 'axios';
+import "../css/cryptomodal.css"
 function CryptoModal({ totalPesos, onClose }) {
-    
-    const [btcRate] = useState(88013248);  
-    const [ethRate] = useState(3352196);   
+    const [btcRate, setBtcRate] = useState(null);
+    const [ethRate, setEthRate] = useState(null);
+    const [arsToBusdRate, setArsToBusdRate] = useState(null);
     const [selectedCrypto, setSelectedCrypto] = useState('BTC');
     const [convertedAmount, setConvertedAmount] = useState(0);
+
+    useEffect(() => {
+        fetchCryptoRates();
+    }, []);
+
     const fetchCryptoRates = async () => {
         try {
             // Obtener tasa de cambio ARS a BUSD
@@ -24,26 +29,24 @@ function CryptoModal({ totalPesos, onClose }) {
             console.error('Error fetching crypto rates from Binance:', error);
         }
     };
-    const handleConversion = () => {
-        let cryptoRate;
 
-        // Selección de la criptomoneda y tasa correspondiente
-        if (selectedCrypto === 'BTC') {
-            cryptoRate = btcRate;
-        } else if (selectedCrypto === 'ETH') {
-            cryptoRate = ethRate;
-        }
+    const handleConversion = () => {
+        if (!arsToBusdRate) return;
+
+        // Convertir ARS a BUSD
+        const busdAmount = totalPesos / arsToBusdRate;
+
+        // Convertir BUSD a criptomoneda seleccionada
+        const cryptoRate = selectedCrypto === 'BTC' ? btcRate : ethRate;
 
         if (cryptoRate) {
-            // Convertir pesos a la criptomoneda seleccionada
-            const amountInCrypto = totalPesos / cryptoRate;
-            setConvertedAmount(amountInCrypto);
+            setConvertedAmount(busdAmount / cryptoRate);
         }
     };
 
     useEffect(() => {
         handleConversion();
-    }, [selectedCrypto, btcRate, ethRate, totalPesos]);
+    }, [selectedCrypto, btcRate, ethRate, arsToBusdRate, totalPesos]);
 
     return (
         <div className="modal-overlay" onClick={onClose}>
