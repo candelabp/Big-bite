@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 export const NavBarBlanco = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
-    const { user, role } = useContext(UserContext);
+    const { user, role, resetcart} = useContext(UserContext);
 
 
     // Función para abrir/cerrar el menú
