@@ -9,7 +9,7 @@ Bienvenido al repositorio del proyecto **Big Bite**, un ecommerce para una hambu
 - **Pasarela de pago**: Integración con métodos de pago digitales para completar las compras de manera segura.
 - **Gestión de usuarios**: Autenticación y autorización de usuarios mediante Firebase
 - **Panel de administración**: Para que el equipo de Big Bite pueda gestionar productos, pedidos, usuarios y herramientas de contabilidad.
-- **Conexión con API REST**: Consumo de una api construida para este proyecto (link)
+- **Conexión con API REST**: Consumo de una api construida para este proyecto (https://github.com/Alvaro-Rubina/BigBite-Backend)
 
 ## Tecnologías utilizadas
 
