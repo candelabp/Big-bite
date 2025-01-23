@@ -5,46 +5,9 @@ import '../css/misPedidos.css'
 import { Footer } from '../components/Footer';
 import { NavBar } from "../components/NavBarRojo";
 import { usePedidos } from '../components/Context/MisPedidosContext';
+import { jsPDF } from 'jspdf';
 
 
-// const pedidos = [
-//     {
-//       id: 1,
-//       estado: "En preparación",
-//       productos: [
-//         { producto: "Hamburguesa clásica", cantidad: 2, precio: 500 },
-//         { producto: "Papas fritas", cantidad: 1, precio: 200 }
-//       ],
-//       total: 1200,
-//     },
-//     {
-//       id: 2,
-//       estado: "Entregado",
-//       productos: [
-//         { producto: "Hamburguesa doble", cantidad: 1, precio: 800 },
-//         { producto: "Bebida", cantidad: 2, precio: 150 }
-//       ],
-//       total: 1100,
-//     },
-//     {
-//       id: 3,
-//       estado: "En camino",
-//       productos: [
-//         { producto: "Hamburguesa vegetariana", cantidad: 1, precio: 600 },
-//         { producto: "Batido", cantidad: 1, precio: 250 }
-//       ],
-//       total: 850,
-//     },
-//     {
-//         id: 4,
-//         estado: "Entregado",
-//         productos: [
-//           { producto: "BiteBox", cantidad: 1, precio: 1100 },
-//           { producto: "Bebida", cantidad: 2, precio: 150 }
-//         ],
-//         total: 2100,
-//       }
-//   ];
 
 export const MisPedidos = () => {
 
@@ -92,6 +55,27 @@ export const MisPedidos = () => {
     // Filtrar pedidos en curso y entregados
     const pedidosEnCurso = pedidos.filter(pedido => pedido.estadoPedido !== "Entregado");
     const pedidosEntregados = pedidos.filter(pedido => pedido.estadoPedido === "Entregado");
+// Función para generar el PDF de la factura
+const handleDescargarFactura = (pedido) => {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(20);
+    doc.text(`Factura de Pedido #${pedido.id}`, 10, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Fecha: ${pedido.fechaSolicitado}`, 10, 30);
+    doc.text(`Hora: ${pedido.horaSolicitado}`, 10, 40);
+
+    doc.text('Detalles del Pedido:', 10, 50);
+
+    pedido.productos.forEach((producto, index) => {
+        const yPosition = 60 + (index * 10);
+        doc.text(`${producto.nombre} - Cantidad: ${producto.cantItems} - Precio: $${producto.precioCombo}`, 10, yPosition);
+    });
+
+    doc.text(`Total: $${pedido.subTotal}`, 10, 80 + (pedido.productos.length * 10));
+    doc.save(`Factura_Pedido_${pedido.id}.pdf`);
+};
 
     return (
         <>
@@ -102,9 +86,9 @@ export const MisPedidos = () => {
                         <h1>Mis Pedidos</h1>
                         <p>Mira el estado de tus pedidos</p>
                     </div>
-                    <div className='arriba_der'>
+                    {/* <div className='arriba_der'>
                         <button type="button" className='btn btn-outline-danger botonescolor'>Filtrar</button>
-                    </div>                    
+                    </div>                     */}
                 </div>
 
                 <br />
@@ -147,6 +131,7 @@ export const MisPedidos = () => {
                                 {selectedPedido.productos.map((producto, index) => (
                                     <li key={index}>
                                         {producto.nombre} - Cantidad: {producto.cantItems} - Precio: ${producto.precioCombo}
+                                        
                                     </li>
                                 ))}
                             </ul>
@@ -154,6 +139,9 @@ export const MisPedidos = () => {
                             <br />
                             <b>Fecha:</b> {selectedPedido.fechaSolicitado}     <b>Hora:</b>{selectedPedido.horaSolicitado}
                             </p>
+                            <button className='btn-factura' onClick={() => handleDescargarFactura(selectedPedido)}>
+                                Descargar Factura
+                            </button>
                         </div>
                     )}
                     </div>
@@ -204,6 +192,10 @@ export const MisPedidos = () => {
                           <br />
                           <b>Fecha:</b> {selectedPedidoEntregado.fechaSolicitado}     <b>Hora:</b>{selectedPedidoEntregado.horaSolicitado}
                           </p>
+                          <button className='btn-factura' onClick={() => handleDescargarFactura(selectedPedidoEntregado)}>
+                                Descargar Factura
+                            </button>
+
                             </div>
                     )}
                     </div>

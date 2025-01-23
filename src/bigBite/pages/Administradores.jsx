@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import '../css/administradores.css';
 import userimage from '../assets/benavides-geronimo-image.webp';
@@ -10,67 +10,17 @@ import messiimage from '../assets/messi.jpg';
 import maslatonimage from '../assets/maslaton.jpg';
 import cobriximage from '../assets/cobrix.jpg';
 import NavbarAdmin from '../components/NavbarAdmin';
-import { fetchSignInMethodsForEmail, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 // import { collection, doc, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { FirebaseDB } from '../../firebase/config';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore/lite';
+import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore/lite';
+import { UserContext } from '../../context/UserContext';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid'; // Para generar un UID único
 import Swal from 'sweetalert2';
 
 
 export const Administradores = () => {
-
-
-  const fetchAndPrintUsers = async () => {
-
-    try {
-
-      const usersCollection = collection(FirebaseDB, 'usuarios');
-      const usersSnapshot = await getDocs(usersCollection);
-      const users = [];
-
-
-      console.log('usersSnapshot.docs:', usersSnapshot.docs); // Verifica el contenido de usersSnapshot.docs
-
-      if (usersSnapshot.empty) {
-        console.log('No hay usuarios en la colección "users".');
-      } else {
-        console.log(`Se encontraron ${usersSnapshot.docs.length} usuarios.`);
-      }
-
-      for (const userDoc of usersSnapshot.docs) {
-        console.log('Procesando usuario:', userDoc.id); // Verifica que está entrando en el bucle
-        const profileDocRef = doc(FirebaseDB, `usuarios/${userDoc.id}`);
-        const profileDoc = await getDoc(profileDocRef);
-
-        if (profileDoc.exists()) {
-          const userData = profileDoc.data();
-          const user = {
-            id: userDoc.id,
-            photoURL: userData.photoURL || '',
-            phoneNumber: userData.telefono || '',
-            displayName: `${userData.nombre} ${userData.apellido}`,
-            role: userData.rol || ''
-          };
-          users.push(user);
-          console.log(user);
-        } else {
-          console.log(`No se encontró el documento de perfil para el usuario ${userDoc.id}`);
-        }
-      }
-
-      setAdmins(users);
-    } catch (error) {
-      console.error("Error al obtener los usuarios:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndPrintUsers();
-  }, []);
-
-
-
-
 
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const password = watch("password");
@@ -80,83 +30,295 @@ export const Administradores = () => {
   const [selectedRole, setSelectedRole] = useState('Admin');
   const [isViewAdmin, setIsViewAdmin] = useState(false);
   const [admins, setAdmins] = useState([]);
+  const { user } = useContext(UserContext);
+  const [image, setImage] = useState(null);
+  const [imageURL, setImageURL] = useState('');
+  const [progress, setProgress] = useState(0);
 
-  const getUserByEmail = async (email) => {
-    const auth = getAuth();
-    const db = getFirestore();
-
+  // Función para obtener usuarios con rol 'empleado'
+  const getEmpleados = async () => {
     try {
-
-      const q = query(collection(db, "users"), where("email", "==", email));
+      const q = query(collection(FirebaseDB, "usuarios"), where("rol", "==", "empleado"));
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        const userDoc = querySnapshot.docs[0];
-        const userData = userDoc.data();
-        return {
-          id: userDoc.id,
-          photoURL: userData.photoURL || '',
-          phoneNumber: userData.telefono || '',
-          displayName: `${userData.nombre} ${userData.apellido}`,
-          role: userData.rol || ''
-        };
+        const empleados = querySnapshot.docs.map((doc) => {
+          const userData = doc.data();
+          return {
+            id: doc.id,
+            photoURL: userData.photoURL || '',
+            telefono: userData.telefono || '',
+            displayName: `${userData.nombre} ${userData.apellido}`,
+            nombre: userData.nombre || '',
+            apellido: userData.apellido || '',
+            rol: userData.rol || '',
+            email: userData.email || ''
+          };
+        });
+        console.log('Empleados obtenidos:', empleados);
+        return empleados;
       } else {
-        console.log(`No se encontró ningún usuario con el correo ${email}.`);
+        console.log("No se encontraron usuarios con el rol 'empleado'.");
+        return [];
       }
     } catch (error) {
-      console.error("Error al buscar el usuario:", error);
+      console.error("Error al buscar los usuarios:", error);
+      return [];
     }
-    return null;
   };
 
-  // Ejemplo de uso
-  // getUserByEmail("senseicloss@google.com").then((userInfo) => {
-  //   if (userInfo) {
-  //     console.log("Información del usuario:", userInfo);
-  //   }
-  // });
-
-  const adminEmails = [
-    "senseicloss@google.com",
-    "labestiadecalchin@google.com",
-    "chiquitapion@google.com",
-    "francorinaldi@google.com",
-    "lionelmessi@google.com",
-    "carlosmaslaton@google.com",
-  ];
-
   useEffect(() => {
-    const fetchAdmins = async () => {
+    const fetchEmpleados = async () => {
       try {
-        const adminPromises = adminEmails.map(email => getUserByEmail(email));
-        const adminData = await Promise.all(adminPromises);
-        const formattedAdmins = adminData.filter(admin => admin !== null).map((admin, index) => ({
-          id: index + 1,
-          image: admin.photoURL,
+        const empleados = await getEmpleados();
+        const formattedAdmins = empleados.map((admin, index) => ({
+          id: admin.id,
           name: admin.displayName,
-          role: "empleado"
+          image: admin.photoURL,
+          nombre: admin.nombre,
+          apellido: admin.apellido,
+          rol: admin.rol,
+          telefono: admin.telefono,
         }));
         setAdmins(formattedAdmins);
       } catch (error) {
-        console.error("Error al obtener la información de los administradores:", error);
+        console.error("Error al obtener la información de los empleados:", error);
       }
     };
 
-    // fetchAdmins();
+    fetchEmpleados();
   }, []);
 
+  // Inicializar `formData` solo cuando `selectedAdmin` cambie
+
+  useEffect(() => {
+    if (selectedAdmin) {
+      reset({
+        nombre: selectedAdmin.nombre || '',
+        apellido: selectedAdmin.apellido || '',
+        telefono: selectedAdmin.telefono || '',
+        email: selectedAdmin.email || ''
+      });
+    }
+  }, [selectedAdmin, reset]);
 
 
-  // const admins = [
-  //   { id: 1, image: senseiclossimage, name: "Sensei Closs", role: "empleado" },
-  //   { id: 2, image: julianalvarezimage, name: "La bestia de Calchin", role: "empleado" },
-  //   { id: 3, image: chiquiimage, name: "Chiqui Tapion", role: "empleado" },
-  //   { id: 4, image: francorinaldiimage, name: "Franco Rinaldi", role: "empleado" },
-  //   { id: 5, image: messiimage, name: "Lionel Messi", role: "empleado" },
-  //   { id: 6, image: maslatonimage, name: "Carlos Maslatón", role: "empleado" },
-  //   { id: 7, image: cobriximage, name: "Cobrix", role: "empleado" }
 
-  // ];
+  // Guardar cambios en Firestore
+  const handleSaveChanges = async (data) => {
+    console.log('handleSaveChanges ejecutado');
+    console.log('Datos del formulario:', data);
+
+    if (selectedAdmin?.id) {
+      const adminDocRef = doc(FirebaseDB, `usuarios/${selectedAdmin.id}`);
+      const displayName = `${data.nombre} ${data.apellido}`;
+      console.log('Referencia del documento:', adminDocRef.path);
+      console.log('Datos a actualizar:', {
+        displayName,
+        telefono: data.telefono,
+      });
+
+      try {
+        await setDoc(adminDocRef, {
+          displayName,
+          nombre: data.nombre,
+          apellido: data.apellido,
+          telefono: data.telefono,
+        }, { merge: true });
+
+        // Obtener el documento actualizado
+        const updatedDoc = await getDoc(adminDocRef);
+        if (updatedDoc.exists()) {
+          console.log('Documento actualizado:', updatedDoc.data());
+        } else {
+          console.log('El documento no existe.');
+        }
+
+        // Actualizar el estado `admins`
+        setAdmins((prevAdmins) =>
+          prevAdmins.map((admin) =>
+            admin.id === selectedAdmin.id
+              ? { ...admin, name: displayName, nombre: data.nombre, apellido: data.apellido, telefono: data.telefono, email: data.email }
+              : admin
+          )
+        );
+
+        // Mostrar mensaje de éxito
+        Swal.fire({
+          icon: 'success',
+          title: 'Cambios Guardados',
+          text: 'Cambios guardados éxitosamente',
+        });
+      } catch (error) {
+        // Mostrar mensaje de error
+        console.error('Error al guardar los cambios:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al guardar los cambios, inténtelo de nuevo',
+        });
+      }
+    } else {
+      console.error('selectedAdmin.id no está definido');
+    }
+  };
+
+  // Cambiar el rol del empleado a 'empleadoInactivo'
+  const handleDeleteAdmin = async () => {
+
+    if (selectedAdmin?.id) {
+      const adminDocRef = doc(FirebaseDB, `usuarios/${selectedAdmin.id}`);
+      try {
+        await setDoc(adminDocRef, { rol: 'empleadoInactivo' }, { merge: true });
+
+        // Filtrar el empleado inactivo del estado `admins`
+        setAdmins((prevAdmins) =>
+          prevAdmins.filter((admin) => admin.id !== selectedAdmin.id)
+        );
+
+        // Limpiar el administrador seleccionado
+        setSelectedAdmin(null);
+        setIsViewAdmin(false);
+
+        // Mostrar mensaje de éxito
+        Swal.fire({
+          icon: 'success',
+          title: 'Empleado Inactivo',
+          text: 'Empleado dado de baja correctamente',
+        });
+      } catch (error) {
+        console.error('Error al cambiar el rol del empleado:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error, inténtelo de nuevo',
+        });
+      }
+    } else {
+      console.error('selectedAdmin.id no está definido');
+    }
+  };
+
+  // Función para manejar la selección de la imagen
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      setImage(file);
+      console.log(file);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor seleccione una imagen válida',
+      });
+    }
+  };
+
+  // Función para manejar la subida de la imagen
+  const handleImageUpload = async (userId) => {
+
+    if (!image) {
+      // Si no hay imagen, resolver la promesa con una cadena vacía
+      // console.log('sin imagen');
+      return '';
+    }
+
+    const storage = getStorage();
+    const storageRef = ref(storage, `profile-images/${userId}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progressPercent =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progressPercent);
+        },
+        (error) => {
+          // console.error('Error al subir la imagen:', error);
+          reject(error);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setImageURL(downloadURL);
+          // console.log('URL de la imagen:', downloadURL);
+          resolve(downloadURL);
+        }
+      );
+    });
+  };
+
+
+
+  // Función para registrar un empleado
+  const handleRegisterEmpleado = async (data) => {
+    const { email, password, nombre, apellido, telefono } = data;
+
+    try {
+      // Verificar si el correo ya existe en Firestore
+      const q = query(collection(FirebaseDB, "usuarios"), where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ese correo ya está en uso',
+        });
+        return;
+      }
+
+      // Generar un UID único para el usuario
+      const userId = uuidv4();
+
+      // Subir la imagen a Firebase Storage
+      const imageURL = await handleImageUpload(userId);
+
+      // Guardar el usuario en Firestore
+      const newDoc = doc(FirebaseDB, `usuarios/${userId}`);
+      await setDoc(newDoc, {
+        rol: 'empleado',
+        displayName: `${nombre} ${apellido}`,
+        nombre,
+        apellido,
+        telefono,
+        email,
+        photoURL: imageURL || '',
+        password // Guardar la contraseña en Firestore (no recomendado para producción)
+      });
+
+      // Actualizar el estado `admins` para incluir el nuevo empleado
+      const newAdmin = {
+        id: userId,
+        displayName: `${nombre} ${apellido}`,
+        nombre,
+        apellido,
+        telefono,
+        email,
+        photoURL: imageURL || '',
+        rol: 'empleado'
+      };
+
+      // Limpiar los campos del formulario
+      reset();
+
+      // Mostrar mensaje de éxito
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro Éxitoso',
+        text: 'Empleado registrado correctamente',
+      });
+      window.location.reload()
+    } catch (error) {
+      console.error('Error durante el registro:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al agregar empleado, inténtelo de nuevo',
+      });
+    }
+  };
 
   const handleSelectAdmin = (admin) => {
     setSelectedAdmin(admin);
@@ -178,6 +340,7 @@ export const Administradores = () => {
     setSelectedAdmin(null);
     setIsAddingAdmin(true);
     setIsViewAdmin(false);
+    reset(); // Limpiar los campos del formulario
   };
 
   const handleRemoveAdmin = () => {
@@ -186,35 +349,6 @@ export const Administradores = () => {
     setIsViewAdmin(false);
   };
 
-  const onSubmit = (data) => {
-    const formData = new FormData();
-
-    formData.append('usuario', new Blob([JSON.stringify(data)], {
-      type: 'application/json'
-    }));
-    formData.append('imagenPerfil', data.imagen[0]);
-
-    fetch('http://localhost:8080/usuarios/registrar', {
-      method: 'POST',
-      body: formData
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => { throw new Error(text); });
-        }
-        return response.text();
-      })
-      .then((message) => {
-        console.log('Respuesta del servidor:', message);
-        Swal.fire({text: message, icon: "success"});
-        // alert(message);
-      })
-      .catch((error) => {
-        console.error('Hubo un error:', error);
-        Swal.fire({text: error.message, icon: "error"});
-        // alert(error.message);
-      });
-  };
 
   return (
     <div className="app-container">
@@ -223,26 +357,26 @@ export const Administradores = () => {
       <div className="top-section">
         <div className="admin-info">
           <div className="admin-avatar">
-            <img src={userimage} alt="" />
+            <img src={user.photoURL} alt="" />
           </div>
           <div>
-            <h1>Tito Calderón</h1>
+            <h1>{user.displayName} </h1>
             <p>Rol: Admin</p>
           </div>
         </div>
         <div className="admin-actions">
-          <button className="add-button" onClick={handleAddAdmin}>Agregar Admin</button>
+          <button className="add-button" onClick={handleAddAdmin}>Agregar Empleado</button>
         </div>
       </div>
 
       {/* Parte Media */}
       <div className="middle-section">
         <div className='zona-media-izquierda'>
-          <h1>Administradores Actuales</h1>
+          <h1>Empleados actuales</h1>
           <div className="admin-actions-left">
             {selectedAdmin && (
               <>
-                <button className="delete-button">Borrar Admin</button>
+                <button className="delete-button" onClick={handleDeleteAdmin}>Borrar Empleado</button>
                 <button className="view-button" onClick={() => handleViewAdmin(selectedAdmin)}>Ver Detalles</button>
               </>
             )}
@@ -280,46 +414,49 @@ export const Administradores = () => {
       {(isViewAdmin) && (
         <div className="bottom-section">
           <div className='zona-baja-izq'>
-            <h1>Detalles Admin</h1>
+            <h1>Detalles Empleado</h1>
           </div>
           <div className='zona-baja-der'>
-            <div className="form-group">
-              <label>Nombre</label>
-              <input type="text" placeholder="Ingrese el nombre" defaultValue={selectedAdmin?.name || ''} />
-            </div>
-            <div className="form-group">
-              <label>Telefono</label>
-              <input type="text" placeholder="Ingrese el telefono" />
-            </div>
-            <div className="form-group">
-              <label>Email</label>
-              <input type="email" placeholder="Ingrese el Email" />
-            </div>
-            <div className="form-group">
-              <label>Rol</label>
-              <div className="role-options">
-                <button
-                  className={`role-button ${selectedRole === 'Admin' ? 'selected' : ''}`}
-                  onClick={() => handleRoleSelect('Admin')}
-                >Admin</button>
-                <button
-                  className={`role-button ${selectedRole === 'Client' ? 'selected' : ''}`}
-                  onClick={() => handleRoleSelect('Client')}
-                >Cliente</button>
+            <form onSubmit={handleSubmit(handleSaveChanges)}>
+              <div className="form-group">
+                <label>Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  placeholder="Ingrese el nombre"
+                  {...register('nombre')}
+                />
               </div>
-            </div>
-            <div className="form-actions">
-              <button className="cancel-button" onClick={handleRemoveAdmin}>Cancelar</button>
-              <button className="save-button">Guardar Cambios</button>
-            </div>
+              <div className="form-group">
+                <label>Apellido</label>
+                <input
+                  type="text"
+                  name="apellido"
+                  placeholder="Ingrese el apellido"
+                  {...register('apellido')}
+                />
+              </div>
+              <div className="form-group">
+                <label>Telefono</label>
+                <input
+                  type="text"
+                  name="telefono"
+                  placeholder="Ingrese el telefono"
+                  {...register('telefono')}
+                />
+              </div>
+              <div className="form-actions">
+                <button type="submit" className="save-button">Guardar Cambios</button>
+              </div>
+            </form>
           </div>
         </div>
       )}
 
       {(isAddingAdmin) && (
-        <form onSubmit={handleSubmit(onSubmit)} className="bottom-section form-admin">
+        <form onSubmit={handleSubmit(handleRegisterEmpleado)} className="bottom-section form-admin">
           <div className='zona-baja-izq'>
-            <h1>Detalles Admin</h1>
+            <h1>Detalles Empleado</h1>
           </div>
           <div className='zona-baja-der'>
             <div className="form-group">
@@ -359,8 +496,8 @@ export const Administradores = () => {
               <label>Imagen de perfil:</label>
               <input
                 type="file"
-                accept="image/*"
-                {...register("imagen", { required: "La imagen es obligatoria" })}
+                onChange={handleImageChange}
+
               />
               {errors.imagen && <span>{errors.imagen.message}</span>}
             </div>
@@ -391,20 +528,6 @@ export const Administradores = () => {
                 })}
               />
               {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
-            </div>
-
-            <div className="form-group">
-              <label>Rol</label>
-              <div className="role-options">
-                <button
-                  className={`role-button ${selectedRole === 'Admin' ? 'selected' : ''}`}
-                  onClick={() => handleRoleSelect('Admin')}
-                >Admin</button>
-                <button
-                  className={`role-button ${selectedRole === 'Client' ? 'selected' : ''}`}
-                  onClick={() => handleRoleSelect('Client')}
-                >Cliente</button>
-              </div>
             </div>
 
             <div className="form-actions">

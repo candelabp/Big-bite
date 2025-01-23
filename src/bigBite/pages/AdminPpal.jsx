@@ -4,6 +4,11 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import NavbarAdmin from '../components/NavbarAdmin';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { getEnvironments } from '../../helpers/getEnvironments';
+
+const {
+  VITE_API_HOST
+} = getEnvironments();
 
 const ResumenMensual = ({ data }) => {
   const [monthlyData, setMonthlyData] = useState([]);
@@ -50,7 +55,7 @@ export const AdminPpal = () => {
 
   const fetchAsientos = async () => {
     try {
-      const response = await fetch('http://localhost:8080/asientos');
+      const response = await fetch(`${VITE_API_HOST}/api/asientos`);
       if (!response.ok) {
         throw new Error('Error al obtener los datos');
       }

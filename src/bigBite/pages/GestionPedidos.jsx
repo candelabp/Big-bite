@@ -2,13 +2,18 @@ import { useEffect, useState } from 'react';
 import NavbarAdmin from '../components/NavbarAdmin';
 import { CompGestPedidos } from '../components/CompGestPedidos';
 import '../css/GestionPedidos.css';
+import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const GestionPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
 
+    const {
+        VITE_API_HOST
+    } = getEnvironments();
+
     useEffect(() => {
         // Llamada inicial para obtener pedidos
-        fetch('https://bigbitebackend-diegocanaless-projects.vercel.app/api/pedidos')
+        fetch(`${VITE_API_HOST}/api/pedidos`)
             .then(response => response.json())
             .then(data => setPedidos(data))
             .catch(error => console.error('Error al obtener pedidos:', error));
@@ -27,13 +32,8 @@ export const GestionPedidos = () => {
                 <hr />
                 <br />
 
-                <div className='pedidos-lista'>
-                    {console.log(pedidos)}
-                    {console.log(pedidos.paymentId)}
-                    {pedidos.map((pedido) => (
-                        <CompGestPedidos key={pedido.id} pedido={pedido} />
-                    ))}
-                </div>
+                <CompGestPedidos />
+
             </section>
         </>
     );

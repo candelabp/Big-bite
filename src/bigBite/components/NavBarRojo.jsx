@@ -7,11 +7,10 @@ import logoBlanco from '../assets/logo blanco.png'
 import { getAuth, signOut } from "firebase/auth";
 import { div } from "framer-motion/client";
 import Swal from "sweetalert2";
-
 export const NavBar = () => {
     // Estado para manejar si el menú está abierto o cerrado
     const [menuAbierto, setMenuAbierto] = useState(false);
-    const { user } = useContext(UserContext);
+    const { user, role } = useContext(UserContext);
 
     // Función para abrir/cerrar el menú
     const abrirMenu = () => {
@@ -28,14 +27,17 @@ export const NavBar = () => {
             text: "Deaseas cerrar sesión?",
             showDenyButton: true,
             confirmButtonText: "Aceptar",
-            denyButtonText: `Cancelar`
+            denyButtonText: "Cancelar"
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 const auth = getAuth();
                 signOut(auth).then(() => {
-                    // Sign-out successful.
+                    // Sign-out successful.e
+                    // Eliminar el usuario de localStorage
+                    localStorage.removeItem('user');
                     window.location.reload();
+                    window.location.href = '/';
                 }).catch((error) => {
                     // An error happened.
                     console.error("An error happened during sign-out:", error);
@@ -43,7 +45,6 @@ export const NavBar = () => {
             }
         });
     }
-
 
 
     return (
@@ -109,18 +110,25 @@ export const NavBar = () => {
                 </li>
 
                 {(user !== null) && (
-                    <div>
-                <li className="contLinks">
-                    <i class="bi bi-list-check"></i>
-                    <Link className="tituloLinkRojo" to="/mispedidos">Mis Pedidos</Link>
-                </li>
-            </div>
+
+                    <li className="contLinks">
+                        <i className="bi bi-list-check"></i>
+                        <Link className="tituloLinkRojo" to="/mispedidos">Mis Pedidos</Link>
+                    </li>
+
                 )}
 
                 <li className="contLinks">
                     <i className="bi bi-question-circle iconPreguntaRojo"></i>
                     <Link className="tituloLinkRojo" to="/contacto">Contacto</Link>
                 </li>
+
+                {(role == "admin" || role == "empleado") && (
+                    <li className="contLinks">
+                        <i className="bi bi-gear-fill"></i>
+                        <Link className="tituloLinkRojo" to="/AdminPpal">Administración</Link>
+                    </li>
+                )}
 
                 {user && (
                     <li className="contLinks" onClick={handleSignOut}>
@@ -130,11 +138,12 @@ export const NavBar = () => {
                         <Link className="tituloLinkRojo">Cerrar Sesión</Link>
                     </li>
                 )}
-                
+
+
                 <li className="redesNav">
-                    <i className="bi bi-twitter-x redesNavRojo"></i>
-                    <i className="bi bi-instagram redesNavRojo"></i>
-                    <i className="bi bi-facebook redesNavRojo"></i>
+                    <Link to='https://x.com/?lang=es' target='_blank'><i className="bi bi-twitter-x redesNavRojo"></i></Link>
+                    <Link to='https://www.instagram.com/?hl=es' target='_blank'><i className="bi bi-instagram redesNavRojo"></i></Link>
+                    <Link to='https://facebook.com/?locale=es_LA' target='_blank'><i className="bi bi-facebook redesNavRojo"></i></Link>
                 </li>
 
 

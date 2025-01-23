@@ -1,0 +1,60 @@
+.libro-mayor {
+    margin: 20px;
+  }
+  
+  .libro-mayor__titulo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #b71c1c;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .libro-mayor__cuenta {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    
+  }
+  
+  .libro-mayor__nombre-cuenta {
+    background-color: #b71c1c;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+  }
+  
+  .libro-mayor__tabla {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .libro-mayor__tabla th, .libro-mayor__tabla td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .libro-mayor__tabla th {
+    background-color: #b71c1c;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .libro-mayor__saldo-final {
+    font-weight: bold;
+    text-align: right;
+    background-color: #f9f9f9;
+    padding: 10px;
+  }
+  
+  .libro-mayor__saldo-final-valor {
+    font-weight: bold;
+    text-align: right;
+    color: #b71c1c;
+    padding: 10px;
+  }
+  .libro-mayor__cuenta h3 {
+    color: #fff;
+  }
