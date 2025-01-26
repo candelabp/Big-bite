@@ -7,6 +7,18 @@ import { NavBar } from '../components/NavBarRojo';
 export const PerfilUsuario = () => {
   const [imageSrc, setImageSrc] = useState('https://www.latercera.com/resizer/v2/B62GHN4X35BKPHABQ7A2MN7GGE.png?quality=80&smart=true&auth=d695ccedad5ca57992737e94c93fd6e5a9432636bc40ab803fd108a52cbc52e6&width=1200&height=800');
 
+  const [nombre, setNombre] = useState('Nombre de ejemplo');
+  const [apellido, setApellido] = useState('Apellido de ejemplo');
+  const [email, setEmail] = useState('email@ejemplo.com');
+  const [telefono, setTelefono] = useState('123456789');
+
+  const [editing, setEditing] = useState({
+    nombre: false,
+    apellido: false,
+    email: false,
+    telefono: false,
+  });
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -18,10 +30,21 @@ export const PerfilUsuario = () => {
     }
   };
 
+  const toggleEdit = (field) => {
+    setEditing((prevState) => ({
+      ...prevState,
+      [field]: !prevState[field],
+    }));
+  };
+
   return (
     <>
       <>
         <NavBar />
+        <header className="admin-header">
+          <h1>Mi Perfil</h1>
+        </header>
+        <h2>Administra tus datos personales</h2>
         <div className="user-container-principal">
           <div className='container-pfp'>
             <label htmlFor="pfp-upload" className="pfp-label">
@@ -39,25 +62,72 @@ export const PerfilUsuario = () => {
           <div className='user-info-container'>
             <div className='campo-perfil'>
               <label className='label-perfil'>Nombre:</label>
-              <input className='input-perfil' />
-              <img src={IconoEditar} alt="Editar nombre" className="svg-editar"/>
+              <input
+                className={`input-perfil ${editing.nombre ? '' : 'read-only'}`}
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                readOnly={!editing.nombre}
+              />
+              <img
+                src={IconoEditar}
+                alt="Editar nombre"
+                className="svg-editar"
+                onClick={() => toggleEdit('nombre')}
+              />
             </div>
             <div className='campo-perfil'>
               <label className='label-perfil'>Apellido:</label>
-              <input className='input-perfil' />
-              <img src={IconoEditar} alt="Editar apellido" className="svg-editar"/>
+              <input
+                className={`input-perfil ${editing.apellido ? '' : 'read-only'}`}
+                value={apellido}
+                onChange={(e) => setApellido(e.target.value)}
+                readOnly={!editing.apellido}
+              />
+              <img
+                src={IconoEditar}
+                alt="Editar apellido"
+                className="svg-editar"
+                onClick={() => toggleEdit('apellido')}
+              />
             </div>
             <div className='campo-perfil'>
               <label className='label-perfil'>Email:</label>
-              <input className='input-perfil' />
-              <img src={IconoEditar} alt="Editar email" className="svg-editar"/>
+              <input
+                className={`input-perfil ${editing.email ? '' : 'read-only'}`}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                readOnly={!editing.email}
+              />
+              <img
+                src={IconoEditar}
+                alt="Editar email"
+                className="svg-editar"
+                onClick={() => toggleEdit('email')}
+              />
             </div>
             <div className='campo-perfil'>
               <label className='label-perfil'>Telefono:</label>
-              <input className='input-perfil' />
-              <img src={IconoEditar} alt="Editar telefono" className="svg-editar"/>
+              <input
+                className={`input-perfil ${editing.telefono ? '' : 'read-only'}`}
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+                readOnly={!editing.telefono}
+              />
+              <img
+                src={IconoEditar}
+                alt="Editar telefono"
+                className="svg-editar"
+                onClick={() => toggleEdit('telefono')}
+              />
             </div>
+            <button className="btn-cambiar-contrasenia">Cambiar contraseña</button>
           </div>
+        </div>
+
+        <div className='container-botones-perfil'>
+          <button type="button" className="btn-guardar-perfil">
+            Guardar
+          </button>
         </div>
         <Footer />
       </>

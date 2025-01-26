@@ -1,3 +1,26 @@
+.admin-header {
+  text-align: center;
+  margin-bottom: 30px;
+  background-color: #DF1C1C;
+  padding: 20px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+
+.admin-header h1 {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.admin-header p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: white;
+}
+
 .user-container-principal {
   display: flex;
   justify-content: center;
@@ -7,11 +30,12 @@
   margin-top: 10vh;
   margin-bottom: 10vh;
 }
-container-pfp {
+
+.container-pfp {
   position: relative;
   display: inline-block;
 }
-  
+
 .pfp-image {
   width: 200px;
   height: 200px;
@@ -20,16 +44,16 @@ container-pfp {
   cursor: pointer;
   transition: filter 0.3s ease;
 }
-  
+
 .pfp-label:hover .pfp-image {
   filter: brightness(0.7);
 }
-  
+
 .pfp-label {
   position: relative;
   display: inline-block;
 }
-  
+
 .pfp-overlay {
   position: absolute;
   top: 50%;
@@ -43,7 +67,7 @@ container-pfp {
   text-align: center;
   cursor: pointer;
 }
-  
+
 .pfp-label:hover .pfp-overlay {
   display: block;
 }
@@ -59,26 +83,70 @@ container-pfp {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 }
-  
+
 .label-perfil {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  width: 150px; /* Asegura que todas las etiquetas tengan el mismo ancho */
 }
 
 .input-perfil {
   padding: 10px;
-  width: 100%;
+  flex: 1;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
+.input-perfil.read-only {
+  background-color: #f0f0f0;
+  color: #888;
+  cursor:default
+}
+
 
 .svg-editar {
   width: 20px;
   height: 20px;
   cursor: pointer;
   transition: transform 0.3s ease;
-  
+}
+
+.svg-editar:hover {
+  transform: scale(1.1);
+}
+
+.btn-cambiar-contrasenia {
+  align-self: flex-start;
+  color: #DF1C1C;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: underline;
+}
+
+.btn-cambiar-contrasenia:hover {
+  color: #a10606;
+}
+
+.container-botones-perfil {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10vh;
+}
+
+.btn-guardar-perfil{
+  width: 200px;
+  padding: 10px;
+  background-color: #DF1C1C;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-guardar-perfil:hover {
+  background-color: #a10606;
 }
