@@ -26,6 +26,7 @@ import { GestionPedidos } from './bigBite/pages/GestionPedidos';
 import { UserProvider } from './context/UserContext';
 import { Administradores } from './bigBite/pages/Administradores';
 import { MisPedidos } from './bigBite/pages/MisPedidos';
+import { PerfilUsuario } from './bigBite/pages/PerfilUsuario'; 
 import { MisPedidosProvider } from './bigBite/components/Context/MisPedidosContext';
 import { ProtectedRoute } from './router/ProtectedRoute';
 import { PublicRoute } from './router/PublicRouter';
@@ -62,8 +63,8 @@ root.render(
 
             <Route element={<ProtectedRoute allowedRoles={['empleado', 'admin', 'cliente', 'empleadoInactivo']} />}>
               <Route path="/misPedidos" element={<MisPedidosProvider> <MisPedidos /> </MisPedidosProvider>} />
-
               <Route path="/carrito" element={<Carrito />} />
+              <Route path="/perfilUsuario" element={<PerfilUsuario />} />
             </Route>
 
             <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
