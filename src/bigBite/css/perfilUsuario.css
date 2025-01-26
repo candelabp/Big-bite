@@ -1,41 +1,84 @@
+.user-container-principal {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 15vh;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
 container-pfp {
-    position: relative;
-    display: inline-block;
-  }
+  position: relative;
+  display: inline-block;
+}
   
-  .pfp-image {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
-    transition: filter 0.3s ease;
-  }
+.pfp-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
   
-  .pfp-label:hover .pfp-image {
-    filter: brightness(0.7);
-  }
+.pfp-label:hover .pfp-image {
+  filter: brightness(0.7);
+}
   
-  .pfp-label {
-    position: relative;
-    display: inline-block;
-  }
+.pfp-label {
+  position: relative;
+  display: inline-block;
+}
   
-  .pfp-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    display: none;
-    padding: 10px;
-    border-radius: 50%;
-    text-align: center;
-    cursor: pointer;
-  }
+.pfp-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: none;
+  padding: 10px;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+}
   
-  .pfp-label:hover .pfp-overlay {
-    display: block;
-  }
+.pfp-label:hover .pfp-overlay {
+  display: block;
+}
+
+.user-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+}
+
+.campo-perfil {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+}
   
+.label-perfil {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.input-perfil {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.svg-editar {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  
+}
