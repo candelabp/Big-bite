@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/perfilUsuario.css';
-import IconoEditar from '../assets/editar.svg';
+import IconoEditar from '../assets/svg/editar.svg';
 import { Footer } from '../components/Footer';
 import { NavBar } from '../components/NavBarRojo';
 
@@ -116,9 +116,9 @@ export const PerfilUsuario = () => {
               />
               <img
                 src={IconoEditar}
-                alt="Editar apellido"
+                alt="Editar email"
                 className="svg-editar"
-                onClick={() => toggleEdit('apellido')}
+                onClick={() => toggleEdit('email')}
               />
             </div>
             <div className='campo-perfil'>
@@ -129,12 +129,7 @@ export const PerfilUsuario = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 readOnly={!editing.email}
               />
-              <img
-                src={IconoEditar}
-                alt="Editar email"
-                className="svg-editar"
-                onClick={() => toggleEdit('email')}
-              />
+              <div className="svg-placeholder"></div>
             </div>
             <div className='campo-perfil'>
               <label className='label-perfil'>Telefono:</label>
