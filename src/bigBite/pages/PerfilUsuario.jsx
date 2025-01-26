@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/perfilUsuario.css';
 import IconoEditar from '../assets/editar.svg';
 import { Footer } from '../components/Footer';
@@ -19,12 +19,16 @@ export const PerfilUsuario = () => {
     telefono: false,
   });
 
+  const [hasChanges, setHasChanges] = useState(false);
+  const [areFieldsValid, setAreFieldsValid] = useState(true);
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageSrc(reader.result);
+        setHasChanges(true); // Marcar que ha habido un cambio
       };
       reader.readAsDataURL(file);
     }
@@ -36,6 +40,33 @@ export const PerfilUsuario = () => {
       [field]: !prevState[field],
     }));
   };
+
+  useEffect(() => {
+    const originalValues = {
+      nombre: 'Nombre de ejemplo',
+      apellido: 'Apellido de ejemplo',
+      email: 'email@ejemplo.com',
+      telefono: '123456789',
+      imageSrc: 'https://www.latercera.com/resizer/v2/B62GHN4X35BKPHABQ7A2MN7GGE.png?quality=80&smart=true&auth=d695ccedad5ca57992737e94c93fd6e5a9432636bc40ab803fd108a52cbc52e6&width=1200&height=800',
+    };
+
+    const currentValues = {
+      nombre,
+      apellido,
+      email,
+      telefono,
+      imageSrc,
+    };
+
+    const hasChanged = Object.keys(currentValues).some(
+      (key) => currentValues[key] !== originalValues[key]
+    );
+
+    const areFieldsFilled = Object.values(currentValues).every(value => value.trim() !== '');
+
+    setHasChanges(hasChanged);
+    setAreFieldsValid(areFieldsFilled);
+  }, [nombre, apellido, email, telefono, imageSrc]);
 
   return (
     <>
@@ -125,7 +156,7 @@ export const PerfilUsuario = () => {
         </div>
 
         <div className='container-botones-perfil'>
-          <button type="button" className="btn-guardar-perfil">
+          <button type="button" className="btn-guardar-perfil" disabled={!hasChanges || !areFieldsValid}>
             Guardar
           </button>
         </div>

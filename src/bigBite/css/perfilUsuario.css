@@ -136,7 +136,7 @@
   margin-bottom: 10vh;
 }
 
-.btn-guardar-perfil{
+.btn-guardar-perfil {
   width: 200px;
   padding: 10px;
   background-color: #DF1C1C;
@@ -149,4 +149,14 @@
 
 .btn-guardar-perfil:hover {
   background-color: #a10606;
+}
+
+.btn-guardar-perfil:disabled {
+  background-color: #ccc; /* Color de fondo gris claro */
+  color: #888; /* Color de texto gris */
+  cursor: not-allowed; /* Cursor de no permitido */
+}
+
+.btn-guardar-perfil:disabled:hover {
+  background-color: #ccc; /* Mantén el color de fondo gris claro al pasar el cursor */
 }
