@@ -7,6 +7,8 @@ import { FirebaseApp } from '../../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore/lite';
+import IconoOcultarPW from '../assets/svg/ojo-abierto.svg';
+import IconoMostrarPW from '../assets/svg/ojo-cerrado.svg';
 import Swal from 'sweetalert2';
 
 export const Ingresar = () => {
@@ -15,7 +17,6 @@ export const Ingresar = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
-
 
   const handleLoginWithGoogle = async () => {
     const auth = getAuth(FirebaseApp);
@@ -96,6 +97,7 @@ export const Ingresar = () => {
       });
     }
   };
+
   return (
     <>
       <NavBarBlanco />
@@ -113,14 +115,17 @@ export const Ingresar = () => {
           />
 
           <label htmlFor="password"><b>Contraseña</b></label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className='campo-contrasenia'>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <img src={IconoMostrarPW} alt="Mostrar contraseña" className="icono-mostrar-contrasenia" />
+          </div>
 
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 

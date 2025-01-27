@@ -39,11 +39,34 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+    
+}
+
+.inicio-sesion input[type="password"] {
+    padding-right: 40px;
+
 }
 
 .inicio-sesion input::placeholder {
     color: #aaa;
 }
+
+.campo-contrasenia {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.icono-mostrar-contrasenia {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-100%);
+}
+
 
 .checkbox-container {
     display: flex;
