@@ -13,7 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { v4 as uuidv4 } from 'uuid'; // Para generar un UID único
 import Swal from 'sweetalert2';
-
+import IconoOcultarPW from '../assets/svg/ojo-abierto.svg';
+import IconoMostrarPW from '../assets/svg/ojo-cerrado.svg';
 
 export const Formulario = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
@@ -23,6 +24,8 @@ export const Formulario = () => {
   const [image, setImage] = useState(null);
   const [imageURL, setImageURL] = useState('');
   const [progress, setProgress] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Función para manejar la selección de la imagen
   const handleImageChange = (e) => {
@@ -73,8 +76,6 @@ export const Formulario = () => {
       );
     });
   };
-
-
 
   // Función para registrar un empleado
   const handleRegister = async (data) => {
@@ -181,6 +182,13 @@ export const Formulario = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   return (
     <div>
@@ -237,10 +245,10 @@ export const Formulario = () => {
             {errors.imagen && <span>{errors.imagen.message}</span>}
           </div>
 
-          <div>
-            <label>Contraseña:</label>
+          <label>Contraseña:</label>
+          <div className='campo-contrasenia'>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("password", {
                 required: "La contraseña es obligatoria",
                 minLength: {
@@ -249,21 +257,33 @@ export const Formulario = () => {
                 },
               })}
             />
-            {errors.password && <span>{errors.password.message}</span>}
+            <img
+              src={showPassword ? IconoOcultarPW : IconoMostrarPW}
+              alt={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              className="icono-mostrar-contrasenia"
+              onClick={togglePasswordVisibility}
+            />
           </div>
+          {errors.password && <span>{errors.password.message}</span>}
 
-          <div>
-            <label>Repetir contraseña:</label>
+          <label>Repetir contraseña:</label>
+          <div className='campo-contrasenia'>
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               {...register("confirmPassword", {
                 required: "Debes repetir la contraseña",
                 validate: (value) =>
                   value === password || "Las contraseñas no coinciden",
               })}
             />
-            {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
+            <img
+              src={showConfirmPassword ? IconoOcultarPW : IconoMostrarPW}
+              alt={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              className="icono-mostrar-contrasenia"
+              onClick={toggleConfirmPasswordVisibility}
+            />
           </div>
+          {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
 
           <div className="formulario-buttons">
             <button type="submit" className='boton-enviar'>Registrar</button>

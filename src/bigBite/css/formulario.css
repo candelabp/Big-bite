@@ -59,10 +59,15 @@ body {
     font-style: normal;
 }
 
+.formulario input[type="password"],
+.formulario input[type="text"] {
+    padding-right: 40px;
+}
+
 .formulario span {
     color: #d32f2f;
-    font-size: 12px;
-    margin-top: -10px;
+    font-size: 15px;
+    margin-bottom: 15px;
     display: block;
 }
 
@@ -127,21 +132,20 @@ body {
     background-color: #f0ac40; /* Amarillo más oscuro al pasar el mouse */
 }
 
-
 /* Estilos adicionales para el contenedor de botones */
 .formulario-buttons {
     display: flex;
     justify-content: space-between;
 }
-.titulo-form h1{
-  
-    font-weight:600;
+
+.titulo-form h1 {
+    font-weight: 600;
     text-align: center;
     color: #f9f9f9;
     padding: auto;
-
 }
-.titulo-form{
+
+.titulo-form {
     background-color: #d32f2f;
     padding: 2vh;
 }
@@ -151,8 +155,6 @@ body {
     .container {
         max-width: 800px; /* Ampliar el contenedor para pantallas más grandes */
         padding: 40px;
-       
-
     }
 
     .formulario {
@@ -160,11 +162,10 @@ body {
         flex-wrap: wrap; /* Permitir que los elementos se ajusten en varias filas */
         gap: 20px; /* Separar los campos */
         justify-content: center;
-
     }
 
     .formulario div {
-     /*   width: 48%; /* Mostrar dos campos por fila en pantallas más grandes */
+        /*   width: 48%; /* Mostrar dos campos por fila en pantallas más grandes */
     }
 
     .formulario label {
@@ -178,5 +179,20 @@ body {
     .formulario button {
         margin-top: 20px;
     }
-    
+}
+
+.campo-contrasenia {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.icono-mostrar-contrasenia {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
 }
