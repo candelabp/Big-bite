@@ -118,7 +118,7 @@ export const PerfilUsuario = () => {
                 src={IconoEditar}
                 alt="Editar email"
                 className="svg-editar"
-                onClick={() => toggleEdit('email')}
+                onClick={() => toggleEdit('apellido')}
               />
             </div>
             <div className='campo-perfil'>
