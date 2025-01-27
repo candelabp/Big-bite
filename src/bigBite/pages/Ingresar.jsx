@@ -15,6 +15,7 @@ export const Ingresar = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -98,6 +99,10 @@ export const Ingresar = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <NavBarBlanco />
@@ -117,14 +122,19 @@ export const Ingresar = () => {
           <label htmlFor="password"><b>Contraseña</b></label>
           <div className='campo-contrasenia'>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <img src={IconoMostrarPW} alt="Mostrar contraseña" className="icono-mostrar-contrasenia" />
+            <img
+              src={showPassword ? IconoOcultarPW : IconoMostrarPW}
+              alt={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              className="icono-mostrar-contrasenia"
+              onClick={togglePasswordVisibility}
+            />
           </div>
 
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

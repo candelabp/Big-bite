@@ -1,11 +1,10 @@
 /* ingresar.css */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 .form-container {
-   display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-
 }
 
 .inicio-sesion {
@@ -17,7 +16,6 @@
     width: 100%;
     margin-bottom: 40vh;
     margin-top: 20vh;
-
 }
 
 .inicio-sesion label {
@@ -28,23 +26,22 @@
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-style: normal;
-
 }
 
 .inicio-sesion input[type="email"],
-.inicio-sesion input[type="password"] {
+.inicio-sesion input[type="password"],
+.inicio-sesion input[type="text"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
-    
 }
 
-.inicio-sesion input[type="password"] {
-    padding-right: 40px;
-
+.inicio-sesion input[type="password"],
+.inicio-sesion input[type="text"] {
+    padding-right: 40px; /* Espacio para el ícono */
 }
 
 .inicio-sesion input::placeholder {
@@ -67,7 +64,6 @@
     transform: translateY(-100%);
 }
 
-
 .checkbox-container {
     display: flex;
     align-items: center;
@@ -81,7 +77,6 @@
 .checkbox-container label {
     font-size: 14px;
     color: #555;
-   
 }
 
 .div-btns {
@@ -91,7 +86,7 @@
     align-items: center;
 }
 
-.ingresar-btn{
+.ingresar-btn {
     background-color: #ff3d3d;
     color: white;
     padding: 8px 15px;
@@ -103,12 +98,10 @@
     transition: background-color 0.3s ease;
     margin-bottom: 2vh;
     font-family: "Poppins", sans-serif;
-    /* font-weight: 300; */
     font-style: normal;
-   
 }
 
-.loginGoogle-btn{
+.loginGoogle-btn {
     background-color: #ff3d3d;
     color: white;
     padding: 8px 10px;
@@ -120,9 +113,7 @@
     transition: background-color 0.3s ease;
     margin-bottom: 2vh;
     font-family: "Poppins", sans-serif;
-    
     font-style: normal;
-   
 }
 
 .cont-btn {
@@ -137,20 +128,20 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
     margin-bottom: 2vh;
     font-family: "Poppins", sans-serif;
-    /* font-weight: 300; */
     font-style: normal;
-   
 }
 
-.ingresar-btn:hover  {
+.ingresar-btn:hover {
     background-color: #e32d2d;
     transform: scale(1.02);
 }
-.loginGoogle-btn:hover  {
+
+.loginGoogle-btn:hover {
     background-color: #e32d2d;
     transform: scale(1.02);
 }
- .cont-btn:hover {
+
+.cont-btn:hover {
     background-color: #e99b1e;
     transform: scale(1.02);
 }
