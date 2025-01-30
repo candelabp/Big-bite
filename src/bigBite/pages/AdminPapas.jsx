@@ -71,23 +71,23 @@ export const AdminPapas = () => {
 
   const onSubmit = async (data) => {
     data.disponible = data.disponible;
-
+  
     const detalleInsumos = selectedInsumos
         .filter(insumo => insumo.cantidad > 0)
         .map(insumo => ({
-          insumoId: insumo.insumoId,  // Asegúrate de que insumoId esté presente y no sea null
+          insumoId: insumo.insumoId,
           cantidad: parseInt(insumo.cantidad, 10),
         }));
-
+  
     data.detalleInsumos = detalleInsumos;
-
+  
     if (data.imagenPapasFritas && data.imagenPapasFritas.length > 0) {
       const file = data.imagenPapasFritas[0];
       const storage = getStorage();
       const fileName = `papas-${uuidv4()}`;
       const storageRef = ref(storage, `papas-images/${fileName}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
-
+  
       uploadTask.on('state_changed',
           (snapshot) => {
             // Progress function
@@ -98,14 +98,14 @@ export const AdminPapas = () => {
           async () => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             data.urlImagen = downloadURL;
-
+  
             // Enviar el DTO al backend
             const url = selectedPapasFritas ?
                 `${VITE_API_HOST}/api/papas-fritas/editar/${selectedPapasFritas.id}` :
                 `${VITE_API_HOST}/api/papas-fritas/registrar`;
-
+  
             const method = selectedPapasFritas ? 'PUT' : 'POST';
-
+  
             fetch(url, {
               method: method,
               headers: {
@@ -113,14 +113,8 @@ export const AdminPapas = () => {
               },
               body: JSON.stringify(data)
             })
-                .then(response => {
-                  if (!response.ok) {
-                    return response.text().then(text => { throw new Error(text); });
-                  }
-                  return response.text();
-                })
+                .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
                 .then(message => {
-                  console.log('Respuesta del servidor:', message);
                   alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
                   reset();
                   setSelectedPapasFritas(null);
@@ -130,20 +124,20 @@ export const AdminPapas = () => {
                       .then(response => response.json())
                       .then(data => setPapasFritas(data));
                 })
-                .catch(error => {
-                  console.error('Hubo un error:', error);
-                  alert('Error al enviar los datos');
-                });
+                .catch(error => alert('Error al enviar los datos'));
           }
       );
     } else {
+      // Asignar URL predeterminada si no se ha seleccionado una imagen
+      data.urlImagen = "https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a";
+  
       // Enviar el DTO al backend sin imagen
       const url = selectedPapasFritas ?
           `${VITE_API_HOST}/api/papas-fritas/editar/${selectedPapasFritas.id}` :
           `${VITE_API_HOST}/api/papas-fritas/registrar`;
-
+  
       const method = selectedPapasFritas ? 'PUT' : 'POST';
-
+  
       fetch(url, {
         method: method,
         headers: {
@@ -151,14 +145,8 @@ export const AdminPapas = () => {
         },
         body: JSON.stringify(data)
       })
-          .then(response => {
-            if (!response.ok) {
-              return response.text().then(text => { throw new Error(text); });
-            }
-            return response.text();
-          })
+          .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
           .then(message => {
-            console.log('Respuesta del servidor:', message);
             alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
             reset();
             setSelectedPapasFritas(null);
@@ -168,10 +156,7 @@ export const AdminPapas = () => {
                 .then(response => response.json())
                 .then(data => setPapasFritas(data));
           })
-          .catch(error => {
-            console.error('Hubo un error:', error);
-            alert('Error al enviar los datos');
-          });
+          .catch(error => alert('Error al enviar los datos'));
     }
   };
 

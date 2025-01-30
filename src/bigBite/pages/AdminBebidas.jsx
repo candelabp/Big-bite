@@ -81,6 +81,9 @@ export const AdminBebidas = () => {
         }
       );
     } else {
+      // Asignar URL predeterminada si no se ha seleccionado una imagen
+      data.urlImagen = "https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a";
+  
       // Enviar el DTO al backend sin imagen
       const url = selectedBebida ? 
         `${VITE_API_HOST}/api/bebidas/editar/${selectedBebida.id}` :
