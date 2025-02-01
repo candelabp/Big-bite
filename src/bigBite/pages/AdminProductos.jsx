@@ -8,7 +8,6 @@ import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminProductos = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
-  const [imageSrc, setImageSrc] = useState('https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a');
   const [hamburguesas, setHamburguesas] = useState([]);
   const [insumos, setInsumos] = useState([]);
   const [selectedHamburguesa, setSelectedHamburguesa] = useState(null);
@@ -192,7 +191,7 @@ export const AdminProductos = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImageSrc(reader.result);
+        setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
     } else {
@@ -260,20 +259,19 @@ export const AdminProductos = () => {
                 <label htmlFor="disponible" className="checkmark-cbx-productos"></label>
               </div>
 
-              <div className='container-product-image'>
-                <label htmlFor="product-image-upload" className='product-image-label'>
-                  <img src={imageSrc} alt="Imagen del producto" className="product-image" />
-                  <div className="product-image-overlay">Subir imagen</div>
-                </label>
-                <input type="file"
-                  id='product-image-upload'
-                  accept="image/*"
-                  {...register("imagenHamburguesa")} 
-                  onChange={handleImageChange}
-                  style={{ display: 'none' }}
-                />
+              <div>
+                <label className='label-producto'>Imagen:</label>
+                <input type="file" accept="image/*" {...register("imagenHamburguesa")} onChange={handleImageChange} />
               </div>
 
+              {/* Previsualización de la imagen o mensaje cuando no haya imagen */}
+              <div className="image-preview">
+                {imagePreview ? (
+                    <img src={imagePreview} alt="Previsualización" className="imagen-producto" />
+                ) : (
+                    <p>No hay imagen cargada</p>
+                )}
+              </div>
               <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
                 <button type="button" onClick={handleOpenInsumosModal} className="btnModal">
                   Seleccionar insumos

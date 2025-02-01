@@ -8,7 +8,6 @@ import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminBiteBox = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
-  const [imageSrc, setImageSrc] = useState('https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a');
   const [biteBoxes, setBiteBoxes] = useState([]);
   const [hamburguesas, setHamburguesas] = useState([]);
   const [bebidas, setBebidas] = useState([]);
@@ -48,8 +47,8 @@ export const AdminBiteBox = () => {
   const onSubmit = async (data) => {
     data.disponible = selectedBiteBox ? data.disponible : (data.stock > 0);
   
-    if (data.imagenBiteBox && data.imagenBiteBox.length > 0) {
-      const file = data.imagenBiteBox[0];
+    if (data.imagen && data.imagen.length > 0) {
+      const file = data.imagen[0];
       const storage = getStorage();
       const fileName = `bitebox-${uuidv4()}`;
       const storageRef = ref(storage, `bitebox-images/${fileName}`);
@@ -163,7 +162,7 @@ export const AdminBiteBox = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImageSrc(reader.result);
+        setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
     } else {
@@ -257,20 +256,19 @@ export const AdminBiteBox = () => {
               <input type="checkbox" id="disponible" {...register("disponible")} />
               <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
             </div>
-
-            <div className='container-product-image'>
-                <label htmlFor="product-image-upload" className='product-image-label'>
-                  <img src={imageSrc} alt="Imagen del producto" className="product-image" />
-                  <div className="product-image-overlay">Subir imagen</div>
-                </label>
-                <input type="file"
-                  id='product-image-upload'
-                  accept="image/*"
-                  {...register("imagenBiteBox")} 
-                  onChange={handleImageChange}
-                  style={{ display: 'none' }}
-                />
-              </div>
+            <div>
+              <label className='label-producto'>Imagen:</label>
+              <input type="file" accept="image/*" {...register("imagen")} onChange={handleImageChange} />
+            </div>
+            
+            {/* Previsualización de la imagen o mensaje cuando no haya imagen */}
+            <div className="image-preview">
+              {imagePreview ? (
+                <img src={imagePreview} alt="Previsualización" className="imagen-producto" />
+              ) : (
+                <p>No hay imagen cargada</p>
+              )}
+            </div>
 
             <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
               <button type="submit" disabled={!isFormComplete()} className={`submit-button btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
