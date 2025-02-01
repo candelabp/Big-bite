@@ -28,20 +28,6 @@ const firebaseConfig = {
   appId: VITE_APPID,
 };
 
-
-// console.log(process.env);
-// console.log(import.meta.env);
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBC8449nnCed0S3KNG1cXq-A7dI62yFV-M",
-//   authDomain: "bigbite-55224.firebaseapp.com",
-//   projectId: "bigbite-55224",
-//   storageBucket: "bigbite-55224.appspot.com",
-//   messagingSenderId: "113801897542",
-//   appId: "1:113801897542:web:94cd47fd3e3e70ac0c0c47"
-// };
-
-
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);
 export const FirebaseAuth = getAuth( FirebaseApp );
