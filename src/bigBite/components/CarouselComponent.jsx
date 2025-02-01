@@ -21,7 +21,7 @@ export const CarouselComponent = () => {
               <img src={logoBlanco} alt="" className="imgFondoSlider" />
               <img src={burger2} alt="" className="imgHamburguesaSlider" />
               <div className="descripcionPedido">
-                <h4 className="tituloProdSlider">Mega Crunch Bate</h4>
+                <h4 className="tituloProdSlider">Mega Crunch Bite</h4>
                 <p className="textoSliderDescripcion">
                   Una hamburguesa con carne jugosa, lechuga fresca, tomate, pepinillos crujientes y una capa de cebolla
                   frita, todo bañado en una salsa especial de la casa

@@ -25,7 +25,7 @@ export const NavBarBlanco = () => {
 
     const handleSignOut = () => {
         Swal.fire({
-            text: "¿Deaseas cerrar sesión?",
+            text: "¿Deseas cerrar sesión?",
             showDenyButton: true,
             confirmButtonText: "Aceptar",
             denyButtonText: "Cancelar"
