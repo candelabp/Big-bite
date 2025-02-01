@@ -8,6 +8,7 @@ import { getEnvironments } from '../../helpers/getEnvironments';
 
 export const AdminPapas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
+  const [imageSrc, setImageSrc] = useState('https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a');
   const [papasFritas, setPapasFritas] = useState([]);
   const [insumos, setInsumos] = useState([]);
   const [selectedPapasFritas, setSelectedPapasFritas] = useState(null);
@@ -190,7 +191,7 @@ export const AdminPapas = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
+        setImageSrc(reader.result);
       };
       reader.readAsDataURL(file);
     } else {
@@ -265,18 +266,20 @@ export const AdminPapas = () => {
               <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
             </div>
 
-            <div>
-              <label className='label-producto'>Imagen:</label>
-              <input className='input-producto' type="file" accept="image/*" {...register("imagenPapasFritas")} onChange={handleImageChange} />
+            <div className='container-product-image'>
+                <label htmlFor="product-image-upload" className='product-image-label'>
+                  <img src={imageSrc} alt="Imagen del producto" className="product-image" />
+                  <div className="product-image-overlay">Subir imagen</div>
+                </label>
+                <input type="file"
+                  id='product-image-upload'
+                  accept="image/*"
+                  {...register("imagenPapasFritas")} 
+                  onChange={handleImageChange}
+                  style={{ display: 'none' }}
+                />
             </div>
 
-            <div className="image-preview">
-              {imagePreview ? (
-                <img src={imagePreview} alt="Previsualización" className="imagen-producto" />
-              ) : (
-                <p>No hay imagen cargada</p>
-              )}
-            </div>
             <div className='content-buttons-adminProducts' style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
               <button type="button" onClick={handleOpenInsumosModal} className="btnModal">
                 Seleccionar insumos
