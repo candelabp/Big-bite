@@ -40,17 +40,17 @@ export const AdminPapas = () => {
   const handleInsumoSelection = (insumoId, cantidad) => {
     setSelectedInsumos(prevSelected => {
       const insumoExists = prevSelected.find(item => item.insumoId === insumoId);
-  
+
       if (insumoExists) {
         return prevSelected.map(item =>
           item.insumoId === insumoId ? { ...item, cantidad: parseInt(cantidad) } : item
         );
       }
-  
+
       if (parseInt(cantidad) > 0) {
         return [...prevSelected, { insumoId, cantidad: parseInt(cantidad) }];
       }
-  
+
       return prevSelected;
     });
   };
@@ -66,29 +66,29 @@ export const AdminPapas = () => {
   };
 
   const handleEditPapasFritas = (e) => {
-    e.preventDefault(); 
-    setIsModalOpen(true); 
+    e.preventDefault();
+    setIsModalOpen(true);
   };
 
   const onSubmit = async (data) => {
     data.disponible = data.disponible;
-  
+
     const detalleInsumos = selectedInsumos
         .filter(insumo => insumo.cantidad > 0)
         .map(insumo => ({
           insumoId: insumo.insumoId,
           cantidad: parseInt(insumo.cantidad, 10),
         }));
-  
+
     data.detalleInsumos = detalleInsumos;
-  
+
     if (data.imagenPapasFritas && data.imagenPapasFritas.length > 0) {
       const file = data.imagenPapasFritas[0];
       const storage = getStorage();
       const fileName = `papas-${uuidv4()}`;
       const storageRef = ref(storage, `papas-images/${fileName}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
-  
+
       uploadTask.on('state_changed',
           (snapshot) => {
             // Progress function
@@ -99,14 +99,14 @@ export const AdminPapas = () => {
           async () => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             data.urlImagen = downloadURL;
-  
+
             // Enviar el DTO al backend
             const url = selectedPapasFritas ?
                 `${VITE_API_HOST}/api/papas-fritas/editar/${selectedPapasFritas.id}` :
                 `${VITE_API_HOST}/api/papas-fritas/registrar`;
-  
+
             const method = selectedPapasFritas ? 'PUT' : 'POST';
-  
+
             fetch(url, {
               method: method,
               headers: {
@@ -137,16 +137,16 @@ export const AdminPapas = () => {
           }
       );
     } else {
-      // Asignar URL predeterminada si no se ha seleccionado una imagen
-      data.urlImagen = "https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a";
-  
+      // Si no se selecciona una nueva imagen, conservar la URL actual
+      data.urlImagen = selectedPapasFritas ? selectedPapasFritas.urlImagen : "https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a";
+
       // Enviar el DTO al backend sin imagen
       const url = selectedPapasFritas ?
           `${VITE_API_HOST}/api/papas-fritas/editar/${selectedPapasFritas.id}` :
           `${VITE_API_HOST}/api/papas-fritas/registrar`;
-  
+
       const method = selectedPapasFritas ? 'PUT' : 'POST';
-  
+
       fetch(url, {
         method: method,
         headers: {
@@ -279,7 +279,7 @@ export const AdminPapas = () => {
             <div className="container-cbx-productos">
               <span className="label-producto">Disponible:</span>
               <input type="checkbox" id="disponible" {...register("disponible")} />
-              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>
             </div>
 
             <div>
@@ -302,11 +302,11 @@ export const AdminPapas = () => {
               <button type="submit" disabled={!isFormComplete()} className={`btnRegistrarHamburguesa ${!isFormComplete() ? 'disabled' : ''}`}>
                 {selectedPapasFritas ? 'Editar Papas Fritas' : 'Registrar Papas Fritas'}
               </button>
-              
+
               <button type="button" onClick={handleEditPapasFritas} className="btnRegistrarHamburguesa">
                 Editar Papas Fritas existentes
               </button>
-            </div>          
+            </div>
           </form>
         </section>
 
@@ -362,7 +362,6 @@ export const AdminPapas = () => {
                         />
                       </div>
                     </div>
-                    
                   );
                 })}
                 <button onClick={confirmInsumoSelection} className="btnRegistrarHamburguesa">

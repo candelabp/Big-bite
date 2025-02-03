@@ -26,7 +26,7 @@ export const AdminBiteBox = () => {
       .then(response => response.json())
       .then(data => setBiteBoxes(data))
       .catch(error => console.error('Error al cargar las BiteBoxes:', error));
-    
+
     // Cargar hamburguesas desde el backend para el desplegable
     fetch(`${VITE_API_HOST}/api/hamburguesas`)
       .then(response => response.json())
@@ -41,20 +41,20 @@ export const AdminBiteBox = () => {
   }, []);
 
   const handleEditBiteBoxes = (e) => {
-    e.preventDefault(); 
-    setIsModalOpen(true); 
+    e.preventDefault();
+    setIsModalOpen(true);
   };
 
   const onSubmit = async (data) => {
     data.disponible = selectedBiteBox ? data.disponible : (data.stock > 0);
-  
+
     if (data.imagen && data.imagen.length > 0) {
       const file = data.imagen[0];
       const storage = getStorage();
       const fileName = `bitebox-${uuidv4()}`;
       const storageRef = ref(storage, `bitebox-images/${fileName}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
-  
+
       uploadTask.on('state_changed',
         (snapshot) => {
           // Progress function
@@ -65,14 +65,14 @@ export const AdminBiteBox = () => {
         async () => {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           data.urlImagen = downloadURL;
-  
+
           // Enviar el DTO al backend
           const url = selectedBiteBox ?
             `${VITE_API_HOST}/api/bite-box/editar/${selectedBiteBox.id}` :
             `${VITE_API_HOST}/api/bite-box/registrar`;
-  
+
           const method = selectedBiteBox ? 'PUT' : 'POST';
-  
+
           fetch(url, {
             method: method,
             headers: {
@@ -110,16 +110,16 @@ export const AdminBiteBox = () => {
         }
       );
     } else {
-      // Asignar URL predeterminada si no se ha seleccionado una imagen
-      data.urlImagen = "https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a";
-  
+      // Si no se selecciona una nueva imagen, conservar la URL actual
+      data.urlImagen = selectedBiteBox ? selectedBiteBox.urlImagen : "https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a";
+
       // Enviar el DTO al backend sin imagen
       const url = selectedBiteBox ?
         `${VITE_API_HOST}/api/bite-box/editar/${selectedBiteBox.id}` :
         `${VITE_API_HOST}/api/bite-box/registrar`;
-  
+
       const method = selectedBiteBox ? 'PUT' : 'POST';
-  
+
       fetch(url, {
         method: method,
         headers: {
@@ -259,7 +259,7 @@ export const AdminBiteBox = () => {
               </select>
               {errors.bebida && <span className="error-message">{errors.bebida.message}</span>}
             </div>
-            
+
             <div className="container-cbx-productos">
               <span className="label-producto">¿Contiene juguete?</span>
               <input type="checkbox" id="contieneJuguete" {...register("contieneJuguete")} />
@@ -269,13 +269,13 @@ export const AdminBiteBox = () => {
             <div className="container-cbx-productos">
               <span className="label-producto">Disponible:</span>
               <input type="checkbox" id="disponible" {...register("disponible")} />
-              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>              
+              <label htmlFor="disponible" className="checkmark-cbx-productos"></label>
             </div>
             <div>
               <label className='label-producto'>Imagen:</label>
               <input type="file" accept="image/*" {...register("imagen")} onChange={handleImageChange} />
             </div>
-            
+
             {/* Previsualización de la imagen o mensaje cuando no haya imagen */}
             <div className="image-preview">
               {imagePreview ? (

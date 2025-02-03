@@ -74,23 +74,23 @@ export const AdminProductos = () => {
 
   const onSubmit = async (data) => {
     data.disponible = data.disponible;
-  
+
     const detalleInsumos = selectedInsumos
         .filter(insumo => insumo.cantidad > 0)
         .map(insumo => ({
           insumoId: insumo.insumoId,
           cantidad: parseInt(insumo.cantidad, 10),
         }));
-  
+
     data.detalleInsumos = detalleInsumos;
-  
+
     if (data.imagenHamburguesa && data.imagenHamburguesa.length > 0) {
       const file = data.imagenHamburguesa[0];
       const storage = getStorage();
       const fileName = `hamburguesa-${uuidv4()}`;
       const storageRef = ref(storage, `hamburguesas-images/${fileName}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
-  
+
       uploadTask.on('state_changed',
           (snapshot) => {
             // Progress function
@@ -101,14 +101,14 @@ export const AdminProductos = () => {
           async () => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             data.urlImagen = downloadURL;
-  
+
             // Enviar el DTO al backend
             const url = selectedHamburguesa ?
                 `${VITE_API_HOST}/api/hamburguesas/editar/${selectedHamburguesa.id}` :
                 `${VITE_API_HOST}/api/hamburguesas/registrar`;
-  
+
             const method = selectedHamburguesa ? 'PUT' : 'POST';
-  
+
             fetch(url, {
               method: method,
               headers: {
@@ -139,16 +139,16 @@ export const AdminProductos = () => {
           }
       );
     } else {
-      // Asignar URL predeterminada si no se ha seleccionado una imagen
-      data.urlImagen = "https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a";
-  
+      // Si no se selecciona una nueva imagen, conservar la URL actual
+      data.urlImagen = selectedHamburguesa ? selectedHamburguesa.urlImagen : "https://firebasestorage.googleapis.com/v0/b/bigbite-55224.appspot.com/o/imagen-producto-default.png?alt=media&token=d6df8d5d-e999-4139-9ac0-b168ce0f316a";
+
       // Enviar el DTO al backend sin imagen
       const url = selectedHamburguesa ?
           `${VITE_API_HOST}/api/hamburguesas/editar/${selectedHamburguesa.id}` :
           `${VITE_API_HOST}/api/hamburguesas/registrar`;
-  
+
       const method = selectedHamburguesa ? 'PUT' : 'POST';
-  
+
       fetch(url, {
         method: method,
         headers: {
