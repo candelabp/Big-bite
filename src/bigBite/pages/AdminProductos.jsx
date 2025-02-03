@@ -5,6 +5,7 @@ import NavbarAdmin from '../components/NavbarAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getEnvironments } from '../../helpers/getEnvironments';
+import Swal from 'sweetalert2';
 
 export const AdminProductos = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -117,7 +118,11 @@ export const AdminProductos = () => {
             })
                 .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
                 .then(message => {
-                  alert(selectedHamburguesa ? 'Edición exitosa' : 'Registro exitoso');
+                  Swal.fire({
+                    icon: 'success',
+                    title: selectedHamburguesa ? 'Edición exitosa' : 'Registro exitoso',
+                    text: message,
+                  });
                   reset();
                   setSelectedHamburguesa(null);
                   setImagePreview(null);
@@ -126,7 +131,11 @@ export const AdminProductos = () => {
                       .then(response => response.json())
                       .then(data => setHamburguesas(data));
                 })
-                .catch(error => alert('Error al enviar los datos'));
+                .catch(error => Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'Error al enviar los datos',
+                }));
           }
       );
     } else {
@@ -149,7 +158,11 @@ export const AdminProductos = () => {
       })
           .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
           .then(message => {
-            alert(selectedHamburguesa ? 'Edición exitosa' : 'Registro exitoso');
+            Swal.fire({
+              icon: 'success',
+              title: selectedHamburguesa ? 'Edición exitosa' : 'Registro exitoso',
+              text: message,
+            });
             reset();
             setSelectedHamburguesa(null);
             setImagePreview(null);
@@ -158,7 +171,11 @@ export const AdminProductos = () => {
                 .then(response => response.json())
                 .then(data => setHamburguesas(data));
           })
-          .catch(error => alert('Error al enviar los datos'));
+          .catch(error => Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al enviar los datos',
+          }));
     }
   };
 

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import '../css/adminProductos.css';
 import NavbarAdmin from '../components/NavbarAdmin';
 import { getEnvironments } from '../../helpers/getEnvironments';
+import Swal from 'sweetalert2';
 
 export const AdminInsumos = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -44,7 +45,11 @@ export const AdminInsumos = () => {
       })
       .then(message => {
         console.log('Respuesta del servidor:', message);
-        alert(selectedInsumo ? 'Edición exitosa' : 'Registro exitoso');
+        Swal.fire({
+          icon: 'success',
+          title: selectedInsumo ? 'Edición exitosa' : 'Registro exitoso',
+          text: message,
+        });
         reset({
           nombre: '',
           precio: '',
@@ -56,10 +61,11 @@ export const AdminInsumos = () => {
           .then(response => response.json())
           .then(data => setInsumos(data));
       })
-      .catch(error => {
-        console.error('Hubo un error:', error);
-        alert('Error al enviar los datos');
-      });
+      .catch(error => Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al enviar los datos',
+      }));
   };
 
   const editarInsumo = (insumo) => {

@@ -5,6 +5,7 @@ import NavbarAdmin from '../components/NavbarAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getEnvironments } from '../../helpers/getEnvironments';
+import Swal from 'sweetalert2';
 
 export const AdminPapas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -115,7 +116,11 @@ export const AdminPapas = () => {
             })
                 .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
                 .then(message => {
-                  alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
+                  Swal.fire({
+                    icon: 'success',
+                    title: selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso',
+                    text: message,
+                  });
                   reset();
                   setSelectedPapasFritas(null);
                   setImagePreview(null);
@@ -124,7 +129,11 @@ export const AdminPapas = () => {
                       .then(response => response.json())
                       .then(data => setPapasFritas(data));
                 })
-                .catch(error => alert('Error al enviar los datos'));
+                .catch(error => Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'Error al enviar los datos',
+                }));
           }
       );
     } else {
@@ -147,7 +156,11 @@ export const AdminPapas = () => {
       })
           .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
           .then(message => {
-            alert(selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso');
+            Swal.fire({
+              icon: 'success',
+              title: selectedPapasFritas ? 'Edición exitosa' : 'Registro exitoso',
+              text: message,
+            });
             reset();
             setSelectedPapasFritas(null);
             setImagePreview(null);
@@ -156,7 +169,11 @@ export const AdminPapas = () => {
                 .then(response => response.json())
                 .then(data => setPapasFritas(data));
           })
-          .catch(error => alert('Error al enviar los datos'));
+          .catch(error => Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al enviar los datos',
+          }));
     }
   };
 

@@ -5,6 +5,7 @@ import NavbarAdmin from '../components/NavbarAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getEnvironments } from '../../helpers/getEnvironments';
+import Swal from 'sweetalert2';
 
 export const AdminBiteBox = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -86,8 +87,11 @@ export const AdminBiteBox = () => {
               return response.text();
             })
             .then(message => {
-              console.log('Respuesta del servidor:', message);
-              alert(selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso');
+              Swal.fire({
+                icon: 'success',
+                title: selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso',
+                text: message,
+              });
               reset();
               setSelectedBiteBox(null);
               setImagePreview(null);
@@ -97,7 +101,11 @@ export const AdminBiteBox = () => {
             })
             .catch(error => {
               console.error('Hubo un error:', error);
-              alert('Error al enviar los datos');
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al enviar los datos',
+              });
             });
         }
       );
@@ -126,8 +134,11 @@ export const AdminBiteBox = () => {
           return response.text();
         })
         .then(message => {
-          console.log('Respuesta del servidor:', message);
-          alert(selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso');
+          Swal.fire({
+            icon: 'success',
+            title: selectedBiteBox ? 'Edición exitosa' : 'Registro exitoso',
+            text: message,
+          });
           reset();
           setSelectedBiteBox(null);
           setImagePreview(null);
@@ -137,7 +148,11 @@ export const AdminBiteBox = () => {
         })
         .catch(error => {
           console.error('Hubo un error:', error);
-          alert('Error al enviar los datos');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al enviar los datos',
+          });
         });
     }
   };

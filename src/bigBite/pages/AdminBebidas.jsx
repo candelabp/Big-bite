@@ -5,6 +5,7 @@ import NavbarAdmin from '../components/NavbarAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getEnvironments } from '../../helpers/getEnvironments';
+import Swal from 'sweetalert2';
 
 export const AdminBebidas = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
@@ -69,7 +70,11 @@ export const AdminBebidas = () => {
           })
             .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
             .then(message => {
-              alert(selectedBebida ? 'Edición exitosa' : 'Registro exitoso');
+              Swal.fire({
+                icon: 'success',
+                title: selectedBebida ? 'Edición exitosa' : 'Registro exitoso',
+                text: message,
+              });
               reset();
               setSelectedBebida(null);
               setImagePreview(null);
@@ -77,7 +82,11 @@ export const AdminBebidas = () => {
                 .then(response => response.json())
                 .then(data => setBebidas(data));
             })
-            .catch(error => alert('Error al enviar los datos'));
+            .catch(error => Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error al enviar los datos',
+            }));
         }
       );
     } else {
@@ -100,7 +109,11 @@ export const AdminBebidas = () => {
       })
         .then(response => response.ok ? response.text() : response.text().then(text => { throw new Error(text); }))
         .then(message => {
-          alert(selectedBebida ? 'Edición exitosa' : 'Registro exitoso');
+          Swal.fire({
+            icon: 'success',
+            title: selectedBebida ? 'Edición exitosa' : 'Registro exitoso',
+            text: message,
+          });
           reset();
           setSelectedBebida(null);
           setImagePreview(null);
@@ -108,7 +121,11 @@ export const AdminBebidas = () => {
             .then(response => response.json())
             .then(data => setBebidas(data));
         })
-        .catch(error => alert('Error al enviar los datos'));
+        .catch(error => Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al enviar los datos',
+        }));
     }
   };
 
