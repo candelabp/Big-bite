@@ -256,17 +256,17 @@ export const AdminProductos = () => {
               </div>
               <div>
                 <label className='label-producto'>Precio Costo:</label>
-                <input className='input-producto'  type="number" step="0.01" {...register("precio", { required: "El precio costo es obligatorio" })} />
+                <input className='input-producto'  type="number" step="0.01" min="0" {...register("precio", { required: "El precio costo es obligatorio" })} />
                 {errors.precio && <span className="error-message">{errors.precio.message}</span>}
               </div>
               <div>
                 <label className='label-producto'>Precio Venta:</label>
-                <input className='input-producto' type="number" step="0.01" {...register("precioCombo", { required: "El precio venta es obligatorio" })} />
+                <input className='input-producto' type="number" step="0.01" min="0" {...register("precioCombo", { required: "El precio venta es obligatorio" })} />
                 {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
               </div>
               <div>
                 <label className='label-producto'>Tiempo de Preparación (minutos):</label>
-                <input className='input-producto' type="number" {...register("tiempoPreparacion", { required: "El tiempo de preparación es obligatorio" })} />
+                <input className='input-producto' type="number" min="0" {...register("tiempoPreparacion", { required: "El tiempo de preparación es obligatorio" })} />
                 {errors.tiempoPreparacion && <span className="error-message">{errors.tiempoPreparacion.message}</span>}
               </div>
 

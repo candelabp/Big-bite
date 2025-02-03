@@ -224,17 +224,17 @@ export const AdminBiteBox = () => {
             </div>
             <div>
               <label className='label-producto'>Precio Costo:</label>
-              <input className='input-producto' type="number" step="0.01" {...register("precio", { required: "El precio es obligatorio" })} />
+              <input className='input-producto' type="number" step="0.01" min="0" {...register("precio", { required: "El precio es obligatorio" })} />
               {errors.precio && <span className="error-message">{errors.precio.message}</span>}
             </div>
             <div>
               <label className='label-producto'>Precio Venta:</label>
-              <input className='input-producto' type="number" step="0.01" {...register("precioCombo", { required: "El precio combo es obligatorio" })} />
+              <input className='input-producto' type="number" step="0.01" min="0" {...register("precioCombo", { required: "El precio combo es obligatorio" })} />
               {errors.precioCombo && <span className="error-message">{errors.precioCombo.message}</span>}
             </div>
             <div>
               <label className='label-producto'>Stock:</label>
-              <input className='input-producto' type="number" {...register("stock", { required: "El stock es obligatorio" })} />
+              <input className='input-producto' type="number" min="0" {...register("stock", { required: "El stock es obligatorio" })} />
               {errors.stock && <span className="error-message">{errors.stock.message}</span>}
             </div>
 
